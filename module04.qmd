@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-This module performs a spectral separability analysis to assess the distinctiveness of land cover classes. Conducting separability analysis is essential to ensure that the spectral signatures of training samples are sufficiently differentiated; inadequate separability between classes can lead to model confusion, increased classification error, and reduced generalization performance.
+This module performs a spectral separability analysis to assess the distinctiveness of land cover classes. Conducting separability analysis is essential to ensure that the spectral signatures of reference data are sufficiently differentiated; inadequate separability between classes can lead to model confusion, increased classification error, and reduced generalization performance.
 
 The module extracts spectral pixel values from near-cloud-free satellite imagery and computes key descriptive statistics for each class. To maintain computational efficiency and minimize class imbalance, sampling is constrained to a defined maximum number of pixels per class. Pairwise separability is then quantified using the Jeffries–Matusita (JM) and Transformed Divergence (TD) metrics, both of which evaluate the statistical distance between class distributions based on their means and covariance matrices. The resulting separability values are categorized to indicate good, marginal, or poor class distinction and visualized through histograms, box plots, and scatter plots. This diagnostic process enables the identification of spectrally overlapping classes that require refinement or redefinition before classification, thereby improving the reliability and accuracy of subsequent LULC mapping workflows.
 
@@ -59,9 +59,9 @@ G -->|Error|A
 
 ```
 
-## Spectral Feature Sampling {#sec-spectral-feature-sampling}
+## Spectral Feature Extraction of Reference Data {#sec-spectral-feature-sampling}
 
-### Spectral Feature Sampling
+### Spectral Feature Extraction of Reference Data
 
 **Back-end**
 
@@ -91,7 +91,7 @@ G -->|Error|A
 `get_sample_pixel_stats_df()` to `convert sample_pixel_stats()` into pandas DataFrame.
 :::
 
-## Specification of Separability Analysis Parameters
+## Conducting the Separability Analysis
 
 ### Specification of Separability Analysis Parameters
 
@@ -108,9 +108,7 @@ The system provides three parameters:
 2.  ID and Class Name as a drop down selection.
 3.  Pixel Size as numeric input.
 
-## Computing the Separability Analysis {#sec-computing-the-separability-analysis}
-
-### Computing the Separability Analysis
+### Computing the Pairwise Class Separability
 
 **Back-end**
 
@@ -171,26 +169,9 @@ The system provides three parameters:
 7.  Results, along with the basic statistics table, are exported as a `.TXT` report.
 8.  Detailed error messages are provided if any errors occur.
 
-## Reviewing Separability Results {#sec-reviewing-separability-results}
+## Visualization of Reference Data's Spectral Profile {#sec-spectral-profile-visualization}
 
-### Reviewing Separability Result {#sec-selection-of-lulc-classification-model}
-
-**Front-end**
-
-1.  If input parameters are incomplete, the user receives an error message.
-2.  If inputs are complete, the user evaluates whether the separability results are satisfactory.
-    -   If unsatisfactory, the user may refine samples for classes with low separability by adding or removing points through [Module 3](@sec-module3) or external editing.
-    -   If satisfactory, the user may proceed to spectral profile visualization (@sec-spectral-profile-visualization) .
-
-**Back-end**
-
-1.  The system validates input parameters and prompts the user to review any incomplete entries.
-
-2.  If it is incomplete, the system displays an error and prompts the user to review the analysis parameters.
-
-## Spectral Profile Visualization {#sec-spectral-profile-visualization}
-
-### Spectral Profile Visualization {#sec-spectra-signature-visualization}
+### Visualization of Reference Data's Spectral Profile {#sec-spectra-signature-visualization}
 
 **Front-end**
 
