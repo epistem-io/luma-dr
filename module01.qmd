@@ -166,10 +166,7 @@ During Phase 1, only Landsat data will be utilized; therefore, the spatial resol
 
 **Back-end**
 
-1.  The system specifies Landsat data collections for both optical and thermal processing and organizes them into two groups in the backend:
-
-    -   `OPTICAL_DATASET` – Defines Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) used for optical data processing.
-    -   `THERMAL_DATASET` – Defines Landsat Top-of-Atmosphere (TOA) thermal datasets (Collection 2, Level-1) used for thermal data analysis.
+1.  The system specifies Landsat data collections for optical processing and organizes it in one dataset: `OPTICAL_DATASET`. It defines Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) used for optical data processing.
 
 2.  The system currently supports Landsat 1-3 raw collection (`landsat_raw`) and and Landsat 4-9 surface reflectance collection (`landsat_sr`). Landsat mission availability is as follows:
 
