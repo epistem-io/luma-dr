@@ -1,16 +1,14 @@
-# Module 3: Reference Data Generation and Data Splitting {#sec-module-3}
+# Module 3: Reference Data Generation {#sec-module-3}
 
 # Module Overview {.unnumbered}
 
-In supervised classification, the quality of reference data directly determines the accuracy of the resulting model. The output of Module 3 is to produce georeferenced point vector datasets for each LULC class defined by the user in the preceding step, [Module 2](@sec-module-2), accompanied by quantitative and visual summaries that facilitate rigorous evaluation, quality control, and optimization for subsequent classification. Upon completion, the user obtains a structured reference datasets for each LULC class, together with statistical diagnostics to assess the quality and representativeness of the data prior to classification. The module will also conduct a data split process of the reference dataset into validation and training data.
+In supervised classification, the quality of reference data directly determines the accuracy of the resulting model. The output of Module 3 is to produce georeferenced point vector datasets for each LULC class defined by the user in the preceding step, [Module 2](@sec-module-2), accompanied by quantitative and visual summaries that facilitate rigorous evaluation, quality control, and optimization for subsequent classification. Upon completion, the user obtains a structured reference datasets for each LULC class, together with statistical diagnostics to assess the quality and representativeness of the data prior to classification.
 
 # Input {.unnumbered}
 
 **User’s Input**
 
 1.  User's reference dataset
-2.  User-specified data splitting percentage.
-3.  User-specified data splitting method.
 
 **Input from Other Modules**
 
@@ -20,7 +18,6 @@ In supervised classification, the quality of reference data directly determines 
 
 # Output {.unnumbered}
 
--   Georeferenced **reference** datasets that have been split into **training** and **validation**.
 -   Statistical analyses of the reference datasets.
 
 # Process {.unnumbered}
@@ -109,48 +106,3 @@ The system presents a recap table with columns for ID, class, number of points, 
 
 `get_sample_stats_df():` to convert the result from `sample_stats()` into a formatted dataframe.
 :::
-
-## Data Splitting {#sec-data-splitting}
-
-### Data Splitting
-
-**Front-end**
-
-1.  The user defines the proportion to split the reference data into a training and validation dataset.
-2.  The user choose the data split method: single random split, stratified random split, or stratified random K-Fold split.
-
-**Back-end**
-
-1.  The system offers three types of data splitting:
-
-    -   Single Random Split: Randomly splits the input training data according to a specified ratio and is ideal when the training dataset is relatively balanced across classes. The system assigns a random number (`randomColumn()`) to each training point and separates the points into training and testing sets. It then extracts the corresponding image pixel values (`image.sampleRegions()`) for all points and returns the two sets, ready for the next step.
-
-        ::: callout-tip
-        ## Related Function(s)
-
-        `random_split():` to partition the training data randomly into training and validation sets.
-        :::
-
-    -   Stratified Random Split: Randomly splits the input data while preserving class proportions. Unique classes are identified (`aggregate_array().distinct()`), random numbers are assigned to points, and each class is split into training and testing subsets. The subsets are merged across classes, and image pixel values are extracted for all points.
-
-        ::: callout-tip
-        ## Related Function(s)
-
-        `stratified_split():` to partition the training data by strata into training and validation sets.
-
-        `split_class():` to partition the training data based on the class.
-        :::
-
-    -   Stratified K-Fold Split: Performs a stratified K-Fold cross-validation split on the input reference dataset. It is particularly useful for datasets with imbalanced classes, as it ensures that the class proportions are preserved in each fold. This method splits the dataset into k folds for cross-validation while preserving class proportions. It first calculates the fold size (`1.0 / k`) and generates evenly spaced thresholds to assign points to training or validation. Unique classes are identified, and each point is assigned a random number. Points within the threshold range are used for validation, and the rest for training. Class-specific splits are merged to form complete training and validation sets for each fold. The function returns a `FeatureCollection` of k folds, each containing its training and validation subsets. Finally, the system ensures that class proportions are maintained in every fold.
-
-        ::: callout-tip
-        ## Related Function(s)
-
-        `make_fold():` to create the folds using the given threshold.
-
-        `per_class():` to split the class to ensure stratification during split.
-
-        `inspect_fold():` to inspect the result of stratified k-fold size.
-        :::
-
-2.  The reference dataset that had been split into training and validation will be used later in [Module 6](@sec-module-6)
