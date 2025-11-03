@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-In supervised classification, the quality of reference data directly determines the accuracy of the resulting model. The output of Module 3 is to produce georeferenced point vector datasets for each LULC class defined by the user in the preceding step, [Module 2](@sec-module-2), accompanied by quantitative and visual summaries that facilitate rigorous evaluation, quality control, and optimization for subsequent classification. Upon completion, the user obtains a structured reference datasets for each LULC class, together with statistical diagnostics to assess the quality and representativeness of the data prior to classification.
+In supervised classification, the quality of reference data directly determines the accuracy of the resulting model. The output of Module 3 is to produce georeferenced point vector datasets for each LULC class defined by the user in the preceding step, [Module 2](@sec-module-2), accompanied by quantitative and visual summaries that facilitate rigorous evaluation, quality control, and optimization for subsequent classification. Upon completion, the user obtains a structured reference datasets for each LULC class, together with statistical diagnostics to assess the quality and representativeness of the data prior to classification. The module will also conduct a data split process of the reference dataset into validation and training data.
 
 # Input {.unnumbered}
 
