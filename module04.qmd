@@ -86,7 +86,7 @@ G -->|Error|A
 ::: callout-tip
 ## Related Function(s)
 
-`sample_pixel_stats()` to compute summary statistics.
+`sample_pixel_stats()` to compute summary statistics of extracted spectral value.
 
 `get_sample_pixel_stats_df()` to `convert sample_pixel_stats()` into pandas DataFrame.
 :::
