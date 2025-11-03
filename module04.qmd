@@ -93,7 +93,7 @@ G -->|Error|A
 
 ## Conducting the Separability Analysis
 
-### Specification of Separability Analysis Parameters
+### Specification of Separability Analysis Parameters {#sec-specification-of-separability-analysis-parameters}
 
 **Front-end**
 
@@ -183,7 +183,7 @@ The user selects the spectral bands for visualization. This allows the user to e
 
 **Back-end**
 
-1.  The system checks the status of the separability analysis:
+1.  The system checks the status of the separability analysis:sec-specification-of-separability-analysis-parameters
 
     -   If successful, visualization proceeds.
     -   If unsuccessful, visualization is blocked and the user is prompted to complete the parameter specification (@sec-specification-of-separability-analysis-parameters).
