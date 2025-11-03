@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-The output of this module is high-quality, near-cloud-free satellite imagery, which is essential for producing accurate and reliable land use and land cover (LULC) datasets. This module focuses on acquiring satellite imagery that has been pre-processed and corrected, including procedures such as cloud masking and shadow removal.
+The output of this module is high-quality, near–cloud-free satellite imagery that corresponds to the user-defined area of interest, which is essential for generating accurate and reliable land use and land cover (LULC) datasets. This module emphasizes the acquisition of pre-processed and corrected satellite imagery, incorporating procedures such as cloud masking and shadow removal.
 
 # Input {.unnumbered}
 
@@ -71,7 +71,7 @@ style K stroke:#000000
 
 **Front-end**
 
-The user selects an administration boundary.
+The user selects an administrative boundary.
 
 **Back-end**
 
@@ -87,7 +87,7 @@ The system queries the FAO Global Administrative Unit Layers (GAUL) 2015 dataset
 
 **Front-end**
 
-1.  The user can upload their `.SHP` file. in `.ZIP` format that includes all necessary files (`.SHP`, `.SHX`, `.DBF`, `.PRJ`).
+The user can upload their `.SHP` file. in `.ZIP` format that includes all necessary files (`.SHP`, `.SHX`, `.DBF`, `.PRJ`).
 
 **Back-end**
 
