@@ -16,13 +16,12 @@ The module extracts spectral pixel values from near-cloud-free satellite imagery
 **Input from Other Modules**
 
 1.  Near-cloud-free satellite imagery within the AOI (@sec-visualization-and-saving-data).
-2.  Training Data (@sec-module-3).
+2.  Reference data (@sec-module-3).
 
 # Output {.unnumbered}
 
-<!-- 1.  Basic statistics (mean, median, variance, and standard deviation). -->
-
-1.  Separability analysis result in diagram visualization and text description.
+1.  Separability analysis result.
+2.  Spectral profile visualization and text description.
 
 # Process {.unnumbered}
 
@@ -66,12 +65,12 @@ G -->|Error|A
 
 **Back-end**
 
-1.  The system extracts spectral (pixel) values from near-cloud-free satellite imagery ([Module 1](@sec-module-01)) using all data in the `TrainDataFinal` set ([Module 3](@sec-module-3)) at a 30 m spatial resolution. To prevent memory overload, timeouts, or class imbalance, a maximum of 7,000 pixels per land cover class (`max_pixel_per_class`) is extracted.
+1.  The system extracts spectral (pixel) values from near-cloud-free satellite imagery ([Module 1](@sec-module-01)) using all reference data in the `TrainDataFinal` set ([Module 3](@sec-module-3)) at a 30 m spatial resolution. To prevent memory overload, timeouts, or class imbalance, a maximum of 7,000 pixels per land cover class (`max_pixel_per_class`) is extracted.
 
 ::: callout-tip
 ## Related Function(s)
 
-`extract_spectral_values()` to extract the pixels of all training samples.
+`extract_spectral_values():` to extract the pixels of all training samples.
 :::
 
 2.  The system ensures that no class exceeds this limit. For each class, the system first filters the training data to select samples of that class and then counts the number of samples. If the count exceeds `max_pixels_per_class`, a random subset up to the limit is selected; otherwise, all samples are used.
@@ -79,7 +78,7 @@ G -->|Error|A
 ::: callout-tip
 ## Related Function(s)
 
-`limit_sample_per_class()` to limit the number of training samples per class.
+`limit_sample_per_class():` to limit the number of training samples per class.
 :::
 
 3.  Next, after pixel extraction, the system computes and summarizes the pixel-level data for each spectral band and class, including the mean, standard deviation, minimum, maximum, median, and count, and formats it into a structured DataFrame suitable for the subsequent separability analysis.
