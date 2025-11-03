@@ -9,7 +9,8 @@ In supervised classification, the quality of reference data directly determines 
 **User’s Input**
 
 1.  User's reference dataset
-2.  User-specified the data splitting percentage.
+2.  User-specified data splitting percentage.
+3.  User-specified data splitting method.
 
 **Input from Other Modules**
 
@@ -115,7 +116,8 @@ The system presents a recap table with columns for ID, class, number of points, 
 
 **Front-end**
 
-1.  The user defines the proportion to split the reference data into training and validation dataset.
+1.  The user defines the proportion to split the reference data into a training and validation dataset.
+2.  The user choose the data split method: single random split, stratified random split, or stratified random K-Fold split.
 
 **Back-end**
 
