@@ -1,4 +1,4 @@
-# Module 6:  Land Use/Land Cover (LULC) Map Generation {#sec-module-0}
+# Module 6: Land Use/Land Cover (LULC) Map Generation {#sec-module-0}
 
 # Module Overview {.unnumbered}
 
@@ -27,40 +27,31 @@ This module provides functionality for users to generate the final LULC map as t
 ## Output {.unnumbered}
 
 1.  Trained RF classification model.
-2.   Classified LULC raster map.
-3.   Optimal hyperparameters from tuning process
-4.   Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix).
+2.  Classified LULC raster map.
+3.  Optimal hyperparameters from tuning process
+4.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix).
 
 ## Process {.unnumbered}
 
 ```{mermaid}
 flowchart TD
+    A([<a href='#sec-checking-prerequisites'>6.1 Check Prerequisites</a>])
+    B([Prompt Return to Previous<br>Modules if Needed])
+    C([<a href='#sec-data-splitting'>6.2 Data Splitting</a>])
+    D([<a href='#sec-define-classification-specifications'>6.3 Define Classification<br>Specifications</a>])
+    E([<a href='#sec-hyperparameter-tuning'>6.4 Hyperparameter Tuning</a>])
+    F([<a href='#sec-final-classification'>6.5 Final Classification</a>])
+    G([<a href='#sec-review-classification-results'>6.6 Review Classification<br>Results</a>])
+    H([Proceed to Module 7])
 
-%% CHECKING PREREQUISITES
-A([<a href="#sec-checking-prerequisites">Check Prerequisites</a>])
-B([Prompt Return to Previous Modules if Needed])
-C([<a href="#sec-review-inputs">Review Inputs</a>])
-
-A --> B
-B --> C
-
-%% MODEL TRAINING AND CLASSIFICATION
-D([<a href="#sec-define-classification-specifications">Define Classification Specifications</a>])
-E([<a href="#sec-feature-extraction">Feature Extraction</a>])
-F([<a href="#sec-train-random-forest-model">Train Random Forest Model</a>])
-G([<a href="#sec-model-accuracy-test">Model Accuracy Test</a>])
-H([<a href="#sec-classification-apply-model-to-entire-image">Classification</a>])
-I([<a href="#sec-review-classification-results">Review Classification Results</a>])
-J([<a href="#sec-module-7">Proceed to Module 7</a>])
-
-C --> D
-D --> E
-E --> F
-F --> G
-G --> H
-H --> I
-I -->|Satisfied| J
-I -->|Unsatisfied| D   
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G -->|Satisfied| H
+    G -->|Unsatisfied| D
 
 ```
 
@@ -111,17 +102,15 @@ The system validates availability of satellite imagery, classification scheme, a
 
         ::: callout-tip
         ## Related Function(s)
-        
-        `module_6.FeatureExtraction.stratified_kfold(): strafied kfold cross validation split
-        
+
+        \`module_6.FeatureExtraction.stratified_kfold(): strafied kfold cross validation split
+
         `module_6.FeatureExtraction.stratified_kfold().make_fold():` to create the folds using the given threshold.
 
         `module_6.FeatureExtraction.stratified_kfold().make_fold().per_class():` to split the class to ensure stratification during split.
 
         `module_6.FeatureExtraction.inspect_fold():` to inspect the result of stratified k-fold size.
         :::
-
-
 
 ## Define Classification Specifications {#sec-define-classification-specifications}
 
