@@ -28,41 +28,21 @@ The output of this module is high-quality, near–cloud-free satellite imagery t
 
 ```{mermaid}
 
-flowchart TD 
-%% Nodes 
-A([<a href="#sec-selection-of-aoi">Selection of AOI</a>]) 
-B([<a href="#sec-aoi-from-administrative-boundaries">AOI from Administrative Boundaries</a>]) 
-C([<a href="#sec-aoi-from-a-shapefile">AOI from a Shapefile</a>]) 
-D([<a href="#sec-aoi-from-on-screen-digitizing">AOI from On-Screen Digitizing</a>]) E([<a href="#sec-input-spatial-image-parameters">Input Spatial Image Parameters</a>]) 
-F([<a href="#sec-satellite-imagery-cannot-be-found">Satellite Imagery Not Found</a>]) 
-G([<a href="#sec-selection-and-preparation-of-satellite-imagery">Selection and Preparation of Satellite Imagery</a>]) 
-H([<a href="#sec-validation-of-shapefile-geometries">Validation of Shapefile Geometries</a>]) 
-I{AOI} K{Near-Cloud-Free Satellite Imagery (.image)} 
-J([<a href="#sec-visualization-and-saving-data">Visualization & Saving of Data</a>])
+flowchart TD
+%% =======================
+%% Nodes
+%% =======================
+A([<a href="#sec-selection-of-aoi">Selection of AOI</a>])
+B([<a href="#sec-validation-of-shapefile-geometries">Validation of Shapefile Geometries</a>])
+C([<a href="#sec-input-spatial-image-parameters">Selection and Preparation of Satellite Imagery</a>])
+D([<a href="#sec-visualization-and-saving-data">Visualization and Saving of Data</a>])
 
+%% =======================
 %% Connections
-A --> B 
-A --> C 
-A --> D 
-B --> I 
-C --> H 
-D --> I 
-H --> |Valid geometries| I 
-H --> |Invalid geometries| C 
-I --> E 
-E --> |Imagery available| G 
-E --> |Imagery not available| F 
-F --> E 
-G --> K 
-G --> J 
-
-%% Node styling 
-classDef Peach fill:#FFEFDB,stroke:#FBB35A,stroke-width:1px,color:#8F632D class I,K Peach 
-
-%% Optional: individual stroke styling 
-style I stroke:#000000 
-style K stroke:#000000
-
+%% =======================
+A --> B
+B --> C
+C --> D
 ```
 
 ## Selection of AOI {#sec-selection-of-aoi}

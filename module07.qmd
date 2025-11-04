@@ -28,7 +28,7 @@ This module focuses on the evaluation and validation of LULC classification resu
 -   Confusion matrix (table).
 -   Accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
 
-## Process
+## Process {.unnumbered}
 
 ```{mermaid}
 flowchart TD
@@ -56,11 +56,15 @@ G -->|Satisfied| H([Process Complete])
 G -->|Unsatisfied| B
 ```
 
-### Checking Prerequisites from Previous Modules
+## Checking Prerequisites from Previous Modules
 
 **Front-end**
 
-1. **Verify Land Cover Map Availability**: The user is notified if the map is missing and prompted to complete [Module 6](https://www.google.com/search?q=%40sec-module-6). 2.  **Verify Validation Data Availability**: If **Validation Data** is available from [Module 3](https://www.google.com/search?q=%40sec-module-3), the user is allowed to proceed. 3.  **Upload and Verify Validation Data**: If missing, the user is prompted to upload a separate **Validation Dataset** and receives verification feedback.
+1.  **Verify Land Cover Map Availability**: The user is notified if the map is missing and prompted to complete [Module 6](https://www.google.com/search?q=%40sec-module-6).
+2.  **Verify Validation Data Availability**:
+    -   If **Validation Data** is available from [Module 3](https://www.google.com/search?q=%40sec-module-3), the user is allowed to proceed.
+
+    -   If missing, the user is prompted to upload a **Validation Dataset** and receives verification feedback.
 
 **Back-end**
 
@@ -70,35 +74,9 @@ G -->|Unsatisfied| B
 
 -   If prerequisites missing, guides user to complete necessary steps
 
-#### Verify Land Cover Map Availability
+## Thematic Accuracy Assessment
 
-**Back-end**
-
--   Confirms LULC map exists from Module 6
-
--   If missing, notifies user to complete Module 6 first
-
-#### Verify Validation Data Availability
-
-**Back-end**
-
--   Checks for validation data from Module 3 partitions
-
--   If unavailable, provides upload interface for independent validation data
-
-#### Upload and Verify Validation Data
-
-**Back-end**
-
--   Accepts validation data upload in supported formats
-
--   Validates data structure and compatibility with classification scheme
-
--   Provides feedback on upload success or required corrections
-
-### Thematic Accuracy Assessment
-
-#### Perform Accuracy Test
+### Perform Accuracy Test
 
 **Back-end**
 
@@ -120,15 +98,23 @@ G -->|Unsatisfied| B
 
 -   `module_7.Evaluate_LULC.thematic_assessment()` - performs complete accuracy assessment workflow
 
-#### Display and Review Accuracy Results
+### Display and Review Accuracy Results
 
 **Front-end**
 
-1.  User reviews the test results, including the Confusion Matrix and all accuracy metrics displayed by `print_metrics()`. 2.  If satisfied, the process completes. 3.  If **unsatisfied**, the user is prompted to: \* Go back to @sec-module-3 to check and clarify the **Reference Data**. \* Go back to @sec-module-6 to refine the hyperparameters or try a different classification approach.
+1.  User reviews the test results, including the Confusion Matrix and all accuracy metrics.
+
+2.  If satisfied, the process completes.
+
+3.  If **unsatisfied**, the user is prompted to:
+
+-   Clarify the **Reference Data**.
+
+-   Go back to @sec-module-6 to refine the hyperparameters or try a different classification approach.
 
 **Back-end**
 
--   Formats and displays comprehensive accuracy report
+-   Formats and displays a comprehensive accuracy report
 
 -   Identifies potential issues based on error patterns
 
