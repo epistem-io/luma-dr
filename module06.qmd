@@ -1,4 +1,4 @@
-# Module 6: LULC Map Generation  {#sec-module-0}
+# Module 6: LULC Map Generation {#sec-module-0}
 
 # Module Overview {.unnumbered}
 
