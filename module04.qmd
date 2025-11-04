@@ -70,7 +70,7 @@ G -->|Error|A
 ::: callout-tip
 ## Related Function(s)
 
-`extract_spectral_values():` to extract the pixels of all training samples.
+`module_4.sample_quality.extract_spectral_values():` to extract the pixels of all training samples.
 :::
 
 2.  The system ensures that no class exceeds this limit. For each class, the system first filters the training data to select samples of that class and then counts the number of samples. If the count exceeds `max_pixels_per_class`, a random subset up to the limit is selected; otherwise, all samples are used.
@@ -78,7 +78,7 @@ G -->|Error|A
 ::: callout-tip
 ## Related Function(s)
 
-`limit_sample_per_class():` to limit the number of training samples per class.
+`module_4.sample_quality.limit_sample_per_class():` to limit the number of training samples per class.
 :::
 
 3.  Next, after pixel extraction, the system computes and summarizes the pixel-level data for each spectral band and class, including the mean, standard deviation, minimum, maximum, median, and count, and formats it into a structured DataFrame suitable for the subsequent separability analysis.
@@ -86,9 +86,9 @@ G -->|Error|A
 ::: callout-tip
 ## Related Function(s)
 
-`sample_pixel_stats()` to compute summary statistics of extracted spectral value.
+`module_4.sample_quality.sample_pixel_stats()` to compute summary statistics of extracted spectral value.
 
-`get_sample_pixel_stats_df()` to `convert sample_pixel_stats()` into pandas DataFrame.
+`module_4.sample_quality.get_sample_pixel_stats_df()` to `module_4.sample_quality.convert sample_pixel_stats()` into pandas DataFrame.
 :::
 
 ## Conducting the Separability Analysis
@@ -117,7 +117,7 @@ The system provides three parameters:
 ::: callout-tip
 ## Related Function(s)
 
-`check_class_separability()` to compute pairwise class separability.
+`module_4.sample_quality.check_class_separability()` to compute pairwise class separability.
 :::
 
 2.  The system runs the separability analysis. Both methods TM and TD take the spectral pixel data of two classes and calculate how distinct they are based on their means and covariance matrices. The resulting values range from 0 (no separability) to 2 (perfect separability).
@@ -125,9 +125,9 @@ The system provides three parameters:
 ::: callout-tip
 ## Related Function(s)
 
-`_jeffries_matusita_distance()` to compute separability value with JM method.
+`module_4.sample_quality._jeffries_matusita_distance()` to compute separability value with JM method.
 
-`transform_divergence()` to compute separability value with TD method.
+`module_4.sample_quality.transform_divergence()` to compute separability value with TD method.
 :::
 
 3.  Finally, the result matrix is converted into a readable, cleaned, long-format pandas DataFrame.
@@ -135,7 +135,7 @@ The system provides three parameters:
 ::: callout-tip
 ## Related Function(s)
 
-`get_separability_df()` to convert `check_class_separability()` into pandas DataFrame.
+`module_4.sample_quality.get_separability_df()` to convert `module_4.sample_quality.check_class_separability()` into pandas DataFrame.
 :::
 
 4.  The system provides a function to filter and highlight the class pairs that are most difficult to distinguish, based on their separability values.
@@ -143,7 +143,7 @@ The system provides three parameters:
 ::: callout-tip
 ## Related Function(s)
 
-`lowest_separability()` to identify the N class with the lowest values.
+`module_4.sample_quality.lowest_separability()` to identify the N class with the lowest values.
 :::
 
 5.  The separability values are assigned to a categorical level indicating how well two classes can be separated. The system groups the numeric values into these categories.
@@ -155,7 +155,7 @@ The system provides three parameters:
 ::: callout-tip
 ## Related Function(s)
 
-`separability_level()` to interpret separability metric values to three categories.
+`module_4.sample_quality.separability_level()` to interpret separability metric values to three categories.
 :::
 
 6.  The system summarizes the number of class pairs in each category to provide an overall view of class separability.
@@ -163,7 +163,7 @@ The system provides three parameters:
 ::: callout-tip
 ## Related Function(s)
 
-`sum_separability()` to count the number pf class pairs in each category.
+`module_4.sample_quality.sum_separability()` to count the number pf class pairs in each category.
 :::
 
 7.  Results, along with the basic statistics table, are exported as a `.TXT` report.
@@ -205,7 +205,7 @@ The user selects the spectral bands for visualization. This allows the user to e
         ::: callout-tip
         ## Related Function(s)
 
-        `plot_facet_histograms()` to plot histogram of the bands.
+        `module_4.sample_quality.plot_facet_histograms()` to plot histogram of the bands.
         :::
 
     -   Box plot
@@ -223,17 +223,17 @@ The user selects the spectral bands for visualization. This allows the user to e
         ::: callout-tip
         ## Related Function(s)
 
-        `plot_boxplots_by_band()` to plot boxplots of the bands.
+        `module_4.sample_quality.plot_boxplots_by_band()` to plot boxplots of the bands.
         :::
 
     -   Scatter plot (2D and 3D)
 
 3.  Helper Text guides the user in interpreting the plots effectively.
 
-4.  The system summarize a comprehensive textual summary of the separability results. The system calls `sum_separability()` and `lowest_separability()` and displays key statistics and interpretations in a readable table format.
+4.  The system summarize a comprehensive textual summary of the separability results..
 
 ::: callout-tip
 ## Related Function(s)
 
-`print_analysis_summary()` to summarize the result.
+`module_4.sample_quality.print_analysis_summary()` to summarize the result.
 :::

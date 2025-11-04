@@ -60,7 +60,7 @@ G -->|Unsatisfied| B
 
 **Front-end**
 
-1.  **Verify Land Cover Map Availability**: The user is notified if the map is missing and prompted to complete [Module 6](https://www.google.com/search?q=%40sec-module-6). 2.  **Verify Validation Data Availability**: If **Validation Data** is available from [Module 3](https://www.google.com/search?q=%40sec-module-3), the user is allowed to proceed. 3.  **Upload and Verify Validation Data**: If missing, the user is prompted to upload a separate **Validation Dataset** and receives verification feedback.
+1. **Verify Land Cover Map Availability**: The user is notified if the map is missing and prompted to complete [Module 6](https://www.google.com/search?q=%40sec-module-6). 2.  **Verify Validation Data Availability**: If **Validation Data** is available from [Module 3](https://www.google.com/search?q=%40sec-module-3), the user is allowed to proceed. 3.  **Upload and Verify Validation Data**: If missing, the user is prompted to upload a separate **Validation Dataset** and receives verification feedback.
 
 **Back-end**
 
@@ -118,7 +118,7 @@ G -->|Unsatisfied| B
 
 **Related Functions:**
 
--   `thematic_assessment()` - performs complete accuracy assessment workflow
+-   `module_7.Evaluate_LULC.thematic_assessment()` - performs complete accuracy assessment workflow
 
 #### Display and Review Accuracy Results
 
@@ -136,4 +136,4 @@ G -->|Unsatisfied| B
 
 **Related Functions:**
 
--   `print_metrics()` - displays formatted accuracy results with interpretations
+-   `module_7.Evaluate_LULC.print_metrics()` - displays formatted accuracy results with interpretations

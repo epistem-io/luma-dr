@@ -80,7 +80,7 @@ The system queries the FAO Global Administrative Unit Layers (GAUL) 2015 dataset
 ::: callout-tip
 ## Related Function(s)
 
-`get_aoi_from_gaul():` to obtain the AOI from GAUL dataset.
+`helpers.get_aoi_from_gaul():` to obtain the AOI from GAUL dataset.
 :::
 
 ### AOI from Shapefile {#sec-aoi-from-shapefile}
@@ -104,24 +104,24 @@ After the user uploads the shapefiles, they receive a feedback such as "AOI conv
 
 **Back-end**
 
-1.  The `shapefile_validator` class validates shapefile geometries within a GeoDataFrame (.GDF). It corrects coordinate reference systems (CRS) to WGS 1984 (EPSG:4326), fixes invalid or empty geometries, validates point and polygon features, simplifies overly complex polygons, and removes features with invalid coordinates. A final geometry check is performed before converting the data into Earth Engine objects.
+1.  The system corrects coordinate reference systems (CRS) to WGS 1984 (EPSG:4326), fixes invalid or empty geometries, validates point and polygon features, simplifies overly complex polygons, and removes features with invalid coordinates. A final geometry check is performed before converting the data into Earth Engine objects.
 
 ::: callout-tip
 ## Related Function(s)
 
-`validate_and_fix_geometry():`to validate and fix geometries issues.
+`shapefile_utils.shapefile_validator.validate_and_fix_geometry():`to validate and fix geometries issues.
 
-`_clean_geometries():` to repair invalid geometries.
+`shapefile_utils.shapefile_validator.clean_geometries():` to repair invalid geometries.
 
-`_fix_crs ():` to resolve coordinate reference system issues.
+`shapefile_utils.shapefile_validator.fix_crs ():` to resolve coordinate reference system issues.
 
-`_validate_polygons():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
+`shapefile_utils.shapefile_validator.validate_polygons():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
 
-`_is_valid_coordinate():` to ensure coordinates fall within a valid latitude and longitude ranges.
+`shapefile_utils.shapefile_validator.is_valid_coordinate():` to ensure coordinates fall within a valid latitude and longitude ranges.
 
-`_count_vertices():` to count the number of vertices in a geometry.
+`shapefile_utils.shapefile_validator.count_vertices():` to count the number of vertices in a geometry.
 
-`_final_validation():` to perform final validation to ensure all geometries are valid.
+`shapefile_utils.shapefile_validator.final_validation():` to perform final validation to ensure all geometries are valid.
 :::
 
 2.  If an error still occurs, the system displays an error message and suggests performing a shapefile simplification process using GIS software.
@@ -133,15 +133,7 @@ After the user uploads the shapefiles, they receive a feedback such as "AOI conv
         ::: callout-tip
         ## Related Function(s)
 
-        `convert_aoi_gdf():`to convert single-geometry shapefiles.
-        :::
-
-    -   Converts multi-geometry ROI shapefiles into ee.FeatureCollection objetcs while preserving feature attributes.
-
-        ::: callout-tip
-        ## Related Function(s)
-
-        `convert_roi_gdf():`to convert multi-geometry shapefiles.
+        `module_1.EE_converter.convert_aoi_gdf():`to convert single-geometry shapefiles.
         :::
 
     -   Throughout the process, the system provides detailed logging feedback via front-end, ensuring users are informed about validation progress, detected issues, and successful conversions.
@@ -166,9 +158,9 @@ During Phase 1, only Landsat data will be utilized; therefore, the spatial resol
 
 **Back-end**
 
-1.  The system specifies Landsat data collections for optical processing and organizes it in one dataset: `OPTICAL_DATASET`. It defines Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) used for optical data processing.
+1.  The system specifies Landsat data collections for optical processing and organizes it: `module_1.Reflectance_Data.OPTICAL_DATASET`. It defines Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) used for optical data processing.
 
-2.  The system currently supports Landsat 1-3 raw collection (`landsat_raw`) and and Landsat 4-9 surface reflectance collection (`landsat_sr`). Landsat mission availability is as follows:
+2.  The system currently supports Landsat 1-3 RAW collection and and Landsat 4-9 surface reflectance (SR) collection. Landsat mission availability is as follows:
 
     -   Landsat 1 Multispectral Scanner/MSS (1972 - 1978)
     -   Landsat 2 Multispectral Scanner/MSS (1978 - 1982)
@@ -184,7 +176,7 @@ During Phase 1, only Landsat data will be utilized; therefore, the spatial resol
 ::: callout-tip
 ## Related Function(s)
 
-`rename_landsat_bands():`to rename bands per sensor type.
+`module_1.Reflactance_Data.rename_landsat_bands():`to rename bands per sensor type.
 :::
 
 4.  The system retrieves images that match user’s selected criteria, including spatial resolution, year, and cloud cover. From `get_optical_data()` receives all inputs: AOI, dates, dataset key, and cloud cover threshold.
@@ -192,7 +184,7 @@ During Phase 1, only Landsat data will be utilized; therefore, the spatial resol
 ::: callout-tip
 ## Related Function(s)
 
-`get_optical_data():` to retrieve and the Landsat image collection based on the input parameters.
+`module_1.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters.
 :::
 
 2.  For single-year imagery, the system selects Landsat images from December 31st of year T or the lowest cloud cover scene available that year. For multi-year imagery, the system retrieves the lowest cloud cover image for each year in the specified range.
@@ -202,7 +194,7 @@ During Phase 1, only Landsat data will be utilized; therefore, the spatial resol
 ::: callout-tip
 ## Related Function(s)
 
-`parse_year_or_date():` to standardize time inputs into `ee.Date` object.
+`module_1.Reflactance_Data.parse_year_or_date():` to standardize time inputs into `ee.Date` object.
 :::
 
 ### Image Processing
@@ -220,10 +212,10 @@ If there is no satellite imagery available for the user's input parameters, the 
 ::: callout-tip
 ## Related Function(s)
 
-`mask_landsat_sr():` to mask cloud and cloud shadow.
+`module_1.Reflactance_Data.mask_landsat_sr():` to mask cloud and cloud shadow.
 :::
 
-1.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented in `composite = collection.median().clip(aoi)`.
+1.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from GEE.
 
 2.  The system clips and mosaics the selected satellite imagery to match the user’s AOI and date range.
 
@@ -264,7 +256,7 @@ If there is no satellite imagery available for the user's input parameters, the 
 ::: callout-tip
 ## Related Function(s)
 
-`get_collection_statistics():` to calculate statistics of the image collection.
+`module_1.Reflactance_Data.get_collection_statistics():` to calculate statistics of the image collection.
 
-`print_collection_report():` to display the image collection statistics report.
+`module_1.Reflactance_Data.print_collection_report():` to display the image collection statistics report.
 :::

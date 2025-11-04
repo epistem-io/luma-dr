@@ -64,7 +64,7 @@ The system checks whether the [default system's classification](@sec-user-select
 ::: callout-tip
 ## Related Function(s)
 
-`get_display_property():` to determine which properties (column in the reference data) to display
+`module_3.sample_quality.get_display_property():` to determine which properties (column in the reference data) to display
 :::
 
 2.  The system generates a dictionary that maps class IDs to their corresponding class names, and then adds a 'Class Name' column to the DataFrame based on this mapping.
@@ -72,9 +72,9 @@ The system checks whether the [default system's classification](@sec-user-select
 ::: callout-tip
 ## Related Function(s)
 
-`class_renaming():` to crate a mapping between class IDs and class names.
+`module_3.sample_quality.class_renaming():` to crate a mapping between class IDs and class names.
 
-`add_class_names():` to add new column with class names to a Pandas DataFrame.
+`module_3.sample_quality.add_class_names():` to add new column with class names to a Pandas DataFrame.
 :::
 
 3.  The system analyzes the reference data to determine:
@@ -86,7 +86,7 @@ The system checks whether the [default system's classification](@sec-user-select
 ::: callout-tip
 ## Related Function(s)
 
-`sample_stats():` to compute basic statistics of the training data.
+`module_3.sample_quality.sample_stats():` to compute basic statistics of the training data.
 :::
 
 ## Preview of Verified Reference Data {#sec-preview-of-verified-training-data}
@@ -104,5 +104,5 @@ The system presents a recap table with columns for ID, class, number of points, 
 ::: callout-tip
 ## Related Function(s)
 
-`get_sample_stats_df():` to convert the result from `sample_stats()` into a formatted dataframe.
+`module_3.sample_quality.get_sample_stats_df():` to convert the result from `sample_stats()` into a formatted dataframe.
 :::
