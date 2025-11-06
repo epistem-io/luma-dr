@@ -7,7 +7,7 @@ book:
   date: "18/09/2025"
   chapters:
     - index.qmd
-    - intro.qmd
+    # - intro.qmd
     - module01.qmd
     - placeholders/module02_placeholder.qmd
     - module03.qmd
