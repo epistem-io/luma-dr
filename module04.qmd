@@ -29,33 +29,18 @@ The module extracts spectral pixel values from near-cloud-free satellite imagery
 flowchart TD
 
 %% Main entry
-A([<a href="#sec-specification-of-separability-analysis-parameters">Specification of Separability Analysis Parameters</a>])
-B[/Methodology/]
-C[/ID and Class Name/]
-D[/Pixel Size/]
-E([<a href="#sec-reviewing-separability-results">Reviewing Separability Results</a>])
-F[\Separability Analysis\]
-G[\Sample Stat. Calculation\]
-H([<a href="#sec-spectral-profile-visualization">Spectral Profile Visualization</a>])
+%% =======================
+%% Nodes
+%% =======================
+A([<a href="#sec-spectral-feature-sampling">Spectral Feature Extraction of Reference Data</a>])
+B([<a href="#sec-specification-of-separability-analysis-parameters">Conducting the Separability Analysis</a>])
+C([<a href="#sec-spectral-profile-visualization">Visualization of Reference Data's Spectral Profile</a>])
 
-%% Flow connections
+%% =======================
+%% Connections
+%% =======================
 A --> B
-A --> C
-A --> D
-
-B --> E
-C --> E
-D --> E
-
-E --> F
-E --> G
-
-F --> H
-G --> H
-
-F -->|Error|A
-G -->|Error|A
-
+B --> C
 
 ```
 

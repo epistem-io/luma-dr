@@ -22,6 +22,25 @@ In supervised classification, the quality of reference data directly determines 
 
 # Process {.unnumbered}
 
+```{mermaid}
+flowchart TD
+%% =======================
+%% Nodes
+%% =======================
+A([<a href="#sec-checking-prerequisites-from-previous-modules">Checking Prerequisites from Previous Modules</a>])
+B([<a href="#sec-user-upload-their-own-training-data">Reference Data Generation</a>])
+C([<a href="#sec-verifying-the-uploaded-training-data">Verifying the Input Reference Data</a>])
+D([<a href="#sec-preview-of-verified-training-data">Preview of Verified Reference Data</a>])
+
+%% =======================
+%% Connections
+%% =======================
+A --> B
+B --> C
+C --> D
+```
+
+
 ## Checking Prerequisites from Previous Modules
 
 ### Checking Prerequisites from Previous Modules

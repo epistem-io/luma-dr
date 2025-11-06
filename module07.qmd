@@ -34,90 +34,66 @@ This module focuses on the evaluation and validation of LULC classification resu
 flowchart TD
 
 %% CHECKING PREREQUISITES
-A([<a href="#sec-checking-prerequisites">Check Prerequisites</a>])
-B([Prompt user to complete Module 6 if missing])
-
-A --> B
+A([<a href="#sec-checking-prerequisites-from-previous-modules">Checking Prerequisites from Previous Modules</a>])
 
 %% THEMATIC ACCURACY ASSESSMENT
-C([<a href="#sec-verify-land-cover-map-availability">Verify Land Cover Map Availability</a>])
-D([<a href="#sec-verify-test-data-availability">Verify Test Data Availability</a>])
-E([<a href="#sec-upload-and-verify-test-data">Upload and Verify Test Data</a>])
-F([<a href="#sec-perform-accuracy-test">Perform Accuracy Test</a>])
-G([<a href="#sec-display-and-review-accuracy-results">Display and Review Accuracy Results</a>])
+B([<a href="#sec-perform-accuracy-test">Perform Accuracy Test</a>])
+C([<a href="#sec-display-and-review-accuracy-results">Display and Review Accuracy Results</a>])
 
+A --> B
 B --> C
-C --> D
-D -->|Test data available| F
-D -->|Test data missing| E
-E --> F
-F --> G
-G -->|Satisfied| H([Process Complete])
-G -->|Unsatisfied| B
+
 ```
 
-## Checking Prerequisites from Previous Modules
+## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites-from-previous-modules}
 
 **Front-end**
 
-1.  **Verify Land Cover Map Availability**: The user is notified if the map is missing and prompted to complete [Module 6](https://www.google.com/search?q=%40sec-module-6).
+1.  **Verify Land Cover Map Availability**: The user is notified if the map is missing and prompted to complete [Module 6](@sec-module-6).
 2.  **Verify Validation Data Availability**:
-    -   If **Validation Data** is available from [Module 3](https://www.google.com/search?q=%40sec-module-3), the user is allowed to proceed.
-
+    -   If **Validation Data** is available from [Module 3](@sec-module-3), the user is allowed to proceed.
     -   If missing, the user is prompted to upload a **Validation Dataset** and receives verification feedback.
 
 **Back-end**
 
 -   Checks for final land cover map from Module 6
-
 -   Validates availability of independent validation data
-
 -   If prerequisites missing, guides user to complete necessary steps
 
-## Thematic Accuracy Assessment
+## Thematic Accuracy Assessment {#sec-thematic-accuracy-assessment}
 
-### Perform Accuracy Test
+### Perform Accuracy Test {#sec-perform-accuracy-test}
 
 **Back-end**
 
 -   **Spatial Sampling**: Extracts classified values at validation sample locations using `sampleRegions()`
-
 -   **Confusion Matrix**: Generates error matrix using Earth Engine's `errorMatrix()` function
-
 -   **Metric Calculation**: Computes comprehensive accuracy metrics:
 
     -   **Overall Accuracy (OA)**: Percentage of correctly classified validation samples
-
     -   **Kappa Coefficient**: Agreement beyond chance, accounting for class distribution
-
     -   **Producer's Accuracy**: Measure of classification completeness (1 - omission error)
-
     -   **User's Accuracy**: Measure of classification reliability (1 - commission error)
 
 **Related Functions:**
 
 -   `module_7.Evaluate_LULC.thematic_assessment()` - performs complete accuracy assessment workflow
 
-### Display and Review Accuracy Results
+### Display and Review Accuracy Results {#sec-display-and-review-accuracy-results}
 
 **Front-end**
 
-1.  User reviews the test results, including the Confusion Matrix and all accuracy metrics.
-
-2.  If satisfied, the process completes.
-
-3.  If **unsatisfied**, the user is prompted to:
+1.  User reviews the test results, including the Confusion Matrix and all accuracy metrics.
+2.  If satisfied, the process completes.
+3.  If **unsatisfied**, the user is prompted to:
 
 -   Clarify the **Reference Data**.
-
 -   Go back to @sec-module-6 to refine the hyperparameters or try a different classification approach.
 
 **Back-end**
 
 -   Formats and displays a comprehensive accuracy report
-
 -   Identifies potential issues based on error patterns
-
 -   Provides specific recommendations for improvement
 
 **Related Functions:**
