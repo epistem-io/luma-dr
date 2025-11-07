@@ -63,6 +63,12 @@ The system queries the FAO Global Administrative Unit Layers (GAUL) 2015 dataset
 `helpers.get_aoi_from_gaul():` to obtain the AOI from GAUL dataset.
 :::
 
+::: callout-tip
+## Related function
+
+`from epistemx.helpers import get_aoi_from_gaul`
+:::
+
 ### AOI from Shapefile {#sec-aoi-from-shapefile}
 
 **Front-end**
