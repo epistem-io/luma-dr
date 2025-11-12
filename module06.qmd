@@ -59,11 +59,11 @@ flowchart TD
 
 **Front-end**
 
-The system verifies all required inputs are available and prompts users to complete previous modules if reference data or other essential inputs are missing.
+1.  The system verifies all required inputs are available and prompts users to complete previous modules if reference data or other essential inputs are missing.
 
 **Back-end**
 
-The system validates availability of satellite imagery, classification scheme, and reference data.
+1.  The system validates availability of satellite imagery, classification scheme, and reference data.
 
 ## Data Splitting {#sec-data-splitting}
 
@@ -114,7 +114,7 @@ The system validates availability of satellite imagery, classification scheme, a
 
 **Front-end**
 
-User configures Random Forest parameters:
+1.  User configures Random Forest parameters:
 
 -   **Number of trees** (`n_tree`): Controls ensemble size (default: 100). More trees increase stability but require more computation.
 -   **Variables per split** (`var_split`): Features considered at each decision point. Default: square root of total features.
@@ -130,17 +130,17 @@ User configures Random Forest parameters:
 
 **Front-end**
 
-The user selects a tuning strategy. System evaluates multiple parameter combinations using training/validation split from @sec-data-splitting. Results display optimal parameters and accuracy.
+1.  The user selects a tuning strategy. System evaluates multiple parameter combinations using training/validation split from @sec-data-splitting. Results display optimal parameters and accuracy.
 
 **Back-end**
 
--   Uses held-out validation data to assess performance.
--   If 100% of reference data allocated to training in Module 3 → no validation data available → tuning disabled.
--   User must upload independent validation data in Module 7.
+1.  Uses held-out validation data to assess performance.
+2.  If 100% of reference data allocated to training in Module 3 → no validation data available → tuning disabled.
+3.  User must upload independent validation data in Module 7.
 
 ### Hard Classification Tuning {#sec-hard-classification-tuning}
 
-Uses multiclass classification approach and evaluates performance using overall accuracy metric.
+1.  Uses multiclass classification approach and evaluates performance using overall accuracy metric.
 
 ::: callout-tip
 ## Related Function(s)
@@ -150,7 +150,7 @@ Uses multiclass classification approach and evaluates performance using overall 
 
 ### Soft Classification Tuning {#sec-soft-classification-tuning}
 
-Uses one-vs-rest binary classification approach and evaluates performance using cross-entropy loss.
+1.  Uses one-vs-rest binary classification approach and evaluates performance using cross-entropy loss.
 
 ::: callout-tip
 ## Related Function(s)
@@ -174,26 +174,26 @@ Performs robust parameter optimization using stratified k-fold cross-validation.
 
 **Front-end**
 
-User can either:
+1.  User can either:
 
 -   Accept optimal parameters from tuning, or
 -   Retain manual inputs Progress bars shown during training and map generation.
 
 **Back-end**
 
-Trains the final Random Forest model using optimal parameters identified during tuning:
+1.  Trains the final Random Forest model using optimal parameters identified during tuning:
 
 -   Bootstrap sampling: Creates diverse training subsets for each tree.
 -   Ensemble construction: Builds multiple decision trees with variation.
 -   Majority voting: Aggregates predictions across all trees.
 
-Users can apply the recommended optimal parameters or use custom values.
+2.  Users can apply the recommended optimal parameters or use custom values.
 
 ### Multiclass Classification {#sec-multiclass-classification}
 
 **Back-end**
 
-Performs direct multiclass classification where each pixel is assigned to a single LULC class.
+1.  Performs direct multiclass classification where each pixel is assigned to a single LULC class.
 
 ::: callout-tip
 ## Related Function(s)
@@ -205,7 +205,7 @@ Performs direct multiclass classification where each pixel is assigned to a sing
 
 **Back-end**
 
-Implements One-vs-Rest strategy, generating probability layers for each class and creating final classification via maximum probability.
+1.  Implements One-vs-Rest strategy, generating probability layers for each class and creating final classification via maximum probability.
 
 ::: callout-tip
 ## Related Function(s)
