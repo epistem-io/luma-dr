@@ -1,4 +1,4 @@
-# Module 1: Acquisition of Near-Cloud-Free Satellite Imagery {#sec-module-1}
+# Acquisition of Near-Cloud-Free Satellite Imagery {#sec-module-1}
 
 # Module Overview {.unnumbered}
 

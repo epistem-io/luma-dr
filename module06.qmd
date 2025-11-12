@@ -1,4 +1,4 @@
-# Module 6: Land Use/Land Cover (LULC) Map Generation {#sec-module-6}
+# Land Use/Land Cover (LULC) Map Generation {#sec-module-6}
 
 # Module Overview {.unnumbered}
 

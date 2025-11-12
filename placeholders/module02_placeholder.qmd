@@ -1,4 +1,4 @@
-# Module 2 Determining LULC Classification Schema and Classes
+# Determining LULC Classification Schema and Classes
 
 # Module Overview {.unnumbered}
 

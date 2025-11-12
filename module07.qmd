@@ -1,4 +1,4 @@
-# Module 7: Thematic Accuracy Assessment {#sec-module-7}
+# Thematic Accuracy Assessment {#sec-module-7}
 
 # Module Overview {.unnumbered}
 
@@ -62,11 +62,12 @@ B --> C
 1.  The user is prompted to upload the validation map.
 2.  The user is prompted to run the accuracy test.
 
-
 **Back-end**
 
 1.  The system extracts classified values at validation sample locations using `sampleRegions()`
+
 2.  The system generates confusion matrix using Earth Engine's `errorMatrix()` function by comparing the LULC map generated from [Module 6](@sec-module-6) with validation map uploaded by the user.
+
 3.  The system computes comprehensive accuracy metrics:
 
     -   **Overall Accuracy (OA)**: Percentage of correctly classified validation samples
@@ -77,10 +78,10 @@ B --> C
 **Related Function(s):**
 
 -   `module_7.Evaluate_LULC.thematic_assessment()` - performs complete accuracy assessment workflow with the following sub-functions:
-    - `module_7.Evaluate_LULC.thematic_assessment.calculate_macro_metrics()` - Calculate **macro-averaged** F1, Precision, Recall
-    - `module_7.Evaluate_LULC.thematic_assessment.calculate_micro_metrics()` - Calculate **micro-averaged** F1, Precision, Recall
-    - `module_7.Evaluate_LULC.thematic_assessment.calculate_geometric_mean()` - Calculate Geometric Mean of per-class recalls (sensitivities)
-    - `module_7.Evaluate_LULC.thematic_assessment.calculate_balanced_accuracy()` - Calculate Balanced Accuracy (macro-averaged recall)
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_macro_metrics()` - Calculate **macro-averaged** F1, Precision, Recall
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_micro_metrics()` - Calculate **micro-averaged** F1, Precision, Recall
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_geometric_mean()` - Calculate Geometric Mean of per-class recalls (sensitivities)
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_balanced_accuracy()` - Calculate Balanced Accuracy (macro-averaged recall)
 
 ### Display and Review Accuracy Results {#sec-display-and-review-accuracy-results}
 

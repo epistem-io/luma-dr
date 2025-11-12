@@ -8,14 +8,16 @@ book:
   chapters:
     - index.qmd
     # - intro.qmd
-    - module01.qmd
-    - placeholders/module02_placeholder.qmd
-    - module03.qmd
-    - module04.qmd
-    - placeholders/module05_placeholder.qmd
-    - module06.qmd
-    - module07.qmd
-    - placeholders/module08_placeholder.qmd
+    - part: "Epistem-X Modules"
+      chapters:
+      - module01.qmd
+      - placeholders/module02_placeholder.qmd
+      - module03.qmd
+      - module04.qmd
+      - placeholders/module05_placeholder.qmd
+      - module06.qmd
+      - module07.qmd
+      - placeholders/module08_placeholder.qmd
     - summary.qmd
     - references.qmd
   sidebar:

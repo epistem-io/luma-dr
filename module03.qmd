@@ -1,4 +1,4 @@
-# Module 3: Reference Data Generation {#sec-module-3}
+# Reference Data Generation {#sec-module-3}
 
 # Module Overview {.unnumbered}
 
@@ -39,7 +39,6 @@ A --> B
 B --> C
 C --> D
 ```
-
 
 ## Checking Prerequisites from Previous Modules
 

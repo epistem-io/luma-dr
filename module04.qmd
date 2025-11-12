@@ -1,4 +1,4 @@
-# Module 4: Spectral Separability Analysis {#sec-module-4}
+# Spectral Separability Analysis {#sec-module-4}
 
 # Module Overview {.unnumbered}
 
