@@ -1,0 +1,8 @@
+# Housekeeping {#sec-module-0}
+
+This text contains a list of supporting files that are required to establish and run `epistemx` as a python library.
+
+# List of files {.unnumbered}
+
+1.  `pyproject.toml`
+    -   `pyproject.toml` is a configuration file used in a python projects to define build systems, manage dependencies, and streamline project setup, i.e. for the `epistemx` core back-end functions. One must define the minimum python version required and all of the dependecies to run `epistemx` as a package. This file also contains some descriptions about `epistemx` and its contributors.
