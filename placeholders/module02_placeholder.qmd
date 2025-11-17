@@ -1,0 +1,15 @@
+# Determining LULC Classification Schema and Classes
+
+# Module Overview {.unnumbered}
+
+This module offers a flexible framework for generating Land Use/Land Cover (LULC) maps tailored to various applications, from broad assessments like deforestation monitoring to detailed analyses reflecting specific management practices or prioritized conservation areas. In the initial phase, only non-hierarchical schemas will be implemented. All classes are treated independently, making it suitable for single-level applications such as deforestation mapping or identifying priority conservation areas.
+
+The output of this module is a well-defined list of LULC classes. The module also manages the selection, input, validation, and storage of LULC classification schemes. Users can select a predefined system schema, upload their own classification file, or enter the classification manually. The module ensures data integrity and provides a downloadable classification table for downstream analysis.
+
+The module incorporates RESTORE+ LULC classifications from Indonesia to support restoration planning, guiding identification of degraded areas and management priorities. These classes are offered as a predefined data classification system.
+
+::: callout-caution
+## Under development
+
+This module's backend is not available yet
+:::

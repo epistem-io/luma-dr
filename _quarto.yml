@@ -2,20 +2,22 @@ project:
   type: book
 
 book:
-  title: "Epistem-X Technical Documentation"
+  title: "Epistem-X Technical Reference Document"
   author: "IIASA"
   date: "18/09/2025"
   chapters:
     - index.qmd
-    - intro.qmd
-    - module01.qmd
-    - module02.qmd
-    - module03.qmd
-    - module04.qmd
-    - module05.qmd
-    - module06.qmd
-    - module07.qmd
-    - module08.qmd
+    # - intro.qmd
+    - part: "Epistem-X Modules"
+      chapters:
+      - module01.qmd
+      - placeholders/module02_placeholder.qmd
+      - module03.qmd
+      - module04.qmd
+      - placeholders/module05_placeholder.qmd
+      - module06.qmd
+      - module07.qmd
+      - placeholders/module08_placeholder.qmd
     - summary.qmd
     - references.qmd
   sidebar:
@@ -32,6 +34,10 @@ format:
     theme:
       - cosmo
       - brand
+    number-sections: true
+    number-depth: 5
+    
+
   pdf:
     documentclass: scrreprt
 

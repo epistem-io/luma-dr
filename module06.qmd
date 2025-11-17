@@ -1,35 +1,228 @@
-# Module 6: LULC Map Generation {#sec-module-0}
+# Land Use/Land Cover (LULC) Map Generation {#sec-module-6}
 
 # Module Overview {.unnumbered}
 
-This module provides functionality for users to generate the final LULC map as the primary output product, derived from the validated and optimized classification model developed in Modules 1-5. Before the processing begins, it ensures that all required inputs - such as satellite imagery, classification schemes, and training samples - are properly prepared and validated. Users can specify data splits, select classification modes, perform hyperparameter tuning optimization, and apply the trained model to the entire AOI to produce a high-quality, georeferenced LULC map. The module supports phased workflows (Phase 1: simple RF-based; Phase 2: flexible algorithm with rules; Phase 3: object-based) for adaptability, aligning with hierarchical or non-hierarchical schemes from [Module 2](@sec-module-2), and incorporates feedback from optional covariate enhancements in [Module 5](@sec-module-5). Upon completion, users receive a displayable, analyzable, and downloadable map with metadata, enabling applications such as deforestation monitoring or conservation planning.
+This module provides functionality for users to generate the final LULC map as the primary output product, derived from the validated and optimized classification model developed in Modules 1-5. Before the processing begins, it ensures that all required inputs - such as satellite imagery, classification schemes, and training samples - are properly prepared and validated. Users can specify data splits, select classification modes, perform hyperparameter tuning optimization, and apply the trained model to the entire AOI to produce a high-quality, georeferenced LULC map. The module supports Random Forest (RF) based classification for adaptability, aligning with hierarchical classification schemes from [Module 2](@sec-module-2), and incorporates feedback from optional covariate enhancements in [Module 5](@sec-module-5). Upon completion, users receive a displayable, analyzable, and downloadable map with metadata, enabling applications such as deforestation monitoring or conservation planning.
 
-# Input {.unnumbered}
+## Input {.unnumbered}
 
-**User's Input**
+**User’s Input**
 
-1.  A list of inputs for the module's system from the user
+1.  User-specified data splitting percentage.
+2.  User-specified data splitting method.
+3.  RF hyperparameters: number of trees (`n_tree`), variables per split (`var_split`), minimum leaf population (`min_leaf_pop`).
+4.  Choice of hyperparameter tuning option (e.g., Hard Classification Tuning, K-Fold Soft Classification Tuning, etc.).
 
-**Input from External Sources**
+**Automatic System Input**
 
-1.  A list of inputs for the module's system not from the user
+1.  None.
 
 **Input from Other Modules**
 
-1.  Trained LULC classification model
+1.  Near-cloud-free satellite imagery within the AOI ([Module 1](@sec-module-1)).
+2.  LULC classification scheme table ([Module 2](@sec-module-2)).
+3.  Georeferenced reference data ([Module 3](@sec-module-3)).
+4.  Validated sample data and separability results ([Module 4](@sec-module-4)).
 
-# Output {.unnumbered}
+## Output {.unnumbered}
 
--   A list of output generated from the module
+1.  Trained RF classification model.
+2.  Classified LULC raster map.
+3.  Optimal hyperparameters from tuning process
+4.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix).
 
-# Process {.unnumbered}
+## Process {.unnumbered}
 
-`{mermaid} flowchart TD  B([<a href="#sec-sub-step-example">Linked to the section</a>])  A --> |Section Link| B}`
+```{mermaid}
+flowchart TD
+    A([<a href='#sec-checking-prerequisites'>Check Prerequisites</a>])
+    C([<a href='#sec-data-splitting'>Data Splitting</a>])
+    D([<a href='#sec-define-classification-specifications'>Define Classification<br>Specifications</a>])
+    E([<a href='#sec-hyperparameter-tuning'>Hyperparameter Tuning</a>])
+    F([<a href='#sec-final-classification'>Final Classification</a>])
+    G([<a href='#sec-review-classification-results'>Review Classification<br>Results</a>])
+    H[Proceed to Module 7]
 
-## Step X
+    A --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G -->|Satisfied| H
+    G -->|Unsatisfied| D
 
-### Sub-Step {#sec-sub-step-example}
+```
 
-#### Back-end
+## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
 
-#### Front-end
+### Checking Prerequisites from Previous Modules
+
+**Front-end**
+
+1.  The system verifies all required inputs are available and prompts users to complete previous modules if reference data or other essential inputs are missing.
+
+**Back-end**
+
+1.  The system validates availability of satellite imagery, classification scheme, and reference data.
+
+## Data Splitting {#sec-data-splitting}
+
+### Data Splitting
+
+**Front-end**
+
+1.  The user defines the proportion to split the reference data into a training and validation dataset.
+2.  The user choose the data split method: single random split, stratified random split, or stratified random K-Fold split.
+
+**Back-end**
+
+1.  The system offers three types of data splitting:
+
+    -   Single Random Split: Randomly splits the input training data according to a specified ratio and is ideal when the training dataset is relatively balanced across classes. The system assigns a random number (`randomColumn()`) to each training point and separates the points into training and testing sets. It then extracts the corresponding image pixel values (`image.sampleRegions()`) for all points and returns the two sets, ready for the next step.
+
+        ::: callout-tip
+        ## Related Function(s)
+
+        `module_6.FeatureExtraction.random_split():` to partition the training data randomly into training and validation sets.
+        :::
+
+    -   Stratified Random Split: Randomly splits the input data while preserving class proportions. Unique classes are identified (`aggregate_array().distinct()`), random numbers are assigned to points, and each class is split into training and testing subsets. The subsets are merged across classes, and image pixel values are extracted for all points.
+
+        ::: callout-tip
+        ## Related Function(s)
+
+        `module_6.FeatureExtraction.stratified_split():` to partition the training data by strata into training and validation sets.
+
+        `module_6.FeatureExtraction.stratified_split().split_class():` to partition the training data based on the class.
+        :::
+
+    -   Stratified K-Fold Split: Performs a stratified K-Fold cross-validation split on the input reference dataset. It is particularly useful for datasets with imbalanced classes, as it ensures that the class proportions are preserved in each fold. This method splits the dataset into k folds for cross-validation while preserving class proportions. It first calculates the fold size (`1.0 / k`) and generates evenly spaced thresholds to assign points to training or validation. Unique classes are identified, and each point is assigned a random number. Points within the threshold range are used for validation, and the rest for training. Class-specific splits are merged to form complete training and validation sets for each fold. The function returns a `FeatureCollection` of k folds, each containing its training and validation subsets. Finally, the system ensures that class proportions are maintained in every fold.
+
+        ::: callout-tip
+        ## Related Function(s)
+
+        `module_6.FeatureExtraction.stratified_kfold():` strafied kfold cross validation split
+
+        `module_6.FeatureExtraction.stratified_kfold().make_fold():` to create the folds using the given threshold.
+
+        `module_6.FeatureExtraction.stratified_kfold().make_fold().per_class():` to split the class to ensure stratification during split.
+
+        `module_6.FeatureExtraction.inspect_fold():` to inspect the result of stratified k-fold size.
+        :::
+
+## Define Classification Specifications {#sec-define-classification-specifications}
+
+**Front-end**
+
+1.  User configures Random Forest parameters:
+
+-   **Number of trees** (`n_tree`): Controls ensemble size (default: 100). More trees increase stability but require more computation.
+-   **Variables per split** (`var_split`): Features considered at each decision point. Default: square root of total features.
+-   **Minimum leaf population** (`min_leaf_pop`): Minimum samples in terminal nodes (default: 1). Higher values prevent overfitting.
+
+**Back-end**
+
+1.  Stores user-specified hyperparameters.
+2.  Prepares for hyperparameter tuning process.
+3.  Integrates data splitting in the tuning.
+
+## Hyperparameter Tuning {#sec-hyperparameter-tuning-options}
+
+**Front-end**
+
+1.  The user selects a tuning strategy. System evaluates multiple parameter combinations using training/validation split from @sec-data-splitting. Results display optimal parameters and accuracy.
+
+**Back-end**
+
+1.  Uses held-out validation data to assess performance.
+2.  If 100% of reference data allocated to training in Module 3 → no validation data available → tuning disabled.
+3.  User must upload independent validation data in Module 7.
+
+### Hard Classification Tuning {#sec-hard-classification-tuning}
+
+1.  Uses multiclass classification approach and evaluates performance using overall accuracy metric.
+
+::: callout-tip
+## Related Function(s)
+
+`module_6.Hyperparameter_tuning.Hard_classification_tuning():` to perform grid search for direct multiclass classification, testing all parameter combinations and selecting those with highest accuracy.
+:::
+
+### Soft Classification Tuning {#sec-soft-classification-tuning}
+
+1.  Uses one-vs-rest binary classification approach and evaluates performance using cross-entropy loss.
+
+::: callout-tip
+## Related Function(s)
+
+`module_6.Hyperparameter_tuning.Soft_classification_tuning():` to optimize parameters for probabilistic classification, selecting combinations with lowest cross-entropy loss.
+:::
+
+### K-Fold Tuning {#sec-k-fold-tuning}
+
+Performs robust parameter optimization using stratified k-fold cross-validation. This approach provides more reliable parameter estimates, especially for imbalanced datasets.
+
+::: callout-tip
+## Related Function(s)
+
+`module_6.Hyperparameter_tuning.hard_tuning_kfold():` to classify multiclass classification with hard k-fold validation.
+
+`module_6.Hyperparameter_tuning.soft_tuning_kfold()` to classifiy one-vs-rest classification with soft k-fold validation.
+:::
+
+## Final Classification {#sec-final-classification}
+
+**Front-end**
+
+1.  User can either:
+
+-   Accept optimal parameters from tuning, or
+-   Retain manual inputs Progress bars shown during training and map generation.
+
+**Back-end**
+
+1.  Trains the final Random Forest model using optimal parameters identified during tuning:
+
+-   Bootstrap sampling: Creates diverse training subsets for each tree.
+-   Ensemble construction: Builds multiple decision trees with variation.
+-   Majority voting: Aggregates predictions across all trees.
+
+2.  Users can apply the recommended optimal parameters or use custom values.
+
+### Multiclass Classification {#sec-multiclass-classification}
+
+**Back-end**
+
+1.  Performs direct multiclass classification where each pixel is assigned to a single LULC class.
+
+::: callout-tip
+## Related Function(s)
+
+`module_6.Generate_LULC.multiclass_classification()` to implement hard classification using the trained Random Forest model to generate the final LULC map.\
+:::
+
+### OVR Classification {#sec-ovr-classification}
+
+**Back-end**
+
+1.  Implements One-vs-Rest strategy, generating probability layers for each class and creating final classification via maximum probability.
+
+::: callout-tip
+## Related Function(s)
+
+`module_6.Generate_LULC.ovr_classification()` to create probability surfaces for all LULC classes and produces final classification using `argmax`, providing confidence layers for each class.
+:::
+
+## Review Classification Results {#sec-review-classification-results}
+
+**Front-end**
+
+1.  User examines the generated LULC map and model performance.
+2.  If satisfied, proceeds to Module 7 for thematic accuracy assessment.
+3.  If unsatisfied, returns to parameter tuning or previous modules.
+
+**Back-end**
+
+1.  Displays optimal parameters and model performance metrics.
+2.  Provides recommendations for improvement if results are unsatisfactory.
+3.  Stores trained model and classification results for Module 7.

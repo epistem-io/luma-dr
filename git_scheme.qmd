@@ -1,0 +1,37 @@
+---
+title: "Git Scheme"
+---
+
+```{mermaid}
+gitGraph
+checkout main
+commit id: "locked BRIN version" tag: "v0.1"
+branch module01-08
+commit id: "BRIN version"
+branch module01
+commit id: "Annisa's commit 1"
+checkout module01-08
+branch module03-04
+commit id: "Maria's commit 1"
+checkout module01-08
+branch module06-08
+commit id: "Gautam's commit 1"
+checkout module01-08
+commit id: "merge all branches test"
+checkout module01
+commit id: "Annisa's commit 2"
+checkout module01
+merge module01-08
+checkout module03-04
+merge module01-08
+checkout module06-08
+merge module01-08
+checkout module01-08
+commit id: "pre-bootcamp version" type: HIGHLIGHT
+checkout main
+merge module01-08 id: "bootcamp version" tag: "v0.2"
+branch bootcamp
+commit id: "bootcamp development"
+checkout main
+merge bootcamp id: "post-bootcamp version" tag: "v1.0"  
+```

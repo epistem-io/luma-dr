@@ -1,42 +1,101 @@
-# Module 7: Thematic Accuracy Assessment {#sec-module-0}
+# Thematic Accuracy Assessment {#sec-module-7}
 
 # Module Overview {.unnumbered}
 
-This module enables users to perform a thematic accuracy assessment on LULC map generated in [Module 6](@sec-module-6), comparing it against independent validation data to quantitatively evaluate its quality and reliability. It supports verification of prerequisites from Modules 1 to Module 6, allows confirmation or adjustment of data partitions and model configurations, and computes key metrics such as confusion matrices (
-
-overall accuracy (OA), Kappa coefficient (κ), producer's accuracy (PA), and user's accuracy (UA). The module provides phased outputs including numerical/visual results, improvement recommendations, and a spatial confidence level map, facilitating iterative refinements (e.g., via links back to Modules 4-6) for enhanced map accuracy in applications like environmental monitoring or policy planning.
+This module enables users to perform a thematic accuracy assessment on LULC map generated in [Module 6](@sec-module-6), comparing it against independent validation data to quantitatively evaluate its quality and reliability. It supports verification of prerequisites from Modules 1 to Module 6, allows confirmation or adjustment of data partitions and model configurations, and computes key metrics such as confusion matrices (overall accuracy (OA), Kappa coefficient (κ), producer's accuracy (PA), and user's accuracy (UA). The module provides phased outputs including numerical/visual results, improvement recommendations, and a spatial confidence level map, facilitating iterative refinements for enhanced map accuracy in applications like environmental monitoring or policy planning.
 
 This module focuses on the evaluation and validation of LULC classification results derived from remote sensing data. The objective is to provide users with tools and guidance to assess the reliability of their classified maps and determine their suitability for further analysis. Upon completion, the user will have a validated LULC map and a clear understanding of its accuracy.
 
-# Input {.unnumbered}
+## Input {.unnumbered}
 
-**User's Input**
+**User’s Input**
 
--   A list of inputs for the module's system from the user
+1.  Validation map for thematic accuracy assessment.
 
 **Automatic System Input**
 
--   
+1.  None.
 
 **Input from Other Modules**
 
--   LULC classification result map from [Module 6](@sec-module-6).
--   Geo-referenced validation data points
+1.  Final land cover map ([Module 6](@sec-module-6)).
 
-# Output {.unnumbered}
+## Output {.unnumbered}
 
--   Confusion matrix
--   Per-class accuracy table
--   Confidence/uncertainty value map
+-   Confusion matrix.
+-   Accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
 
-# Process {.unnumbered}
+## Process {.unnumbered}
 
-`{mermaid} flowchart TD  B([<a href="#sec-sub-step-example">Linked to the section</a>])  A --> |Section Link| B}`
+```{mermaid}
+flowchart TD
 
-## Step X
+%% CHECKING PREREQUISITES
+A([<a href="#sec-checking-prerequisites-from-previous-modules">Checking Prerequisites from Previous Modules</a>])
 
-### Sub-Step {#sec-sub-step-example}
+%% THEMATIC ACCURACY ASSESSMENT
+B([<a href="#sec-perform-accuracy-test">Perform Accuracy Test</a>])
+C([<a href="#sec-display-and-review-accuracy-results">Display and Review Accuracy Results</a>])
 
-#### Back-end
+A --> B
+B --> C
 
-#### Front-end
+```
+
+## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites-from-previous-modules}
+
+**Front-end**
+
+1.  The user is notified if the classified LULC map is missing and prompted to complete [Module 6](@sec-module-6).
+
+**Back-end**
+
+-   Checks for classified LULC map from [Module 6](@sec-module-6).
+-   If prerequisites missing, guides user to complete necessary steps
+
+## Thematic Accuracy Assessment {#sec-thematic-accuracy-assessment}
+
+### Perform Accuracy Test {#sec-perform-accuracy-test}
+
+**Front-end**
+
+1.  The user is prompted to upload the validation map.
+2.  The user is prompted to run the accuracy test.
+
+**Back-end**
+
+1.  The system extracts classified values at validation sample locations using `sampleRegions()`
+
+2.  The system generates confusion matrix using Earth Engine's `errorMatrix()` function by comparing the LULC map generated from [Module 6](@sec-module-6) with validation map uploaded by the user.
+
+3.  The system computes comprehensive accuracy metrics:
+
+    -   **Overall Accuracy (OA)**: Percentage of correctly classified validation samples
+    -   **Kappa Coefficient**: Agreement beyond chance, accounting for class distribution
+    -   **Producer's Accuracy**: Measure of classification completeness (1 - omission error)
+    -   **User's Accuracy**: Measure of classification reliability (1 - commission error)
+
+**Related Function(s):**
+
+-   `module_7.Evaluate_LULC.thematic_assessment()` - performs complete accuracy assessment workflow with the following sub-functions:
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_macro_metrics()` - Calculate **macro-averaged** F1, Precision, Recall
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_micro_metrics()` - Calculate **micro-averaged** F1, Precision, Recall
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_geometric_mean()` - Calculate Geometric Mean of per-class recalls (sensitivities)
+    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_balanced_accuracy()` - Calculate Balanced Accuracy (macro-averaged recall)
+
+### Display and Review Accuracy Results {#sec-display-and-review-accuracy-results}
+
+**Front-end**
+
+1.  User reviews the thematic assessment results, including the Confusion Matrix and all accuracy metrics.
+2.  If satisfied, the process completes.
+3.  If **unsatisfied**, the user is given the option to go back to previous module to improve the result.
+
+**Back-end**
+
+1.  The system formats and displays a comprehensive accuracy report.
+2.  The system prints the metric results' interpretation to guide users in understanding the metric result.
+
+**Related Function(s):**
+
+-   `module_7.Evaluate_LULC.print_metrics()` - displays formatted accuracy results with interpretations

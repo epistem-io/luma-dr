@@ -1,30 +1,27 @@
-# Module 4: Training and Hyperparameter Tuning of LULC Classification Models {#sec-module-4}
+# Spectral Separability Analysis {#sec-module-4}
 
 # Module Overview {.unnumbered}
 
-This module enables users to generate accurate LULC maps by selecting or training classification models, optimizing them through hyperparameter tuning, and validating their compatibility with user data. Users can either use existing models from other users or apply system-recommended parameters to train a new model. On the back-end, these parameters are used to train and evaluate a Random Forest (RF) classifier, resulting in a land use and land cover model with measurable quality and a georeferenced LULC map ready for download or further analysis.
+This module performs a spectral separability analysis to assess the distinctiveness of land cover classes. Conducting separability analysis is essential to ensure that the spectral signatures of reference data are sufficiently differentiated; inadequate separability between classes can lead to model confusion, increased classification error, and reduced generalization performance.
+
+The module extracts spectral pixel values from near-cloud-free satellite imagery and computes key descriptive statistics for each class. To maintain computational efficiency and minimize class imbalance, sampling is constrained to a defined maximum number of pixels per class. Pairwise separability is then quantified using the Jeffries–Matusita (JM) and Transformed Divergence (TD) metrics, both of which evaluate the statistical distance between class distributions based on their means and covariance matrices. The resulting separability values are categorized to indicate good, marginal, or poor class distinction and visualized through histograms, box plots, and scatter plots. This diagnostic process enables the identification of spectrally overlapping classes that require refinement or redefinition before classification, thereby improving the reliability and accuracy of subsequent LULC mapping workflows.
 
 # Input {.unnumbered}
 
 **User's Input**
 
-1.  Hyperparameter tuning constraints.
-2.  Training/test data split ratio.
-
-**Automatic System Input**
-
-1.  Covariate default system.
+1.  Separability analysis parameters.
+2.  User-specified spectral bands for visualization.
 
 **Input from Other Modules**
 
-1.  Near-cloud-free satellite imagery within the AOI (@sec-satellite-imagery-post-processing).
-2.  LULC classification table( @sec-saving-the-lulc-classification-table).
-3.  Georeferenced training dataset (@sec-training-data-validation-and-statistical-analysis).
+1.  Near-cloud-free satellite imagery within the AOI (@sec-visualization-and-saving-data).
+2.  Reference data (@sec-module-3).
 
 # Output {.unnumbered}
 
-1.  Trained LULC classification model.
-2.  LULC raster map.
+1.  Separability analysis result.
+2.  Spectral profile visualization and text description.
 
 # Process {.unnumbered}
 
@@ -32,134 +29,196 @@ This module enables users to generate accurate LULC maps by selecting or trainin
 flowchart TD
 
 %% Main entry
-A([<a href="#sec-selection-of-lulc-classification-model">Selection of LULC Classification Model</a>])
+%% =======================
+%% Nodes
+%% =======================
+A([<a href="#sec-spectral-feature-sampling">Spectral Feature Extraction of Reference Data</a>])
+B([<a href="#sec-specification-of-separability-analysis-parameters">Conducting the Separability Analysis</a>])
+C([<a href="#sec-spectral-profile-visualization">Visualization of Reference Data's Spectral Profile</a>])
 
-%% Using Existing Model
-B([<a href="#sec-model-validation-and-compability">Model Validation & Compatibility</a>])
+%% =======================
+%% Connections
+%% =======================
+A --> B
+B --> C
 
-%% Create New Model
-C([<a href="#sec-selecting-classification-algorithm-to-train-a-new-model">Selecting Classification Algorithm</a>])
-
-%% Hyperparameter Tuning subsections
-D([<a href="#sec-splitting-the-training-data">Splitting the Training Data</a>])
-E([<a href="#sec-setting-the-hyperparameters">Setting the Hyperparameters</a>])
-F([<a href="#sec-training-and-validating-the-model">Training & Validating the Model</a>])
-G([<a href="#sec-selecting-best-hyperparameter-combination">Selecting Best Hyperparameter Combination</a>])
-
-%% Flow connections
-A -->|Use Pre-trained Model| B
-A -->|Train New Model| C
-
-B -->|Compatible| F
-B -->|Not Compatible| C
-
-C --> D
-D --> E
-E --> F
-F --> G
 ```
 
-## Selection of LULC Classification Model
+## Spectral Feature Extraction of Reference Data {#sec-spectral-feature-sampling}
 
-### Selection of LULC Classification Model {#sec-selection-of-lulc-classification-model}
-
-**Front-end**
-
-The user can choose two options for LULC classification models:
-
-1.  Use a Pre-Trained Model (from the system or another users).
-2.  Train a New Model.
+### Spectral Feature Extraction of Reference Data
 
 **Back-end**
 
-1.  If the user chooses to use the pre-trained model, the system proceeds to @sec-using-existing-model.
-2.  If the user chooses to train a new model, the system proceeds to @sec-create-new-model.
+1.  The system extracts spectral (pixel) values from near-cloud-free satellite imagery ([Module 1](@sec-module-01)) using all reference data in the `TrainDataFinal` set ([Module 3](@sec-module-3)) at a 30 m spatial resolution. To prevent memory overload, timeouts, or class imbalance, a maximum of 7,000 pixels per land cover class (`max_pixel_per_class`) is extracted.
 
-## Using Pre-Trained Model
+::: callout-tip
+## Related Function(s)
 
-### Model Validation and Compability {#sec-model-validation-and-compability}
+`module_4.sample_quality.extract_spectral_values():` to extract the pixels of all training samples.
+:::
 
-**Front-end**
+2.  The system ensures that no class exceeds this limit. For each class, the system first filters the training data to select samples of that class and then counts the number of samples. If the count exceeds `max_pixels_per_class`, a random subset up to the limit is selected; otherwise, all samples are used.
 
-1.  If compatible, the user can proceed to [Module 5](@sec-module-5).
-2.  If not compatible, the user is prompted to create a new model (@sec-create-new-model).
+::: callout-tip
+## Related Function(s)
 
-**Back-end**
+`module_4.sample_quality.limit_sample_per_class():` to limit the number of training samples per class.
+:::
 
-1.  The system checks whether the model’s classification scheme matches the user’s scheme.
-2.  If incompatible, the system recommends the user to click the option Train a New Model.
-3.  The user can manually verify compatibility if desired.
+3.  Next, after pixel extraction, the system computes and summarizes the pixel-level data for each spectral band and class, including the mean, standard deviation, minimum, maximum, median, and count, and formats it into a structured DataFrame suitable for the subsequent separability analysis.
 
-## Train a New Model {#sec-create-new-model}
+::: callout-tip
+## Related Function(s)
 
-### Selecting Classification Algorithm to Train a New Model {#sec-selecting-classification-algorithm-to-train-a-new-model}
+`module_4.sample_quality.sample_pixel_stats()` to compute summary statistics of extracted spectral value.
 
-**Front-end**
+`module_4.sample_quality.get_sample_pixel_stats_df()` to `module_4.sample_quality.convert sample_pixel_stats()` into pandas DataFrame.
+:::
 
-The user is given the option to choose which classification algorithm to train the Random Forest classifier model.
+## Conducting the Separability Analysis
 
-**Back-end**
-
-1.  The system can automatically generate optimal hyperparameters for Random Forest, including: number of trees, variables per split, and minimum leaf size.
-2.  Classification can be performed in three modes:
-    -   Hard Classification (Fast and Simple)
-        -   Assigns each pixel to exactly one class using a single-split mechanism.
-        -   Model performance is evaluated using accuracy against the test dataset.
-        -   Best suited for quick classifications with simple, non-hierarchical LULC classification such as Forest, Wetland Agriculture, Water Body, and Settlement.
-    -   Soft Classification (Moderate Complexity)
-        -   Uses a one-vs-rest binary approach.
-        -   Estimates the probability of each pixel belonging to each class instead of assigning it directly.
-        -   Model performance is reported using log loss (cross-entropy); lower values indicate better parameters.
-        -   Produces probability values for each land cover class, with the final map generated using rules or by selecting the highest probability per pixel.
-    -   Hierarchical Classification (Advanced)
-        -   Supports classification with nested or multi-level/hierarchy schemes.
-3.  For each classification mode, the system provides a description along with its trade-offs.
-
-## Hyperparameter Tuning
-
-### Splitting the Training Data {#sec-splitting-the-training-data}
+### Specification of Separability Analysis Parameters {#sec-specification-of-separability-analysis-parameters}
 
 **Front-end**
 
-The user selects an option and enters percentages if using a Custom Partition.
+1.  The user defines the parameters and selects the method for separability analysis.
+2.  Inputs include ID, Class Name, and pixel size.
 
 **Back-end**
 
-1.  The user can split training data into training and validation/test sets.
-2.  Options:
-    -   Custom Partition: The user specifies the ratio (e.g., 70% training / 30% testing).
-    -   Default Partition: The system uses a predefined ratio automatically.
+The system provides three parameters:
 
-### Setting the Hyperparameters
+1.  Methodology: Jeffries-Matusita or Transformed Divergence.
+2.  ID and Class Name as a drop down selection.
+3.  Pixel Size as numeric input.
+
+### Computing the Pairwise Class Separability
+
+**Back-end**
+
+1.  The system first generates all possible class pairs in the dataset, since separability metrics like JM or TD are defined for two classes at a time. It then creates a matrix to store the separability value for each class pair.
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality.check_class_separability()` to compute pairwise class separability.
+:::
+
+2.  The system runs the separability analysis. Both methods TM and TD take the spectral pixel data of two classes and calculate how distinct they are based on their means and covariance matrices. The resulting values range from 0 (no separability) to 2 (perfect separability).
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality._jeffries_matusita_distance()` to compute separability value with JM method.
+
+`module_4.sample_quality.transform_divergence()` to compute separability value with TD method.
+:::
+
+3.  Finally, the result matrix is converted into a readable, cleaned, long-format pandas DataFrame.
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality.get_separability_df()` to convert `module_4.sample_quality.check_class_separability()` into pandas DataFrame.
+:::
+
+4.  The system provides a function to filter and highlight the class pairs that are most difficult to distinguish, based on their separability values.
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality.lowest_separability()` to identify the N class with the lowest values.
+:::
+
+5.  The separability values are assigned to a categorical level indicating how well two classes can be separated. The system groups the numeric values into these categories.
+
+    -   Good separability (\>1.8): Classes are well separated.
+    -   Weak/Marginal separability (1.0-1.8): Classes overlap partially.
+    -   Class confusion (\<1.0): Classes require improvement.
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality.separability_level()` to interpret separability metric values to three categories.
+:::
+
+6.  The system summarizes the number of class pairs in each category to provide an overall view of class separability.
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality.sum_separability()` to count the number pf class pairs in each category.
+:::
+
+7.  Results, along with the basic statistics table, are exported as a `.TXT` report.
+8.  Detailed error messages are provided if any errors occur.
+
+## Visualization of Reference Data's Spectral Profile {#sec-spectral-profile-visualization}
+
+### Visualization of Reference Data's Spectral Profile {#sec-spectra-signature-visualization}
 
 **Front-end**
 
-The user selects parameters and assigns values if using the custom option.
+The user selects the spectral bands for visualization. This allows the user to evaluate whether the spectral data and class separability are satisfactory:
+
+-   If satisfied with the result, the user proceed to the next module.
+
+-   If not satisfied, the user can return to [Module 3](@sec-module-3) to modify the `TrainDataFinal`.
 
 **Back-end**
 
-Options for the Random Forest’s model hyperparameter selection:
+1.  The system checks the status of the separability analysis:sec-specification-of-separability-analysis-parameters
 
-1.  Custom Parameters: The user can manually set values for parameters (e.g., number of trees, max depth, minimum leaf size).
-2.  Default Parameters: The system applies recommended default values.
+    -   If successful, visualization proceeds.
+    -   If unsuccessful, visualization is blocked and the user is prompted to complete the parameter specification (@sec-specification-of-separability-analysis-parameters).
 
-### Training and Validating the Model {#sec-training-and-validating-the-model}
+2.  A visualization canvas and the required Python libraries are provided to support the visualization of results and spectral data distribution through:
 
-**Front-end**
+    -   Histogram
 
-The user is notified of model performance, including accuracy and other relevant metrics.
+        Histogram visualizes the distribution of pixel values for selected spectral bands, separated by class. It reveals overlap or separation between classes visually.
 
-**Back-end**
+        -   The system checks if the DataFrame has data; if not, it stops.
 
-1.  The system trains the model using the selected hyperparameters and the training data.
-2.  Performance is evaluated on validation data.
+        -   If the user doesn’t specify which bands to plot, it automatically selects the first few bands (max_bands=3).
 
-### Selecting Best Hyperparameter Combination {#sec-selecting-best-hyperparameter-combination}
+        -   For each selected band, it creates faceted histograms, where each class appears in a separate subplot (facet).
 
-**Front-end**
+        -   This helps the user see how pixel value distributions differ between classes for each spectral band.
 
-The user can further optimize the model to improve classification performance.
+        ::: callout-tip
+        ## Related Function(s)
 
-**Back-end**
+        `module_4.sample_quality.plot_facet_histograms()` to plot histogram of the bands.
+        :::
 
-The system provides an options for model optimization.
+    -   Box plot
+
+        Box plot displays pixel values distributions for each spectral band across all classes. It shows the range, median, and variability of spectral values per class, helping identify overlaps.
+
+        -   The system checks that data exists; otherwise, exits.
+
+        -   It selects the spectral bands to plot (either user-defined or the first few).
+
+        -   For each band, it creates a boxplot where: The x-axis shows class IDs and the y-axis shows pixel values for that band.
+
+        -   It rotates class labels for readability (useful when there are many classes).
+
+        ::: callout-tip
+        ## Related Function(s)
+
+        `module_4.sample_quality.plot_boxplots_by_band()` to plot boxplots of the bands.
+        :::
+
+    -   Scatter plot (2D and 3D)
+
+3.  Helper Text guides the user in interpreting the plots effectively.
+
+4.  The system summarize a comprehensive textual summary of the separability results..
+
+::: callout-tip
+## Related Function(s)
+
+`module_4.sample_quality.print_analysis_summary()` to summarize the result.
+:::

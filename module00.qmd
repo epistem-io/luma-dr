@@ -39,3 +39,9 @@ A --> |Section Link| B
 #### Back-end
 
 #### Front-end
+
+::: callout-tip
+## Related function
+
+Write the file in which the function was called from (e.g, `from epistemx.helpers import get_aoi_from_gaul` means the function `get_aoi_from_gaul` was called from `helpers.py`)
+:::

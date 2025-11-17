@@ -1,6 +1,10 @@
-# Module 5: Improving Model Quality with Multi-Source Data {#module-5 .unnumbered}
+# Module 5: Improving Model Quality with Multi-Source Data {#module-5}
 
 # Module Overview {.unnumbered}
+
+::: callout-caution
+This module is not available in Phase 1
+:::
 
 This optional module enables users to refine the model based on feedback from Module 4. It supports the integration of additional covariates to enhance model accuracy and robustness. Users can incorporate additional covariates, including radar, spectral, and non-spectral types (For details please see @sec-manual-covariate). The updated configuration facilitates the generation of a higher-quality model compared to the previous iteration.
 
@@ -13,11 +17,8 @@ This optional module enables users to refine the model based on feedback from Mo
 **Automatic System Input**
 
 1.  Default covariates.
-
 2.  Radar-based covariates.
-
 3.  Spectral transformations covariates.
-
 4.  Non-spectral covariates.
 
 **Input from Other Modules**
@@ -28,11 +29,8 @@ This optional module enables users to refine the model based on feedback from Mo
 # Output {.unnumbered}
 
 1.  List of covariates and descriptive table.
-
 2.  Variables as a covariate stack.
-
 3.  Variables as extracted features.
-
 4.  Table/chart of variable importance/influence.
 
 # Process {.unnumbered}
@@ -44,29 +42,19 @@ This optional module enables users to refine the model based on feedback from Mo
 **Front-end:**
 
 1.  The user selects a list of covariates according to the classification objectives and receives system recommendations.
-
 2.  If a Default Covariates is chosen, the user can either:
-
     -   Accept the default covariates set to proceed with retraining the model, or
-
     -   Modify the covariates list, which redirects to the covariate customization options.
-
 3.  If a Manual Covariates is chosen, the user selects the three covariates options with system guidance.
 
 **Back-end:**
 
 1.  The system provides two selection modes:
-
     -   System Default Covariates: Retrieves and displays a default set of covariates used in the classification model, including metadata (e.g., description, intended use).
-
     -   Manual Covariate: Displays categorized options:
-
         -   Radar-based covariates.
-
         -   Spectral transformations.
-
         -   Non-spectral covariates.
-
 2.  The system also provides recommendations for effective covariate use.
 
 ## System Default Covariates
@@ -80,7 +68,6 @@ This optional module enables users to refine the model based on feedback from Mo
 **Back-end:**
 
 1.  The system displays the default covariates and allows user modifications.
-
 2.  Provides information on the trade-offs involved in adjusting covariate set.
 
 ## Manual Covariates {#sec-manual-covariate}
@@ -94,23 +81,14 @@ This optional module enables users to refine the model based on feedback from Mo
 **Back-end:**
 
 1.  The system summarizes the chosen covariates before returning to the workflow from [Module 4](@sec-module-2).
-
 2.  Detailed covariate categories include:
-
     -   Radar-based covariates: Includes raw radar backscatter (Sentinel-1, PALSAR), temporal and seasonal composites, and derived features (ratios, texture, vegetation indices).
-
     -   Spectral transformations that consists of four parts:
-
         -   Built-up/Soil indices: OSAVI (Optimized Soil-Adjusted Vegetation Index), MSAVI (Modified Soil Adjusted Vegetation Index), NDBI (Normalized Difference Built-up Index), SAVI (Soil Adjusted Vegetation Index).
-
         -   Vegetation indices: GBNDVI (Green-Blue Normalized Difference Vegetation Index), ARVI (Atmospherically Resistant Vegetation Index), CVI (Chlorophyll Vegetation Index), RVMI (Red-Edge Vegetation Moisture Index), GNDVI (Green Normalized Difference Vegetation Index), NDVI (Normalized Difference Vegetation Index), EVI (Enhanced Vegetation Index).
-
         -   Water or water-related indices: AWEI (Automated Water Extraction Index), MNDWI (Modified Normalized Difference Water Index), NDMI (Normalized Difference Moisture Index), NDWI (Normalized Difference Water Index), MNDWI (Modified NDWI).
-
         -   Burn index: NBR (Normalized Burn Ratio).
-
     -   Non-spectral covariates: Includes terrain metrics (elevation, slope, aspect) and distance metrics (to roads, coastlines, and settlements).
-
 3.  The system highlights the trade-offs between covariate selection and model training efficiency.
 
 ## Model Evaluation and Optimization Feedback {#sec-model-evaluation-and-optimization-feedback}
@@ -120,19 +98,12 @@ This optional module enables users to refine the model based on feedback from Mo
 **Front-end:**
 
 1.  The user evaluates model performance: “Improved” or “Not Improved”.
-
     -   If Improved, the system outputs the LULC classification model with the optimized covariate set.
-
     -   If Not Improved, the user reviews the optimized covariates and decides whether to apply them to generate the LULC classification model.
 
 **Back-end:**
 
-1.  After adjustment, the system prompts the user to evaluate: *“Has model quality now improved?”*
-
-    If No:
-
+1.  After adjustment, the system prompts the user to evaluate: *“Has model quality now improved?”* If No:
     -   The system provides recommendations for covariate ranking analysis and reselection.
-
     -   Covariate optimization is performed to identify the most influential variables.
-
 2.  Once finalized, the system proceeds with model retraining using the optimized covariate set.
