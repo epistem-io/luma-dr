@@ -44,6 +44,12 @@ B --> C
 C --> D
 ```
 
+## Initialization and Authentication
+
+- The code ensures that the key to access the Earth Engine API through a service account is available  under the `/auth` folder
+- The function will attempt to connect and establish connections to the  EE API continuously (as oppose to the simple and repetitive `ee.Authenticate()`)
+
+
 ## Selection of AOI {#sec-selection-of-aoi}
 
 ### AOI from Administrative Boundaries {#sec-aoi-from-administrative-boundaries}
