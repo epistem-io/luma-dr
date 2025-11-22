@@ -3,7 +3,7 @@ project:
 
 book:
   title: "Epistem-X Technical Reference Document"
-  author: "IIASA"
+  # author: 
   date: "18/09/2025"
   chapters:
     - index.qmd
