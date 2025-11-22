@@ -25,31 +25,6 @@ The output of this module is high-quality, near–cloud-free satellite imagery t
 
 # Process {.unnumbered}
 
-```{mermaid}
-
-flowchart TD
-%% =======================
-%% Nodes
-%% =======================
-A([<a href="#sec-selection-of-aoi">Selection of AOI</a>])
-B([<a href="#sec-validation-of-shapefile-geometries">Validation of Shapefile Geometries</a>])
-C([<a href="#sec-input-spatial-image-parameters">Selection and Preparation of Satellite Imagery</a>])
-D([<a href="#sec-visualization-and-saving-data">Visualization and Saving of Data</a>])
-
-%% =======================
-%% Connections
-%% =======================
-A --> B
-B --> C
-C --> D
-```
-
-## Initialization and Authentication
-
-- The code ensures that the key to access the Earth Engine API through a service account is available  under the `/auth` folder
-- The function will attempt to connect and establish connections to the  EE API continuously (as oppose to the simple and repetitive `ee.Authenticate()`)
-
-
 ## Selection of AOI {#sec-selection-of-aoi}
 
 ### AOI from Administrative Boundaries {#sec-aoi-from-administrative-boundaries}
@@ -170,7 +145,15 @@ The user is prompted to fill in these parameters:
 `module_1.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters.
 :::
 
-2.  For single-year imagery, the system selects Landsat images from December 31st of year T or the lowest cloud cover scene available that year. For multi-year imagery, the system retrieves the lowest cloud cover image for each year in the specified range.
+5.  The system applies Landsat Collection 2 scaling factors using the following formula: Digital Number (DN) \* scale_factor + offset. This allows the user to get the data back to its original floating point value, a scale factor, and offset
+
+::: callout-tip
+## Related Function(s)
+
+`module_1.Reflactance_Data.apply_scale_factors():` to retrieve and the Landsat image collection based on the input parameters.
+:::
+
+6.  For single-year imagery, the system selects Landsat images from December 31st of year T or the lowest cloud cover scene available that year. For multi-year imagery, the system retrieves the lowest cloud cover image for each year in the specified range.
 
 ::: callout-tip
 ## Related Function(s)
@@ -195,6 +178,13 @@ The user is prompted to fill in these parameters:
 ## Related Function(s)
 
 `module_1.Reflactance_Data.mask_landsat_sr():` to mask cloud and cloud shadow.
+:::
+
+::: callout-warning
+## Feature Status
+
+If Landsat 5-9 is selected, then `module_1.Reflactance_Data.mask_landsat_sr()` implements cloud, **cirrus**, and cloud shadow masking using QA_PIXEL band. For now, the masking is only performed for cloud and cloud shadow.
+
 :::
 
 3.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from GEE.
