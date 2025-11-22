@@ -24,24 +24,34 @@ A quick summary of the module is put here
 
 # Process {.unnumbered}
 
-```{mermaid}
-flowchart TD
-
-B([<a href="#sec-sub-step-example">Linked to the section</a>])
-
-A --> |Section Link| B
-```
+Embed the Visio chart here for the module
 
 ## Step X
 
 ### Sub-Step {#sec-sub-step-example}
 
-#### Back-end
+#### LUMA User Journey
 
-#### Front-end
+This would be the "User Journey" part in Visio (white box)
+
+::: callout-important
+## Error Handling Notification
+
+This part shows the error notifications that will be shown to the users for each of the guardrails set on the Geospatial Engine
+:::
+
+#### LUMA Geospatial Engine
+
+This would be the "System Response" part in Visio (pink box)
 
 ::: callout-tip
 ## Related function
 
 Write the file in which the function was called from (e.g, `from epistemx.helpers import get_aoi_from_gaul` means the function `get_aoi_from_gaul` was called from `helpers.py`)
+:::
+
+::: callout-warning
+## Feature Status
+
+Write the feature status on the related functions from the agreed discussion in Notion.
 :::
