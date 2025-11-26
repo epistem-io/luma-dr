@@ -152,6 +152,12 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.final_validation():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
     :::
 
+::: callout-important
+### Feature Notes
+
+The input validation process for shapefiles is modified for Streamlit compatibility. Adjustments might be necessary for other UI platform developments.
+:::
+
 2.  After the system succeeded to validate the shapefile, the system converted the GeoDataFrame file format into Earth Engine geometry format.
 
 ::: callout-tip
@@ -243,7 +249,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band.
         :::
 
-        ::: callout-warning
+        ::: callout-important
         ## Feature Notes
 
         If Landsat 5-9 is selected, then `data_acquisition.Reflactance_Data.mask_landsat_sr()` should also implement **cirrus** masking using QA_PIXEL band. For now, the masking is only performed for cloud and cloud shadow.
@@ -275,7 +281,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
 
-    ::: callout-warning
+    ::: callout-important
     ## Feature Notes
 
     Creating composite, clip, and mosaic of the image collection is currently conducted on Streamlit.
@@ -309,7 +315,7 @@ This is a part of **User Journey 1.3: Download Satellite Imagery**
 
     a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB.
 
-    ::: callout-warning
+    ::: callout-important
     ## Feature Notes
 
     1.  The constraints that force the satellite image file size to be within the allowable limit (such as AOI extent, spatial resolution, bit depth, and image format) have not yet been defined.
@@ -318,9 +324,11 @@ This is a part of **User Journey 1.3: Download Satellite Imagery**
 
     b.  Export to Google Cloud Storage: Downloads the image to Google Cloud Storage.
 
+4.  The user is given the option to continue to [Module 2](@sec-module-2)
+
 **LUMA Geospatial Engine**
 
-This is a part of **System Response 1.3: Download Satellite Imagery**
+This is a part of **System Response 1.3: Download Satellite Imagery and Continue to Next Module**
 
 1.  The system collects the statistics of the satellite images found.
 
