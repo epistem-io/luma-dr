@@ -2,21 +2,23 @@
 
 # Module Overview {.unnumbered}
 
-This module performs a spectral separability analysis to assess the distinctiveness of land cover classes. Conducting separability analysis is essential to ensure that the spectral signatures of reference data are sufficiently differentiated; inadequate separability between classes can lead to model confusion, increased classification error, and reduced generalization performance.
-
-The module extracts spectral pixel values from near-cloud-free satellite imagery and computes key descriptive statistics for each class. To maintain computational efficiency and minimize class imbalance, sampling is constrained to a defined maximum number of pixels per class. Pairwise separability is then quantified using the Jeffries–Matusita (JM) and Transformed Divergence (TD) metrics, both of which evaluate the statistical distance between class distributions based on their means and covariance matrices. The resulting separability values are categorized to indicate good, marginal, or poor class distinction and visualized through histograms, box plots, and scatter plots. This diagnostic process enables the identification of spectrally overlapping classes that require refinement or redefinition before classification, thereby improving the reliability and accuracy of subsequent LULC mapping workflows.
+To be developed
 
 # Input {.unnumbered}
 
-**User's Input**
-
-1.  Separability analysis parameters.
-2.  User-specified spectral bands for visualization.
-
-**Input from Other Modules**
-
-1.  Near-cloud-free satellite imagery within the AOI (@sec-visualization-and-saving-data).
-2.  Reference data (@sec-module-3).
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
+| Name of Input                            | Input Type               | Details                                                                                           |
++==========================================+==========================+===================================================================================================+
+| Parameters for the separability analysis | User's input             | Contains:                                                                                         |
+|                                          |                          |                                                                                                   |
+|                                          |                          | -   Spatial resolution of the imagery from Module 1 can be adjusted for the separability analysis |
+|                                          |                          |                                                                                                   |
+|                                          |                          | -   Number of maximum pixels which the analysis will run for each pair of classes                 |
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
+| Sample dataset                           | Input from Other Modules | Output from Module 3                                                                              |
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
+| Near-cloud free satellite imagery        | Input from Other Modules | Output from Module 1                                                                              |
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
 
 # Output {.unnumbered}
 
@@ -25,200 +27,211 @@ The module extracts spectral pixel values from near-cloud-free satellite imagery
 
 # Process {.unnumbered}
 
-```{mermaid}
-flowchart TD
+::: callout-warning
+## Error Handling Notification
 
-%% Main entry
-%% =======================
-%% Nodes
-%% =======================
-A([<a href="#sec-spectral-feature-sampling">Spectral Feature Extraction of Reference Data</a>])
-B([<a href="#sec-specification-of-separability-analysis-parameters">Conducting the Separability Analysis</a>])
-C([<a href="#sec-spectral-profile-visualization">Visualization of Reference Data's Spectral Profile</a>])
-
-%% =======================
-%% Connections
-%% =======================
-A --> B
-B --> C
-
-```
-
-## Spectral Feature Extraction of Reference Data {#sec-spectral-feature-sampling}
-
-### Spectral Feature Extraction of Reference Data
-
-**Back-end**
-
-1.  The system extracts spectral (pixel) values from near-cloud-free satellite imagery ([Module 1](@sec-module-01)) using all reference data in the `TrainDataFinal` set ([Module 3](@sec-module-3)) at a 30 m spatial resolution. To prevent memory overload, timeouts, or class imbalance, a maximum of 7,000 pixels per land cover class (`max_pixel_per_class`) is extracted.
-
-::: callout-tip
-## Related Function(s)
-
-`module_4.sample_quality.extract_spectral_values():` to extract the pixels of all training samples.
+This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
 :::
 
-2.  The system ensures that no class exceeds this limit. For each class, the system first filters the training data to select samples of that class and then counts the number of samples. If the count exceeds `max_pixels_per_class`, a random subset up to the limit is selected; otherwise, all samples are used.
+## Specifying the Separability Analysis Parameter {#sec-specification-of-separability-analysis-parameters}
 
-::: callout-tip
-## Related Function(s)
+### Specifying the Separability Analysis Parameter
 
-`module_4.sample_quality.limit_sample_per_class():` to limit the number of training samples per class.
+**Luma User Journey**
+
+This is a part of **User Journey 4.1: Determining separability analysis parameter**
+
+1.  The user is prompted to fill in the parameters for separability analysis. The system provides a default value for each of the parameters as the following:
+    -   Spatial resolution used for the separability analysis: 30 meter
+    -   Maximum number of pixels which the separability analysis will be conducted to: 5000
+2.  The system shows a message showing Transformed Divergence method will be used to conduct the analysis.
+
+::: callout-important
+## Feature Notes
+
+There is no option for the user to change the separability analysis method.
 :::
 
-3.  Next, after pixel extraction, the system computes and summarizes the pixel-level data for each spectral band and class, including the mean, standard deviation, minimum, maximum, median, and count, and formats it into a structured DataFrame suitable for the subsequent separability analysis.
+**Luma Geospatial Engine**
 
-::: callout-tip
-## Related Function(s)
-
-`module_4.sample_quality.sample_pixel_stats()` to compute summary statistics of extracted spectral value.
-
-`module_4.sample_quality.get_sample_pixel_stats_df()` to `module_4.sample_quality.convert sample_pixel_stats()` into pandas DataFrame.
-:::
+This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ## Conducting the Separability Analysis
 
-### Specification of Separability Analysis Parameters {#sec-specification-of-separability-analysis-parameters}
+### Initialize the Separability Analysis {#sec-initialize-separability-analysis}
 
-**Front-end**
+This is a part of **System Response 4.1: Separability Analysis Workflow**
 
-1.  The user defines the parameters and selects the method for separability analysis.
-2.  Inputs include ID, Class Name, and pixel size.
+**Luma User Journey**
 
-**Back-end**
+1.  The user is prompted to run the separability analysis
 
-The system provides three parameters:
+**Luma Geospatial Engine**
 
-1.  Methodology: Jeffries-Matusita or Transformed Divergence.
-2.  ID and Class Name as a drop down selection.
-3.  Pixel Size as numeric input.
+This sub-step does not involve any operations within the Luma Geospatial Engine.
 
-### Computing the Pairwise Class Separability
+### Validating the sample data's geometry
 
-**Back-end**
+**Luma User Journey**
 
-1.  The system first generates all possible class pairs in the dataset, since separability metrics like JM or TD are defined for two classes at a time. It then creates a matrix to store the separability value for each class pair.
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 1 of 7.
 
-::: callout-tip
-## Related Function(s)
+**Luma Geospatial Engine**
 
-`module_4.sample_quality.check_class_separability()` to compute pairwise class separability.
-:::
+1.  The system validates the geometry of the sample data stored in the system from Module 3 output.
 
-2.  The system runs the separability analysis. Both methods TM and TD take the spectral pixel data of two classes and calculate how distinct they are based on their means and covariance matrices. The resulting values range from 0 (no separability) to 2 (perfect separability).
+    ::: callout-tip
+    ## Related Function
 
-::: callout-tip
-## Related Function(s)
+    `input_utils.shapefile_validator.validate_and_fix_geometry():`to validate and fix geometries issues.
+    :::
 
-`module_4.sample_quality._jeffries_matusita_distance()` to compute separability value with JM method.
+    ::: callout-important
+    ## Error Handling Notification
 
-`module_4.sample_quality.transform_divergence()` to compute separability value with TD method.
-:::
+    An error message is displayed if the system failed to run `validate_and_fix_geometry()`.
+    :::
 
-3.  Finally, the result matrix is converted into a readable, cleaned, long-format pandas DataFrame.
+### Converting sample data into Earth Engine format
 
-::: callout-tip
-## Related Function(s)
+**Luma User Journey**
 
-`module_4.sample_quality.get_separability_df()` to convert `module_4.sample_quality.check_class_separability()` into pandas DataFrame.
-:::
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 2 of 7
 
-4.  The system provides a function to filter and highlight the class pairs that are most difficult to distinguish, based on their separability values.
+**Luma Geospatial Engine**
 
-::: callout-tip
-## Related Function(s)
+1.  The system converts sample data from `.gdf` data into Earth Engine Feature Collection format
 
-`module_4.sample_quality.lowest_separability()` to identify the N class with the lowest values.
-:::
+    ::: callout-tip
+    ## Related Function
 
-5.  The separability values are assigned to a categorical level indicating how well two classes can be separated. The system groups the numeric values into these categories.
+    `input_utils.shapefile_validator.convert_roi_gdf()`: to convert geodataframe into EE Feture Collection. The supported multi-geometries type for this conversions are MultiPoint and MultiPolygon.
+    :::
 
-    -   Good separability (\>1.8): Classes are well separated.
-    -   Weak/Marginal separability (1.0-1.8): Classes overlap partially.
-    -   Class confusion (\<1.0): Classes require improvement.
+    ::: callout-important
+    ## Error Handling Notification
 
-::: callout-tip
-## Related Function(s)
+    An error message is displayed if the system failed to run `convert_roi_gdf()`.
+    :::
 
-`module_4.sample_quality.separability_level()` to interpret separability metric values to three categories.
-:::
+### Starting the separability analysis computation
 
-6.  The system summarizes the number of class pairs in each category to provide an overall view of class separability.
+**Luma User Journey**
 
-::: callout-tip
-## Related Function(s)
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 3 of 7
 
-`module_4.sample_quality.sum_separability()` to count the number pf class pairs in each category.
-:::
+**Luma Geospatial Engine**
 
-7.  Results, along with the basic statistics table, are exported as a `.TXT` report.
-8.  Detailed error messages are provided if any errors occur.
+1.  The system initializes the Related Function's for separability analysis with the appropriate required input objects for the `class`.
+
+    ::: callout-tip
+    ## Related Function
+
+    `sample_data_quality.sample_quality()`: a `class` to handle all the workflows for separability analysis.
+    :::
+
+### Counting sample data statistics {#sec-sample-stats}
+
+**Luma User Journey**
+
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 4 of 7.
+
+**Luma Geospatial Engine**
+
+1.  The system retrieves the basic statistic information of the sample data.
+
+    ::: callout-tip
+    ## Related Function
+
+    `sample_data_quality.sample_quality.sample_stats()` : to retrieve the sample data’s total sample count, unique classes, class-wise sample counts, and class balance, and includes class names when provided.
+
+    `sample_data_quality.sample_quality.get_sample_stats_df()` : to turn the statistic information into a dataframe format.
+    :::
+
+### Extracting spectral value
+
+**Luma User Journey**
+
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 5 of 7. The system also highlights that this step will take some time.
+
+**Luma Geospatial Engine**
+
+1.  The system extracts the pixel-level spectral values for each sample data by sampling the composite image at the specified scale. The system also limits the maximum number of pixels per LULC class that will be extracted to avoid memory overload.
+
+    ::: callout-tip
+    ## Related Function
+
+    `sample_data_quality.sample_quality.extract_spectral_values()` : to extract and compile spectral reflectance values for all sample data. The result is a dataframe containing band values for each sample data.
+
+    `sample_data_quality.sample_quality.limit_samples_per_class()` : limits (down-samples) the number of sample data per class whenever the number of available samples exceeds the maximum pixel threshold with random sampling.
+    :::
+
+### Calculating the extracted spectral feature statistics {#sec-sample-pixel-stats}
+
+**Luma User Journey**
+
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 6 of 7.
+
+**Luma Geospatial Engine**
+
+1.  The system computes detailed pixel-level statistics for each LULC class (mean, standard deviation, minimum, maximum, median, and sample count) based on the extracted spectral values and formats these results into a structured summary table.
+
+    ::: callout-tip
+    ## Related Function
+
+    `sample_data_quality.sample_quality.sample_pixel_stats()` : calculates per-class spectral statistics (mean, std, min, max, median, count) for all bands.
+
+    `sample_data_quality.sample_quality.get_sample_pixel_stats_df()` : converts the computed statistics into a dataframe.
+    :::
+
+### Calculating separability index {#sec-caluclate-separability-index}
+
+**Luma User Journey**
+
+1.  The system shows a progress update indicating that the separability analysis is currently at Step 7 of 7.
+
+**Luma Geospatial Engine**
+
+1.  The system computes the class-to-class separability using Transformed Divergence (TD).
+
+2.  The system generates a pairwise separability matrix and converts the results into a structured dataframe.
+
+3.  The system categorizes the number of good, weak, and poor class pairs as a summary for user.
+
+    ::: callout-tip
+    ## Related Function
+
+    `sample_data_quality.sample_quality.check_class_separability()`: calculates the pairwise separability values between classes using Transformed Divergence. The choice of using TD as the algorithm is still hard-coded.
+
+    `sample_data_quality.sample_quality.get_separability_df()`: converts separability results into a dataframe with class names and interpretation levels.
+
+    `sample_data_quality.sample_quality.lowest_separability()`: extracts the class pairs with the lowest separability scores.
+
+    `sample_data_quality.sample_quality.sum_separability()`: produces a summary report counting how many class pairs fall under good, weak, or poor separability categories.
+    :::
 
 ## Visualization of Reference Data's Spectral Profile {#sec-spectral-profile-visualization}
 
 ### Visualization of Reference Data's Spectral Profile {#sec-spectra-signature-visualization}
 
-**Front-end**
+This is a part of **User Journey 4.2: Analyzing separability index result and visualizing sample data**
 
-The user selects the spectral bands for visualization. This allows the user to evaluate whether the spectral data and class separability are satisfactory:
+**Luma User Journey**
 
--   If satisfied with the result, the user proceed to the next module.
+1.  The user is shown a summary of the number and proportion of sample data for each LULC class from the output of @sec-sample-stats.
 
--   If not satisfied, the user can return to [Module 3](@sec-module-3) to modify the `TrainDataFinal`.
+2.  The user is shown a summary of the extracted sample features for each LULC class from the output of @sec-sample-pixel-stats.
 
-**Back-end**
+3.  The user is presented with an overall summary of the separability analysis, including the separability category (good, weak, or poor) for each class and a highlight of which LULC classes require improvement, based on the output of @sec-caluclate-separability-index. A dataframe containing details of the pairwise seaparability is also displayed.
 
-1.  The system checks the status of the separability analysis:sec-specification-of-separability-analysis-parameters
+4.  The user is provided with interactive visualizations to explore spectral distributions and clustering. Available visualization options include histograms, boxplots, and scatter plots.
 
-    -   If successful, visualization proceeds.
-    -   If unsuccessful, visualization is blocked and the user is prompted to complete the parameter specification (@sec-specification-of-separability-analysis-parameters).
+**Luma Geospatial Engine**
 
-2.  A visualization canvas and the required Python libraries are provided to support the visualization of results and spectral data distribution through:
+1.  This step does not involve operations from Luma Geospatial Engine.
 
-    -   Histogram
+    ::: callout-important
+    ## Feature Notes
 
-        Histogram visualizes the distribution of pixel values for selected spectral bands, separated by class. It reveals overlap or separation between classes visually.
-
-        -   The system checks if the DataFrame has data; if not, it stops.
-
-        -   If the user doesn’t specify which bands to plot, it automatically selects the first few bands (max_bands=3).
-
-        -   For each selected band, it creates faceted histograms, where each class appears in a separate subplot (facet).
-
-        -   This helps the user see how pixel value distributions differ between classes for each spectral band.
-
-        ::: callout-tip
-        ## Related Function(s)
-
-        `module_4.sample_quality.plot_facet_histograms()` to plot histogram of the bands.
-        :::
-
-    -   Box plot
-
-        Box plot displays pixel values distributions for each spectral band across all classes. It shows the range, median, and variability of spectral values per class, helping identify overlaps.
-
-        -   The system checks that data exists; otherwise, exits.
-
-        -   It selects the spectral bands to plot (either user-defined or the first few).
-
-        -   For each band, it creates a boxplot where: The x-axis shows class IDs and the y-axis shows pixel values for that band.
-
-        -   It rotates class labels for readability (useful when there are many classes).
-
-        ::: callout-tip
-        ## Related Function(s)
-
-        `module_4.sample_quality.plot_boxplots_by_band()` to plot boxplots of the bands.
-        :::
-
-    -   Scatter plot (2D and 3D)
-
-3.  Helper Text guides the user in interpreting the plots effectively.
-
-4.  The system summarize a comprehensive textual summary of the separability results..
-
-::: callout-tip
-## Related Function(s)
-
-`module_4.sample_quality.print_analysis_summary()` to summarize the result.
-:::
+    All the spectral features plot visualizations were made on Streamlit script.
+    :::
