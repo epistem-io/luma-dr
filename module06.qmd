@@ -2,227 +2,159 @@
 
 # Module Overview {.unnumbered}
 
-This module provides functionality for users to generate the final LULC map as the primary output product, derived from the validated and optimized classification model developed in Modules 1-5. Before the processing begins, it ensures that all required inputs - such as satellite imagery, classification schemes, and training samples - are properly prepared and validated. Users can specify data splits, select classification modes, perform hyperparameter tuning optimization, and apply the trained model to the entire AOI to produce a high-quality, georeferenced LULC map. The module supports Random Forest (RF) based classification for adaptability, aligning with hierarchical classification schemes from [Module 2](@sec-module-2), and incorporates feedback from optional covariate enhancements in [Module 5](@sec-module-5). Upon completion, users receive a displayable, analyzable, and downloadable map with metadata, enabling applications such as deforestation monitoring or conservation planning.
+To be developed
 
-## Input {.unnumbered}
+# Input {.unnumbered}
 
-**User’s Input**
+| Name of input | Input type | Details |
+|----|----|----|
+| Sample data split proportion | User's input | Optional, if not set then use default value |
+| Random Forest (RF) parameters | User's input | Optional, if not set then use default value |
+| Satellite imagery within the AOI | Input from other modules | Module 1 |
+| LULC classes | Input from other modules | Module 2 |
+| Sample data | Input from other modules | Module 3 |
 
-1.  User-specified data splitting percentage.
-2.  User-specified data splitting method.
-3.  RF hyperparameters: number of trees (`n_tree`), variables per split (`var_split`), minimum leaf population (`min_leaf_pop`).
-4.  Choice of hyperparameter tuning option (e.g., Hard Classification Tuning, K-Fold Soft Classification Tuning, etc.).
-
-**Automatic System Input**
-
-1.  None.
-
-**Input from Other Modules**
-
-1.  Near-cloud-free satellite imagery within the AOI ([Module 1](@sec-module-1)).
-2.  LULC classification scheme table ([Module 2](@sec-module-2)).
-3.  Georeferenced reference data ([Module 3](@sec-module-3)).
-4.  Validated sample data and separability results ([Module 4](@sec-module-4)).
-
-## Output {.unnumbered}
+# Output {.unnumbered}
 
 1.  Trained RF classification model.
-2.  Classified LULC raster map.
-3.  Optimal hyperparameters from tuning process
-4.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix).
+2.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix).
+3.  Classified LULC raster map.
 
-## Process {.unnumbered}
+# Process {.unnumbered}
 
-```{mermaid}
-flowchart TD
-    A([<a href='#sec-checking-prerequisites'>Check Prerequisites</a>])
-    C([<a href='#sec-data-splitting'>Data Splitting</a>])
-    D([<a href='#sec-define-classification-specifications'>Define Classification<br>Specifications</a>])
-    E([<a href='#sec-hyperparameter-tuning'>Hyperparameter Tuning</a>])
-    F([<a href='#sec-final-classification'>Final Classification</a>])
-    G([<a href='#sec-review-classification-results'>Review Classification<br>Results</a>])
-    H[Proceed to Module 7]
+::: callout-important
+## Error Handling Notification
 
-    A --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G -->|Satisfied| H
-    G -->|Unsatisfied| D
-
-```
+This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules
+:::
 
 ## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
 
+This is a part of **System Response 6.1: Reviewing input specifications for model training**
+
 ### Checking Prerequisites from Previous Modules
 
-**Front-end**
+**Luma User Journey**
 
-1.  The system verifies all required inputs are available and prompts users to complete previous modules if reference data or other essential inputs are missing.
+1.  The user is displayed a verification of the required inputs stored in the system.
 
-**Back-end**
+**Luma Geospatial Engine**
 
-1.  The system validates availability of satellite imagery, classification scheme, and reference data.
+1.  The system validates availability of the required inputs.
 
-## Data Splitting {#sec-data-splitting}
+## Extracting spectral feature from sample data {#sample-data-feature-extraction}
 
-### Data Splitting
+### Splitting the sample data {#sec-data-split}
 
-**Front-end**
+**Luma User Journey**
 
-1.  The user defines the proportion to split the reference data into a training and validation dataset.
-2.  The user choose the data split method: single random split, stratified random split, or stratified random K-Fold split.
+1.  The user defines the proportion to split the sample data into training and validation dataset.
 
-**Back-end**
+**Luma Geospatial Engine**
 
-1.  The system offers three types of data splitting:
+1.  The system conducts feature extraction for both training and validation data accordingly to the proportion set by the user.
 
-    -   Single Random Split: Randomly splits the input training data according to a specified ratio and is ideal when the training dataset is relatively balanced across classes. The system assigns a random number (`randomColumn()`) to each training point and separates the points into training and testing sets. It then extracts the corresponding image pixel values (`image.sampleRegions()`) for all points and returns the two sets, ready for the next step.
+2.  The system uses stratified random split method to conduct the data splitting.
 
-        ::: callout-tip
-        ## Related Function(s)
+    ::: callout-tip
+    ## Related Functions
 
-        `module_6.FeatureExtraction.random_split():` to partition the training data randomly into training and validation sets.
-        :::
+    `classification.FeatureExtraction.stratified_split()` : performs stratified random split of sample data based on LULC class labels.
+    :::
 
-    -   Stratified Random Split: Randomly splits the input data while preserving class proportions. Unique classes are identified (`aggregate_array().distinct()`), random numbers are assigned to points, and each class is split into training and testing subsets. The subsets are merged across classes, and image pixel values are extracted for all points.
+## Creating classification model {#sec-create-classification-model}
 
-        ::: callout-tip
-        ## Related Function(s)
+### Creating classification model {#sec-create-classification-model}
 
-        `module_6.FeatureExtraction.stratified_split():` to partition the training data by strata into training and validation sets.
+**Luma User Journey**
 
-        `module_6.FeatureExtraction.stratified_split().split_class():` to partition the training data based on the class.
-        :::
+This is a part of **User Journey 6.2: Determining classification's specification**
 
-    -   Stratified K-Fold Split: Performs a stratified K-Fold cross-validation split on the input reference dataset. It is particularly useful for datasets with imbalanced classes, as it ensures that the class proportions are preserved in each fold. This method splits the dataset into k folds for cross-validation while preserving class proportions. It first calculates the fold size (`1.0 / k`) and generates evenly spaced thresholds to assign points to training or validation. Unique classes are identified, and each point is assigned a random number. Points within the threshold range are used for validation, and the rest for training. Class-specific splits are merged to form complete training and validation sets for each fold. The function returns a `FeatureCollection` of k folds, each containing its training and validation subsets. Finally, the system ensures that class proportions are maintained in every fold.
+1.  The user is given the option to manually configure the number of trees used in RF model from three given options: 50, 100, or 150. Other parameters are set to default.
 
-        ::: callout-tip
-        ## Related Function(s)
+2.  The user is also given the option to use default value of the RF parameters. The default value are as the following:
+    
+    -   Number of trees: 100
+    -   Variables per split: square root of total spectral band features used
+    -   Minimum leaf population: 1
 
-        `module_6.FeatureExtraction.stratified_kfold():` strafied kfold cross validation split
+3.  The user is prompted to verify the inputs and run the process to create the classification model.
 
-        `module_6.FeatureExtraction.stratified_kfold().make_fold():` to create the folds using the given threshold.
 
-        `module_6.FeatureExtraction.stratified_kfold().make_fold().per_class():` to split the class to ensure stratification during split.
+**Luma Geospatial Engine**
 
-        `module_6.FeatureExtraction.inspect_fold():` to inspect the result of stratified k-fold size.
-        :::
+This is a part of **System Response 6.2: Classification process**
 
-## Define Classification Specifications {#sec-define-classification-specifications}
+1.  The system create the classification model using hard classification method.
 
-**Front-end**
+    ::: callout-tip
+    ## Related Functions
 
-1.  User configures Random Forest parameters:
+    `classification.Generate_LULC.hard_classification()` : trains a RF classifier (`smileRandomForest`) using extracted training data and applies it to the input imagery to produce a hard (pixel-level) multiclass.
+    :::    
 
--   **Number of trees** (`n_tree`): Controls ensemble size (default: 100). More trees increase stability but require more computation.
--   **Variables per split** (`var_split`): Features considered at each decision point. Default: square root of total features.
--   **Minimum leaf population** (`min_leaf_pop`): Minimum samples in terminal nodes (default: 1). Higher values prevent overfitting.
+### Reviewing classification model's quality {#sec-review-model-result}
 
-**Back-end**
+**Luma User Journey**
 
-1.  Stores user-specified hyperparameters.
-2.  Prepares for hyperparameter tuning process.
-3.  Integrates data splitting in the tuning.
+This is a part of **User Journey 6.3: Review classification result**
 
-## Hyperparameter Tuning {#sec-hyperparameter-tuning-options}
+1.  The user is shown a feature-importance graph displaying each variable used to train the classification model. In this development phase, only spectral bands are used as classification variables.
 
-**Front-end**
+2.  The user is prompted to begin the process of calculating the model’s accuracy assessment.
 
-1.  The user selects a tuning strategy. System evaluates multiple parameter combinations using training/validation split from @sec-data-splitting. Results display optimal parameters and accuracy.
+3.  The user is shown the results of the model’s accuracy assessment, presented in the following structure:
 
-**Back-end**
+    -   Overall model accuracy (overall accuracy percentage, kappa coefficient, average F1-score, and G-Mean score)
 
-1.  Uses held-out validation data to assess performance.
-2.  If 100% of reference data allocated to training in Module 3 → no validation data available → tuning disabled.
-3.  User must upload independent validation data in Module 7.
+    -   Class-level accuracy (producer’s accuracy, user’s accuracy, F1-score, and G-Mean score), also visualized in a confusion matrix with an accompanying highlight summary of the LULC classes with the lowest accuracy.
 
-### Hard Classification Tuning {#sec-hard-classification-tuning}
+**Luma Geospatial Engine**
 
-1.  Uses multiclass classification approach and evaluates performance using overall accuracy metric.
+This is a part of **System Response 6.3: Testing model's accuracy**
 
-::: callout-tip
-## Related Function(s)
+1.  The system extracts feature importance from the trained Random Forest model and presents a ranked table of bands (or a fallback equal-weight estimate if true importance is unavailable).
 
-`module_6.Hyperparameter_tuning.Hard_classification_tuning():` to perform grid search for direct multiclass classification, testing all parameter combinations and selecting those with highest accuracy.
-:::
+    ::: callout-tip
+    ## Related Functions
 
-### Soft Classification Tuning {#sec-soft-classification-tuning}
+    `classification.Generate_LULC.get_feature_importance()` : extracts and returns model feature importance as a dataframe; if the model explanation is not available, falls back to an equal-weight estimate.
+    ::: 
 
-1.  Uses one-vs-rest binary classification approach and evaluates performance using cross-entropy loss.
+2.  The system calculates model evaluation metrics on the validation dataset.
 
-::: callout-tip
-## Related Function(s)
+    ::: callout-tip
+    ## Related Functions
 
-`module_6.Hyperparameter_tuning.Soft_classification_tuning():` to optimize parameters for probabilistic classification, selecting combinations with lowest cross-entropy loss.
-:::
+    `classification.Generate_LULC.evaluate_model()` :classifies the validation data with the trained classifier, builds the confusion matrix, and returns a dictionary of accuracy metrics
+    ::: 
 
-### K-Fold Tuning {#sec-k-fold-tuning}
+3.  Confusion matrix and model accuracy summary are rendered in the user-interface.
 
-Performs robust parameter optimization using stratified k-fold cross-validation. This approach provides more reliable parameter estimates, especially for imbalanced datasets.
+### Visualizing LULC classification map result {#sec-view-classification-map}
 
-::: callout-tip
-## Related Function(s)
+**Luma User Journey**
 
-`module_6.Hyperparameter_tuning.hard_tuning_kfold():` to classify multiclass classification with hard k-fold validation.
+1.  The user can visualizes the LULC classification result on a canvas map along with the training data layer.
 
-`module_6.Hyperparameter_tuning.soft_tuning_kfold()` to classifiy one-vs-rest classification with soft k-fold validation.
-:::
+2.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
 
-## Final Classification {#sec-final-classification}
+**Luma Geospatial Engine**
 
-**Front-end**
+This sub-step does not involve any operations from Luma Geospatial Engine.
 
-1.  User can either:
+### Downloading the LULC classification map result
 
--   Accept optimal parameters from tuning, or
--   Retain manual inputs Progress bars shown during training and map generation.
+**Luma User Journey**
 
-**Back-end**
+1.  The user can download the satellite imagery through two options:
 
-1.  Trains the final Random Forest model using optimal parameters identified during tuning:
+    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the classification map result is less than 32 MB.
 
--   Bootstrap sampling: Creates diverse training subsets for each tree.
--   Ensemble construction: Builds multiple decision trees with variation.
--   Majority voting: Aggregates predictions across all trees.
+    b.  Export to Google Cloud Storage: Downloads the image to Google Cloud Storage.
 
-2.  Users can apply the recommended optimal parameters or use custom values.
+**LUMA Geospatial Engine**
 
-### Multiclass Classification {#sec-multiclass-classification}
+1.  This sub-step does not involve any operations from Luma Geospatial Engine. Direct download settings are defined from Streamlit, using the same workflow as defined in @sec-visualization-and-saving-data.
 
-**Back-end**
-
-1.  Performs direct multiclass classification where each pixel is assigned to a single LULC class.
-
-::: callout-tip
-## Related Function(s)
-
-`module_6.Generate_LULC.multiclass_classification()` to implement hard classification using the trained Random Forest model to generate the final LULC map.\
-:::
-
-### OVR Classification {#sec-ovr-classification}
-
-**Back-end**
-
-1.  Implements One-vs-Rest strategy, generating probability layers for each class and creating final classification via maximum probability.
-
-::: callout-tip
-## Related Function(s)
-
-`module_6.Generate_LULC.ovr_classification()` to create probability surfaces for all LULC classes and produces final classification using `argmax`, providing confidence layers for each class.
-:::
-
-## Review Classification Results {#sec-review-classification-results}
-
-**Front-end**
-
-1.  User examines the generated LULC map and model performance.
-2.  If satisfied, proceeds to Module 7 for thematic accuracy assessment.
-3.  If unsatisfied, returns to parameter tuning or previous modules.
-
-**Back-end**
-
-1.  Displays optimal parameters and model performance metrics.
-2.  Provides recommendations for improvement if results are unsatisfactory.
-3.  Stores trained model and classification results for Module 7.
+2.  For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.
