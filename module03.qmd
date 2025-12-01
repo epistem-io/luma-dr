@@ -9,6 +9,7 @@ To be developed.
 | Name of input | Input Type | Details |
 |------------------------|------------------------|------------------------|
 | User's sample data | User's Input |  |
+| Default sample data | System's Input | RESTORE+ sample data |
 | LULC classification class table | Input from Other Modules | Output from Module 2 |
 | AOI | Input from Other Modules | Output from Module 1 |
 | Near-cloud free satellite imagery | Input from Other Modules | Output from Module 1 |
@@ -119,6 +120,7 @@ This is a part of **System Response 3.2.b: Verifying the uploaded sample data's 
     :::
 
 5.  The system generates a summary table of the user's uploaded sample data. The summary includes:
+
     -   LULC class ID
     -   LULC class name
     -   Number of sample data of the LULC class
@@ -152,6 +154,17 @@ This is a part of **System Response 3.3.a: On screen sampling facility**
 **Luma Geospatial Engine**
 
 This sub-step does not involve any operations within the Luma Geospatial Engine.
+
+### Using default sample data
+
+**Luma User Journey**
+
+1.  The user is automatically directed to use the default sample data if the user [chose to use an existing LULC scheme in Module 2](@sec-user-select-existing-lulc-template)
+2.  The system displays the area of the AOI and the number of sample data loaded.
+
+**Luma Geospatial Engine**
+
+1.  The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset. 
 
 ## Sample Data Preview
 
