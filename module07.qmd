@@ -28,6 +28,12 @@ This is a part of **System Response 7.1: Verification data**
 
 1.  The user is displayed a verification of the required inputs stored in the system.
 
+    ::: callout-important
+    ## Error Handling Notification
+
+    This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
+    :::
+
 **Luma Geospatial Engine**
 
 1.  The system validates availability of the required inputs.
@@ -41,6 +47,18 @@ This is a part of **System Response 7.1: Verification data**
 This is a part of **User Jorney 7.2 Upload data**
 
 1.  The user is prompted to upload the validation map in a `.zip` file. The user is reminded that the validation map should have the same ID class as the one used for the classification.
+
+    ::: callout-tip
+    ## Success Notification
+
+    The system shows a confirmation that the validation data has been validated.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system shows an error message if the uploaded validation map fails the validation process.
+    :::
 
 2.  The system displays the uploaded validation map on a canvas map along with the tabular data.
 
@@ -93,6 +111,12 @@ This is a part of **User Journey 7.3: Thematic accuracy assessment**
 2.  The user can optionally set the confidence interval for the thematic accuracy assessment.
 
 3.  The user is prompted to start the thematic accuracy assessment process.
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system shows an error message if the system fails to run the thematic accuracy assessment.
+    :::
 
 **Luma Geospatial Engine**
 
