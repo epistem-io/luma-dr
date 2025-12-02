@@ -1,12 +1,16 @@
 .Rproj.user
+.Rproj
 .Rhistory
 .RData
 .Ruserdata
 
 /.quarto/
+/*_files/
 
 _book/
 *.html
 *.pdf
 *.docx
 .DS_Store
+
+**/*.quarto_ipynb

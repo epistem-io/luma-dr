@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "LUMA Development Reference"
+  title: "Luma Development Reference"
   # author: 
   # date: "18/09/2025"
   chapters:
@@ -15,10 +15,10 @@ book:
         - ee_init.qmd
         - helpers.qmd
     # - intro.qmd
-    - part: "LUMA Modules"
+    - part: "Luma Modules"
       chapters:
       - module01.qmd
-      - placeholders/module02_placeholder.qmd
+      - module02.qmd
       - module03.qmd
       - module04.qmd
       - placeholders/module05_placeholder.qmd
@@ -33,7 +33,8 @@ book:
     tools:
       - icon: globe
         href: https://epistem.io/
-  
+      - icon: file-pdf
+        href: files/visio_bootcamp.pdf
 bibliography: references.bib
 
 format:
