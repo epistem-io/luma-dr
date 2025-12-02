@@ -30,10 +30,11 @@ The output of this module is near–cloud-free satellite imagery that correspond
 
 This is a part of **User Journey 1.1: Prerequisite Check**
 
-1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`).
+1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system emphasizes on all required shapefile components that needs to be put in the `.zip` file.
+
 2.  The system validates whether the `.zip` file includes all the required shapefile components.
 
-::: callout-warning
+::: callout-important
 ## Error Handling Notification
 
 The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
@@ -55,7 +56,13 @@ This is a part of **User Journey 1.1: Prerequisite Check**
 
 1.  After the user uploads the AOI, they receive a continuous feedback on each the validation process.
 
-::: callout-warning
+::: callout-note
+## Success Notification
+
+The system shows a confirmation when the AOI is loaded successfully.
+:::
+
+::: callout-important
 ## Error Handling Notification
 
 The system provides an error notification if shapefile validation fails.
@@ -67,14 +74,14 @@ The system provides an error notification if shapefile validation fails.
 
 This is a part of **System Response 1.1: Area of Interest Definition**
 
-1.  The system performs a multi-step geometry sanitization process before converting any shapefile or GeoDataFrame into Earth Engine objects. Each correction is handled by exactly one dedicated function:
+1.  The system performs a multi-step geometry sanitization process before converting any shapefile or GeoDataFrame into Earth Engine objects. **These input validation processes for shapefiles are designed mainly for Streamlit compatibility**. Each correction is handled by exactly one dedicated function:
 
     -   The Coordinate Reference System (CRS) is automatically corrected and reprojected to WGS 1984 (EPSG:4326).
 
     ::: callout-tip
     ## Related Functions
 
-    `input_utils.shapefile_validator.fix_crs ():` to resolve coordinate reference system issues.
+    `input_utils.shapefile_validator.fix_crs():` to resolve coordinate reference system issues.
     :::
 
     -   Invalid, empty, or topologically broken geometries are detected and repaired.
@@ -125,12 +132,6 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.final_validation():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
     :::
 
-::: callout-important
-### Feature Notes
-
-The input validation process for shapefiles is modified for Streamlit compatibility. Adjustments might be necessary for other UI platform developments.
-:::
-
 2.  After the system succeeded to validate the shapefile, the system converted the GeoDataFrame file format into Earth Engine geometry format.
 
 ::: callout-tip
@@ -157,17 +158,11 @@ This is a part of **User Journey 1.2: Determining Satellite Imageries Parameters
 
     -   Target map date: Choose the range of period of satellite imagery in a single year format (YYYY) or full-date format (YYYY-MM-DD). If YYYY is used as the input format, the year option starts from 1972 until present year. The year 2020 is shown as the default option.
 
-    -   Spatial resolution: Specify the desired spatial resolution.
-
-        ::: callout-important
-        ## Feature Notes
-
-        During Phase 1, only Landsat data will be utilized; therefore, the spatial resolution will be set on default to 30 meters.
-        :::
+    -   Spatial resolution: Specify the desired spatial resolution. During Phase 1, only Landsat data will be utilized; therefore, the spatial resolution will be set on default to 30 meters.
 
     -   Sensor type: a list of sensors available based on the selected target map date input parameter. Landsat 8 OLI is shown to be the default option.
 
-        ::: callout-warning
+        ::: callout-important
         ## Error Handling Notification
 
         Since only Landsat data is utilized, the system provides an error notification if no Landsat sensor is available in the selected time range.
@@ -175,9 +170,15 @@ This is a part of **User Journey 1.2: Determining Satellite Imageries Parameters
 
     -   Maximum cloud cover: Set a preferred cloud cover threshold, or use the default value of 30%.
 
-2.  The system shows the number of total satellite images found based on the user parameter input.
+2.  The system provides information on satellite image availability shows the number of total satellite images found based on the user parameter input. The information includes total images found, date range of images, WRS tiles, path row tiles, scene IDs, image acquisition dates, average scene cloud cover, date range, and cloud cover range.
 
-    ::: callout-warning
+    ::: callout-note
+    ## Success Notification
+
+    The system shows the total number of satellite images found.
+    :::
+
+    ::: callout-important
     ## Error Handling Notification
 
     The system provides an error notification if no satellite images were found based on the user's parameter. The user is prompted to change the cloud cover threshold or change the target map date.
@@ -195,7 +196,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     `data_acquisition.Reflectance_Data.OPTICAL_DATASETS` defines the properties of Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) to be fetched for optical data processing.
     :::
 
-    The system currently supports Landsat 1-3 RAW collection and and Landsat 4-9 surface reflectance (SR) collection. Landsat mission availability is as follows:
+    The system currently supports Landsat 1-3 RAW collection and and Landsat 4-9 surface reflectance (SR) collection. Additionally, Landsat 4 - 9 Top-of-Atmosphere (TOA) is used for retrieving thermal band as additional input band for the classification. This consideration stems from Landsat SR collection thermal band quality which often resulted in no data and prone to over-correction in high contrast land cover feature. Landsat mission availability is as follows:
 
     -   Landsat 1 Multispectral Scanner/MSS (1972 - 1978)
     -   Landsat 2 Multispectral Scanner/MSS (1978 - 1982)
@@ -222,7 +223,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band.
         :::
 
-        ::: callout-important
+        ::: callout-caution
         ## Feature Notes
 
         If Landsat 5-9 is selected, then `data_acquisition.Reflactance_Data.mask_landsat_sr()` should also implement **cirrus** masking using QA_PIXEL band. For now, the masking is only performed for cloud and cloud shadow.
@@ -233,7 +234,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         ::: callout-tip
         ## Related Functions
 
-        `data_acquisition.Reflactance_Data.apply_scale_factors()`: to apply Landsat collection 2 scalling factors using the following formula: Digital Number (DN) \* scale_factor + offset.
+        `data_acquisition.Reflactance_Data.apply_scale_factors()`: to apply Landsat collection 2 scalling factors using the following formula: Digital Number (DN) \* scale_factor + offset. The scale factor will only be applied to optical bands.
         :::
 
     -   The system renames the bands accordingly with the sensor type input.
@@ -244,7 +245,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         `data_acquisition.Reflactance_Data.rename_landsat_bands()`: to standardize Landsat Surface Reflectance (SR) band names based on sensor type. From 'SR_B*' or 'B*' to 'NIR', 'GREEN', etc.
         :::
 
-3.  The system then use the same parameter as multispectral data and use it to search collection 2 TOA data, except for Landsat 1-3 MSS.
+3.  The system then use the same parameter as multispectral data and use it to search collection 2 TOA data, except for Landsat 1-3 MSS. The TOA data thermal band (namely, band 10) is then stacked with multispectral band from SR data. Since band 11, contain larger calibration uncertainty, only band 10 is used. No additional pre-processing is conducted for thermal band since digital number value alone is considered satisfactory for discriminating land cover features.
 
     ::: callout-tip
     ## Related Functions
@@ -254,7 +255,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
 
-    ::: callout-important
+    ::: callout-caution
     ## Feature Notes
 
     Creating composite, clip, and mosaic of the image collection is currently conducted on Streamlit.
@@ -270,34 +271,37 @@ This is a part of **User Journey 1.3: Download Satellite Imagery**
 
 1.  The system visualize the satellite imagery on a canvas map in bands NIR (near-Infrared), RED, and GREEN. The map is centralized on the AOI.
 
-2.  A summary report containing the metadata of the collected satellite imagery that includes:
+2.  The user can download the satellite imagery through two options:
 
-    -   Total images found
-    -   Data range of images
-    -   Unique WRS tiles
-    -   Path row tiles
-    -   Scene IDs
-    -   Image acquisition dates
-    -   Average scene cloud cover
-    -   Date range
-    -   Cloud cover range
+    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB. Direct download settings are defined from Streamlit.
 
-    The user can download the information of the scene ID, image acquisition dates, and average cloud cover as a `.csv` format.
+    ::: callout-note
+    ## Success Notification
 
-3.  The user can download the satellite imagery through two options:
-
-    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB.
+    The system shows a confirmation if the URL for direct download of satellite imagery is successfully made.
+    :::
 
     ::: callout-important
-    ## Feature Notes
+    ## Error Handling Notification
 
-    1.  The constraints that force the satellite image file size to be within the allowable limit (such as AOI extent, spatial resolution, bit depth, and image format) have not yet been defined.
-    2.  Direct download settings are defined from Streamlit.
+    The system provides an error notification if the system fails to create the URL for direct download and suggests the user to use Google Cloud Storage instead or use smaller AOI area.
     :::
 
     b.  Export to Google Cloud Storage: Downloads the image to Google Cloud Storage.
 
-4.  The user is given the option to continue to [Module 2](@sec-module-2)
+    ::: callout-note
+    ## Success Notification
+
+    The system shows a confirmation if the satellite image is successfully saved to Google Cloud Storage.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system provides an error notification if the system fails to export the image to Google Cloud Storage.
+    :::
+
+3.  The user is given the option to continue to [Module 2](@sec-module-2)
 
 **LUMA Geospatial Engine**
 
