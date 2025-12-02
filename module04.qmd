@@ -27,7 +27,7 @@ To be developed
 
 # Process {.unnumbered}
 
-::: callout-warning
+::: callout-important
 ## Error Handling Notification
 
 This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
@@ -44,13 +44,7 @@ This is a part of **User Journey 4.1: Determining separability analysis paramete
 1.  The user is prompted to fill in the parameters for separability analysis. The system provides a default value for each of the parameters as the following:
     -   Spatial resolution used for the separability analysis: 30 meter
     -   Maximum number of pixels which the separability analysis will be conducted to: 5000
-2.  The system shows a message showing Transformed Divergence method will be used to conduct the analysis.
-
-::: callout-important
-## Feature Notes
-
-There is no option for the user to change the separability analysis method.
-:::
+2.  The system shows a message showing Transformed Divergence method will be used to conduct the analysis. In this development phase, there is no option for the user to change the separability analysis method.
 
 **Luma Geospatial Engine**
 
@@ -190,6 +184,12 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 1.  The system shows a progress update indicating that the separability analysis is currently at Step 7 of 7.
 
+    ::: callout-note
+    ## Success Notification
+
+    The system shows a confirmation that separability analysis has been successfully conducted.
+    :::
+
 **Luma Geospatial Engine**
 
 1.  The system computes the class-to-class separability using Transformed Divergence (TD).
@@ -220,18 +220,52 @@ This is a part of **User Journey 4.2: Analyzing separability index result and vi
 
 1.  The user is shown a summary of the number and proportion of sample data for each LULC class from the output of @sec-sample-stats.
 
+    ::: callout-note
+    ## Success Notification
+
+    The system displays a summary of the number and proportion of sample data for each LULC class in a tabular format.
+    :::
+
 2.  The user is shown a summary of the extracted sample features for each LULC class from the output of @sec-sample-pixel-stats.
 
-3.  The user is presented with an overall summary of the separability analysis, including the separability category (good, weak, or poor) for each class and a highlight of which LULC classes require improvement, based on the output of @sec-caluclate-separability-index. A dataframe containing details of the pairwise seaparability is also displayed.
+    ::: callout-note
+    ## Success Notification
+
+    The system displays a summary of the extracted sample features for each LULC class in a tabular format.
+    :::
+
+3.  The user is presented with an overall summary of the separability analysis based on the output of @sec-caluclate-separability-index.
+
+    ::: callout-note
+    ## Success Notification
+
+    The system displays a highlight of separability category (good, weak, or poor) for each class, and highlights which LULC classes require improvement. A dataframe containing details of the pairwise separability is also displayed.
+    :::
 
 4.  The user is provided with interactive visualizations to explore spectral distributions and clustering. Available visualization options include histograms, boxplots, and scatter plots.
 
+    ::: callout-note
+    ## Success Notification
+
+    The system displays visualization options: histograms, boxplots, 3D scatter plot, and 2D scatter plots.
+    :::
+
 **Luma Geospatial Engine**
 
-1.  This step does not involve operations from Luma Geospatial Engine.
+1.  The system provides four different visualization options of the spectral distributions and clustering.
 
-    ::: callout-important
-    ## Feature Notes
+    ::: callout-tip
+    ## Related Functions
 
-    All the spectral features plot visualizations were made on Streamlit script.
+    `sample_data_quality.spectral_plotter.plot_histogram()`: generates overlaid interactive histograms of selected bands showing class-wise frequency distributions
+
+    `sample_data_quality.spectral_plotter.plot_boxplot()`: creates interactive boxplots summarizing per-class band statistics (median, quartiles, outliers) for selected bands.
+
+    `sample_data_quality.spectral_plotter.interactive_scatter_plot()`: produces an interactive 2D scatter plot of two bands with class coloring and hover details for exploring class clustering.
+
+    `sample_data_quality.spectral_plotter.static_scatter_plot()`: renders a static 2D scatter plot with optional confidence ellipses
+
+    `sample_data_quality.spectral_plotter.add_elipse()`: draws a confidence ellipse axis for a class’ 2D band distribution (used by `static_scatter_plot`).
+
+    `sample_data_quality.spectral_plotter.scatter_plot_3d()`: builds an interactive 3D scatter plot to explore three-band feature space and rotate/zoom clusters.
     :::
