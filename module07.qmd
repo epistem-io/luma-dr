@@ -2,100 +2,167 @@
 
 # Module Overview {.unnumbered}
 
-This module enables users to perform a thematic accuracy assessment on LULC map generated in [Module 6](@sec-module-6), comparing it against independent validation data to quantitatively evaluate its quality and reliability. It supports verification of prerequisites from Modules 1 to Module 6, allows confirmation or adjustment of data partitions and model configurations, and computes key metrics such as confusion matrices (overall accuracy (OA), Kappa coefficient (κ), producer's accuracy (PA), and user's accuracy (UA). The module provides phased outputs including numerical/visual results, improvement recommendations, and a spatial confidence level map, facilitating iterative refinements for enhanced map accuracy in applications like environmental monitoring or policy planning.
+To be developed.
 
-This module focuses on the evaluation and validation of LULC classification results derived from remote sensing data. The objective is to provide users with tools and guidance to assess the reliability of their classified maps and determine their suitability for further analysis. Upon completion, the user will have a validated LULC map and a clear understanding of its accuracy.
+# Input {.unnumbered}
 
-## Input {.unnumbered}
+| Name of input       | Input type               | Details              |
+|---------------------|--------------------------|----------------------|
+| Validation map      | User's input             | In shapefile format. |
+| Classified LULC map | Input from Other Modules | Module 6             |
 
-**User’s Input**
-
-1.  Validation map for thematic accuracy assessment.
-
-**Automatic System Input**
-
-1.  None.
-
-**Input from Other Modules**
-
-1.  Final land cover map ([Module 6](@sec-module-6)).
-
-## Output {.unnumbered}
+# Output {.unnumbered}
 
 -   Confusion matrix.
--   Accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
+-   Thematic accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
 
-## Process {.unnumbered}
+# Process {.unnumbered}
 
-```{mermaid}
-flowchart TD
+## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
 
-%% CHECKING PREREQUISITES
-A([<a href="#sec-checking-prerequisites-from-previous-modules">Checking Prerequisites from Previous Modules</a>])
+This is a part of **System Response 7.1: Verification data**
 
-%% THEMATIC ACCURACY ASSESSMENT
-B([<a href="#sec-perform-accuracy-test">Perform Accuracy Test</a>])
-C([<a href="#sec-display-and-review-accuracy-results">Display and Review Accuracy Results</a>])
+### Checking Prerequisites from Previous Modules
 
-A --> B
-B --> C
+**Luma User Journey**
 
-```
+1.  The user is displayed a verification of the required inputs stored in the system.
 
-## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites-from-previous-modules}
+    ::: callout-important
+    ## Error Handling Notification
 
-**Front-end**
+    This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
+    :::
 
-1.  The user is notified if the classified LULC map is missing and prompted to complete [Module 6](@sec-module-6).
+**Luma Geospatial Engine**
 
-**Back-end**
-
--   Checks for classified LULC map from [Module 6](@sec-module-6).
--   If prerequisites missing, guides user to complete necessary steps
+1.  The system validates availability of the required inputs.
 
 ## Thematic Accuracy Assessment {#sec-thematic-accuracy-assessment}
 
-### Perform Accuracy Test {#sec-perform-accuracy-test}
+### Uploading the Validation Map
 
-**Front-end**
+**Luma User Journey**
 
-1.  The user is prompted to upload the validation map.
-2.  The user is prompted to run the accuracy test.
+This is a part of **User Jorney 7.2 Upload data**
 
-**Back-end**
+1.  The user is prompted to upload the validation map in a `.zip` file. The user is reminded that the validation map should have the same ID class as the one used for the classification.
 
-1.  The system extracts classified values at validation sample locations using `sampleRegions()`
+    ::: callout-note
+    ## Success Notification
 
-2.  The system generates confusion matrix using Earth Engine's `errorMatrix()` function by comparing the LULC map generated from [Module 6](@sec-module-6) with validation map uploaded by the user.
+    The system shows a confirmation that the validation data has been validated.
+    :::
 
-3.  The system computes comprehensive accuracy metrics:
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system shows an error message if the uploaded validation map fails the validation process.
+    :::
+
+2.  The system displays the uploaded validation map on a canvas map along with the tabular data.
+
+**Luma Geospatial Engine**
+
+1.  The system verifies if the `.shp` of the validation map is the uploaded inside the `.zip` file.
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
+    :::
+
+2.  The system conducts geometry fixes on the uploaded validation map.
+
+    ::: callout-tip
+    ## Related Function
+
+    `input_utils.shapefile_validator.validate_and_fix_geometry():`to validate and fix geometries issues.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    An error message is displayed if the system failed to run `validate_and_fix_geometry()`.
+    :::
+
+3.  The system converts the validation map from `.gdf` data into Earth Engine Feature Collection format
+
+    ::: callout-tip
+    ## Related Function
+
+    `input_utils.shapefile_validator.convert_roi_gdf()`: to convert geodataframe into EE Feture Collection. The supported multi-geometries type for this conversions are MultiPoint and MultiPolygon.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    An error message is displayed if the system failed to run `convert_roi_gdf()`.
+    :::
+
+### Starting the thematic accuracy assessment
+
+**Luma User Journey**
+
+This is a part of **User Journey 7.3: Thematic accuracy assessment**
+
+1.  The user is prompted to fill in the parameters for the thematic accuracy assessment, including specifying the column that refers to the LULC ID class and the pixel size of the classified LULC map.
+
+2.  The user can optionally set the confidence interval for the thematic accuracy assessment.
+
+3.  The user is prompted to start the thematic accuracy assessment process.
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system shows an error message if the system fails to run the thematic accuracy assessment.
+    :::
+
+**Luma Geospatial Engine**
+
+This is a part of **System Response 7.3: Thematic accuracy assessment**
+
+1.  The system performs a thematic accuracy assessment by validating inputs, sampling the classified LULC map at reference points.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `thematic_assessment.Thematic_Accuracy_Assessment.validate_inputs()`: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in `run_accuracy_assessment()`.
+
+    `thematic_assessment.Thematic_Accuracy_Assessment._extract_confusion_matrix_data()`: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an `ee.ConfusionMatrix` object. This function is used in `run_accuracy_assessment()`.
+
+    `thematic_assessment.Thematic_Accuracy_Assessment._calculate_confidence_interval()`: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in `run_accuracy_assessment()`.
+
+    `thematic_assessment.Thematic_Accuracy_Assessment._calculate_f1_scores()`: Calculates the F1 score for each class using the producer's and user's accuracy values. This function is used in `run_accuracy_assessment()`.
+
+    `thematic_assessment.Thematic_Accuracy_Assessment.run_accuracy_assessment()`: Executes the full thematic accuracy workflow, including validation, sampling (`sampleRegions()`), metric extraction (`errorMatrix()`), confidence interval calculation, and compilation of final results.
+    :::
+
+### Reviewing the thematic accuracy result
+
+**Luma User Journey**
+
+This is a part of **User Journey 7.4: Preview thematic accuracy result**
+
+1.  The system displays the overall accuracy metrics result:
 
     -   **Overall Accuracy (OA)**: Percentage of correctly classified validation samples
     -   **Kappa Coefficient**: Agreement beyond chance, accounting for class distribution
+    -   **Confidence interval at 95%**: The lower and upper bounds that describe the uncertainty range of the overall accuracy estimate at the 95% confidence level
+    -   **Validation map number**: The total number of validation samples used in the thematic accuracy assessment
+
+2.  The system displays the accuracy metrics result on class-level:
+
     -   **Producer's Accuracy**: Measure of classification completeness (1 - omission error)
     -   **User's Accuracy**: Measure of classification reliability (1 - commission error)
+    -   **F1 score**: Summarizes Producer's and User's Accuracy metrics
 
-**Related Function(s):**
+3.  The system displays the confusion matrix.
 
--   `module_7.Evaluate_LULC.thematic_assessment()` - performs complete accuracy assessment workflow with the following sub-functions:
-    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_macro_metrics()` - Calculate **macro-averaged** F1, Precision, Recall
-    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_micro_metrics()` - Calculate **micro-averaged** F1, Precision, Recall
-    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_geometric_mean()` - Calculate Geometric Mean of per-class recalls (sensitivities)
-    -   `module_7.Evaluate_LULC.thematic_assessment.calculate_balanced_accuracy()` - Calculate Balanced Accuracy (macro-averaged recall)
+4.  The user is offered the option to download the overall accuracy metrics result summary or the class-level accuracy result in a `.csv` format.
 
-### Display and Review Accuracy Results {#sec-display-and-review-accuracy-results}
+5.  The user is prompted to return to [Module 6](@sec-module-6) to improve the model classification quality.
 
-**Front-end**
+**Luma Geospatial Engine**
 
-1.  User reviews the thematic assessment results, including the Confusion Matrix and all accuracy metrics.
-2.  If satisfied, the process completes.
-3.  If **unsatisfied**, the user is given the option to go back to previous module to improve the result.
-
-**Back-end**
-
-1.  The system formats and displays a comprehensive accuracy report.
-2.  The system prints the metric results' interpretation to guide users in understanding the metric result.
-
-**Related Function(s):**
-
--   `module_7.Evaluate_LULC.print_metrics()` - displays formatted accuracy results with interpretations
+This sub-step does not involve any operations from Luma Geospatial Engine.

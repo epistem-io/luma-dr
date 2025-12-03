@@ -1,124 +1,220 @@
-# Module 2: Determining LULC Classification Schema and Classes {#sec-module-2}
+# LULC Classification Scheme {#sec-module-2}
 
 # Module Overview {.unnumbered}
 
-This module offers a flexible framework for generating Land Use/Land Cover (LULC) maps tailored to various applications, from broad assessments like deforestation monitoring to detailed analyses reflecting specific management practices or prioritized conservation areas. In the initial phase, only non-hierarchical schemas will be implemented. All classes are treated independently, making it suitable for single-level applications such as deforestation mapping or identifying priority conservation areas.
-
-The output of this module is a well-defined list of LULC classes. The module also manages the selection, input, validation, and storage of LULC classification schemes. Users can select a predefined system schema, upload their own classification file, or enter the classification manually. The module ensures data integrity and provides a downloadable classification table for downstream analysis.
-
-The module incorporates RESTORE+ LULC classifications from Indonesia to support restoration planning, guiding identification of degraded areas and management priorities. These classes are offered as a predefined data classification system.
+To be developed.
 
 # Input {.unnumbered}
 
-**User’s Input**
-
-1.  Default LULC class list.
-2.  Manually entered LULC class list.
-3.  Uploaded LULC class list.
-
-**Automatic System Input**
-
-1.  FAO LULC classes.
-2.  RESTORE+ LULC classes.
+| Name of input | Input Type | Details |
+|------------------------|------------------------|------------------------|
+| User's LULC list of classes | User's input | Entered with `.csv` file or manually defined on the UI |
+| Other existing LULC list of classes | System's input | RESTORE+ LULC class |
 
 # Output {.unnumbered}
 
-LULC classification table
+1.  LULC list of classes to be applied in the final classification result
 
 # Process {.unnumbered}
 
-```{mermaid}
-flowchart TD
+::: callout-important
+## Error Handling Notification
 
-A([<a href="#sec-selection-of-classification-schema">Selection of Classification Schema</a>])
-B([<a href="#sec-user-selecting-the-default-system-classification">User Selecting the Default System's Classification</a>])
-C([<a href="#sec-user-uploading-their-own-classification">User Uploading Their Own Classification</a>])
-D([<a href="#sec-user-entering-the-classification-manually">User Entering the Classification Manually</a>])
-E([<a href="#validation-of-input-data">Validation of Input Data</a>])
-F([<a href="#sec-saving-the-lulc-classification-table">Downloading and Saving the LULC Classification Table</a>])
+This module cannot be accessed if the system does not detect any saved satellite imagery from [Module 1](#sec-module-1).
+:::
 
-%% Flow connections
-A --> B
-A --> C
-A --> D
+## Selection of Classification Scheme {#sec-selection-of-classification-schema}
 
-B --> E
-C --> E
-D --> E
+**Luma User Journey**
 
+This is a part of **User Journey 2.1: Choosing a classification scheme**
 
-E -->|Valid| F
-E -->|Invalid| A
-```
+1.  The user is given the options of creating the classification scheme:
+    a.  Upload the classification scheme
+    b.  Manually define the scheme on the UI
+    c.  Use an existing classification scheme
 
-## Selection of Classification Schema {#sec-selection-of-classification-schema}
+**Luma Geospatial Engine**
 
-**Front-end**
+This sub-step does not involve any operations within the Luma Geospatial Engine.
 
-The user has the option to use the system’s default classification schema, upload a file containing their own classification scheme, or enter the classification manually.
+-   If the user chooses to upload their own schema, the system proceeds to @sec-user-uploading-their-own-classification
+-   If the user chooses to define the classification manually on the UI, the system proceeds to @sec-user-entering-the-classification-manually
+-   If the user chooses a default classification scheme, the system proceeds to @sec-user-select-existing-lulc-template
 
-**Back-end**
+### User Uploading Their Own Classification Scheme {#sec-user-uploading-their-own-classification}
 
-1.  If the user chooses the default schema, the system proceeds to @sec-user-selecting-the-default-system-classification
-2.  If the user chooses to upload their own schema, the system proceeds to @sec-user-uploading-their-own-classification
-3.  If the user chooses to enter the classification manually, the system proceeds to @sec-user-entering-the-classification-manually
+**Luma User Journey**
 
-### User Uploading Their Own Classification {#sec-user-uploading-their-own-classification}
+1.  The user is prompted to upload the `.csv` file containing the classification scheme information.
 
-**Front-end**
+2.  The system displays a guidance notification indicating that the uploaded `.csv` file must contain at least three columns: a class ID (numeric identifier), a class name, and an optional hex color code specifying the display color for each class.
 
-1.  The user uploads the `.XLSX`, `.XLS`, or `.CSV` file.
-2.  If there is an error, the user receives a warning and is prompted to re-upload the corrected file or format.
+3.  The system automatically detects column headers based on common naming conventions. If the expected headers are not found, the user must manually assign the correct column names.
 
-**Back-end**
+4.  The user is prompted to finalize the scheme by clicking a button.
 
-1.  The system displays an Upload button.
+    ::: callout-note
+    ## Success Notification
 
-2.  The system validates the uploaded file, checking:
+    The system shows a confirmation if the classification table is successfully saved to the system.
+    :::
 
-    -   The file is not corrupt.
-    -   The format is valid.
-    -   The file size is within the allowed limit.
-    -   The file is not password-protected.
+    ::: callout-important
+    ## Error Handling Notification
 
-3.  The system then validates and extracts data from sheets, cells, rows, and columns, converting it into a Pandas DataFrame. It checks whether the data is present or empty.
+    The system shows an error message if:
 
-4.  If the validation is successful, the system displays a preview of the data in a table and provides a verification result notification.
+    -   The class ID is not a valid number
+    -   There is a duplicate class ID
+    :::
+
+**Luma Geospatial Engine**
+
+This is a part of **System Response 2.1.a: Uploading classification scheme**
+
+1.  The system automatically detects column headers based on common naming conventions for ID, class name, and color code. If the expected headers are not found, the user must manually assign the correct column names.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.auto_detect_csv_columns()`: this function automatically detects the column headers. The set for the common naming conventions are currently hardcoded as the following:
+
+    -   For ID: "id", "classid", "kode", "code"
+    -   For class name: "classname", "class", "kelas", "name", "nama"
+    -   For color code: "color", "colorcode", "warna", "colour", "hex", "palette"
+    :::
+
+2.  The system validates the uploaded `.csv` to ensure IDs are numeric and unique, applies a set of distinct colors if no color code was provided by the user. The user can change the color code manually.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.process_csv_upload()`: to validate class data by checking ID integrity, assigning colors (`_generate_distinct_colors`), and returning a success status with a summary message.
+
+    `classification_scheme.LULC_scheme_Manager._generate_distinct_colors()`: to generate a predefined set of distinct colors for LULC classes (up to 20). If the number of classes exceeds this limit, the method falls back to generating random colors via `_generate_random_colors()`.
+
+    `classification_scheme.LULC_scheme_Manager._generate_random_colors()`: to generate random hex color code.
+
+    `classification_scheme.LULC_scheme_Manager.finalize_csv_upload()`: to finalize the CSV file by applying any user-assigned colors, saving and sorting the class list, and clearing temporary data.
+    :::
 
 ### User Entering the Classification Manually {#sec-user-entering-the-classification-manually}
 
-**Front-end**
+**Luma User Journey**
 
-1.  The user fills out the input form containing ID, Class, and Color Code fields, and optionally the Description column.
-2.  The system warns the user if the form is incomplete or data conversion fails.
+1.  The user is prompted to fill out a form for each class ID, class name, and hex color code.
 
-**Back-end**
+2.  The system stores each class entry individually as it is added.
 
-1.  The system displays the input form and checks that all required columns are filled.
-2.  Once the input form is converted into a Pandas DataFrame, the data are previewed in a table with a verification status.
+3.  All added classes are displayed in a summary table for preview.
 
-### User Selecting the Default System's Classification {#sec-user-selecting-the-default-system-classification}
+4.  The user can edit or delete the classes in the summary table preview.
 
-**Front-end**
+5.  The user is prompted to finalize the scheme by clicking a button.
 
-If the default classification schema is selected, the user chooses a list of LULC classes from either the RESTORE+ or FAO.
+    ::: callout-note
+    ## Success Notification
 
-**Back-end**
+    The system shows a confirmation if the classification table is successfully saved to the system.
+    :::
 
-1.  The system loads the default N classes from the database and displays the classification in tabular format with an N-class template containing the attributes: ID, Class, and Color Code.
-2.  The system then records the user's selection in its internal database table.
+**Luma Geospatial Engine**
 
+This is a part of **System Response 2.1.b: Manually define classification scheme**
 
-## Downloading and Saving the LULC Classification Table {#sec-saving-the-lulc-classification-table}
+1.  The system validates user-provided class input for numeric ID, non-empty class name, and uniqueness (if adding new classes).
 
-### Downloading and Saving the LULC Classification Table
+    ::: callout-tip
+    ## Related Functions
 
-**Front-end**
+    `classification_scheme.LULC_scheme_Manager.validate_class_input()`: Validates class ID and name, checks for uniqueness, and returns a validity flag with an error message if invalid.
 
-1.  The user can download the table in Excel file format and save it in their local drive.
-2.  The system confirms the download; the user then proceed to [Module 3](@sec-module-3).
+    `classification_scheme.LULC_scheme_Manager.add_class()`: Adds a new class or updates an existing class, validates inputs, assigns colors, sorts classes, and updates the next available ID.
+    :::
 
-**Back-end**
+2.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
 
-1.  The system provides a button to download the result file.
-2.  The classification table is saved as a variable for use in subsequent modules.
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.edit_class()`
+
+    `classification_scheme.LULC_scheme_Manager.delete_class()`
+
+    `classification_scheme.LULC_scheme_Manager.cancel_edit()`
+    :::
+
+### User Selecting a Default Classification Scheme {#sec-user-select-existing-lulc-template}
+
+**Luma User Journey**
+
+1.  The user is prompted to select a default classification scheme. In the current development, only classification scheme from RESTORE+ is available.
+
+2.  The user is prompted to finalize the scheme by clicking a button.
+
+    ::: callout-note
+    ## Success Notification
+
+    The system shows a confirmation if the classification table is successfully saved to the system.
+    :::
+
+**Luma Geospatial Engine**
+
+This is a part of **Response System 2.1.c: Using default classification scheme**
+
+1.  The system loads the chosen classification scheme classes.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.load_default_scheme()`: to load an existing classification scheme from a dataset.
+
+    `classification_scheme.LULC_scheme_Manager.get_default_schemes()`: stores the RESTORE+ LULC class in a dictionary.
+    :::
+
+## Saving and Downloading the LULC Classification Table {#sec-saving-the-lulc-classification-table}
+
+### Saving and Downloading the LULC Classification Table
+
+**Luma User Journey**
+
+This is a part of **User Journey 2.2: Saving and Downloading the LULC Classification Table**
+
+1.  The user can optionally download the table in `.csv` file format and save it in their local device.
+
+2.  The system gets a confirmation of the number of classes saved in the system.
+
+3.  The user is given the option to proceed to [Module 3](@sec-module-3).
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system disables the option to continue to the next module if the system does not detect a satellite imagery saved inside the system.
+    :::
+
+**Luma Geospatial Engine**
+
+This is a part of **System Response 2.2: Save LULC Classification Table and Continue to Next Module**
+
+1.  The system generates a `.csv` file containing the final LULC classification scheme table.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.get_csv_data()` : to generate a `.csv` file containing the final classification table that has been standardized by `get_dataframe`.
+
+    `classification_scheme.LULC_scheme_Manager.get_dataframe()` : to standardize the column names of the LULC classification table to "ID", "Land Cover Class", "Color Palette"
+    :::
+
+2.  The system checks whether the user has defined at least one class.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.has_classes()`: to check if any classes are defined.
+
+    `classification_scheme.LULC_scheme_Manager.get_class_count()`: get the information of the number of the defined classes.
+    :::
+
+3.  The system saved the LULC class classification scheme as an object to be loaded in the next modules.

@@ -1,126 +1,263 @@
-# Reference Data Generation {#sec-module-3}
+# Sample Data Generation {#sec-module-3}
 
 # Module Overview {.unnumbered}
 
-In supervised classification, the quality of reference data directly determines the accuracy of the resulting model. The output of Module 3 is to produce georeferenced point vector datasets for each LULC class defined by the user in the preceding step, [Module 2](@sec-module-2), accompanied by quantitative and visual summaries that facilitate rigorous evaluation, quality control, and optimization for subsequent classification. Upon completion, the user obtains a structured reference datasets for each LULC class, together with statistical diagnostics to assess the quality and representativeness of the data prior to classification.
+To be developed.
 
 # Input {.unnumbered}
 
-**User’s Input**
-
-1.  User's reference dataset
-
-**Input from Other Modules**
-
-1.  User-selected AOI (@sec-selection-of-aoi).
-2.  Near-cloud-free satellite imagery (@sec-visualization-and-saving-data).
-3.  LULC classification table.
+| Name of input | Input Type | Details |
+|------------------------|------------------------|------------------------|
+| User's sample data | User's Input |  |
+| Default sample data | System's Input | RESTORE+ sample data |
+| LULC classification class table | Input from Other Modules | Output from Module 2 |
+| AOI | Input from Other Modules | Output from Module 1 |
+| Near-cloud free satellite imagery | Input from Other Modules | Output from Module 1 |
 
 # Output {.unnumbered}
 
--   Statistical analyses of the reference datasets.
+1.  Statistical analyses of the sample data.
 
 # Process {.unnumbered}
-
-```{mermaid}
-flowchart TD
-%% =======================
-%% Nodes
-%% =======================
-A([<a href="#sec-checking-prerequisites-from-previous-modules">Checking Prerequisites from Previous Modules</a>])
-B([<a href="#sec-user-upload-their-own-training-data">Reference Data Generation</a>])
-C([<a href="#sec-verifying-the-uploaded-training-data">Verifying the Input Reference Data</a>])
-D([<a href="#sec-preview-of-verified-training-data">Preview of Verified Reference Data</a>])
-
-%% =======================
-%% Connections
-%% =======================
-A --> B
-B --> C
-C --> D
-```
 
 ## Checking Prerequisites from Previous Modules
 
 ### Checking Prerequisites from Previous Modules
 
-**Front-end**
+**Luma User Journey**
 
-If the user has not completed [Module 1](@sec-module-1) and [Module 2](@sec-module-2), the system displays a warning message prompting them to finish those modules first.
+This is a part of **System Response 3.1: Checking prerequisites from previous modules**
 
-**Back-end**
+1.  If the user has not completed [Module 1](@sec-module-1) and [Module 2](@sec-module-2), the system displays a warning message prompting them to finish those modules first.
 
-The system checks whether the [default system's classification](@sec-user-selecting-the-default-system-classification) is selected in [Module 2](@sec-module-2).
+    ::: callout-important
+    ## Error Handling Notification
 
-1.  If yes, the system proceeds directly to @sec-preview-of-verified-training-data.
-2.  If no, the system verifies the availability of output products from previous modules. If the required products are not available, the system notifies the user to complete the previous modules before proceeding.
+    This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
+    :::
 
-## Reference Data Generation
+2.  The user is prompted to choose how to add sample data, either by [uploading their own dataset](#sec-user-upload-their-own-training-data), using [on-screen sampling](#sec-on-screen-sampling), or using [default sample data](@sec-default-sample-data) .
 
-### User Uploading Their Own Reference Data {#sec-user-upload-their-own-training-data}
+**Luma Geospatial Engine**
 
-**Front-end**
+This sub-step does not involve any operations within the Luma Geospatial Engine.
 
-1.  The user uploads a `.ZIP` file of the reference data.
+## Sample Data Generation
 
-**Back-end**
+### User Uploads Their Own Sample Data {#sec-user-upload-their-own-training-data}
 
-1.  The system provides an upload interface that accepts only `.ZIP` file (containing point features with LULC class attributes) or `.CSV`/`.XLS`/`.XLSX` format (containing point coordinates and associated LULC class labels established in [Module 2](@sec-module-2)).
+**Luma User Journey**
 
-## Verifying the Input Reference Data {#sec-verifying-the-uploaded-training-data}
+This is a part of **User Journey 3.1: Identifying sample data availability**
 
-### Verifying the Input Reference Data
+1.  The user is prompted to upload a `.zip` file containing their sample data.
 
-**Front-end**
+    ::: callout-important
+    ## Error Handling Notification
 
-1.  The user receives a notification indicating the quality of their uploaded reference data
+    The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
+    :::
 
-**Back-end**
+2.  The user is prompted to specify the column header that specify the LULC class. This is a part of **User Journey 3.2a: Uploading sample data**
 
-1.  The system chooses whether to display the Class ID or the Class Name for the reference data.
+**Luma Geospatial Engine**
 
-::: callout-tip
-## Related Function(s)
+1.  The system verifies the format data input of the `.shp` inside the `.zip` . This is a part of **System Response 3.2.a: Verifying the uploaded sample data format**
 
-`module_3.sample_quality.get_display_property():` to determine which properties (column in the reference data) to display
-:::
+2.  Once the input format data is validated, the system runs @sec-verify-sample-data
 
-2.  The system generates a dictionary that maps class IDs to their corresponding class names, and then adds a 'Class Name' column to the DataFrame based on this mapping.
+### Verifying Sample Data from User's Input {#sec-verify-sample-data}
 
-::: callout-tip
-## Related Function(s)
+**Luma User Journey**
 
-`module_3.sample_quality.class_renaming():` to crate a mapping between class IDs and class names.
+1.  The user receives continuous feedback on the status of their sample data verification. Five steps are displayed in the status panel:
 
-`module_3.sample_quality.add_class_names():` to add new column with class names to a Pandas DataFrame.
-:::
+    1.  Checking the field containing class names
+    2.  Validating the class entries
+    3.  Checking whether class IDs are sufficient
+    4.  Verifying that sample points fall within the AOI
+    5.  Generating a summary of the sample data status
 
-3.  The system analyzes the reference data to determine:
+2.  The user is shown a preview of the uploaded sample data on a map canvas and a preview table of the uploaded sample data.
 
-    -   The list and count of unique classes.
+3.  The user is then prompted to process the sample data.
 
-    -   The number of sample points per class.
+    ::: callout-note
+    ## Success Notification
 
-::: callout-tip
-## Related Function(s)
+    The system shows a confirmation if the sample data is successfully verified.
+    :::
 
-`module_3.sample_quality.sample_stats():` to compute basic statistics of the training data.
-:::
+    ::: callout-important
+    ## Error Handling Notification
 
-## Preview of Verified Reference Data {#sec-preview-of-verified-training-data}
+    The system provides an error notification if the system fails to conduct the sample data verification, along with the specific message at which step the validation failed.
+    :::
 
-### Preview of Verified Reference Data
+4.  The user is provided with the summary display of the sample data.
 
-**Front-end**
+    ::: callout-note
+    ## Success Notification
 
-The user reviews the verified reference dataset displayed in a table.
+    A notification shows a highlight of which class has insufficient sample data, the number of sample data that falls outside the AOI, and the total number of classes that has sample data outside the AOI.
+    :::
 
-**Back-end**
+5.  The system provides an option to move to [on-screen sampling](#sec-on-screen-sampling) to add more sample data. This is a part of **User Journey 3.2.b: Choosing to add new sample data for insufficient class**
 
-The system presents a recap table with columns for ID, class, number of points, and percentage.
+6.  If the user is satisfied with the sample data, the user is prompted to finalize the sample data by clicking a button.
 
-::: callout-tip
-## Related Function(s)
+    ::: callout-note
+    ## Success Notification
 
-`module_3.sample_quality.get_sample_stats_df():` to convert the result from `sample_stats()` into a formatted dataframe.
-:::
+    The system shows a confirmation if the sample data is successfully saved into the system.
+    :::
+
+**Luma Geospatial Engine**
+
+This is a part of **System Response 3.2.b: Verifying the uploaded sample data's content and adding new sample data**
+
+1.  The system checks which column in the sample dataset should be used as the class label.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `sample_data.SyncTrainData.SetClassField():` Set the class name field for sample data.
+    :::
+
+2.  The system validates class labels in the sample dataset by filtering out class values that do not exist in the classification scheme from [Module 2](@sec-module-2), and updates the sample data and validation report accordingly.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `sample_data.SyncTrainData.ValidClass():` Validate classes in sample data.
+    :::
+
+3.  The system checks the number of sample data for each class. The minimum required sample size per class is currently hard-coded at 20.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `sample_data.SyncTrainData.CheckSufficiency():` Check if there are sufficient samples per class.
+    :::
+
+4.  The system filters the training samples so only those that spatially overlap the AOI remain, updates validation counts, and records warnings if AOI filtering fails.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `sample_data.SyncTrainData.FilterTrainAoi():` Check if there are sufficient samples per class.
+    :::
+
+5.  The system generates a summary table of the user's uploaded sample data. The summary includes:
+
+    -   LULC class ID
+    -   LULC class name
+    -   Number of sample data of the LULC class
+    -   Percentage of the sample data count
+    -   Sufficiency category of the LULC class' sample data
+
+    ::: callout-tip
+    ## Related Functions
+
+    `sample_data.SyncTrainData.TrainDataRaw():` Check if there are sufficient sample data per class.
+    :::
+
+### On-Screen Sampling {#sec-on-screen-sampling}
+
+**Luma User Journey**
+
+This is a part of **System Response 3.3.a: On screen sampling facility**
+
+1.  The system shows an interactive map where user can add a sample data. If the user already uploaded their own sample data, the verified sample data will be shown on the interactive map.
+
+    ::: callout-note
+    ## Success Notification
+
+    The system shows a confirmation that the uploaded sample data has been loaded to the on-screen canvas, along with the number of sample data uploaded.
+    :::
+
+2.  The system lists all LULC classes defined in Module 2. The user assign new sample points accordingly to the correct class.
+
+3.  The system offers an option to save the result from on-screen sampling process to their local device.
+
+4.  The user is prompted to finalize the on-screen sampling process by clicking a button.
+
+    ::: callout-note
+    ## Success Notification
+
+    Once, finalized the system shows a summary of the number of the modified sample data after on-screen process.
+    :::
+
+5.  The system then moves to @sec-sample-data-preview.
+
+**Luma Geospatial Engine**
+
+This sub-step does not involve any operations within the Luma Geospatial Engine. The on-screen sampling feature was developed using `folium` for the Streamlit development.
+
+### Using Default Sample Data {#sec-default-sample-data}
+
+**Luma User Journey**
+
+1.  The user is automatically directed to use the default sample data if the user [chose to use an existing LULC scheme in Module 2](@sec-user-select-existing-lulc-template)
+
+2.  The system displays the area of the AOI and the number of sample data loaded on a map canvas.
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system shows an error notification if RESTORE+ data is failed to be loaded. This could be due to the AOI located outside the scope of RESTORE+ dataset, or the AOI is too big.
+    :::
+
+    ::: callout-note
+    ## Success Notification
+
+    The system displayed a summary of the number of sample data loaded from RESTORE+ data that matches with the AOI saved in the system, and the area of AOI in km2.
+    :::
+
+**Luma Geospatial Engine**
+
+1.  The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset.
+
+## Sample Data Preview {#sec-sample-data-preview}
+
+### Sample Data Preview
+
+**Luma User Journey**
+
+This is a part of **System Response 3.4: Verified sample data preview**
+
+1.  The user is provided with the summary display of the **updated** sample data.
+
+    ::: callout-note
+    ## Success Notification
+
+    A notification shows a highlight of which class has insufficient sample data, the number of sample data that falls outside the AOI, and the total number of classes that has sample data outside the AOI.
+    :::
+
+2.  The user is prompted to confirm that they will use the sample dataset.
+
+    ::: callout-note
+    ## Success Notification
+
+    The system shows a confirmation that the sample data has been saved into the system.
+    :::
+
+3.  The user is given the option to proceed to @sec-module-4 .
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system disables the option to continue to the next module if the system does not detect any sample data stored in the system.
+    :::
+
+**Luma Geospatial Engine**
+
+1.  The system runs @sec-verify-sample-data for the **updated** sample data.
+
+    ::: callout-caution
+    ## Feature Note
+
+    Visio diagram and source code needs to be updated to move sample data splitting to Module 6. It is currently still in Module 3.
+    :::
+
+2.  The system saved the sample data as an object to be loaded in the next modules.

@@ -2,31 +2,39 @@ project:
   type: book
 
 book:
-  title: "Epistem-X Technical Reference Document"
-  author: "IIASA"
-  date: "18/09/2025"
+  title: "Luma Development Reference"
+  # author: 
+  # date: "18/09/2025"
   chapters:
     - index.qmd
+    - writing_guidelines.qmd
+    - testing_guidelines.qmd
+    - part: "General Development Settings"
+      chapters: 
+        - python_setup.qmd
+        - ee_init.qmd
+        - helpers.qmd
     # - intro.qmd
-    - part: "Epistem-X Modules"
+    - part: "Luma Modules"
       chapters:
       - module01.qmd
-      - placeholders/module02_placeholder.qmd
+      - module02.qmd
       - module03.qmd
       - module04.qmd
       - placeholders/module05_placeholder.qmd
       - module06.qmd
       - module07.qmd
       - placeholders/module08_placeholder.qmd
-    - summary.qmd
-    - references.qmd
+    # - summary.qmd
+    # - references.qmd
   sidebar:
     logo: images/epistem_logo_color.png
     search: true
     tools:
       - icon: globe
         href: https://epistem.io/
-  
+      - icon: file-pdf
+        href: files/visio_bootcamp.pdf
 bibliography: references.bib
 
 format:
