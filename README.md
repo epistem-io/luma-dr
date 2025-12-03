@@ -8,22 +8,24 @@ To contribute to this development reference, please follow these steps:
 
 1. Clone this repository to your local machine.
 2. Create a new branch for your changes. 
-3. Make your changes to the relevant `.qmd` files. This changes must also be written in the Braindump page on the "To-Settle" part if there are any disputable decisions from the comments, or the "Work in Progress" section if there are no disputable decisions. These sections will be updated once the PR is merged.
+3. Make your changes to the relevant `.qmd` files. This changes must also be written in the Braindump page on the "To-Settle" part if there are any disputable decisions from the comments, or the "Work in Progress" section if there are no disputable decisions. These sections will be updated once the pull-request of the branch is merged.
 4. Test your changes by rendering the Quarto book locally.
-5. Commit your changes and push them to your branch. Write the commit message in the format: `[ModuleXX] Short description of changes`.
-6. Open a pull request for review.
+5. Commit your changes and push them to your branch. It's recommended to write the commit message in the format: [ModuleXX] Short description of changes.
+6. Open a pull-request for review.
 7. A meeting will be scheduled to discuss and review the changes. Once approved, the changes will be merged into the main branch.
 
 ## Repository Structure  
 
 The documentation is organized into the following structure: 
 
+```
 ├── images/                 : Folder containing image assets
 ├── files/                  : Folder containing additional files and resources, such as the Visio diagram of the modules for the User Journey and System Response reference
 └── _quarto.yml             : Quarto configuration file
-
+```
 The rendered development reference are structured as follows:
 
+```
 ├── index.qmd               : Landing page  
 ├── ee_init.qmd             : Initialization instructions for Earth Engine. Development reference for `luma-stack/src/epistemx/ee_init.py`
 ├── python_setup.qmd        : Python environment setup guide
@@ -38,4 +40,4 @@ The rendered development reference are structured as follows:
 ├── module06.qmd            : Development reference for `luma-stack/src/epistemx/classification.py`
 ├── module07.qmd            : Development reference for `luma-stack/src/epistemx/thematic_assessment.py`
 └── module08.qmd            : Development reference for `luma-stack/src/epistemx/post_classification.py`
-
+```
