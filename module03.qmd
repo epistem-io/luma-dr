@@ -58,15 +58,13 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
     The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
     :::
 
-2.  The user is prompted to specify the column header that specify the LULC class. 
-    This is a part of **User Journey 3.2a: Uploading sample data**
+2.  The user is prompted to specify the column header that specify the LULC class. This is a part of **User Journey 3.2a: Uploading sample data**
 
 **Luma Geospatial Engine**
 
-1.  The system verifies the format data input of the `.shp` inside the `.zip` . 
-    This is a part of **System Response 3.2.a: Verifying the uploaded sample data format**
+1.  The system verifies the format data input of the `.shp` inside the `.zip` . This is a part of **System Response 3.2.a: Verifying the uploaded sample data format**
 
-2.  Once the input format data is validated, the system runs @sec-verifying-the-uploaded-training-data
+2.  Once the input format data is validated, the system runs @sec-verify-sample-data
 
 ### Verifying Sample Data from User's Input {#sec-verify-sample-data}
 
@@ -80,7 +78,7 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
     4.  Verifying that sample points fall within the AOI
     5.  Generating a summary of the sample data status
 
-2.  The user is shown a preview of the uploaded sample data on a map canvas and a preview table of the uploaded sample data. 
+2.  The user is shown a preview of the uploaded sample data on a map canvas and a preview table of the uploaded sample data.
 
 3.  The user is then prompted to process the sample data.
 
@@ -96,7 +94,7 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
     The system provides an error notification if the system fails to conduct the sample data verification, along with the specific message at which step the validation failed.
     :::
 
-4.  The user is provided with the summary display of the sample data. 
+4.  The user is provided with the summary display of the sample data.
 
     ::: callout-note
     ## Success Notification
@@ -113,7 +111,6 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
 
     The system shows a confirmation if the sample data is successfully saved into the system.
     :::
-
 
 **Luma Geospatial Engine**
 
@@ -210,7 +207,7 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
     The system shows an error notification if RESTORE+ data is failed to be loaded. This could be due to the AOI located outside the scope of RESTORE+ dataset, or the AOI is too big.
     :::
-    
+
     ::: callout-note
     ## Success Notification
 

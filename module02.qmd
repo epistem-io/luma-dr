@@ -1,4 +1,4 @@
-# Determining LULC Classification Scheme and Classes {#sec-module-2}
+# LULC Classification Scheme {#sec-module-2}
 
 # Module Overview {.unnumbered}
 

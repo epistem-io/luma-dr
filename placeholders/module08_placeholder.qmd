@@ -1,4 +1,4 @@
-# Post Classification Analysis and Housekeeping {#sec-module-8}
+# Post Classification Analysis {#sec-module-8}
 
 ::: callout-caution
 ## Under development

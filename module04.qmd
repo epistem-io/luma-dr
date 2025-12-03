@@ -1,4 +1,4 @@
-# Spectral Separability Analysis {#sec-module-4}
+# Sample Data Quality Analysis {#sec-module-4}
 
 # Module Overview {.unnumbered}
 
