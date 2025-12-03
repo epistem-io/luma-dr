@@ -8,11 +8,14 @@ To contribute to this development reference, please follow these steps:
 
 1. Clone this repository to your local machine.
 2. Create a new branch for your changes. 
-3. Make your changes to the relevant `.qmd` files. This changes must also be written in the Braindump page on the "To-Settle" part if there are any disputable decisions from the comments, or the "Work in Progress" section if there are no disputable decisions. These sections will be updated once the pull-request of the branch is merged.
-4. Test your changes by rendering the Quarto book locally.
-5. Commit your changes and push them to your branch. It's recommended to write the commit message in the format: [ModuleXX] Short description of changes.
-6. Open a pull-request for review.
-7. A meeting will be scheduled to discuss and review the changes. Once approved, the changes will be merged into the main branch.
+3. Make your changes to the relevant `.qmd` files accordingly.
+   - If the proposed modification involves changing the source code in [luma-stack](https://github.com/epistem-io/luma-stack), the changes should be put in a `callout-warning` type.
+   - If the proposed modification only requires clarifying text in the `.qmd` file, apply the change directly to the body text of the development reference. To ensure the changes are traceable in comparison mode, avoid altering blank lines.
+5. This specific modification must also be written in the Notion's Braindump page on the "Work in Progress" section if there are no disputable decisions. These sections will be updated once the pull-request of the branch is merged.
+6. **Test your changes first by rendering the Quarto book locally!**
+7. Commit your changes and push them to your branch. It's recommended to write the commit message in the format: [ModuleXX] Short description of changes.
+8. Open a pull-request for review.
+9. A meeting will be scheduled to discuss and review the changes. Once approved, the changes will be merged into the main branch and your branch will be deleted.
 
 ## Repository Structure  
 
