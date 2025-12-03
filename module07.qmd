@@ -48,7 +48,7 @@ This is a part of **User Jorney 7.2 Upload data**
 
 1.  The user is prompted to upload the validation map in a `.zip` file. The user is reminded that the validation map should have the same ID class as the one used for the classification.
 
-    ::: callout-tip
+    ::: callout-note
     ## Success Notification
 
     The system shows a confirmation that the validation data has been validated.

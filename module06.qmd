@@ -166,9 +166,11 @@ This is a part of **System Response 6.3: Testing model's accuracy**
 
 **Luma User Journey**
 
-1.  The user can visualizes the LULC classification result on a canvas map along with the training data layer.
+1.  This step is optional for the user.
 
-2.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
+2.  The user can visualizes the LULC classification result on a canvas map along with the training data layer.
+
+3.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
 
 **Luma Geospatial Engine**
 
@@ -178,7 +180,9 @@ This sub-step does not involve any operations from Luma Geospatial Engine.
 
 **Luma User Journey**
 
-1.  The user can download the classified LULC map through two options:
+1.  This step is optional for the user.
+
+2.  The user can download the classified LULC map through two options:
 
     a.  Direct download: Downloads the image locally in the user's device. This option is only available if the classification map result is less than 32 MB.
 
@@ -202,7 +206,7 @@ This sub-step does not involve any operations from Luma Geospatial Engine.
     The system shows a confirmation if the classified LULC map is successfully saved to Google Cloud Storage.
     :::
 
-        ::: callout-important
+    ::: callout-important
     ## Error Handling Notification
 
     The system provides an error notification if the system fails to export the classified LULC map to Google Cloud Storage.
