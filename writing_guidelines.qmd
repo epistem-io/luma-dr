@@ -1,1 +1,87 @@
 # Writing Guideline for Developers {.unnumbered}
+
+## Development Platforms
+
+To facilitate the collaborative environment of Luma, we are using several platforms:
+
+1.  Notion (the “Braindump”)
+
+    This refers to what we call a “Braindump.” We use this Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine. There are several databases within the Braindump with each serving a specific purpose:
+
+    -   **Structured pages for Luma Geospatial Engine development:** These are dedicated pages for documenting ideas, plans, and discussions related to the development of the Luma Geospatial Engine.
+
+    -   **Structured pages for Luma User Interface development:** These pages are dedicated to the implementation details of the Luma User Interface.
+
+    -   **To-Settle:** A list of topics or issues that require further discussion or a decision to be made before proceeding.
+
+    -   **Work in Progress:** A list for tracking ongoing tasks related to Luma Geospatial Engine updates.
+
+    -   **Unresolved issues from Pull Request approvals:** This section records issues or feedback that emerged during the pull request review process and need additional work or clarification before approval.
+
+    -   **Meeting Notes:** A collection of notes, summaries, and key decisions from meetings related to Luma’s development activities.
+
+    -   **Sketchbooks:** A creative space for brainstorming, drafting, or sketching out ideas, workflows, or conceptual designs before formal documentation.
+
+2.  Quarto (the “Documentation Reference”)
+
+    We use Quarto to document the stages of improvements that are (or will be) implemented in the Luma Geospatial Engine.
+
+3.  Luma Geospatial Engine Python package
+
+    The Luma Geospatial Engine is a Python-based package that powers the Luma platform for the core functionality and computational tools for geospatial analysis and processing.
+
+4.  GitHub
+
+    GitHub serves as the collaboration and version control platform for the Luma Geospatial Engine. It is where all codebases are managed, reviewed, and deployed. There are two main repositories currently operating:
+
+    -   [luma-stack](https://github.com/epistem-io/luma-stack): this repository is used to host Luma Geospatial Engine Python package.
+
+    -   [luma-dr](https://github.com/epistem-io/luma-dr): this repository is used to host the Documentation Reference.
+
+## Quick Summary of the Workflow
+
+To contribute to Luma's development, the following steps should be taken:
+
+1.  Write your comments in the corresponding section of the Braindump. Tag the person you want to discuss the comments with to ensure they see your input.
+
+    -   If you notice there is a disagreement in the comment where someone else disagrees with your thought, write the topic in the **To-Settle** list so a meeting can be arranged to settle the dispute. Additionally, you can write down the arguments of your comments on the page to be discussed in the meeting. Once the dispute is resolved, the topic should be moved to
+
+    -   If there is no disagreement about a proposed development, the topic should be added directly to the **Work in Progress** list.
+
+2.  Create a new branch in luma-dr to write down your updates. For more details, follow the guidance in the README section on luma-dr on how to make an update to the repository.
+
+3.  Create a pull request in luma-dr from the new branch you created to propose your suggested changes to the main branch. A pull request meeting will be held regularly to determine whether your changes will be accepted or rejected.
+
+4.  Once all suggested modifications are merged into the main branch of luma-dr, contributors of those modifications can then begin implementing the corresponding changes in luma-stack, starting from a new branch.
+
+    ::: callout-tip
+    If your changes are minor (e.g., bug fix, refactoring), you can directly create a pull-request in luma-stack to be reviewed during the next pull request meeting.
+    :::
+
+5.  During the next pull request meeting, three agendas will take place:
+
+    1.  Reviewing and accepting pull-requests in luma-stack that correspond to the accepted modifications from the previous luma-dr meeting.
+
+    2.  Modifying the luma-dr based on the pull-request approvals.
+
+    3.  Reviewing new pull-requests made for the next updates.
+
+6.  There might be cases where a pull-request needs to be accepted even though there are some failed tests to the update. These failures needs to be addressed in the comments of the pull-request acceptance, and also in the **Unresolved issues from Pull-Request approvals** list.
+
+## Notion
+
+To be developed
+
+## Development Reference
+
+To be developed
+
+## GitHub
+
+### Branches
+
+### Pull-Requests
+
+## Python Method Writing Convention
+
+To be developed
