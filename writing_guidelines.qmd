@@ -153,6 +153,10 @@ For example, if a `luma-stack` update requires changes in `luma-dr`, include a l
 
 To be developed. A standardized licensing framework will be provided to ensure consistent open-source and internal usage across repositories.
 
+### Releases
+
+To be developed. The release process defines how stable versions of Luma tools and documentation are packaged, tagged, and shared. Releases ensure that users and collaborators can always access a verified version of the software or documentation.
+
 ## Python Method Writing Convention
 
 To be developed
