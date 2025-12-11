@@ -168,6 +168,12 @@ This is a part of **User Journey 1.2: Determining Satellite Imageries Parameters
         Since only Landsat data is utilized, the system provides an error notification if no Landsat sensor is available in the selected time range.
         :::
 
+        ::: callout-warning
+        ## Feature Notes
+
+        A warning should be provided about the limited availability of Landsat 1-3 data if the user uses temporal scope input between 1972-1984.
+        :::
+
     -   Maximum cloud cover: Set a preferred cloud cover threshold, or use the default value of 30%.
 
 2.  The system provides information on satellite image availability shows the number of total satellite images found based on the user parameter input. The information includes total images found, date range of images, WRS tiles, path row tiles, scene IDs, image acquisition dates, average scene cloud cover, date range, and cloud cover range.
