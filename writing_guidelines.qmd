@@ -6,23 +6,9 @@ To facilitate the collaborative environment of Luma, we are using several platfo
 
 1.  Notion (the “Braindump”)
 
-    This refers to what we call a “Braindump.” We use this Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine. There are several databases within the Braindump with each serving a specific purpose:
+    This refers to what we call a “Braindump.” We use this Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine.
 
-    -   **Structured pages for Luma Geospatial Engine development:** These are dedicated pages for documenting ideas, plans, and discussions related to the development of the Luma Geospatial Engine.
-
-    -   **Structured pages for Luma User Interface development:** These pages are dedicated to the implementation details of the Luma User Interface.
-
-    -   **To-Settle:** A list of topics or issues that require further discussion or a decision to be made before proceeding.
-
-    -   **Work in Progress:** A list for tracking ongoing tasks related to Luma Geospatial Engine updates.
-
-    -   **Unresolved issues from Pull Request approvals:** This section records issues or feedback that emerged during the pull request review process and need additional work or clarification before approval.
-
-    -   **Meeting Notes:** A collection of notes, summaries, and key decisions from meetings related to Luma’s development activities.
-
-    -   **Sketchbooks:** A creative space for brainstorming, drafting, or sketching out ideas, workflows, or conceptual designs before formal documentation.
-
-2.  Quarto (the “Documentation Reference”)
+2.  Quarto (the "Development Reference”)
 
     We use Quarto to document the stages of improvements that are (or will be) implemented in the Luma Geospatial Engine.
 
@@ -44,7 +30,7 @@ To contribute to Luma's development, the following steps should be taken:
 
     -   If there is no disagreement about a proposed development, the topic should be added directly to the **Work in Progress** list.
 
-2.  Create a new branch in `luma-dr` to write down your updates. For more details, follow the guidance in the README section on `luma-dr` on how to make an update to the repository.
+2.  Create a new branch in `luma-dr` to write down your updates. For more details, follow the guidance in the `README.md` on `luma-dr` on how to make an update to the repository.
 
 3.  Create a pull request in `luma-dr` from the new branch you created to propose your suggested changes to the main branch. A pull request meeting will be held regularly to determine whether your changes will be accepted or rejected.
 
@@ -65,13 +51,28 @@ To contribute to Luma's development, the following steps should be taken:
 6.  There might be cases where a pull-request needs to be accepted even though there are some failed tests to the update. These failures needs to be addressed in the comments of the pull-request acceptance, and also in the **Unresolved issues from Pull-Request approvals** list.
 
 ::: callout-tip
-
 For more reference on the workflow (including a case example), refer to [this](https://icrafcifor.sharepoint.com/:p:/r/sites/EPISTEM/Shared%20Documents/EPISTEM%20Consortium/4%20Events/2025111721_BootcampEpistem/epistem_bootcamp_2026.pptx?d=w7c7fb473330a437e9835326eba440760&csf=1&web=1&e=ZdhbnG) slide presented during the Bootcamp.
 :::
 
 ## Notion
 
-To be developed
+To be developed.
+
+There are several databases within the Braindump with each serving a specific purpose:
+     
+-   **Structured pages for Luma Geospatial Engine development:** These are dedicated pages for documenting ideas, plans, and discussions related to the development of the Luma Geospatial Engine.
+
+-   **Structured pages for Luma User Interface development:** These pages are dedicated to the implementation details of the Luma User Interface.
+
+-   **To-Settle:** A list of topics or issues in the comment section of the Braindump that require further discussion or a decision to be made before the updates are documented to the Development Reference.
+
+-   **Work in Progress:** A list for tracking ongoing tasks related to Luma Geospatial Engine updates.
+
+-   **Unresolved issues from Pull Request approvals:** This section records issues or feedback that emerged during the pull request review process and need additional work or clarification before approval.
+
+-   **Meeting Notes:** A collection of notes, summaries, and key decisions from meetings related to Luma’s development activities.
+
+-   **Sketchbooks:** A creative space for brainstorming, drafting, or sketching out ideas or conceptual designs before formal documentation. This section is intentionally unstructured to encourage open brainstorming and creative exploration.
 
 ## Development Reference
 
@@ -101,7 +102,7 @@ All activities regarding the development of software related to Epistem will be 
 
     -   [luma-stack](https://github.com/epistem-io/luma-stack): this repository is used to host Luma Geospatial Engine Python package. To contribute to this repository, please refer to `README.md` in this repository for detailed instructions on setting up a developer environment and configuring your local machine.
 
-    -   [luma-dr](https://github.com/epistem-io/luma-dr): this repository is used to host the Documentation Reference. To contribute to this repository, please refer to `README.md` in this repository for detailed instructions on  installing and configuring Quarto to build and preview documentation locally.
+    -   [luma-dr](https://github.com/epistem-io/luma-dr): this repository is used to host the Documentation Reference. To contribute to this repository, please refer to `README.md` in this repository for detailed instructions on installing and configuring Quarto to build and preview documentation locally.
 
     -   LumaLite: this repository is used to host a minimal working version of the Luma user interface for testing visualization and basic tool interaction. To contribute to this repository, please contact an Epistem admin.
 
@@ -114,19 +115,18 @@ All activities regarding the development of software related to Epistem will be 
 2.  A [branch protection](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule) is targeted for the `main` branch. This means contributors cannot directly make changes to the `main` branch. Instead, all updates must go through a pull request (PR) process to ensure the code is reviewed and tested before merging. The branch protection rules are as the following:
 
     -   Require a pull-request before merging (please refer to the **Pull-Requests (PRs)** section in this page for more details)
-        
+
     -   Require at least one approval before merging.
 
 3.  Each contributor should create a personal working branch from the `main` branch when developing new features or fixes. Once the work is complete, open a pull request to propose merging those changes into the `main` branch, unless there are circumstances where new branch can be created from another feature branch if the work is closely related.
 
 ::: callout-tip
-
 Branch naming convention to specify the specific type of a contribution should be further discussed (e.g., `feature/`, `bugfix/`)
 :::
 
 ### Security and Secrets
 
-1. **Never commit secrets** such as passwords, access tokens, or API keys. Add `.gitignore` file to prevent private files from being accidentally uploaded.
+1.  **Never commit secrets** such as passwords, access tokens, or API keys. Add `.gitignore` file to prevent private files from being accidentally uploaded.
 
 ### Pull-Requests (PRs)
 
@@ -134,8 +134,7 @@ Branch naming convention to specify the specific type of a contribution should b
 
 2.  Keep a PR focused on a specific topic. This specific topic should also correspond to a task in the **Work in Progress** list in Notion. To help identify the task, name the PR title accordingly with what is written in the **Work in Progress** task list.
 
-3.  *Only for `luma-stack` and `luma-dr` repository*: when an update in one repository depends on or affects the other, link the related PRs in their descriptions.
-For example, if a `luma-stack` update requires changes in `luma-dr`, include a link to the corresponding PR in each repository to maintain traceability.
+3.  *Only for `luma-stack` and `luma-dr` repository*: when an update in one repository depends on or affects the other, link the related PRs in their descriptions. For example, if a `luma-stack` update requires changes in `luma-dr`, include a link to the corresponding PR in each repository to maintain traceability.
 
 4.  As required by the branch protection rules, every PR must receive at least one approval before merging. This approval should come from an Epistem admin. You may also request additional reviewers for feedback.
 
@@ -147,7 +146,7 @@ For example, if a `luma-stack` update requires changes in `luma-dr`, include a l
 
     -   Approve: accept the PR as ready to merge
 
-5.  The PR title should reflect the main change made. This title will be used as the commit message when the PR is merged into the main branch.
+6.  The PR title should reflect the main change made. This title will be used as the commit message when the PR is merged into the main branch.
 
 ### Licensing
 
