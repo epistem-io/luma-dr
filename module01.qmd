@@ -261,6 +261,50 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     Creating composite, clip, and mosaic of the image collection is currently conducted on Streamlit.
     :::
 
+## Mosaic and Composite for Satellite Imagery
+
+**Luma Geospatial Engine**
+
+This is a part of **System Response 1.2: Search and Filter Imagery**
+
+The final image (single layer) which will be presented to the user is created using `final_image` methods, which resulted in mosaic imagery or temporal aggregation composite imagery.
+
+1.  Mosaicking
+
+    Mosaicking approach simply stacks all images in the collection and, for each pixel, selects the value from the topmost image according to the collection’s ordering.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `data_acquisition.final_Image.quality_mosaic` create a quality mosaic image based on quality band (source band). `add_quality_band` compute or select the band that will be used for creating the mosaic. Three quality band is supported, namely NDVI and NIR. The mosaic is created based on the highest pixel value of the corresponding band
+    :::
+
+2.  Temporal Aggregation
+
+    Temporal aggregation used statistical reducers, (such as median) to combine pixel values from all images over time. A **median composite** often produces a noticeably cleaner image because cloud and other high-reflectance features tend to occupy the upper tail of the distribution. This approach, naturally excludes the feature, resulting in fewer artifacts and a more consistent surface reflectance. However, if at certain location there’s no valid pixel, the location will resulted in no-data.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `data_acquisition.final_Image.get_temporal_composite:` Create a temporal aggregation composite using earth engine reducers. Supported reducers are `median`, `mean`, `min`, `max`, and `percentile`
+    :::
+
+3.  Valid Pixel Reporting
+
+    To provide comprehensive report on the final image creation, system provide the data range which composite is created. Additionally, valid pixel and no data is estimated and reported to the user
+
+    ::: callout-tip
+    ## Related Functions
+
+    `calculate_coverage` estimate, the valid pixels (unmasked by cloud masking) within AOI. This quantified the ‘no data’ or blank blocks on the final image. This served as alternative approach in reporting the cloud cover within AOI, since in theory, the cloud cover within AOI is already masked out during cloud masking procedure. This function is used within the `get_temporal_composite` and reported in the final image creation.
+
+    -   ::: callout-caution
+        ## Feature Notes
+
+        The `calculate_coverage` serves as an alternative to calculate cloud cover within AOI. Since cloud cover should be masked out during cloud masking and remove during temporal aggregation
+        :::
+    :::
+
 ## Visualization and Saving of Processed Satellite Imagery {#sec-visualization-and-saving-data}
 
 ### Visualization and Saving Processed Satellite Imagery
