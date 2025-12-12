@@ -271,7 +271,7 @@ The final image (single layer) which will be presented to the user is created us
 
 1.  Mosaicking
 
-    Mosaicking approach simply stacks all images in the collection and, for each pixel, selects the value from the topmost image according to the collection’s ordering.
+    Mosaicking approach simply stacks all images in the collection and, for each pixel, selects the value from the topmost image according to the collection’s ordering. The system implement quality mosaic, which allows the use of quality band that affected the order of mosaic
 
     ::: callout-tip
     ## Related Functions
@@ -281,7 +281,7 @@ The final image (single layer) which will be presented to the user is created us
 
 2.  Temporal Aggregation
 
-    Temporal aggregation used statistical reducers, (such as median) to combine pixel values from all images over time. A **median composite** often produces a noticeably cleaner image because cloud and other high-reflectance features tend to occupy the upper tail of the distribution. This approach, naturally excludes the feature, resulting in fewer artifacts and a more consistent surface reflectance. However, if at certain location there’s no valid pixel, the location will resulted in no-data.
+    Temporal aggregation used statistical reducers, (such as median) to combine pixel values from an image collection over time. A **median composite** often produces a noticeably cleaner image because cloud and other high-reflectance features tend to occupy the upper tail of the distribution. This approach, naturally excludes the feature, resulting in fewer artifacts and a more consistent surface reflectance. However, if at certain location there’s no valid pixel across the image collection, the location will resulted in no-data (blank region). Temporal aggregation function is paired with `calculate_coverage` to provide report of the valid pixels in an AOI.
 
     ::: callout-tip
     ## Related Functions
@@ -291,7 +291,7 @@ The final image (single layer) which will be presented to the user is created us
 
 3.  Valid Pixel Reporting
 
-    To provide comprehensive report on the final image creation, system provide the data range which composite is created. Additionally, valid pixel and no data is estimated and reported to the user
+    To provide comprehensive report on the final image creation, system provide the data range which composite is created. Additionally, valid pixel and no data is estimated and reported to the user.
 
     ::: callout-tip
     ## Related Functions
