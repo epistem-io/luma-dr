@@ -66,6 +66,19 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
 
 2.  Once the input format data is validated, the system runs @sec-verify-sample-data
 
+3.  The system loads the sample data after verifying the upload
+
+    -   Check the initial sample count and conduct sample filtering based on its geometry, making sure all of the sample is located inside the area of interest 
+    -   Handle a large dataset by stratified sampling so that the sample does not exceed 5000 features, and maintain class distribution representation
+    -   Convert the shapefile into a geodataframe
+    -   Updates the class field identifier in the training data dictionary.
+
+    ::: callout-tip
+    ## Related Function
+
+    `sample_data.SyncTrainData.LoadTrainData():` to load the sample data into the system by conducting several checks
+    :::
+
 ### Verifying Sample Data from User's Input {#sec-verify-sample-data}
 
 **Luma User Journey**
