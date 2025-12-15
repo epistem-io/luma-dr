@@ -7,7 +7,7 @@ The output of this module is near–cloud-free satellite imagery that correspond
 # Input {.unnumbered}
 
 | Name of Input | Input Type | Details |
-|---------------------------------|-------------------|-------------------|
+|---------------------------------|--------------------|--------------------|
 | Area of Interest | User's input |  |
 | Target map date | User's input | YYYY or DD-MM-YYYY |
 | Desired spatial resolution | User's input | in meters |
@@ -40,7 +40,7 @@ This is a part of **User Journey 1.1: Prerequisite Check**
 The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
 :::
 
-::: callout-note
+::: callout-caution
 ## Feature note
 
 Add options to upload kml/ kmz files for non-gis users.
