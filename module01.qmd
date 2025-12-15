@@ -215,18 +215,12 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     `data_acquisition.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
     :::
 
-    -   The system performs cloud masking with QA_PIXEL band that encodes pixel conditions using specific bit flags. Bitwise AND operation are applied to isolate these conditions, focusing on clouds (bit 4, value 16) and cloud shadows (bit 3, value 8). Pixels matching these flags are excluded to produce a cleaner, near cloud-free image.
+    -   The system performs cloud masking with QA_PIXEL band that encodes pixel conditions using specific bit flags. Bitwise AND operation are applied to isolate these conditions, focusing on clouds (bit 4, value 16) and cloud shadows (bit 3, value 8). Confidence threshold of these features is applied, in which only pixels with high confidence is selected as the final mask. Pixels matching the final mask, is excluded to produce a cleaner image across the image collection.
 
         ::: callout-tip
         ## Related Functions
 
-        `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band.
-        :::
-
-        ::: callout-caution
-        ## Feature Notes
-
-        If Landsat 5-9 is selected, then `data_acquisition.Reflactance_Data.mask_landsat_sr()` should also implement **cirrus** masking using QA_PIXEL band. For now, the masking is only performed for cloud and cloud shadow.
+        `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band with confidence threshold
         :::
 
     -   The system applies scaling to the optical reflectance bands to convert the raw digital numbers (DNs) into physically meaningful surface reflectance values. A scale factor 0.0000275 and offset -0.2 are applied, as defined in the Landsat Collection 2 Surface Reflectance metadata. This conversion standardize the reflectance values to a range of approximately 0 to 1, enabling accurate comparison and analysis across different scenes and sensors.
