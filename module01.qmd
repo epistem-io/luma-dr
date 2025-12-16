@@ -215,7 +215,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     `data_acquisition.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
     :::
 
-    -   The system performs cloud masking with QA_PIXEL band that encodes pixel conditions using specific bit flags. Bitwise AND operation are applied to isolate these conditions, focusing on clouds (bit 4, value 16) and cloud shadows (bit 3, value 8). Confidence threshold of these features is applied, in which only pixels with high confidence is selected as the final mask. Pixels matching the final mask, is excluded to produce a cleaner image across the image collection.
+    -   The system performs cloud masking using the quality assurance band (QA_PIXEL) QA_PIXEL band that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
 
         ::: callout-tip
         ## Related Functions
