@@ -1,1 +1,141 @@
 # Earth Engine Initialization and Authentication {.unnumbered}
+
+## 1. Overview
+
+Luma-GE uses the Google Earth Engine (GEE) Python API for cloud-based geospatial processing. Before any module can call Earth Engine, the runtime must be authorised.
+
+In practice, “authorisation” is two things glued together:
+
+First, you authenticate as an identity (a human Google account, or a service account).
+
+Second, Earth Engine needs a Google Cloud project context so quotas and usage accounting are applied to the right place. Recent Earth Engine Python client changes have made this project context effectively mandatory for common authentication modes. If Earth Engine cannot determine a “quota project”, requests will fail.
+
+Luma-GE currently supports two working authorisation options, each with clear trade-offs: 
+
+1. Manual authentication (interactive OAuth) is best for local development and workflows tied to a human identity. It is interactive (browser + copy/paste code) and is not suitable for unattended deployments.
+
+2. Service account authentication is the default for deployments and CI. It is non-interactive and repeatable, but it is **not a good fit for exporting to a user’s personal Google Drive**, because a service account is not a normal Drive user.
+
+A third option, OAuth2 login in the interface, is not implemented yet. It is mentioned here because it is a plausible path to per-user Drive exports and per-user attribution without sharing credentials.
+
+
+
+## 2. Prerequisites
+
+To use Earth Engine from Python, you need:
+
+A Google account with Earth Engine access, and a Google Cloud project that is registered for Earth Engine and has the Earth Engine API enabled.
+
+If you are using service account mode, you also need a service account created in that Cloud project and a JSON private key for it.
+
+For service accounts, ensure the account has the correct IAM permissions on the project. In practice, the Earth Engine docs point you at Earth Engine resource roles, and some auth modes also require permissions related to Service Usage.
+
+
+
+## 3. Output
+
+An authorised session allowing Luma-GE functions to execute Earth Engine computations, traceable to a specific Google Cloud project.
+
+
+
+## 4. Steps
+
+### 4a. Manual authentication (interactive OAuth)
+
+Manual authentication is the simplest path for developers working locally. It authenticates you as your own Google account. That matters when you need behaviour tied to a human or organisation identity, such as exporting to your Google Drive.
+
+In practice, you run an auth function, a browser window opens, you sign in with a Google account that has Earth Engine access, and you paste an authorisation code back into the terminal (or a notebook cell). After that, initialise Earth Engine with an explicit project ID so usage is attributed correctly.
+
+In Luma-GE, this is implemented in `luma_ge/ee_config.py:authenticate_manually()`, which calls `ee.Authenticate()` followed by `ee.Initialize(project='YOUR_PROJECT_ID')`.
+
+::: callout-warning
+Luma-GE does not support running manual authentication inside a Streamlit interface. Earth Engine’s interactive flow expects terminal/browser control that a hosted app generally does not have. If you need “login” inside a UI, that is an OAuth2 web-app feature (see 4c).
+:::
+
+### 4b. Service account authentication (deployment and CI)
+
+A service account is a non-human Google identity intended for machine-to-machine access. This is the recommended mode for deployments, containers, scheduled jobs, and CI pipelines.
+
+To create and download a service account key, use Google Cloud IAM: create a service account under your project, then create a JSON key for it. Treat the JSON key like a password. If it leaks, rotate it.
+
+In Luma-GE, service account auth is implemented in `luma_ge/ee_config.py:initialize_with_service_account()`. The implementation loads the JSON key, sets `GOOGLE_APPLICATION_CREDENTIALS`, and initialises Earth Engine. If you do not pass a project ID explicitly, it attempts to infer it from the JSON (`project_id`).
+
+Where should the key live? Anywhere except Git.
+
+For local development, keep the JSON file outside the repo and point to it using `GOOGLE_APPLICATION_CREDENTIALS`, or store it in a local `auth/` directory that is excluded by `.gitignore`.
+
+For deployments, inject the key via environment variables or a secrets manager. Luma-GE’s credential discovery helper (`luma_ge/__init__.py:_find_service_account_file()`) searches in this priority order: `GOOGLE_SERVICE_ACCOUNT_JSON_B64`, then `GOOGLE_SERVICE_ACCOUNT_JSON`, then `GOOGLE_APPLICATION_CREDENTIALS`, before looking for local `auth/` folders and container fallbacks.
+
+::: callout-important
+Never commit a service account key to GitHub. Public repos are scraped, history is hard to erase, and forks/caches persist. If a key is exposed, rotate it immediately.
+:::
+
+Exports are the main bottleneck with service accounts. Earth Engine supports Drive exports via `Export.image.toDrive`, but Drive exports target the authenticated identity’s Drive.
+
+A recent Google Workspace policy change adds a very specific sharp edge. From 15 April 2025, newly created Google Cloud IAM service accounts no longer receive the default Google Workspace storage and cannot own Drive items. In practical terms, a service account created after that date will generally fail to export to “My Drive”, because there is no Drive storage space for it to own the exported file.
+
+For service accounts, the recommended pathways are exporting to Google Cloud Storage (GCS) or to an Earth Engine Asset, then sharing/copying results as needed. If you must land results in Drive, a more robust pattern is exporting into a Shared Drive, where the Shared Drive owns the file rather than the service account.
+
+If you want a direct download link for quick debugging or open access downloads (without user login), `ee.Image.getDownloadURL()` is available but intentionally limited (maximum request size 32 MB and maximum grid dimension 10,000 pixels). It will not work for large rasters.
+
+### 4c. OAuth2 user login (not implemented yet)
+
+OAuth2 user login means each user authorises Earth Engine using their own Google account through the interface (a “Login with Google” button). This is the cleanest way to support user-owned Drive exports and avoid shared credentials.
+
+This is not implemented in Luma-GE yet. Doing it properly requires a secure web OAuth2 flow (redirects, token handling, refresh, logout, secure storage), tighter integration between the UI stack and Luma-GE, and explicit decisions about what the interface is allowed to do on behalf of the user.
+
+As an existence proof that an Earth Engine-backed web interface can work with OAuth2 user login is the Remap app: [https://remap-app.org/](https://remap-app.org/)
+
+
+
+## 5. Troubleshooting
+
+Most authorisation failures fall into a handful of predictable buckets.
+
+### 5.1 Authentication fails
+
+If Earth Engine says you are not authenticated, you either have no cached user credentials (manual mode) or the service account key was not found/loaded (service account mode). In Luma-GE, `get_auth_status()` is the quickest sanity check because it performs a trivial request to confirm the session can execute.
+
+If manual authentication suddenly starts failing after a library update (especially in notebook-style flows), check the Earth Engine Python client library release notes. A common error message asks you to grant `roles/serviceusage.serviceUsageConsumer` (or the underlying `serviceusage.services.use` permission) on the relevant project.
+
+If a service account works on one developer laptop but fails on another, it is usually one of these: the key file path is wrong or unreadable; the project is not registered for Earth Engine access; the Earth Engine API is not enabled; the service account does not have the required IAM roles; or permissions have not yet propagated.
+
+### 5.2 Quota / project errors
+
+If you see an error about a quota project not being set, Earth Engine cannot determine which Cloud project should be charged for requests. The Earth Engine guide recommends setting the project explicitly.
+
+Ensure that (a) the project is registered for Earth Engine access, (b) the Earth Engine API is enabled in Cloud Console, and (c) you initialise with an explicit project in code: `ee.Initialize(project='YOUR_PROJECT_ID')`.
+
+If you are using Application Default Credentials, the Earth Engine guide also suggests running `earthengine set_project YOUR_PROJECT_ID` or `gcloud auth application-default set-quota-project YOUR_PROJECT_ID`.
+
+### 5.3 Exports fail
+
+Export failures are a common trap. `ee.Image.getDownloadURL()` is intentionally limited to small downloads (maximum request size 32 MB and maximum grid dimension 10,000). If you exceed those limits, switch to batch exports.
+
+For service accounts, it is suggested exporting to Cloud Storage (`Export.image.toCloudStorage`) or to an Earth Engine Asset. For large exports into a user’s personal Drive, use manual authentication.
+
+To understand limits and constraints applied to a project (task concurrency, storage, request rates, and other quotas), use the Earth Engine quotas and monitoring documentation, plus Cloud Console quota and monitoring pages.
+
+
+
+## 6. References
+
+Google for Developers (2025) *Authentication and Initialization*. Google Earth Engine Guides. Available at: [https://developers.google.com/earth-engine/guides/auth](https://developers.google.com/earth-engine/guides/auth) 
+
+Google for Developers (2025) *Earth Engine access*. Google Earth Engine Guides. Available at: [https://developers.google.com/earth-engine/guides/access](https://developers.google.com/earth-engine/guides/access) 
+
+Google for Developers (2025) *Service Accounts*. Google Earth Engine Guides. Available at: [https://developers.google.com/earth-engine/guides/service_account](https://developers.google.com/earth-engine/guides/service_account) 
+
+Google for Developers (2024) *ee.Image.getDownloadURL*. Earth Engine API reference. Available at: [https://developers.google.com/earth-engine/apidocs/ee-image-getdownloadurl](https://developers.google.com/earth-engine/apidocs/ee-image-getdownloadurl) 
+
+Google for Developers (2025) *Export.image.toDrive*. Earth Engine API reference. Available at: [https://developers.google.com/earth-engine/apidocs/export-image-todrive](https://developers.google.com/earth-engine/apidocs/export-image-todrive) 
+
+Google for Developers (2025) *Export.image.toCloudStorage*. Earth Engine API reference. Available at: [https://developers.google.com/earth-engine/apidocs/export-image-tocloudstorage](https://developers.google.com/earth-engine/apidocs/export-image-tocloudstorage) 
+
+Google for Developers (2025) *Earth Engine Python client library release notes*. Available at: [https://developers.google.com/earth-engine/docs/python-client-lib/release-notes](https://developers.google.com/earth-engine/docs/python-client-lib/release-notes) 
+
+Google for Developers (2025) *Earth Engine quotas*. Google Earth Engine Guides. Available at: [https://developers.google.com/earth-engine/guides/usage](https://developers.google.com/earth-engine/guides/usage) 
+
+Google for Developers (2025) *Monitoring usage*. Google Earth Engine Guides. Available at: [https://developers.google.com/earth-engine/guides/monitoring_usage](https://developers.google.com/earth-engine/guides/monitoring_usage) 
+
+Google Cloud (2025) *Set the quota project*. Google Cloud documentation. Available at: [https://docs.cloud.google.com/docs/quotas/set-quota-project](https://docs.cloud.google.com/docs/quotas/set-quota-project) 
