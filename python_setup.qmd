@@ -1,4 +1,109 @@
 # Python Environment Setup {.unnumbered}
 
 ## 1. Overview
-This page describes how to set up a repeatable Python environment for Luma development, and how to install Luma GE as a package.
+Luma stands for Land Use Mapping for All. The geospatial functionalities that powers Luma is called Luma-GE (Luma Geospatial Engine).
+Luma-GE is shipped as a Python package because it needs to run in more than one context. The same geospatial engine must be importable by an interface layer (for example, a Streamlit-based UI/UX) and also be usable directly from a notebook for development, debugging, and method exploration. Packaging turns “a folder of scripts” into a reliable, versioned engine with a stable import path (`import luma_ge`), repeatable installs across laptops and CI, and a single place to declare runtime requirements.
+
+Luma-GE uses `pyproject.toml` as the source of truth for packaging and installation. This file must live at the repository root. Modern Python tooling (including `pip`) reads `pyproject.toml` to understand the package identity, its required Python version, and the dependencies that must be installed alongside the engine. In practical terms, the `[project]` section is where we define the package name and version, set `requires-python`, and list the dependencies needed by the functions and methods provided by Luma-GE.
+
+::: callout-warning
+Dependencies will be kept **parsimonious**. Only add a dependency when a function or method genuinely needs it. This keeps installs faster, reduces conflicts, and avoids dragging heavy geospatial binaries into environments that don’t need them.
+:::
+
+---
+
+## 2. Goals
+
+The goal is a developer setup that works the same way on different laptops and in CI. Installs should be standard and boring, and a new contributor should be able to get a working environment quickly without any one-off hacks.
+
+---
+
+## 3. Prerequisites
+
+You need Git installed because `pip` installs from a Git URL by calling `git` under the hood. You also need a Python environment manager. For geospatial stacks, we recommend Miniforge or Mambaforge (Conda-compatible and lightweight) because many geospatial dependencies are easier to install as pre-built binaries than to compile locally.
+
+To confirm Git and Conda/Mamba are available in your shell, run:
+
+```bash
+git --version
+conda --version
+```
+
+If you are on Windows, avoid adding Python or Conda to your system PATH unless you know exactly why you are doing it. PATH conflicts are a common source of broken environments.
+
+---
+
+## 4. Output
+
+A working development environment that can run Luma-GE via an interface or via a notebook, and can also build package artefacts when needed.
+
+---
+
+## 5. Process
+
+### Step 1 - Create an isolated environment
+
+Create a dedicated environment for Luma so your system Python stays untouched and dependency conflicts are contained.
+
+```bash
+mamba create -n luma python=3.11
+mamba activate luma
+```
+
+If you use `conda` instead of `mamba`, the commands are the same (just slower).
+
+### Step 2 - Install Luma-GE from GitHub
+
+If you want a quick install of the latest code without cloning the repo, install directly from GitHub. By default we install from the main branch.
+
+```bash
+python -m pip install "luma_ge @ git+https://github.com/epistem-io/luma-stack.git"
+```
+
+If you need a specific branch (for example, to test a feature branch or reproduce a bug), pin it explicitly:
+
+```bash
+python -m pip install "luma_ge @ git+https://github.com/epistem-io/luma-stack.git@<branch-name>"
+```
+
+
+::: callout-important
+Installing from a Git URL requires `git` to be installed and available on your PATH.
+:::
+
+### Step 3 - Quick verification
+
+Confirm the package imports correctly.
+
+```bash
+python -c "import luma_ge; print('luma_ge import OK')"
+```
+
+If you want a concrete example of how Luma-GE functions and methods are used in practice (outside the interface layer), review the implementation notebook in the repository:
+
+`notebooks/Module_implementation.ipynb`
+
+```text
+https://github.com/epistem-io/luma-stack/blob/main/notebooks/Module_implementation.ipynb
+```
+
+### Step 4 - Tests (coming soon)
+
+::: callout-warning
+**Coming soon**
+
+A PyTest suite is planned but not implemented yet.
+
+When it lands, this section will document the default test command (`pytest -q`), where tests live (`tests/`), naming (`test_*.py`), and recommended patterns (fixtures, `monkeypatch`, and mocking for cloud APIs).
+:::
+
+---
+
+## 6. Change management (three-stream approach)
+
+Python environment changes are high-impact when they change the supported Python version, alter core dependency groups (especially geospatial binaries), modify install commands or extras, or change CI behaviour. These changes should follow the three-stream workflow (Notion → luma-dr → luma-stack) so that the documentation and implementation stay in lock-step.
+
+---
+
+## 7. References
+
