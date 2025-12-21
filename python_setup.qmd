@@ -107,3 +107,10 @@ Python environment changes are high-impact when they change the supported Python
 
 ## 7. References
 
+- UBC Geography (2024) *Getting Started with Conda, Virtual Environments, and Python*. Available at: https://ubc-geography.github.io/computing-resources/development-environments/conda-getting-started.html
+
+- pyOpenSci (2025) *Python Package Structure & Layout*. pyOpenSci Python Package Guide. Available at: https://www.pyopensci.org/python-package-guide/package-structure-code/python-package-structure.html
+
+- PyPA (2025) *VCS Support*. Available at: https://pip.pypa.io/en/stable/topics/vcs-support/
+
+- PyPA (2025) *Writing your pyproject.toml*. Python Packaging User Guide. Available at: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
