@@ -133,6 +133,14 @@ This is a part of **System Response 2.1.b: Manually define classification scheme
     `classification_scheme.LULC_scheme_Manager.add_class()`: Adds a new class or updates an existing class, validates inputs, assigns colors, sorts classes, and updates the next available ID.
     :::
 
+    ::: callout-warning
+    ## Feature Note
+
+    In the current version, the system retrieves the class name from the column name, stores it as a variable, and later uses it as a reference to match the class name consistency input of the sample data in Module 3. As a result, if the class name entered in Module 2 differs only by letter case (for example, `Forest` vs. `forest` or `FOREST`), it will not match the class name used in the sample data uploaded in Module 3, and the class will be incorrectly identified as invalid.
+
+    To reduce human error, a function named `normalize_class_name` should be added to standardize all class name inputs. This function will be applied in both Module 2 and Module 3 to ensure consistent class name handling across the system.
+    :::
+
 2.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
 
     ::: callout-tip
