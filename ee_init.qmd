@@ -14,9 +14,7 @@ Luma-GE currently supports two working authorisation options, each with clear tr
 
 1. Manual authentication (interactive OAuth) is best for local development and workflows tied to a human identity. It is interactive (browser + copy/paste code) and is not suitable for unattended deployments.
 
-2. Service account authentication is the default for deployments and CI. It is non-interactive and repeatable, but it is **not a good fit for exporting to a user’s personal Google Drive**, because a service account is not a normal Drive user.
-
-A third option, OAuth2 login in the interface, is not implemented yet. It is mentioned here because it is a plausible path to per-user Drive exports and per-user attribution without sharing credentials.
+2. Service account authentication is the default for deployments and CI. It is non-interactive and repeatable, but it has no option for exporting to a user’s personal Google Drive.
 
 
 
@@ -49,7 +47,7 @@ In practice, you run an auth function, a browser window opens, you sign in with 
 In Luma-GE, this is implemented in `luma_ge/ee_config.py:authenticate_manually()`, which calls `ee.Authenticate()` followed by `ee.Initialize(project='YOUR_PROJECT_ID')`.
 
 ::: callout-warning
-Luma-GE does not support running manual authentication inside a Streamlit interface. Earth Engine’s interactive flow expects terminal/browser control that a hosted app generally does not have. If you need “login” inside a UI, that is an OAuth2 web-app feature (see 4c).
+Luma-GE does not support running manual authentication inside a Streamlit interface. Earth Engine’s interactive flow expects terminal/browser control that a hosted app generally does not have.
 :::
 
 ### 4b. Service account authentication (deployment and CI)
@@ -77,14 +75,6 @@ A recent Google Workspace policy change adds a very specific sharp edge. From 15
 For service accounts, the recommended pathways are exporting to Google Cloud Storage (GCS) or to an Earth Engine Asset, then sharing/copying results as needed. If you must land results in Drive, a more robust pattern is exporting into a Shared Drive, where the Shared Drive owns the file rather than the service account.
 
 If you want a direct download link for quick debugging or open access downloads (without user login), `ee.Image.getDownloadURL()` is available but intentionally limited (maximum request size 32 MB and maximum grid dimension 10,000 pixels). It will not work for large rasters.
-
-### 4c. OAuth2 user login (not implemented yet)
-
-OAuth2 user login means each user authorises Earth Engine using their own Google account through the interface (a “Login with Google” button). This is the cleanest way to support user-owned Drive exports and avoid shared credentials.
-
-This is not implemented in Luma-GE yet. Doing it properly requires a secure web OAuth2 flow (redirects, token handling, refresh, logout, secure storage), tighter integration between the UI stack and Luma-GE, and explicit decisions about what the interface is allowed to do on behalf of the user.
-
-As an existence proof that an Earth Engine-backed web interface can work with OAuth2 user login is the Remap app: [https://remap-app.org/](https://remap-app.org/)
 
 
 
