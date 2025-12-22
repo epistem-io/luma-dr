@@ -221,18 +221,12 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     `data_acquisition.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
     :::
 
-    -   The system performs cloud masking with QA_PIXEL band that encodes pixel conditions using specific bit flags. Bitwise AND operation are applied to isolate these conditions, focusing on clouds (bit 4, value 16) and cloud shadows (bit 3, value 8). Pixels matching these flags are excluded to produce a cleaner, near cloud-free image.
+    -   The system performs cloud masking using the quality assurance band (QA_PIXEL) QA_PIXEL band that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
 
         ::: callout-tip
         ## Related Functions
 
-        `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band.
-        :::
-
-        ::: callout-caution
-        ## Feature Notes
-
-        If Landsat 5-9 is selected, then `data_acquisition.Reflactance_Data.mask_landsat_sr()` should also implement **cirrus** masking using QA_PIXEL band. For now, the masking is only performed for cloud and cloud shadow.
+        `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band with confidence threshold
         :::
 
     -   The system applies scaling to the optical reflectance bands to convert the raw digital numbers (DNs) into physically meaningful surface reflectance values. A scale factor 0.0000275 and offset -0.2 are applied, as defined in the Landsat Collection 2 Surface Reflectance metadata. This conversion standardize the reflectance values to a range of approximately 0 to 1, enabling accurate comparison and analysis across different scenes and sensors.
@@ -265,6 +259,50 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ## Feature Notes
 
     Creating composite, clip, and mosaic of the image collection is currently conducted on Streamlit.
+    :::
+
+## Mosaic and Composite for Satellite Imagery
+
+**Luma Geospatial Engine**
+
+This is a part of **System Response 1.2: Search and Filter Imagery**
+
+The final image (single layer) which will be presented to the user is created using `final_image` methods, which resulted in mosaic imagery or temporal aggregation composite imagery.
+
+1.  Mosaicking
+
+    Mosaicking approach simply stacks all images in the collection and, for each pixel, selects the value from the topmost image according to the collection’s ordering. The system implement quality mosaic, which allows the use of quality band that affected the order of mosaic
+
+    ::: callout-tip
+    ## Related Functions
+
+    `data_acquisition.final_Image.quality_mosaic` create a quality mosaic image based on quality band (source band). `add_quality_band` compute or select the band that will be used for creating the mosaic. Three quality band is supported, namely NDVI and NIR. The mosaic is created based on the highest pixel value of the corresponding band
+    :::
+
+2.  Temporal Aggregation
+
+    Temporal aggregation used statistical reducers, (such as median) to combine pixel values from an image collection over time. A **median composite** often produces a noticeably cleaner image because cloud and other high-reflectance features tend to occupy the upper tail of the distribution. This approach, naturally excludes the feature, resulting in fewer artifacts and a more consistent surface reflectance. However, if at certain location there’s no valid pixel across the image collection, the location will resulted in no-data (blank region). Temporal aggregation function is paired with `calculate_coverage` to provide report of the valid pixels in an AOI.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `data_acquisition.final_Image.get_temporal_composite:` Create a temporal aggregation composite using earth engine reducers. Supported reducers are `median`, `mean`, `min`, `max`, and `percentile`
+    :::
+
+3.  Valid Pixel Reporting
+
+    To provide comprehensive report on the final image creation, system provide the data range which composite is created. Additionally, valid pixel and no data is estimated and reported to the user.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `calculate_coverage` estimate, the valid pixels (unmasked by cloud masking) within AOI. This quantified the ‘no data’ or blank blocks on the final image. This served as alternative approach in reporting the cloud cover within AOI, since in theory, the cloud cover within AOI is already masked out during cloud masking procedure. This function is used within the `get_temporal_composite` and reported in the final image creation.
+
+    -   ::: callout-caution
+        ## Feature Notes
+
+        The `calculate_coverage` serves as an alternative to calculate cloud cover within AOI. Since cloud cover should be masked out during cloud masking and remove during temporal aggregation
+        :::
     :::
 
 ## Visualization and Saving of Processed Satellite Imagery {#sec-visualization-and-saving-data}
