@@ -1,1 +1,61 @@
-# Testing Guideline for Developers {.unnumbered}
+---
+title: "Testing Guideline for Developers"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+---
+
+This document provides testing guidelines for the **Luma Geospatial Engine (luma-ge)** Python package.
+
+# Overview
+
+- The luma-stack package follows a **notebook-centric testing approach** where the primary validation is the successful execution of `notebooks/Module_implementation.ipynb` using testing datasets.
+- Why notebook-based testing? This approach ensures that tests validate the actual user workflow with real datasets, verify all modules working together with authentic data flows, and catch breaking changes in the complete pipeline.
+- The notebook serves as both implementation and integration test, ensuring examples match current functionality and real data.
+- Whenever methods/functions are modified or new features are added to the package, this testing process must be executed to verify that the complete workflow still runs correctly and to identify where impacts occur after feature updates.
+- Testing uses datasets provided in the `data/` folder, including study area boundary, training points, classification scheme, and validation data.
+
+# Pre-requisites
+
+Before you begin testing, ensure you have the following:
+
+- **luma-stack package installed**: Follow the installation guide to set up the package in your environment.
+- **Earth Engine authentication configured**: You need a Google Earth Engine account with proper API access. [Earth Engine Setup Guide](https://developers.google.com/earth-engine/guides/python_install).
+- **Jupyter Lab/Notebook**: For running the test notebook. Install with `pip install jupyterlab` or `mamba install jupyterlab`.
+- **Testing datasets**: Located in the `data/` folder.
+
+# Dataset Requirements
+
+For testing purposes, actual datasets are provided in the `data/` folder:
+
+- **`data/area_of_interest.shp`**: Study area boundary
+    - Must include all shapefile components (.shp, .shx, .dbf, .prj)
+- **`data/training_points.shp`**: Sample of training points with land cover classes
+    - Must contain proper attribute fields for class labels
+- **`data/classification_scheme.csv`**: Classification scheme
+
+# Testing Workflow for Feature Development
+
+When modifying methods/functions or adding new features:
+
+1. **Before modifications**: Run the complete notebook test and document:
+    - Execution time for each module
+    - Output files and their characteristics
+    - Any warnings or messages generated
+2. **After modifications**: Re-run the complete notebook test and compare:
+    - Check if all cells still execute without errors
+    - Compare execution times (identify performance impacts)
+    - Verify output consistency with pre-modification results
+    - Identify which modules are affected by the changes
+3. **Impact identification**: If issues arise:
+    - Note which specific module(s) fail or show unexpected result
+    - Document error messages and their locations
+    - Check if data flow between modules is affected
+
+::: {.callout-note}
+## Mandatory testing after code changes
+
+Any modification to luma-stack methods/functions requires running this complete test suite before committing changes to the repository.
+:::
