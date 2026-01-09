@@ -1,8 +1,48 @@
-# Writing Guideline for Developers {.unnumbered}
+# Collaborative Development Guideline {.unnumbered}
+
+## Three-stream approach explanation
+
+-   What is the three-stream approach
+
+-   Why the three-stream approach
+
+-   What are the three streams
+
+-   The workflow
+
+## Using Notion for the Braindump
+
+-   Pakai current version tapi sesuain dengan flow
+
+## Version Control
+
+-   GitHub as the platform to track luma-dr and luma-stack
+
+-   How the workflow is operated in GitHub
+
+## The Development Reference
+
+-   Goal of the DR:
+
+    -   Documenting development decision to guide code implementation process
+
+    -   Facilitate development of technical documentation by providing materials that can be converted into mature documentation with minimum effort
+
+-   Writing guideline for DR:
+
+    -   Generic structure for the DR (Input, Output, Process)
+
+        -   For luma-ge the structure is straightforward tapi untuk modul lainnya bisa disesuaikan
+
+    -   Level of detail: describe all the crucial elements to inform the developers (but not a direct translation of a code to a descriptive language)
+
+    -   Formatting (callout types)
+
+------------------------------------------------------------------------
 
 ## Development Platforms
 
-We are using several platforms fo facilitate the collaborative environment of Luma:
+We are using several platforms to facilitate the collaborative environment of Luma:
 
 1.  **Notion (the "Braindump")**
 
