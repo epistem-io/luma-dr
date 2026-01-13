@@ -138,6 +138,12 @@ This is a part of **System Response 7.3: Thematic accuracy assessment**
     `thematic_assessment.Thematic_Accuracy_Assessment.run_accuracy_assessment()`: Executes the full thematic accuracy workflow, including validation, sampling (`sampleRegions()`), metric extraction (`errorMatrix()`), confidence interval calculation, and compilation of final results.
     :::
 
+::: callout-caution
+## Feature note
+
+No area-weighted accuracy assessment, Treats every validation point equally → forest class with 80% area gets same weight as rare shrub class with 0.5%. Scientifically invalid for reporting producer/user accuracy in heterogeneous landscapes.
+:::
+
 ### Reviewing the thematic accuracy result
 
 **Luma User Journey**
