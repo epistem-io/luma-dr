@@ -60,6 +60,12 @@ This is a part of **System Response 6.1: Reviewing input specifications for mode
     The system shows a confirmation that feature extraction has been completed, and the summary of the number of training data and validation data split.
     :::
 
+::: callout-note
+## Feature note
+
+No spatial train/test split, severe spatial autocorrelation → Both random and stratified splits ignore spatial proximity → training and validation pixels can be meters apart → overoptimistic accuracy (often \>15–30% inflated OA/Kappa). Example: <https://code.earthengine.google.com/1b71681b94be875fedb86a0ebed6c532>
+:::
+
 **Luma Geospatial Engine**
 
 1.  The system conducts feature extraction for both training and validation data accordingly to the proportion set by the user.
