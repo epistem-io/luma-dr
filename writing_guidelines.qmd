@@ -1,137 +1,119 @@
 # Collaborative Development Guideline {.unnumbered}
 
-## Three-stream approach explanation
+## About the Three-Stream Approach
 
--   What is the three-stream approach
+-   **What is the three-stream approach?**
 
--   Why the three-stream approach
+The three-stream approach is a workflow that separates thinking, documentation, and implementation into clear yet connected streams. Each stage of development has its own dedicated space, allowing for a structured decision-making process throughout the development lifecycle instead of mixing ideas, references, and implementations in scattered places.
 
--   What are the three streams
+-   **Why the three-stream approach?**
 
--   The workflow
+The approach intends to solve a common problem in collaborative software development: ideas were discussed in one place, decisions were written somewhere else, and code evolved on its own, making it hard to tell what was current or why something changed. Someone working a week later or in a different time zone would often re-solve the same problem or unknowingly work against an outdated assumption.
 
-## Using Notion for the Braindump
+The three-stream approach keeps context visible through [asynchronous communication](https://handbook.gitlab.com/handbook/company/culture/all-remote/asynchronous/), so work stays aligned even when people are not in the same place or working at the same time.
 
--   Pakai current version tapi sesuain dengan flow
+-   **What are the three streams?**
 
-## Version Control
+    -   Notion: the “Braindump”
 
--   GitHub as the platform to track luma-dr and luma-stack
+        This is where ideas start. We use this Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine. Nothing here is final and things are allowed to change or be discarded.
 
--   How the workflow is operated in GitHub
+    -   Quarto: the “Development Reference”
 
-## The Development Reference
+        This is where ideas become decisions. Content here is structured and stable enough for developers to refer to. It provides shared context so contributors can understand past decisions, even if they were not part of the original discussion.
 
--   Goal of the DR:
+    -   Luma Geospatial Engine Python package: the “Code Implementation”
 
-    -   Documenting development decision to guide code implementation process
+        The Luma Geospatial Engine is the final implementation of the development, in the form of a Python-based package that powers the Luma platform.
 
-    -   Facilitate development of technical documentation by providing materials that can be converted into mature documentation with minimum effort
+    Both the Development Reference and Code Implementation are hosted on GitHub for version control.
 
--   Writing guideline for DR:
+### Summary of the Three-Stream Approach
 
-    -   Generic structure for the DR (Input, Output, Process)
+1.  Start by writing your comments in the **Braindump** under the relevant section. Tag the person you want to discuss with so your input is visible and does not get missed.
 
-        -   For luma-ge the structure is straightforward tapi untuk modul lainnya bisa disesuaikan
+    -   If someone disagrees with your comment, add the topic to the **To-Settle** list. Use the page to write down the key arguments so they can be discussed efficiently in a meeting. Once the disagreement is resolved, move the topic to **Work in Progress**.
+    -   If there is no disagreement, you can add the topic directly to **Work in Progress**.
 
-    -   Level of detail: describe all the crucial elements to inform the developers (but not a direct translation of a code to a descriptive language)
+2.  For agreed development work, create a new branch in **luma-dr** and document the proposed changes there.
 
-    -   Formatting (callout types)
+3.  Next, open a pull request in **luma-dr** from your new branch to the main branch. **Pull requests are reviewed during regular pull request meetings, where changes are either accepted or rejected.**
 
-------------------------------------------------------------------------
+4.  Once changes are merged into the main branch of **luma-dr**, contributors can begin implementing them in **luma-stack**. Implementation should always start from a new branch.
 
-## Development Platforms
+5.  Submit a pull request on **luma-stack** to propose your changes for review at the next pull request meeting. If needed, also submit a pull request on **luma-dr** to update the documentation describing the changes.
 
-We are using several platforms to facilitate the collaborative environment of Luma:
+6.  During each pull request meeting, the team will:
 
-1.  **Notion (the "Braindump")**
+    -   Review and accept pull requests in **luma-stack** that implement previously approved changes
+    -   Update **luma-dr** based on approved pull requests
+    -   Review new pull requests in **luma-dr** proposed for future updates
 
-    [Notion](https://academy.notion.com/page/essentials-catalogue?reg=1) refers to what we call as the “Braindump”. We use the Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine.
+::: callout-tip
+For more reference on the workflow (including a case example), refer to [this](https://icrafcifor.sharepoint.com/:p:/r/sites/EPISTEM/Shared%20Documents/EPISTEM%20Consortium/4%20Events/2025111721_BootcampEpistem/epistem_bootcamp_2026.pptx?d=w7c7fb473330a437e9835326eba440760&csf=1&web=1&e=ZdhbnG) slide presented during the Bootcamp.
+:::
 
-2.  **Quarto (the "Development Reference")**
+## The "Braindump"
 
-    [Quarto](https://quarto.org/docs/get-started/hello/jupyter.html) is used as the Development Reference to document the stages of improvements that are (or will be) implemented in the Luma Geospatial Engine.
+The Braindump serves as the central hub for refining ideas and discussions related to Luma’s development prior to their formal inclusion in the Development Reference. It contains organized pages that ensure alignment with the current Development Reference, along with sections dedicated to other discussion topics.
 
-3.  **Luma Geospatial Engine Python package**
+-   **Structured pages for Luma Geospatial Engine development**
 
-    The Luma Geospatial Engine is a Python-based package that powers the Luma platform for the core functionality and computational tools for geospatial analysis and processing.
+    -   The content of each page in this section reflects the latest version of the Development Reference (i.e., the `main` branch of luma-dr).
 
-4.  **GitHub**
+    -   Ideas and discussions can be provided by commenting on the related section of each page. **Tag the relevant person in the comment to ensure the comment is read by others.**
 
-    GitHub serves as the collaboration and version control platform for the Luma Geospatial Engine. It is where all codebases are managed, reviewed, and deployed.
-
-## Notion (the "Braindump")
-
-There are several sections within the Braindump with each serving a specific purpose:
-
-1.  **Structured pages for Luma Geospatial Engine development**
-
-    -   This section is structured to mirror the sections of the Development Reference.
-    -   The content of each page reflects the latest version of the Development Reference (i.e., the main branch of luma-dr).
-    -   Ideas, plans, or discussions can be provided by commenting on the related section of each page. **Tag the relevant person in the comment to ensure the comment is read by others.**
     -   The comments will be resolved in two cases:
+
         -   No follow-up is needed after the discussion.
         -   The follow-up has been listed in the **Work in Progress** or **To-Settle** section.
 
-2.  **Structured pages for Luma User Interface development**
+-   **Structured pages for Luma User Interface development**
 
-    -   This section is a database dedicated to the implementation details of Luma User Interface.
+    This section is a database dedicated to the implementation details of the Luma User Interface.
 
-3.  **To-Settle**
+-   **To-Settle**
 
     -   This section is dedicated to listing topics that arise from disagreements among multiple people in the comments on the **Structured pages for Luma Geospatial Engine development** and that require further discussion or a decision before updates are documented in the Development Reference.
     -   The disagreement should be briefly described inside the page.
     -   Choose an urgency level of the conflict to determine if the meeting should be scheduled as soon as possible.
     -   Once the conflict is settled, the issue can either be moved to be listed in the **Work in Progress** or dismissed.
 
-4.  **Work in Progress**
+-   **Work in Progress**
 
     -   This section is dedicated for tracking ongoing tasks related to Luma Geospatial Engine updates.
     -   Each task goes through several stages of development according to the contribution workflow. The stage at which an issue is currently is noted in the **Completion status** column.
 
-5.  **Unresolved issues from Pull Request approvals**
+-   **Unresolved issues from Pull Request approvals**
 
-    -   This section records issues or feedback that emerged during the pull request review process and need additional work or clarification before approval.
+    This section records issues or feedback that emerged during the pull request review process and need additional work or clarification before approval.
 
-6.  **Meeting Notes**
+-   **Meeting Notes**
 
-    -   A collection of notes, summaries, and key decisions from meetings related to Luma’s development activities.
+    A collection of notes, summaries, and key decisions from meetings related to Luma’s development activities.
 
-7.  **Sketchbooks**
+-   **Sketchbooks**
 
-    -   A space for "sketching out" ideas or conceptual designs before formal documentation. This section is intentionally unstructured to encourage open exploration.
+    A space for "sketching out" ideas or conceptual designs before formal documentation. This section is intentionally unstructured to encourage open exploration.
 
-## Quarto (the "Development Reference")
+## Version Control
 
-To be developed
-
-## GitHub
-
-All activities regarding the development of software related to Epistem will be stored under the [epistem-io](https://github.com/epistem-io) organization GitHub account.
-
-### Contributor's Roles
-
-1.  Only members of the Epistem consortium are authorized contributors to these repositories.
-
-2.  There are three different roles set in the [epistem-io](https://github.com/epistem-io) organization, each with different levels of access:
-
-    -   Admin: has full control of repositories (e.g., create/delete repositories, manage access, merge pull requests).
-
-    -   Manage: can review and approve contributions, manage issues, and organize repository settings.
-
-    -   Write: can create branches, push code, and submit pull requests for review.
-
-    Contributors should know their assigned role before making any changes to ensure proper permissions are in place.
+Version control is a core component of the Luma ecosystem and is managed through GitHub, which serves as the central platform for tracking both Quarto’s Development Reference and Luma Geospatial Engine code implementation. GitHub provides a transparent and traceable environment for managing changes to code and documentation over time. Contributors create a dedicated branch for each feature, fix, or documentation update. Once the work is complete, changes are submitted to the main branch through a pull request. Each pull-request is reviewed and approved before merging to ensure quality control and alignment between the development reference and the geospatial engine.
 
 ### Repositories
 
-1.  There are three main repositories currently operating:
+1.  There are two main repositories currently operating:
 
-    -   [luma-stack](https://github.com/epistem-io/luma-stack): this repository is used to host Luma Geospatial Engine Python package. To contribute to this repository, please refer to `README.md` in this repository for detailed instructions on setting up a developer environment and configuring your local machine.
-
-    -   [luma-dr](https://github.com/epistem-io/luma-dr): this repository is used to host the Documentation Reference. To contribute to this repository, please refer to `README.md` in this repository for detailed instructions on installing and configuring Quarto to build and preview documentation locally.
-
-    -   LumaLite: this repository is used to host a minimal working version of the Luma user interface for testing visualization and basic tool interaction. To contribute to this repository, please contact an Epistem admin.
+    -   [luma-stack](https://github.com/epistem-io/luma-stack): This repository is used to host Luma Geospatial Engine Python package. To contribute to this repository, please refer to `README.md` in this repository for detailed instructions on setting up a developer environment and configuring your local machine.
+    -   [luma-dr](https://github.com/epistem-io/luma-dr): This repository hosts Luma Development Reference. Contributions follow this workflow:
+        1.  Clone the repository to your local machine.
+        2.  Create a new branch for your changes.
+        3.  Edit the relevant `.qmd` files to implement your updates.
+        4.  Document your modifications in the Braindump under the "Work in Progress" section.
+        5.  Test your changes by rendering the Quarto book locally to ensure correctness.
+        6.  Commit and push your changes to your branch.
+        7.  Submit a pull request for review. All changes must be merged via pull request.
+        8.  Proposed changes will be discussed, and once approved, merged into the main branch. Your feature branch will then be deleted.
 
 2.  If a new repository is needed (e.g., for an experimental module, plugin, or related service), please consult with an Epistem admin before proceeding.
 
@@ -142,18 +124,11 @@ All activities regarding the development of software related to Epistem will be 
 2.  A [branch protection](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule) is targeted for the `main` branch. This means contributors cannot directly make changes to the `main` branch. Instead, all updates must go through a pull request (PR) process to ensure the code is reviewed and tested before merging. The branch protection rules are as the following:
 
     -   Require a pull-request before merging (please refer to the **Pull-Requests (PRs)** section in this page for more details)
-
     -   Require at least one approval before merging.
 
 3.  Each contributor should create a personal working branch from the `main` branch when developing new features or fixes. Once the work is complete, open a pull request to propose merging those changes into the `main` branch, unless there are circumstances where new branch can be created from another feature branch if the work is closely related.
 
-::: callout-tip
-Branch naming convention to specify the specific type of a contribution should be further discussed (e.g., `feature/`, `bugfix/`)
-:::
-
-### Security and Secrets
-
-1.  **Never commit secrets** such as passwords, access tokens, or API keys. Add `.gitignore` file to prevent private files from being accidentally uploaded.
+4.  Branch naming convention to specify the specific type of a contribution should be further discussed (e.g., `feature/`, `bugfix/`)
 
 ### Pull-Requests (PRs)
 
@@ -168,12 +143,26 @@ Branch naming convention to specify the specific type of a contribution should b
 5.  Reviewers should check for correctness, clarity, performance, and proper documentation. Use GitHub’s review options:
 
     -   Comment: suggest improvements
-
     -   Request changes: block merge until issues are resolved
-
     -   Approve: accept the PR as ready to merge
 
 6.  The PR title should reflect the main change made. This title will be used as the commit message when the PR is merged into the main branch.
+
+### Contributor's Roles
+
+1.  Only members of the Epistem consortium are authorized contributors to these repositories.
+
+2.  There are three different roles set in the [epistem-io](https://github.com/epistem-io) organization, each with different levels of access:
+
+    -   Admin: has full control of repositories (e.g., create/delete repositories, manage access, merge pull requests).
+    -   Manage: can review and approve contributions, manage issues, and organize repository settings.
+    -   Write: can create branches, push code, and submit pull requests for review.
+
+    Contributors should know their assigned role before making any changes to ensure proper permissions are in place.
+
+### Security and Secrets
+
+**Never commit secrets** such as passwords, access tokens, or API keys. Add `.gitignore` file to prevent private files from being accidentally uploaded.
 
 ### Licensing
 
@@ -183,39 +172,42 @@ To be developed. A standardized licensing framework will be provided to ensure c
 
 To be developed. The release process defines how stable versions of Luma tools and documentation are packaged, tagged, and shared. Releases ensure that users and collaborators can always access a verified version of the software or documentation.
 
-## Quick Summary of the Contribution Workflow
+## The Development Reference
 
-To contribute to Luma's development, the following steps should be taken:
+The development reference is dedicated as a platform for mainly two purposes:
 
-1.  Write your comments in the corresponding section of the Braindump. Tag the person you want to discuss the comments with to ensure they see your input.
+1.  **Formalized the decision made in the Braindump.** All discussions’ results that were made in the Braindump are documented accordingly, so that all developments made for the Code Implementation are well-tracked.
+2.  **Facilitate the development of Luma’s technical documentation for end-users.** With the use of the development reference as a structured documentation of Luma’s development, this documentation can also be a starting point to create Luma’s technical documentation for end-users in the future, with reduced effort.
 
-    -   If you notice there is a disagreement in the comment where someone else disagrees with your thought, write the topic in the **To-Settle** list so a meeting can be arranged to settle the dispute. Additionally, you can write down the arguments of your comments on the page to be discussed in the meeting. Once the dispute is resolved, the topic should be moved to **Work in Progress**.
+### Writing Guidelines for the Development Reference
 
-    -   If there is no disagreement about a proposed development, the topic should be added directly to the **Work in Progress** list.
+-   The development reference includes several pages, each serving a different thematic purpose in Luma technology
 
-2.  Create a new branch in `luma-dr` to write down your updates. For more details, follow the guidance in the `README.md` on `luma-dr` on how to make an update to the repository.
+-   Each of the pages is written in the following structure:
 
-3.  Create a pull request in `luma-dr` from the new branch you created to propose your suggested changes to the main branch. A pull request meeting will be held regularly to determine whether your changes will be accepted or rejected.
+    1.  **Title of the page**
+    2.  **Input**: a list of input data needed for the related process in the related page. The inputs are divided into:
+        -   User’s Input: list of inputs provided by Luma’s users.
+        -   Input from External Sources: list of inputs received from sources other than Luma's user.
+        -   Input from Other Modules: list of inputs from other modules in Luma.
+    3.  **Output**: list of expected output from the process defined in the page.
+    4.  **Process**: a detailed step-by-step the execution logic of the functionality described on the page. The process should be defined into the following sub-headings:
+        -   **Step**: a step represents a distinct change in system state or responsibility. A new step must be introduced when:
+            -   ownership shifts (e.g. from user action to system execution, or between modules), or
+            -   a new input set is consumed, or
+            -   an intermediate output is produced that is required by subsequent logic.
+        -   **Sub-step**: a sub-step represents an atomic action required to complete a step. Sub-steps must not introduce new inputs or outputs beyond those defined for the parent step.
+            -   **Luma User Journey**: the description of the processes that occur in the user interface. This part is equivalent to the “User Journey” in the Visio workflow diagram.
+                1.  An error notification should be written in the `callout-important` block type with the title “Error Handling Notification”.
+                2.  A success notification should be written in the `callout-note` block type with the title “Success Notification”.
+            -   **Luma Geospatial Engine**: the description of the processes that occur in the back-end part. This part is equivalent to the “System Response” in the Visio workflow diagram.
+                1.  The defined function of the related process in the sub-step should be written in the `callout-tip` block type with the title “Related Function”.
 
-4.  Once all suggested modifications are merged into the main branch of `luma-dr`, contributors of those modifications can then begin implementing the corresponding changes in `luma-stack`, starting from a new branch.
+-   Write the Development Reference using clear and easy-to-understand wording that can be understood by audiences with different levels of technical expertise. Avoid technical jargon where possible while still ensuring that all critical elements of the process are clearly and sufficiently described.
 
-    ::: callout-tip
-    If your changes are minor (e.g., bug fix, refactoring), you can directly create a pull-request in `luma-stack` to be reviewed during the next pull request meeting without having to modify the Development Reference (i.e., making a pull-request in `luma-dr`).
+    ::: callout-important
+    When writing descriptions of a process, make sure to include all the crucial steps that need to be taken in the related process.
     :::
-
-5.  During the next pull request meeting, three agendas will take place:
-
-    1.  Reviewing and accepting pull-requests in `luma-stack` that correspond to the accepted modifications from the previous `luma-dr` meeting.
-
-    2.  Modifying the `luma-dr` based on the pull-request approvals.
-
-    3.  Reviewing new pull-requests made for the next updates.
-
-6.  There might be cases where a pull-request needs to be accepted even though there are some failed tests to the update. These failures needs to be addressed in the comments of the pull-request acceptance, and also in the **Unresolved issues from Pull-Request approvals** list.
-
-::: callout-tip
-For more reference on the workflow (including a case example), refer to [this](https://icrafcifor.sharepoint.com/:p:/r/sites/EPISTEM/Shared%20Documents/EPISTEM%20Consortium/4%20Events/2025111721_BootcampEpistem/epistem_bootcamp_2026.pptx?d=w7c7fb473330a437e9835326eba440760&csf=1&web=1&e=ZdhbnG) slide presented during the Bootcamp.
-:::
 
 ## Python Method Writing Convention
 
