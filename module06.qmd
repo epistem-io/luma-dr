@@ -64,7 +64,7 @@ This is a part of **System Response 6.1: Reviewing input specifications for mode
 
 1.  The system conducts feature extraction for both training and validation data accordingly to the proportion set by the user.
 
-2.  The system uses stratified random split method to conduct the data splitting.
+2.  The system uses stratified random split method to conduct the data splitting. This method randomly selects samples within each class to proportionally create training and testing sets while preserving class distribution.
 
     ::: callout-tip
     ## Related Functions
@@ -80,17 +80,17 @@ This is a part of **System Response 6.1: Reviewing input specifications for mode
 
 This is a part of **User Journey 6.2: Determining classification's specification**
 
-1.  The user is given the option to manually configure the classification parameter:
+1.  The user is given the option to use default value of the RF parameters. The default value are as the following:
 
-    -   Number of trees: 50, 100, or 150
-    -   Variables per split: square root of total spectral band features used
-    -   Minimum leaf population
-
-2.  The user is also given the option to use default value of the RF parameters. The default value are as the following:
-
-    -   Number of trees: 100
+    -   Number of trees: 50, 100, or 150 are given as options
     -   Variables per split: square root of total spectral band features used
     -   Minimum leaf population: 1
+
+2.  The user is given the option to manually configure the classification parameter:
+
+    -   Number of trees
+    -   Variables per split: square root of total spectral band features used, or can adjust manually
+    -   Minimum leaf population
 
 3.  The user is prompted to verify the inputs and run the process to create the classification model.
 
