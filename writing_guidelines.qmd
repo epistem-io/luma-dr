@@ -4,7 +4,7 @@
 
 -   **What is the three-stream approach?**
 
-The three-stream approach is a workflow that separates thinking, documentation, and implementation into clear yet connected streams. Each stage of development has its own dedicated space, allowing for a structured decision-making process throughout the development lifecycle instead of mixing ideas, references, and implementations in scattered places.
+The three-stream approach is a workflow that separates brainstorming, design, and implementation into clear yet connected streams. Each stage of development has its own dedicated space, allowing for a structured and transparent decision-making and implementation process throughout the development cycle instead of mixing ideas, references, and implementations in scattered places.
 
 -   **Why the three-stream approach?**
 
@@ -14,21 +14,21 @@ The three-stream approach keeps context visible through [asynchronous communicat
 
 -   **What are the three streams?**
 
-    -   Notion: the “Braindump”
+    -   The “Braindump” (on Notion)
 
         This is where ideas start. We use this Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine. Nothing here is final and things are allowed to change or be discarded.
 
-    -   Quarto: the “Development Reference”
+    -   The “Development Reference” (using Quarto)
 
         This is where ideas become decisions. Content here is structured and stable enough for developers to refer to. It provides shared context so contributors can understand past decisions, even if they were not part of the original discussion.
 
-    -   Luma Geospatial Engine Python package: the “Code Implementation”
+    -   The “Code Implementation” (Luma Geospatial Engine Python package)
 
         The Luma Geospatial Engine is the final implementation of the development, in the form of a Python-based package that powers the Luma platform.
 
     Both the Development Reference and Code Implementation are hosted on GitHub for version control.
 
-### Summary of the Three-Stream Approach
+### Steps of the Three-Stream Approach
 
 1.  Start by writing your comments in the **Braindump** under the relevant section. Tag the person you want to discuss with so your input is visible and does not get missed.
 
@@ -98,7 +98,7 @@ The Braindump serves as the central hub for refining ideas and discussions relat
 
 ## Version Control
 
-Version control is a core component of the Luma ecosystem and is managed through GitHub, which serves as the central platform for tracking both Quarto’s Development Reference and Luma Geospatial Engine code implementation. GitHub provides a transparent and traceable environment for managing changes to code and documentation over time. Contributors create a dedicated branch for each feature, fix, or documentation update. Once the work is complete, changes are submitted to the main branch through a pull request. Each pull-request is reviewed and approved before merging to ensure quality control and alignment between the development reference and the geospatial engine.
+Version control is a core component of the Luma ecosystem and is managed through GitHub, which serves as the central platform for tracking both Quarto based Development Reference and Luma Geospatial Engine code implementation. GitHub provides a transparent and traceable environment for managing changes to code and documentation over time. Contributors create a dedicated branch for each feature, fix, or documentation update. Once the work is complete, changes are submitted to the main branch through a pull request. Each pull-request is reviewed and approved before merging to ensure quality control and alignment between the development reference and the geospatial engine.
 
 ### Repositories
 
