@@ -85,14 +85,6 @@ This is a part of **System Response 2.1.a: Uploading classification scheme**
     -   For color code: "color", "colorcode", "warna", "colour", "hex", "palette"
     :::
 
-::: callout-caution
-## Feature note
-
-Bug: add_class() allows duplicate IDs in edit mode.
-
-It only check duplicate ID when not self.edit_mode. → User can create two classes with same ID by editing one and changing its ID to an existing one.
-:::
-
 1.  The system validates the uploaded `.csv` to ensure IDs are numeric and unique, applies a set of distinct colors if no color code was provided by the user. The user can change the color code manually.
 
     ::: callout-tip
@@ -139,6 +131,14 @@ This is a part of **System Response 2.1.b: Manually define classification scheme
     `classification_scheme.LULC_scheme_Manager.validate_class_input()`: Validates class ID and name, checks for uniqueness, and returns a validity flag with an error message if invalid.
 
     `classification_scheme.LULC_scheme_Manager.add_class()`: Adds a new class or updates an existing class, validates inputs, assigns colors, sorts classes, and updates the next available ID.
+    :::
+
+    ::: callout-caution
+    ## Feature Note
+
+    Known Issue: `add_class()` permits duplicate class IDs when operating in edit mode.
+
+    Duplicate ID validation is only enforced when `self.edit_mode` is `False`. As a result, a user can unintentionally create multiple classes with the same ID by editing an existing class and changing its ID to one that already exists.
     :::
 
 2.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
