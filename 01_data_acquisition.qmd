@@ -264,7 +264,7 @@ The final image (single layer) which will be presented to the user is created us
     ::: callout-tip
     ## Related Functions
 
-    `data_acquisition.final_Image.quality_mosaic` create a quality mosaic image based on quality band (source band). `add_quality_band` compute or select the band that will be used for creating the mosaic. Three quality band is supported, namely NDVI and NIR. The mosaic is created based on the highest pixel value of the corresponding band
+    `data_acquisition.final_Image.get_quality_mosaic` create a quality mosaic image based on quality band (source band). `add_quality_band` compute or select the band that will be used for creating the mosaic. Three quality band is supported, namely NDVI and NIR. The mosaic is created based on the highest pixel value of the corresponding band
     :::
 
 2.  Temporal Aggregation

@@ -17,7 +17,7 @@ This module performs supervised Random Forest classification to generate a land 
 # Output {.unnumbered}
 
 1.  Trained LULC classification model.
-2.  Model accuracy report if validatndefinedion data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the [splitted the sample data](@sec-sec-data-split)
+2.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the [splitted the sample data](@sec-sec-data-split)
 3.  Classified LULC raster map.
 
 # Process {.unnumbered}
@@ -152,7 +152,7 @@ This is a part of **System Response 6.3: Testing model's accuracy**
     `classification.Generate_LULC.get_feature_importance()` : extracts and returns model feature importance as a dataframe; if the model explanation is not available, falls back to an equal-weight estimate.
     :::
 
-2.  The system calculates model evaluation metrics on the validation dataset.
+2.  The system calculates model evaluation metrics on the validation dataset. This option only available if the user perform data split.
 
     ::: callout-tip
     ## Related Functions
@@ -166,11 +166,9 @@ This is a part of **System Response 6.3: Testing model's accuracy**
 
 **Luma User Journey**
 
-1.  This step is optional for the user.
+1.  The user can visualizes the LULC classification result on a canvas map along with the training data layer.
 
-2.  The user can visualizes the LULC classification result on a canvas map along with the training data layer.
-
-3.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
+2.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
 
 **Luma Geospatial Engine**
 
