@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-To be developed
+This module performs supervised Random Forest classification to generate a land cover map. It includes input review, hyperparameter definition, feature extraction, model training, hard/soft classification, feature importance, and accuracy evaluation using test data.
 
 # Input {.unnumbered}
 

@@ -68,7 +68,7 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
 
 3.  The system loads the sample data after verifying the upload
 
-    -   Check the initial sample count and conduct sample filtering based on its geometry, making sure all of the sample is located inside the area of interest 
+    -   Check the initial sample count and conduct sample filtering based on its geometry, making sure all of the sample is located inside the area of interest
     -   Handle a large dataset by stratified sampling so that the sample does not exceed 5000 features, and maintain class distribution representation
     -   Convert the shapefile into a geodataframe
     -   Updates the class field identifier in the training data dictionary.
@@ -266,11 +266,5 @@ This is a part of **System Response 3.4: Verified sample data preview**
 **Luma Geospatial Engine**
 
 1.  The system runs @sec-verify-sample-data for the **updated** sample data.
-
-    ::: callout-caution
-    ## Feature Note
-
-    Visio diagram and source code needs to be updated to move sample data splitting to Module 6. It is currently still in Module 3.
-    :::
 
 2.  The system saved the sample data as an object to be loaded in the next modules.
