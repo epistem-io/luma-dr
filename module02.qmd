@@ -133,15 +133,9 @@ This is a part of **System Response 2.1.b: Manually define classification scheme
     `classification_scheme.LULC_scheme_Manager.add_class()`: Adds a new class or updates an existing class, validates inputs, assigns colors, sorts classes, and updates the next available ID.
     :::
 
-    ::: callout-warning
-    ## Feature Note
+2.  The system normalizes class name inputs through a sequential process: it first applies Unicode normalization using the NFKD form, converts all characters to lowercase, replaces common separators (`_`, `-`) with spaces, removes non-alphanumeric characters, collapses multiple consecutive spaces, and applies light lexical normalization to reduce superficial grammatical differences, such as singular versus plural forms (e.g. “forest” and “forests”). Missing values (`None` or `NA`) are returned as None. Optionally, words within the class name can be sorted alphabetically to enable order-independent matching (e.g. “Forest Mixed” = “Mixed Forest”)
 
-    In the current version, the system retrieves the class name from the column name, stores it as a variable, and later uses it as a reference to match the class name consistency input of the sample data in Module 3. As a result, if the class name entered in Module 2 differs only by letter case (for example, `Forest` vs. `forest` or `FOREST`), it will not match the class name used in the sample data uploaded in Module 3, and the class will be incorrectly identified as invalid.
-
-    To reduce human error, a function named `normalize_class_name` should be added to standardize all class name inputs. This function will be applied in both Module 2 and Module 3 to ensure consistent class name handling across the system.
-    :::
-
-2.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
+3.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
 
     ::: callout-tip
     ## Related Functions
