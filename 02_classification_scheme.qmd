@@ -133,15 +133,9 @@ This is a part of **System Response 2.1.b: Manually define classification scheme
     `classification_scheme.LULC_scheme_Manager.add_class()`: Adds a new class or updates an existing class, validates inputs, assigns colors, sorts classes, and updates the next available ID.
     :::
 
-    ::: callout-caution
-    ## Feature Note
+2.  The system normalizes class name inputs through a sequential process: it first applies Unicode normalization using the NFKD form, converts all characters to lowercase, replaces common separators (`_`, `-`) with spaces, removes non-alphanumeric characters, collapses multiple consecutive spaces, and applies light lexical normalization to reduce superficial grammatical differences, such as singular versus plural forms (e.g. “forest” and “forests”). Missing values (`None` or `NA`) are returned as None. Optionally, words within the class name can be sorted alphabetically to enable order-independent matching (e.g. “Forest Mixed” = “Mixed Forest”)
 
-    Known Issue: `add_class()` permits duplicate class IDs when operating in edit mode.
-
-    Duplicate ID validation is only enforced when `self.edit_mode` is `False`. As a result, a user can unintentionally create multiple classes with the same ID by editing an existing class and changing its ID to one that already exists.
-    :::
-
-2.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
+3.  Temporary edit mode flags are managed to differentiate between adding and updating classes.
 
     ::: callout-tip
     ## Related Functions

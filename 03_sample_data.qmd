@@ -79,6 +79,12 @@ This is a part of **User Journey 3.1: Identifying sample data availability**
     `sample_data.SyncTrainData.LoadTrainData():` to load the sample data into the system by conducting several checks
     :::
 
+::: callout-caution
+## Feature note
+
+The main issue is that the original stratified sampling algorithm made sequential `.getInfo()` calls for each class label when calculating class sizes and extracting features, which could cause browser crashes or exceed Earth Engine quotas when processing large datasets (5000+ features). The improved implementation consolidates all server-side computations into a single aggregated request, keeping all operations on the server side until the final `.getInfo()` call, thus avoiding excessive client-server communication and quota limitations.
+:::
+
 ### Verifying Sample Data from User's Input {#sec-verify-sample-data}
 
 **Luma User Journey**
