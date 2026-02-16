@@ -21,7 +21,7 @@ book:
       - module02.qmd
       - module03.qmd
       - module04.qmd
-      - placeholders/module05_placeholder.qmd
+      - module05.qmd
       - module06.qmd
       - module07.qmd
       - placeholders/module08_placeholder.qmd
