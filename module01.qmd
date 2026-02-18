@@ -7,7 +7,7 @@ The output of this module is near–cloud-free satellite imagery that correspond
 # Input {.unnumbered}
 
 | Name of Input | Input Type | Details |
-|---------------------------------|--------------------|--------------------|
+|--------------------------------|--------------------|--------------------|
 | Area of Interest | User's input |  |
 | Target map date | User's input | YYYY or DD-MM-YYYY |
 | Desired spatial resolution | User's input | in meters |
@@ -51,6 +51,34 @@ Add options to upload kml/ kmz files for non-gis users.
 **LUMA Geospatial Engine**
 
 This sub-step does not involve any operations within the LUMA Geospatial Engine.
+
+### AOI from Indonesia Administrative Boundaries
+
+In addition to user define upload the system supports the selection of AOI from Indonesia administrative boundaries at regency level.
+
+**LUMA User Journey**
+
+1.   The user select an AOI based on a drop down list of Indonesian regency administrative boundaries
+
+2.  The system provide a preview of the selected boundary
+
+**Luma Geospatial Engine**
+
+1.  Load `ee.FeatureCollection` containing Indonesian administrative boundaries. The data should be uploaded as GEE asset and the link for it must be provided and shared publicly
+2.  The system extract the regency name and provide complete list for the user
+3.  The system convert the `ee.FeatureCollection` to `geodataframe` for visualization, while using the unconverted one as an AOI for the imagery search
+
+::: callout-tip
+## Related Function
+
+`input_utils.load_regency_asset:` Fetching GEE asset containing Indonesia administrative boundaries
+
+`input_utils.get_regency_name`: Creating a list of regency name for the user
+
+`input_utils.get_regency_geometry:` Get geometry for the selected regency
+
+`input_utils.convert_gee_features_to_gdf:` convert `ee.FeatureCollection` to `geodataframe` for visualization in the system
+:::
 
 ## Correction of Shapefile Geometries {#sec-validation-of-shapefile-geometries}
 
