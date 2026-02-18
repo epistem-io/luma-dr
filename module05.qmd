@@ -51,7 +51,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Terrain-based metrics
 
-        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands) (), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
+        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
 
         -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree (0-90)
 
@@ -76,6 +76,14 @@ This is part of User Journey 5.1: User Predictors Selection
 
         `predictor.distance_calculator.calculate_distance_metrics`: Core function to intialize the distance calculation logic for coastline, road, and settlement
         :::
+
+        Currently, the system support distance calculation from the following source:
+
+        -   Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
+
+        -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
+
+        -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap data
 
     -   Spectral transformation indices
 
@@ -124,25 +132,23 @@ This is part of User Journey 5.1: User Predictors Selection
 
         `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
 
-        `predictor.SpectralCalculator.validate_index_requirements` :
-
-        `predictor.SpectralCalculator.calculate_indices`:
+        `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
 
         `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
 
         `predictor.SpectralCalculator.get_calculation_summary`
         :::
 
-2.  The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
+2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
     ::: callout-tip
     ## Related Functions
 
-    `predictor.PredictorCalculation.validate_prerequisites`
+    `predictor.PredictorCalculation.validate_prerequisites:` Validate that required inputs are available for predictor computation. Required input are composite (`ee.Image`), AOI (`ee.FeatureCollection`) , and raw image collection (`ee.Image.Collection`)
 
     `predictor.PredictorCalculation.compute_predictors` : Orchestrates predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
 
-    `predictor.PredictorCalculation.prepare_module6_summary`
+    `predictor.PredictorCalculation.prepare_module6_summary:` Prepare summary metadata for module 6
     :::
 
 ## Predictors Result Visualization and Analysis
@@ -159,9 +165,9 @@ This is part of User Journey 5.1: User Predictors Selection
 
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
-    - Creates a random sampling across the AOI (default value is 5000 points)
+    -   Creates a random sampling across the AOI (default value is 5000 points)
 
-    - Computes correlation analysis using GEE's core function
+    -   Computes correlation analysis using GEE's core function
 
 2.  The correlation analysis is conducted across all predictors, including the original multispectral band
 
