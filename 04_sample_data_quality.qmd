@@ -2,7 +2,9 @@
 
 # Module Overview {.unnumbered}
 
-To be developed
+This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1. 
+
+This module is diagnostic only and does not produce inputs for subsequent modules. Its outputs support interpretation of class confusion and provide justification for feature enhancement in later stages of the workflow.
 
 # Input {.unnumbered}
 
@@ -43,7 +45,7 @@ This is a part of **User Journey 4.1: Determining separability analysis paramete
 
 1.  The user is prompted to fill in the parameters for separability analysis. The system provides a default value for each of the parameters as the following:
     -   Spatial resolution used for the separability analysis: 30 meter
-    -   Maximum number of pixels which the separability analysis will be conducted to: 5000
+    -   Maximum number of pixels which the separability analysis will be conducted to: 5000 for each class, to prevent crash in the analysis.
 2.  The system shows a message showing Transformed Divergence method will be used to conduct the analysis. In this development phase, there is no option for the user to change the separability analysis method.
 
 **Luma Geospatial Engine**

@@ -30,7 +30,7 @@ The output of this module is near–cloud-free satellite imagery that correspond
 
 This is a part of **User Journey 1.1: Prerequisite Check**
 
-1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system emphasizes on all required shapefile components that needs to be put in the `.zip` file.
+1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system emphasizes on all required shapefile components that needs to be put in the `.zip` file. The system also supports uploads of `.kml` or `.kmz` files.
 
 2.  The system validates whether the `.zip` file includes all the required shapefile components.
 
@@ -40,17 +40,11 @@ This is a part of **User Journey 1.1: Prerequisite Check**
 The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
 :::
 
-::: callout-caution
-## Feature note
-
-Add options to upload kml/ kmz files for non-gis users.
-:::
-
 3.  The AOI file is saved in a temporary directory, allowing users to go back-and-forth in between modules without having to re-uploading the AOI file.
 
 **Luma Geospatial Engine**
 
-This sub-step does not involve any operations within the LUMA Geospatial Engine.
+This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### AOI from Indonesia Administrative Boundaries
 
@@ -194,18 +188,12 @@ This is a part of **User Journey 1.2: Determining Satellite Imageries Parameters
 
     -   Spatial resolution: Specify the desired spatial resolution. During Phase 1, only Landsat data will be utilized; therefore, the spatial resolution will be set on default to 30 meters.
 
-    -   Sensor type: a list of sensors available based on the selected target map date input parameter. Landsat 8 OLI is shown to be the default option.
+    -   Sensor type: a list of sensors available based on the selected target map date input parameter. Landsat 8 OLI is shown to be the default option. A warning message will show about the limited availability of Landsat 1-3 data if the user uses temporal scope input between 1972-1984.
 
         ::: callout-important
         ## Error Handling Notification
 
         Since only Landsat data is utilized, the system provides an error notification if no Landsat sensor is available in the selected time range.
-        :::
-
-        ::: callout-warning
-        ## Feature Notes
-
-        A warning should be provided about the limited availability of Landsat 1-3 data if the user uses temporal scope input between 1972-1984.
         :::
 
     -   Maximum cloud cover: Set a preferred cloud cover threshold, or use the default value of 30%.
@@ -289,12 +277,6 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
 
-    ::: callout-caution
-    ## Feature Notes
-
-    Creating composite, clip, and mosaic of the image collection is currently conducted on Streamlit.
-    :::
-
 ## Mosaic and Composite for Satellite Imagery
 
 **Luma Geospatial Engine**
@@ -310,7 +292,7 @@ The final image (single layer) which will be presented to the user is created us
     ::: callout-tip
     ## Related Functions
 
-    `data_acquisition.final_Image.quality_mosaic` create a quality mosaic image based on quality band (source band). `add_quality_band` compute or select the band that will be used for creating the mosaic. Three quality band is supported, namely NDVI and NIR. The mosaic is created based on the highest pixel value of the corresponding band
+    `data_acquisition.final_Image.get_quality_mosaic` create a quality mosaic image based on quality band (source band). `add_quality_band` compute or select the band that will be used for creating the mosaic. Three quality band is supported, namely NDVI and NIR. The mosaic is created based on the highest pixel value of the corresponding band
     :::
 
 2.  Temporal Aggregation
@@ -332,11 +314,7 @@ The final image (single layer) which will be presented to the user is created us
 
     `calculate_coverage` estimate, the valid pixels (unmasked by cloud masking) within AOI. This quantified the ‘no data’ or blank blocks on the final image. This served as alternative approach in reporting the cloud cover within AOI, since in theory, the cloud cover within AOI is already masked out during cloud masking procedure. This function is used within the `get_temporal_composite` and reported in the final image creation.
 
-    -   ::: callout-caution
-        ## Feature Notes
-
-        The `calculate_coverage` serves as an alternative to calculate cloud cover within AOI. Since cloud cover should be masked out during cloud masking and remove during temporal aggregation
-        :::
+    The `calculate_coverage` serves as an alternative to calculate cloud cover within AOI. Since cloud cover should be masked out during cloud masking and remove during temporal aggregation
     :::
 
 ## Visualization and Saving of Processed Satellite Imagery {#sec-visualization-and-saving-data}
