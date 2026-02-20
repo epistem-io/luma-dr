@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-To be developed.
+This module performs a comprehensive thematic accuracy assessment of the land cover map using ground reference data. It includes data verification, upload/validation of test data, accuracy matrix calculation (OA, Kappa, PA, UA), confidence intervals, F1-scores, and formatted summary reports for display.
 
 # Input {.unnumbered}
 

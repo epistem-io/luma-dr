@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-To be developed.
+This module prompt the user to define the list of land cover or land use class which they're going to classified using the Luma platform. Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.
 
 # Input {.unnumbered}
 
@@ -85,15 +85,7 @@ This is a part of **System Response 2.1.a: Uploading classification scheme**
     -   For color code: "color", "colorcode", "warna", "colour", "hex", "palette"
     :::
 
-::: callout-caution
-## Feature note
-
-Bug: add_class() allows duplicate IDs in edit mode.
-
-It only check duplicate ID when not self.edit_mode. → User can create two classes with same ID by editing one and changing its ID to an existing one.
-:::
-
-1.  The system validates the uploaded `.csv` to ensure IDs are numeric and unique, applies a set of distinct colors if no color code was provided by the user. The user can change the color code manually.
+2.  The system validates the uploaded `.csv` to ensure IDs are numeric and unique, applies a set of distinct colors if no color code was provided by the user. The user can change the color code manually.
 
     ::: callout-tip
     ## Related Functions

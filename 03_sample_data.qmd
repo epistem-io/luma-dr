@@ -273,10 +273,4 @@ This is a part of **System Response 3.4: Verified sample data preview**
 
 1.  The system runs @sec-verify-sample-data for the **updated** sample data.
 
-    ::: callout-caution
-    ## Feature Note
-
-    Visio diagram and source code needs to be updated to move sample data splitting to Module 6. It is currently still in Module 3.
-    :::
-
 2.  The system saved the sample data as an object to be loaded in the next modules.
