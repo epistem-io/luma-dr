@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction – Epistem-X Technical Documentation</title>
+<title>Helpers – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,18 +30,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./module01.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./01_data_acquisition.html" rel="next">
+<link href="./ee_init.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -82,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./python_setup.html">General Development Settings</a></li><li class="breadcrumb-item"><a href="./helpers.html">Helpers</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -97,12 +98,14 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Epistem-X Technical Documentation</a> 
+      <a href="./">Luma Development Reference</a> 
         <div class="sidebar-tools-main">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -116,107 +119,123 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About the project</span></a>
+ <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Introduction</span></a>
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></a>
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span></a>
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></a>
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></a>
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></a>
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span></a>
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Module 8: Post Classification Analysis and Housekeeping</span></span></a>
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#system-overview" id="toc-system-overview" class="nav-link active" data-scroll-target="#system-overview">System Overview</a>
-  <ul class="collapse">
-  <li><a href="#lulc-classification-algorithm" id="toc-lulc-classification-algorithm" class="nav-link" data-scroll-target="#lulc-classification-algorithm">LULC Classification Algorithm</a></li>
-  <li><a href="#reference-data-repository" id="toc-reference-data-repository" class="nav-link" data-scroll-target="#reference-data-repository">Reference Data Repository</a></li>
-  <li><a href="#user-interface" id="toc-user-interface" class="nav-link" data-scroll-target="#user-interface">User Interface</a></li>
-  </ul></li>
-  <li><a href="#epistem-x-development-phases" id="toc-epistem-x-development-phases" class="nav-link" data-scroll-target="#epistem-x-development-phases">Epistem-X Development Phases</a>
-  <ul class="collapse">
-  <li><a href="#phase-1-express-map" id="toc-phase-1-express-map" class="nav-link" data-scroll-target="#phase-1-express-map">Phase 1: Express Map</a></li>
-  <li><a href="#phase-2-map-studio" id="toc-phase-2-map-studio" class="nav-link" data-scroll-target="#phase-2-map-studio">Phase 2: Map Studio</a></li>
-  <li><a href="#phase-3-map-lab" id="toc-phase-3-map-lab" class="nav-link" data-scroll-target="#phase-3-map-lab">Phase 3: Map Lab</a></li>
-  </ul></li>
-  <li><a href="#modules-overview" id="toc-modules-overview" class="nav-link" data-scroll-target="#modules-overview">Modules Overview</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./python_setup.html">General Development Settings</a></li><li class="breadcrumb-item"><a href="./helpers.html">Helpers</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title">Helpers</h1>
 </div>
 
 
@@ -233,102 +252,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This document is a technical specification for the Epistem-X workflow. It is intended for back-end engineers, remote sensing scientists, data engineers, and DevOps to implement a production-ready mapping pipeline.</p>
-<section id="system-overview" class="level2">
-<h2 class="anchored" data-anchor-id="system-overview">System Overview</h2>
-<p>The envisioned landscape monitoring system is designed to comprise three core components, as illustrated in <a href="#fig-overall-system-architecture" class="quarto-xref">Figure&nbsp;<span>1</span></a>. These components work in an integrated manner to provide a robust, scalable, and flexible solution for generating high-quality Land Use and Land Cover (LULC) maps. By combining advanced algorithms, structured reference data, and user-friendly interfaces, the system will support diverse stakeholders in monitoring, managing, and making informed decisions about landscapes.</p>
-<div id="fig-overall-system-architecture" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-overall-system-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/overall_system_architecture.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overall-system-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: System architecture and core components of the LULC monitoring system
-</figcaption>
-</figure>
-</div>
-<section id="lulc-classification-algorithm" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="lulc-classification-algorithm">LULC Classification Algorithm</h3>
-<p>[insert brief summary of all the modules]</p>
-</section>
-<section id="reference-data-repository" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="reference-data-repository">Reference Data Repository</h3>
-<p>[insert brief summary of Epistem-Y]</p>
-</section>
-<section id="user-interface" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="user-interface">User Interface</h3>
-<p>[insert UI description]</p>
-</section>
-</section>
-<section id="epistem-x-development-phases" class="level2">
-<h2 class="anchored" data-anchor-id="epistem-x-development-phases">Epistem-X Development Phases</h2>
-<p>Epistem-X will progress through a structured development lifecycle consisting of three phases. Phase 1 is targeted for completion by December 2025, followed by Phase 2, which is planned for delivery by June 2026.</p>
-<section id="phase-1-express-map" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="phase-1-express-map">Phase 1: Express Map</h3>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Phase 1 User’s Focus
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Users seeking to create their first land cover map quickly, easily, and with high-quality results.</p>
-</div>
-</div>
-<p>Phase 1 serves as the primary entry point for all Epistem users. The platform provides a guided workflow designed to produce standardized, high-quality maps with minimal complexity. Users follow a core set of steps to achieve results without navigating complex options.</p>
-<p>[in this development phase, what can the user do with this tool? what are the inputs/outputs?]</p>
-</section>
-<section id="phase-2-map-studio" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="phase-2-map-studio">Phase 2: Map Studio</h3>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Phase 2 User’s Focus
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Users with foundational knowledge seeking more complex mapping, experimenting with additional datasets, and refining map details according to specific needs.</p>
-</div>
-</div>
-</section>
-<section id="phase-3-map-lab" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="phase-3-map-lab">Phase 3: Map Lab</h3>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Phase 3 User’s Focus
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Users requiring in-depth analysis, collaborative workflows, and the ability to learn from other Epistem users.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="modules-overview" class="level2">
-<h2 class="anchored" data-anchor-id="modules-overview">Modules Overview</h2>
-<p>The workflow for generating LULC maps consists of eight sequential modules:</p>
-<p><a href="./module01.html">Module 1: Generating cloud-free satellite images</a></p>
-<p><a href="./module02.html">Module 2: Determining the LULC classification schema and classes</a></p>
-<p><a href="./module03.html">Module 3: Obtaining representative training data</a></p>
-<p><a href="./module04.html">Module 4: Performing separability analysis and selecting covariates</a></p>
-<p><a href="./module05.html">Module 5: Incorporating non-image covariates to improve model accuracy</a></p>
-<p><a href="./module06.html">Module 6: Generating the preliminary LULC map</a></p>
-<p><a href="./module07.html">Module 7: Assessing thematic accuracy using independent validation data</a></p>
-<p><a href="./module08.html">Module 8: Performing post-classification analysis and data housekeeping</a></p>
-<p>Each module builds on the previous one, ensuring a systematic and reproducible workflow from raw imagery to a validated, fully documented LULC map.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -382,13 +307,14 @@ Phase 3 User’s Focus
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -732,13 +658,13 @@ Phase 3 User’s Focus
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="About the project">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About the project</span>
+      <a href="./ee_init.html" class="pagination-link" aria-label="Earth Engine Initialization and Authentication">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Earth Engine Initialization and Authentication</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module01.html" class="pagination-link" aria-label="Module 1: Acquisition of Near-Cloud-Free Satellite Imagery">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./01_data_acquisition.html" class="pagination-link" aria-label="Acquisition of Near-Cloud-Free Satellite Imagery">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

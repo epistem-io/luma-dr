@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Luma Development Reference</title>
+<title>2&nbsp; LULC Classification Scheme – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./writing_guidelines.html" rel="next">
+<link href="./03_sample_data.html" rel="next">
+<link href="./01_data_acquisition.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -82,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">About Luma</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./02_classification_scheme.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -117,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About Luma</span></a>
   </div>
 </li>
@@ -179,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
@@ -231,16 +232,31 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#about-luma" id="toc-about-luma" class="nav-link active" data-scroll-target="#about-luma">About Luma</a></li>
+  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
+  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
+  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
+  <ul class="collapse">
+  <li><a href="#sec-selection-of-classification-schema" id="toc-sec-selection-of-classification-schema" class="nav-link" data-scroll-target="#sec-selection-of-classification-schema"><span class="header-section-number">2.1</span> Selection of Classification Scheme</a>
+  <ul class="collapse">
+  <li><a href="#sec-user-uploading-their-own-classification" id="toc-sec-user-uploading-their-own-classification" class="nav-link" data-scroll-target="#sec-user-uploading-their-own-classification"><span class="header-section-number">2.1.1</span> User Uploading Their Own Classification Scheme</a></li>
+  <li><a href="#sec-user-entering-the-classification-manually" id="toc-sec-user-entering-the-classification-manually" class="nav-link" data-scroll-target="#sec-user-entering-the-classification-manually"><span class="header-section-number">2.1.2</span> User Entering the Classification Manually</a></li>
+  <li><a href="#sec-user-select-existing-lulc-template" id="toc-sec-user-select-existing-lulc-template" class="nav-link" data-scroll-target="#sec-user-select-existing-lulc-template"><span class="header-section-number">2.1.3</span> User Selecting a Default Classification Scheme</a></li>
+  </ul></li>
+  <li><a href="#sec-saving-the-lulc-classification-table" id="toc-sec-saving-the-lulc-classification-table" class="nav-link" data-scroll-target="#sec-saving-the-lulc-classification-table"><span class="header-section-number">2.2</span> Saving and Downloading the LULC Classification Table</a>
+  <ul class="collapse">
+  <li><a href="#saving-and-downloading-the-lulc-classification-table" id="toc-saving-and-downloading-the-lulc-classification-table" class="nav-link" data-scroll-target="#saving-and-downloading-the-lulc-classification-table"><span class="header-section-number">2.2.1</span> Saving and Downloading the LULC Classification Table</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./02_classification_scheme.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Luma Development Reference</h1>
+<h1 class="title"><span id="sec-module-2" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></h1>
 </div>
 
 
@@ -257,11 +273,323 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="about-luma" class="level1 unnumbered">
-<h1 class="unnumbered">About Luma</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut lorem vitae mauris hendrerit eleifend. Etiam consectetur porttitor tortor sit amet sodales. Sed ac tellus vulputate, tempus tellus sed, scelerisque magna. Aliquam lacus neque, interdum non mattis vestibulum, vulputate a leo. Curabitur velit elit, pulvinar ac volutpat quis, sodales sed elit. Nulla risus massa, gravida commodo egestas nec, gravida eget lacus. Proin tincidunt sodales laoreet. Sed volutpat, libero tincidunt rutrum faucibus, diam metus suscipit justo, sit amet rutrum tortor quam et neque.</p>
+<section id="module-overview" class="level1 unnumbered">
+<h1 class="unnumbered">Module Overview</h1>
+<p>This module prompt the user to define the list of land cover or land use class which they’re going to classified using the Luma platform. Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.</p>
+</section>
+<section id="input" class="level1 unnumbered">
+<h1 class="unnumbered">Input</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name of input</th>
+<th>Input Type</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>User’s LULC list of classes</td>
+<td>User’s input</td>
+<td>Entered with <code>.csv</code> file or manually defined on the UI</td>
+</tr>
+<tr class="even">
+<td>Other existing LULC list of classes</td>
+<td>System’s input</td>
+<td>RESTORE+ LULC class</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output" class="level1 unnumbered">
+<h1 class="unnumbered">Output</h1>
+<ol type="1">
+<li>LULC list of classes to be applied in the final classification result</li>
+</ol>
+</section>
+<section id="process" class="level1 unnumbered">
+<h1 class="unnumbered">Process</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This module cannot be accessed if the system does not detect any saved satellite imagery from <a href="01_data_acquisition.html">Module 1</a>.</p>
+</div>
+</div>
+<section id="sec-selection-of-classification-schema" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-selection-of-classification-schema"><span class="header-section-number">2.1</span> Selection of Classification Scheme</h2>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Journey 2.1: Choosing a classification scheme</strong></p>
+<ol type="1">
+<li>The user is given the options of creating the classification scheme:
+<ol type="a">
+<li>Upload the classification scheme</li>
+<li>Manually define the scheme on the UI</li>
+<li>Use an existing classification scheme</li>
+</ol></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This sub-step does not involve any operations within the Luma Geospatial Engine.</p>
+<ul>
+<li>If the user chooses to upload their own schema, the system proceeds to <a href="#sec-user-uploading-their-own-classification" class="quarto-xref"><span>Section 2.1.1</span></a></li>
+<li>If the user chooses to define the classification manually on the UI, the system proceeds to <a href="#sec-user-entering-the-classification-manually" class="quarto-xref"><span>Section 2.1.2</span></a></li>
+<li>If the user chooses a default classification scheme, the system proceeds to <a href="#sec-user-select-existing-lulc-template" class="quarto-xref"><span>Section 2.1.3</span></a></li>
+</ul>
+<section id="sec-user-uploading-their-own-classification" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="sec-user-uploading-their-own-classification"><span class="header-section-number">2.1.1</span> User Uploading Their Own Classification Scheme</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The user is prompted to upload the <code>.csv</code> file containing the classification scheme information.</p></li>
+<li><p>The system displays a guidance notification indicating that the uploaded <code>.csv</code> file must contain at least three columns: a class ID (numeric identifier), a class name, and an optional hex color code specifying the display color for each class.</p></li>
+<li><p>The system automatically detects column headers based on common naming conventions. If the expected headers are not found, the user must manually assign the correct column names.</p></li>
+<li><p>The user is prompted to finalize the scheme by clicking a button.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation if the classification table is successfully saved to the system.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows an error message if:</p>
+<ul>
+<li>The class ID is not a valid number</li>
+<li>There is a duplicate class ID</li>
+</ul>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This is a part of <strong>System Response 2.1.a: Uploading classification scheme</strong></p>
+<ol type="1">
+<li><p>The system automatically detects column headers based on common naming conventions for ID, class name, and color code. If the expected headers are not found, the user must manually assign the correct column names.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.auto_detect_csv_columns()</code>: this function automatically detects the column headers. The set for the common naming conventions are currently hardcoded as the following:</p>
+<ul>
+<li>For ID: “id”, “classid”, “kode”, “code”</li>
+<li>For class name: “classname”, “class”, “kelas”, “name”, “nama”</li>
+<li>For color code: “color”, “colorcode”, “warna”, “colour”, “hex”, “palette”</li>
+</ul>
+</div>
+</div></li>
+<li><p>The system validates the uploaded <code>.csv</code> to ensure IDs are numeric and unique, applies a set of distinct colors if no color code was provided by the user. The user can change the color code manually.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.process_csv_upload()</code>: to validate class data by checking ID integrity, assigning colors (<code>_generate_distinct_colors</code>), and returning a success status with a summary message.</p>
+<p><code>classification_scheme.LULC_scheme_Manager._generate_distinct_colors()</code>: to generate a predefined set of distinct colors for LULC classes (up to 20). If the number of classes exceeds this limit, the method falls back to generating random colors via <code>_generate_random_colors()</code>.</p>
+<p><code>classification_scheme.LULC_scheme_Manager._generate_random_colors()</code>: to generate random hex color code.</p>
+<p><code>classification_scheme.LULC_scheme_Manager.finalize_csv_upload()</code>: to finalize the CSV file by applying any user-assigned colors, saving and sorting the class list, and clearing temporary data.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="sec-user-entering-the-classification-manually" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="sec-user-entering-the-classification-manually"><span class="header-section-number">2.1.2</span> User Entering the Classification Manually</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The user is prompted to fill out a form for each class ID, class name, and hex color code.</p></li>
+<li><p>The system stores each class entry individually as it is added.</p></li>
+<li><p>All added classes are displayed in a summary table for preview.</p></li>
+<li><p>The user can edit or delete the classes in the summary table preview.</p></li>
+<li><p>The user is prompted to finalize the scheme by clicking a button.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation if the classification table is successfully saved to the system.</p>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This is a part of <strong>System Response 2.1.b: Manually define classification scheme</strong></p>
+<ol type="1">
+<li><p>The system validates user-provided class input for numeric ID, non-empty class name, and uniqueness (if adding new classes).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.validate_class_input()</code>: Validates class ID and name, checks for uniqueness, and returns a validity flag with an error message if invalid.</p>
+<p><code>classification_scheme.LULC_scheme_Manager.add_class()</code>: Adds a new class or updates an existing class, validates inputs, assigns colors, sorts classes, and updates the next available ID.</p>
+</div>
+</div></li>
+<li><p>The system normalizes class name inputs through a sequential process: it first applies Unicode normalization using the NFKD form, converts all characters to lowercase, replaces common separators (<code>_</code>, <code>-</code>) with spaces, removes non-alphanumeric characters, collapses multiple consecutive spaces, and applies light lexical normalization to reduce superficial grammatical differences, such as singular versus plural forms (e.g.&nbsp;“forest” and “forests”). Missing values (<code>None</code> or <code>NA</code>) are returned as None. Optionally, words within the class name can be sorted alphabetically to enable order-independent matching (e.g.&nbsp;“Forest Mixed” = “Mixed Forest”)</p></li>
+<li><p>Temporary edit mode flags are managed to differentiate between adding and updating classes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.edit_class()</code></p>
+<p><code>classification_scheme.LULC_scheme_Manager.delete_class()</code></p>
+<p><code>classification_scheme.LULC_scheme_Manager.cancel_edit()</code></p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="sec-user-select-existing-lulc-template" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="sec-user-select-existing-lulc-template"><span class="header-section-number">2.1.3</span> User Selecting a Default Classification Scheme</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The user is prompted to select a default classification scheme. In the current development, only classification scheme from RESTORE+ is available.</p></li>
+<li><p>The user is prompted to finalize the scheme by clicking a button.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation if the classification table is successfully saved to the system.</p>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This is a part of <strong>Response System 2.1.c: Using default classification scheme</strong></p>
+<ol type="1">
+<li><p>The system loads the chosen classification scheme classes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.load_default_scheme()</code>: to load an existing classification scheme from a dataset.</p>
+<p><code>classification_scheme.LULC_scheme_Manager.get_default_schemes()</code>: stores the RESTORE+ LULC class in a dictionary.</p>
+</div>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="sec-saving-the-lulc-classification-table" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-saving-the-lulc-classification-table"><span class="header-section-number">2.2</span> Saving and Downloading the LULC Classification Table</h2>
+<section id="saving-and-downloading-the-lulc-classification-table" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="saving-and-downloading-the-lulc-classification-table"><span class="header-section-number">2.2.1</span> Saving and Downloading the LULC Classification Table</h3>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Journey 2.2: Saving and Downloading the LULC Classification Table</strong></p>
+<ol type="1">
+<li><p>The user can optionally download the table in <code>.csv</code> file format and save it in their local device.</p></li>
+<li><p>The system gets a confirmation of the number of classes saved in the system.</p></li>
+<li><p>The user is given the option to proceed to <a href="@sec-module-3">Module 3</a>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system disables the option to continue to the next module if the system does not detect a satellite imagery saved inside the system.</p>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This is a part of <strong>System Response 2.2: Save LULC Classification Table and Continue to Next Module</strong></p>
+<ol type="1">
+<li><p>The system generates a <code>.csv</code> file containing the final LULC classification scheme table.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.get_csv_data()</code> : to generate a <code>.csv</code> file containing the final classification table that has been standardized by <code>get_dataframe</code>.</p>
+<p><code>classification_scheme.LULC_scheme_Manager.get_dataframe()</code> : to standardize the column names of the LULC classification table to “ID”, “Land Cover Class”, “Color Palette”</p>
+</div>
+</div></li>
+<li><p>The system checks whether the user has defined at least one class.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification_scheme.LULC_scheme_Manager.has_classes()</code>: to check if any classes are defined.</p>
+<p><code>classification_scheme.LULC_scheme_Manager.get_class_count()</code>: get the information of the number of the defined classes.</p>
+</div>
+</div></li>
+<li><p>The system saved the LULC class classification scheme as an object to be loaded in the next modules.</p></li>
+</ol>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -667,10 +995,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./01_data_acquisition.html" class="pagination-link" aria-label="Acquisition of Near-Cloud-Free Satellite Imagery">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./writing_guidelines.html" class="pagination-link" aria-label="Collaborative Development Guideline">
-        <span class="nav-page-text">Collaborative Development Guideline</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_sample_data.html" class="pagination-link" aria-label="Sample Data Generation">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

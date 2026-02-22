@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Module 6: LULC Map Generation – Epistem-X Technical Documentation</title>
+<title>Testing Guideline for Developers – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,18 +30,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./module07.html" rel="next">
-<link href="./module05.html" rel="prev">
+<link href="./python_setup.html" rel="next">
+<link href="./writing_guidelines.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,9 +70,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -85,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module06.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./testing_guidelines.html">Testing Guideline for Developers</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -100,12 +98,14 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Epistem-X Technical Documentation</a> 
+      <a href="./">Luma Development Reference</a> 
         <div class="sidebar-tools-main">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -119,115 +119,123 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About the project</span></a>
+ <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></a>
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span></a>
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></a>
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></a>
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module06.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></a>
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span></a>
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Module 8: Post Classification Analysis and Housekeeping</span></span></a>
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a>
-  <ul class="collapse">
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a></li>
-  <li><a href="#checking-prerequisites-from-previous-modules" id="toc-checking-prerequisites-from-previous-modules" class="nav-link" data-scroll-target="#checking-prerequisites-from-previous-modules"><span class="header-section-number">6.1</span> Checking Prerequisites from Previous Modules</a>
-  <ul class="collapse">
-  <li><a href="#front-end" id="toc-front-end" class="nav-link" data-scroll-target="#front-end"><span class="header-section-number">6.1.1</span> Front-end</a></li>
-  <li><a href="#back-end" id="toc-back-end" class="nav-link" data-scroll-target="#back-end"><span class="header-section-number">6.1.2</span> Back-end</a></li>
-  </ul></li>
-  <li><a href="#model-training-and-classification" id="toc-model-training-and-classification" class="nav-link" data-scroll-target="#model-training-and-classification"><span class="header-section-number">6.2</span> Model Training and Classification</a>
-  <ul class="collapse">
-  <li><a href="#sec-review-inputs" id="toc-sec-review-inputs" class="nav-link" data-scroll-target="#sec-review-inputs"><span class="header-section-number">6.2.1</span> Review Inputs</a></li>
-  <li><a href="#sec-define-classification-specifications" id="toc-sec-define-classification-specifications" class="nav-link" data-scroll-target="#sec-define-classification-specifications"><span class="header-section-number">6.2.2</span> Define Classification Specifications</a></li>
-  <li><a href="#sec-feature-extraction" id="toc-sec-feature-extraction" class="nav-link" data-scroll-target="#sec-feature-extraction"><span class="header-section-number">6.2.3</span> Feature Extraction</a></li>
-  <li><a href="#sec-train-random-forest-model" id="toc-sec-train-random-forest-model" class="nav-link" data-scroll-target="#sec-train-random-forest-model"><span class="header-section-number">6.2.4</span> Train Random Forest Model</a></li>
-  <li><a href="#sec-model-accuracy-test" id="toc-sec-model-accuracy-test" class="nav-link" data-scroll-target="#sec-model-accuracy-test"><span class="header-section-number">6.2.5</span> Model Accuracy Test</a></li>
-  <li><a href="#sec-classification-apply-model-to-entire-image" id="toc-sec-classification-apply-model-to-entire-image" class="nav-link" data-scroll-target="#sec-classification-apply-model-to-entire-image"><span class="header-section-number">6.2.6</span> Classification (Apply Model to Entire Image)</a></li>
-  <li><a href="#sec-review-classification-results" id="toc-sec-review-classification-results" class="nav-link" data-scroll-target="#sec-review-classification-results"><span class="header-section-number">6.2.7</span> Review Classification Results</a></li>
-  </ul></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-module-0" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></h1>
+<h1 class="title">Testing Guideline for Developers</h1>
 </div>
 
 
@@ -244,224 +252,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="module-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Module Overview</h1>
-<p>This module provides functionality for users to generate the final LULC map as the primary output product, derived from the validated and optimized classification model developed in Modules 1-5. Before the processing begins, it ensures that all required inputs - such as satellite imagery, classification schemes, and training samples - are properly prepared and validated. Users can specify data splits, select classification modes, perform hyperparameter tuning optimization, and apply the trained model to the entire AOI to produce a high-quality, georeferenced LULC map. The module supports Random Forest (RF) based classification for adaptability, aligning with hierarchical or non-hierarchical schemes from <a href="@sec-module-2">Module 2</a>, and incorporates feedback from optional covariate enhancements in <a href="@sec-module-5">Module 5</a>. Upon completion, users receive a displayable, analyzable, and downloadable map with metadata, enabling applications such as deforestation monitoring or conservation planning.</p>
-<section id="input" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="input">Input</h2>
-<p><strong>User’s Input</strong></p>
-<ol type="1">
-<li>Agreement to proceed after input review (yes/no).</li>
-<li>RF hyperparameters: number of trees (<code>n_tree</code>), variables per split (<code>var_split</code>), minimum leaf population (<code>min_leaf_pop</code>).</li>
-</ol>
-<p><strong>Automatic System Input</strong></p>
-<ol type="1">
-<li>None.</li>
-</ol>
-<p><strong>Input from Other Modules</strong></p>
-<ol type="1">
-<li>Near-cloud-free satellite imagery within the AOI (<a href="@sec-module-1">Module 1</a>).</li>
-<li>LULC classification scheme table (<a href="@sec-module-2">Module 2</a>).</li>
-<li>Georeferenced training dataset (<a href="@sec-module-3">Module 3</a>).</li>
-<li>Validation dataset (<a href="@sec-module-3">Module 3</a>).</li>
-<li>Validated sample data and separability results (<a href="@sec-module-4">Module 4</a>).</li>
-</ol>
-</section>
-<section id="output" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="output">Output</h2>
-<ul>
-<li>Trained RF classification model.</li>
-<li>Classified LULC raster map.</li>
-<li>Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix).</li>
-</ul>
-</section>
-<section id="process" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="process">Process</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-
-%% CHECKING PREREQUISITES
-A([&lt;a href="#sec-checking-prerequisites"&gt;Check Prerequisites&lt;/a&gt;])
-B([Prompt Return to Previous Modules if Needed])
-C([&lt;a href="#sec-review-inputs"&gt;Review Inputs&lt;/a&gt;])
-
-A --&gt; B
-B --&gt; C
-
-%% MODEL TRAINING AND CLASSIFICATION
-D([&lt;a href="#sec-define-classification-specifications"&gt;Define Classification Specifications&lt;/a&gt;])
-E([&lt;a href="#sec-feature-extraction"&gt;Feature Extraction&lt;/a&gt;])
-F([&lt;a href="#sec-train-random-forest-model"&gt;Train Random Forest Model&lt;/a&gt;])
-G([&lt;a href="#sec-model-accuracy-test"&gt;Model Accuracy Test&lt;/a&gt;])
-H([&lt;a href="#sec-classification-apply-model-to-entire-image"&gt;Classification&lt;/a&gt;])
-I([&lt;a href="#sec-review-classification-results"&gt;Review Classification Results&lt;/a&gt;])
-J([&lt;a href="#sec-module-7"&gt;Proceed to Module 7&lt;/a&gt;])
-
-C --&gt; D
-D --&gt; E
-E --&gt; F
-F --&gt; G
-G --&gt; H
-H --&gt; I
-I --&gt;|Satisfied| J
-I --&gt;|Unsatisfied| D
-
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="checking-prerequisites-from-previous-modules" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules"><span class="header-section-number">6.1</span> Checking Prerequisites from Previous Modules</h2>
-<section id="front-end" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="front-end"><span class="header-section-number">6.1.1</span> Front-end</h3>
-<p>The user is notified if inputs are insufficient or test data is missing, and prompted to return to previous modules (e.g., <a href="@sec-module-3">Module 3</a> for test data) as needed.</p>
-</section>
-<section id="back-end" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="back-end"><span class="header-section-number">6.1.2</span> Back-end</h3>
-<ol type="1">
-<li>The system performs a parameter and input suitability test to verify availability and compatibility of inputs from Modules 1-5 (such as imagery, scheme, training data, optional validation data).</li>
-<li>Test data availability from <a href="@sec-module-3">Module 3</a>.</li>
-<li>If any inputs are missing or incompatible, the system directs the user to return to the incomplete module.</li>
-<li>If no test data, suggest the user return to <a href="@sec-module-3">Module 3</a> and correct the sample.</li>
-<li>The system directs the user to return to the module that has not been completed.</li>
-</ol>
-</section>
-</section>
-<section id="model-training-and-classification" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="model-training-and-classification"><span class="header-section-number">6.2</span> Model Training and Classification</h2>
-<section id="sec-review-inputs" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="sec-review-inputs"><span class="header-section-number">6.2.1</span> Review Inputs</h3>
-<section id="front-end-1" class="level4" data-number="6.2.1.1">
-<h4 data-number="6.2.1.1" class="anchored" data-anchor-id="front-end-1"><span class="header-section-number">6.2.1.1</span> Front-end</h4>
-<ol type="1">
-<li>The user reviews the summary text report to decide if they agree to proceed.
-<ul>
-<li>If yes, continue to define specifications.</li>
-<li>If no, return to relevant previous modules.</li>
-</ul></li>
-<li>Users return to previous modules as needed.</li>
-</ol>
-</section>
-<section id="back-end-1" class="level4" data-number="6.2.1.2">
-<h4 data-number="6.2.1.2" class="anchored" data-anchor-id="back-end-1"><span class="header-section-number">6.2.1.2</span> Back-end</h4>
-<ol type="1">
-<li>The system generates and displays a summary report of variables for the classification process, including imagery details, classification scheme, and training data summary.</li>
-<li>Displays a summary text and dataframe.</li>
-<li>Lists variables used in classification.</li>
-</ol>
-</section>
-</section>
-<section id="sec-define-classification-specifications" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="sec-define-classification-specifications"><span class="header-section-number">6.2.2</span> Define Classification Specifications</h3>
-<section id="front-end-2" class="level4" data-number="6.2.2.1">
-<h4 data-number="6.2.2.1" class="anchored" data-anchor-id="front-end-2"><span class="header-section-number">6.2.2.1</span> Front-end</h4>
-<ol type="1">
-<li>User enters RF hyperparameter values:
-<ul>
-<li>Number of trees (n_tree)</li>
-<li>Variables per split (var_split)</li>
-<li>Minimum leaf population (min_leaf_pop)</li>
-</ul></li>
-</ol>
-</section>
-<section id="back-end-2" class="level4" data-number="6.2.2.2">
-<h4 data-number="6.2.2.2" class="anchored" data-anchor-id="back-end-2"><span class="header-section-number">6.2.2.2</span> Back-end</h4>
-<ol type="1">
-<li>Stores user-entered hyperparameters.</li>
-<li>Applies them as main parameters for Random Forest training.</li>
-</ol>
-</section>
-</section>
-<section id="sec-feature-extraction" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="sec-feature-extraction"><span class="header-section-number">6.2.3</span> Feature Extraction</h3>
-<section id="front-end-3" class="level4" data-number="6.2.3.1">
-<h4 data-number="6.2.3.1" class="anchored" data-anchor-id="front-end-3"><span class="header-section-number">6.2.3.1</span> Front-end</h4>
-<p>Runs automatically after specifications are defined.</p>
-</section>
-<section id="back-end-3" class="level4" data-number="6.2.3.2">
-<h4 data-number="6.2.3.2" class="anchored" data-anchor-id="back-end-3"><span class="header-section-number">6.2.3.2</span> Back-end</h4>
-<p>Performs feature extraction by sampling pixel values from imagery based on training (and optional validation) samples.</p>
-</section>
-</section>
-<section id="sec-train-random-forest-model" class="level3" data-number="6.2.4">
-<h3 data-number="6.2.4" class="anchored" data-anchor-id="sec-train-random-forest-model"><span class="header-section-number">6.2.4</span> Train Random Forest Model</h3>
-<section id="front-end-4" class="level4" data-number="6.2.4.1">
-<h4 data-number="6.2.4.1" class="anchored" data-anchor-id="front-end-4"><span class="header-section-number">6.2.4.1</span> Front-end</h4>
-<p>Shows user progress during training.</p>
-</section>
-<section id="back-end-4" class="level4" data-number="6.2.4.2">
-<h4 data-number="6.2.4.2" class="anchored" data-anchor-id="back-end-4"><span class="header-section-number">6.2.4.2</span> Back-end</h4>
-<ol type="1">
-<li>Trains RF model using prepared data:
-<ul>
-<li>Bootstrap sampling for subsets per tree.</li>
-<li>Builds multiple decision trees.</li>
-<li>Uses majority voting for predictions.</li>
-</ul></li>
-<li>Produces trained model asset.</li>
-</ol>
-</section>
-</section>
-<section id="sec-model-accuracy-test" class="level3" data-number="6.2.5">
-<h3 data-number="6.2.5" class="anchored" data-anchor-id="sec-model-accuracy-test"><span class="header-section-number">6.2.5</span> Model Accuracy Test</h3>
-<section id="front-end-5" class="level4" data-number="6.2.5.1">
-<h4 data-number="6.2.5.1" class="anchored" data-anchor-id="front-end-5"><span class="header-section-number">6.2.5.1</span> Front-end</h4>
-<p>Displays accuracy report if validation data is available.</p>
-</section>
-<section id="back-end-5" class="level4" data-number="6.2.5.2">
-<h4 data-number="6.2.5.2" class="anchored" data-anchor-id="back-end-5"><span class="header-section-number">6.2.5.2</span> Back-end</h4>
-<ol type="1">
-<li>Applies model to validation data if available.</li>
-<li>Generates accuracy metrics: overall accuracy, precision, recall, F1-score, Kappa, error matrix.</li>
-<li>Skips if no validation data.</li>
-</ol>
-</section>
-</section>
-<section id="sec-classification-apply-model-to-entire-image" class="level3" data-number="6.2.6">
-<h3 data-number="6.2.6" class="anchored" data-anchor-id="sec-classification-apply-model-to-entire-image"><span class="header-section-number">6.2.6</span> Classification (Apply Model to Entire Image)</h3>
-<section id="front-end-6" class="level4" data-number="6.2.6.1">
-<h4 data-number="6.2.6.1" class="anchored" data-anchor-id="front-end-6"><span class="header-section-number">6.2.6.1</span> Front-end</h4>
-<p>Runs after training with progress shown.</p>
-</section>
-<section id="back-end-6" class="level4" data-number="6.2.6.2">
-<h4 data-number="6.2.6.2" class="anchored" data-anchor-id="back-end-6"><span class="header-section-number">6.2.6.2</span> Back-end</h4>
-<ol type="1">
-<li>Applies trained model to entire imagery.</li>
-<li>Generates classification summary and result data.</li>
-</ol>
-</section>
-</section>
-<section id="sec-review-classification-results" class="level3" data-number="6.2.7">
-<h3 data-number="6.2.7" class="anchored" data-anchor-id="sec-review-classification-results"><span class="header-section-number">6.2.7</span> Review Classification Results</h3>
-<section id="front-end-7" class="level4" data-number="6.2.7.1">
-<h4 data-number="6.2.7.1" class="anchored" data-anchor-id="front-end-7"><span class="header-section-number">6.2.7.1</span> Front-end</h4>
-<ol type="1">
-<li>User reviews model results and map.
-<ul>
-<li>If satisfied, proceed to <a href="@sec-module-7">Module 7</a>.</li>
-<li>If not, adjust parameters or return to prior modules.</li>
-</ul></li>
-</ol>
-</section>
-<section id="back-end-7" class="level4" data-number="6.2.7.2">
-<h4 data-number="6.2.7.2" class="anchored" data-anchor-id="back-end-7"><span class="header-section-number">6.2.7.2</span> Back-end</h4>
-<ol type="1">
-<li>Displays model learning and accuracy results.</li>
-<li>Suggests corrections or parameter checks if unsatisfied.</li>
-</ol>
 
 
-</section>
-</section>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -515,13 +307,14 @@ I --&gt;|Unsatisfied| D
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -865,13 +658,13 @@ I --&gt;|Unsatisfied| D
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./module05.html" class="pagination-link" aria-label="Module 5: Improving Model Quality with Multi-Source Data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span>
+      <a href="./writing_guidelines.html" class="pagination-link" aria-label="Collaborative Development Guideline">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Collaborative Development Guideline</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module07.html" class="pagination-link" aria-label="Module 7: Thematic Accuracy Assessment">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./python_setup.html" class="pagination-link" aria-label="Python Environment Setup">
+        <span class="nav-page-text">Python Environment Setup</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

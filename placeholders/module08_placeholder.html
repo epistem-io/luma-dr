@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Module 5: Improving Model Quality with Multi-Source Data – Epistem-X Technical Documentation</title>
+<title>8&nbsp; Post Classification Analysis – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,25 +23,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./module06.html" rel="next">
-<link href="./module04.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../07_accuracy.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module05.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="../placeholders/module08_placeholder.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -96,13 +96,15 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Epistem-X Technical Documentation</a> 
+      <a href="../">Luma Development Reference</a> 
         <div class="sidebar-tools-main">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="../files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -115,117 +117,124 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About the project</span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="../writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="../testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></a>
+  <a href="../python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span></a>
+  <a href="../ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></a>
+  <a href="../helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module05.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></a>
+  <a href="../01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></a>
+  <a href="../02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span></a>
+  <a href="../03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Module 8: Post Classification Analysis and Housekeeping</span></span></a>
+  <a href="../04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="../placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="../06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
-  <ul class="collapse">
-  <li><a href="#sec-selection-of-covariate" id="toc-sec-selection-of-covariate" class="nav-link" data-scroll-target="#sec-selection-of-covariate"><span class="header-section-number">5.1</span> Selection of Covariate</a>
-  <ul class="collapse">
-  <li><a href="#selection-of-covariate" id="toc-selection-of-covariate" class="nav-link" data-scroll-target="#selection-of-covariate"><span class="header-section-number">5.1.1</span> Selection of Covariate</a></li>
-  </ul></li>
-  <li><a href="#system-default-covariates" id="toc-system-default-covariates" class="nav-link" data-scroll-target="#system-default-covariates"><span class="header-section-number">5.2</span> System Default Covariates</a>
-  <ul class="collapse">
-  <li><a href="#system-default-covariates-1" id="toc-system-default-covariates-1" class="nav-link" data-scroll-target="#system-default-covariates-1"><span class="header-section-number">5.2.1</span> System Default Covariates</a></li>
-  </ul></li>
-  <li><a href="#sec-manual-covariate" id="toc-sec-manual-covariate" class="nav-link" data-scroll-target="#sec-manual-covariate"><span class="header-section-number">5.3</span> Manual Covariates</a>
-  <ul class="collapse">
-  <li><a href="#manual-covariates" id="toc-manual-covariates" class="nav-link" data-scroll-target="#manual-covariates"><span class="header-section-number">5.3.1</span> Manual Covariates</a></li>
-  </ul></li>
-  <li><a href="#sec-model-evaluation-and-optimization-feedback" id="toc-sec-model-evaluation-and-optimization-feedback" class="nav-link" data-scroll-target="#sec-model-evaluation-and-optimization-feedback"><span class="header-section-number">5.4</span> Model Evaluation and Optimization Feedback</a>
-  <ul class="collapse">
-  <li><a href="#model-evaluation-and-optimization-feedback" id="toc-model-evaluation-and-optimization-feedback" class="nav-link" data-scroll-target="#model-evaluation-and-optimization-feedback"><span class="header-section-number">5.4.1</span> Model Evaluation and Optimization Feedback</a></li>
-  </ul></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="../placeholders/module08_placeholder.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="module-5" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></h1>
+<h1 class="title"><span id="sec-module-8" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></h1>
 </div>
 
 
@@ -242,151 +251,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="module-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Module Overview</h1>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution
+<span class="screen-reader-only">Caution</span>Under development
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This module is not available in Phase 1</p>
+<p>This module’s backend is not available yet.</p>
 </div>
 </div>
-<p>This optional module enables users to refine the model based on feedback from Module 4. It supports the integration of additional covariates to enhance model accuracy and robustness. Users can incorporate additional covariates, including radar, spectral, and non-spectral types (For details please see <a href="#sec-manual-covariate" class="quarto-xref"><span>Section 5.3</span></a>). The updated configuration facilitates the generation of a higher-quality model compared to the previous iteration.</p>
-</section>
-<section id="input" class="level1 unnumbered">
-<h1 class="unnumbered">Input</h1>
-<p><strong>User’s Input</strong></p>
-<ol type="1">
-<li>User-selected covariate set</li>
-</ol>
-<p><strong>Automatic System Input</strong></p>
-<ol type="1">
-<li>Default covariates.</li>
-<li>Radar-based covariates.</li>
-<li>Spectral transformations covariates.</li>
-<li>Non-spectral covariates.</li>
-</ol>
-<p><strong>Input from Other Modules</strong></p>
-<ol type="1">
-<li>Near-cloud-free satellite imagery.</li>
-<li>LULC classification table.</li>
-</ol>
-</section>
-<section id="output" class="level1 unnumbered">
-<h1 class="unnumbered">Output</h1>
-<ol type="1">
-<li>List of covariates and descriptive table.</li>
-<li>Variables as a covariate stack.</li>
-<li>Variables as extracted features.</li>
-<li>Table/chart of variable importance/influence.</li>
-</ol>
-</section>
-<section id="process" class="level1 unnumbered">
-<h1 class="unnumbered">Process</h1>
-<section id="sec-selection-of-covariate" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec-selection-of-covariate"><span class="header-section-number">5.1</span> Selection of Covariate</h2>
-<section id="selection-of-covariate" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="selection-of-covariate"><span class="header-section-number">5.1.1</span> Selection of Covariate</h3>
-<p><strong>Front-end:</strong></p>
-<ol type="1">
-<li>The user selects a list of covariates according to the classification objectives and receives system recommendations.</li>
-<li>If a Default Covariates is chosen, the user can either:
-<ul>
-<li>Accept the default covariates set to proceed with retraining the model, or</li>
-<li>Modify the covariates list, which redirects to the covariate customization options.</li>
-</ul></li>
-<li>If a Manual Covariates is chosen, the user selects the three covariates options with system guidance.</li>
-</ol>
-<p><strong>Back-end:</strong></p>
-<ol type="1">
-<li>The system provides two selection modes:
-<ul>
-<li>System Default Covariates: Retrieves and displays a default set of covariates used in the classification model, including metadata (e.g., description, intended use).</li>
-<li>Manual Covariate: Displays categorized options:
-<ul>
-<li>Radar-based covariates.</li>
-<li>Spectral transformations.</li>
-<li>Non-spectral covariates.</li>
-</ul></li>
-</ul></li>
-<li>The system also provides recommendations for effective covariate use.</li>
-</ol>
-</section>
-</section>
-<section id="system-default-covariates" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="system-default-covariates"><span class="header-section-number">5.2</span> System Default Covariates</h2>
-<section id="system-default-covariates-1" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="system-default-covariates-1"><span class="header-section-number">5.2.1</span> System Default Covariates</h3>
-<p><strong>Front-end:</strong></p>
-<ol type="1">
-<li>The user reviews and optionally adjusts the default covariate list.</li>
-</ol>
-<p><strong>Back-end:</strong></p>
-<ol type="1">
-<li>The system displays the default covariates and allows user modifications.</li>
-<li>Provides information on the trade-offs involved in adjusting covariate set.</li>
-</ol>
-</section>
-</section>
-<section id="sec-manual-covariate" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="sec-manual-covariate"><span class="header-section-number">5.3</span> Manual Covariates</h2>
-<section id="manual-covariates" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="manual-covariates"><span class="header-section-number">5.3.1</span> Manual Covariates</h3>
-<p><strong>Front-end:</strong></p>
-<ol type="1">
-<li>The user reviews a detailed overview of selected covariates and can adjust them through customization options.</li>
-</ol>
-<p><strong>Back-end:</strong></p>
-<ol type="1">
-<li>The system summarizes the chosen covariates before returning to the workflow from <a href="@sec-module-2">Module 4</a>.</li>
-<li>Detailed covariate categories include:
-<ul>
-<li>Radar-based covariates: Includes raw radar backscatter (Sentinel-1, PALSAR), temporal and seasonal composites, and derived features (ratios, texture, vegetation indices).</li>
-<li>Spectral transformations that consists of four parts:
-<ul>
-<li>Built-up/Soil indices: OSAVI (Optimized Soil-Adjusted Vegetation Index), MSAVI (Modified Soil Adjusted Vegetation Index), NDBI (Normalized Difference Built-up Index), SAVI (Soil Adjusted Vegetation Index).</li>
-<li>Vegetation indices: GBNDVI (Green-Blue Normalized Difference Vegetation Index), ARVI (Atmospherically Resistant Vegetation Index), CVI (Chlorophyll Vegetation Index), RVMI (Red-Edge Vegetation Moisture Index), GNDVI (Green Normalized Difference Vegetation Index), NDVI (Normalized Difference Vegetation Index), EVI (Enhanced Vegetation Index).</li>
-<li>Water or water-related indices: AWEI (Automated Water Extraction Index), MNDWI (Modified Normalized Difference Water Index), NDMI (Normalized Difference Moisture Index), NDWI (Normalized Difference Water Index), MNDWI (Modified NDWI).</li>
-<li>Burn index: NBR (Normalized Burn Ratio).</li>
-</ul></li>
-<li>Non-spectral covariates: Includes terrain metrics (elevation, slope, aspect) and distance metrics (to roads, coastlines, and settlements).</li>
-</ul></li>
-<li>The system highlights the trade-offs between covariate selection and model training efficiency.</li>
-</ol>
-</section>
-</section>
-<section id="sec-model-evaluation-and-optimization-feedback" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sec-model-evaluation-and-optimization-feedback"><span class="header-section-number">5.4</span> Model Evaluation and Optimization Feedback</h2>
-<section id="model-evaluation-and-optimization-feedback" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="model-evaluation-and-optimization-feedback"><span class="header-section-number">5.4.1</span> Model Evaluation and Optimization Feedback</h3>
-<p><strong>Front-end:</strong></p>
-<ol type="1">
-<li>The user evaluates model performance: “Improved” or “Not Improved”.
-<ul>
-<li>If Improved, the system outputs the LULC classification model with the optimized covariate set.</li>
-<li>If Not Improved, the user reviews the optimized covariates and decides whether to apply them to generate the LULC classification model.</li>
-</ul></li>
-</ol>
-<p><strong>Back-end:</strong></p>
-<ol type="1">
-<li>After adjustment, the system prompts the user to evaluate: <em>“Has model quality now improved?”</em> If No:
-<ul>
-<li>The system provides recommendations for covariate ranking analysis and reselection.</li>
-<li>Covariate optimization is performed to identify the most influential variables.</li>
-</ul></li>
-<li>Once finalized, the system proceeds with model retraining using the optimized covariate set.</li>
-</ol>
 
 
-</section>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -440,13 +319,14 @@ Caution
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -790,14 +670,11 @@ Caution
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./module04.html" class="pagination-link" aria-label="Module 4: Spectral Separability Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span>
+      <a href="../07_accuracy.html" class="pagination-link" aria-label="Thematic Accuracy Assessment">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module06.html" class="pagination-link" aria-label="Module 6: LULC Map Generation">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

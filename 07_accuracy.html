@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Module 4: Spectral Separability Analysis – Epistem-X Technical Documentation</title>
+<title>7&nbsp; Thematic Accuracy Assessment – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,18 +30,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./module05.html" rel="next">
-<link href="./module03.html" rel="prev">
+<link href="./placeholders/module08_placeholder.html" rel="next">
+<link href="./06_classification.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,9 +70,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -85,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module04.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./07_accuracy.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -100,12 +98,14 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Epistem-X Technical Documentation</a> 
+      <a href="./">Luma Development Reference</a> 
         <div class="sidebar-tools-main">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -119,75 +119,109 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About the project</span></a>
+ <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></a>
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span></a>
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></a>
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></a>
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></a>
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span></a>
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Module 8: Post Classification Analysis and Housekeeping</span></span></a>
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -203,17 +237,15 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
   <ul class="collapse">
-  <li><a href="#sec-specification-of-separability-analysis-parameters" id="toc-sec-specification-of-separability-analysis-parameters" class="nav-link" data-scroll-target="#sec-specification-of-separability-analysis-parameters"><span class="header-section-number">4.1</span> Specification of Separability Analysis Parameters</a>
+  <li><a href="#sec-checking-prerequisites" id="toc-sec-checking-prerequisites" class="nav-link" data-scroll-target="#sec-checking-prerequisites"><span class="header-section-number">7.1</span> Checking Prerequisites from Previous Modules</a>
   <ul class="collapse">
-  <li><a href="#specification-of-separability-analysis-parameters" id="toc-specification-of-separability-analysis-parameters" class="nav-link" data-scroll-target="#specification-of-separability-analysis-parameters"><span class="header-section-number">4.1.1</span> Specification of Separability Analysis Parameters</a></li>
+  <li><a href="#checking-prerequisites-from-previous-modules" id="toc-checking-prerequisites-from-previous-modules" class="nav-link" data-scroll-target="#checking-prerequisites-from-previous-modules"><span class="header-section-number">7.1.1</span> Checking Prerequisites from Previous Modules</a></li>
   </ul></li>
-  <li><a href="#sec-reviewing-separability-results" id="toc-sec-reviewing-separability-results" class="nav-link" data-scroll-target="#sec-reviewing-separability-results"><span class="header-section-number">4.2</span> Reviewing Separability Results</a>
+  <li><a href="#sec-thematic-accuracy-assessment" id="toc-sec-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#sec-thematic-accuracy-assessment"><span class="header-section-number">7.2</span> Thematic Accuracy Assessment</a>
   <ul class="collapse">
-  <li><a href="#sec-selection-of-lulc-classification-model" id="toc-sec-selection-of-lulc-classification-model" class="nav-link" data-scroll-target="#sec-selection-of-lulc-classification-model"><span class="header-section-number">4.2.1</span> Reviewing Separability Result</a></li>
-  </ul></li>
-  <li><a href="#sec-spectral-profile-visualization" id="toc-sec-spectral-profile-visualization" class="nav-link" data-scroll-target="#sec-spectral-profile-visualization"><span class="header-section-number">4.3</span> Spectral Profile Visualization</a>
-  <ul class="collapse">
-  <li><a href="#sec-spectra-signature-visualization" id="toc-sec-spectra-signature-visualization" class="nav-link" data-scroll-target="#sec-spectra-signature-visualization"><span class="header-section-number">4.3.1</span> Spectral Profile Visualization</a></li>
+  <li><a href="#uploading-the-validation-map" id="toc-uploading-the-validation-map" class="nav-link" data-scroll-target="#uploading-the-validation-map"><span class="header-section-number">7.2.1</span> Uploading the Validation Map</a></li>
+  <li><a href="#starting-the-thematic-accuracy-assessment" id="toc-starting-the-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.2</span> Starting the thematic accuracy assessment</a></li>
+  <li><a href="#reviewing-the-thematic-accuracy-result" id="toc-reviewing-the-thematic-accuracy-result" class="nav-link" data-scroll-target="#reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.3</span> Reviewing the thematic accuracy result</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -222,9 +254,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./07_accuracy.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-module-4" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></h1>
+<h1 class="title"><span id="sec-module-7" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></h1>
 </div>
 
 
@@ -243,155 +275,251 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="module-overview" class="level1 unnumbered">
 <h1 class="unnumbered">Module Overview</h1>
-<p>This module enables users to evaluate the spectral separability of sample classes using Jeffries–Matusita (JM) distance or Transformed Divergence (TD). It provides quantitative metrics for class distinction and visual tools for intuitive interpretation. By identifying well-separated classes and informative covariates, this analysis helps ensure data quality and supports more accurate classification or modeling workflows.</p>
+<p>This module performs a comprehensive thematic accuracy assessment of the land cover map using ground reference data. It includes data verification, upload/validation of test data, accuracy matrix calculation (OA, Kappa, PA, UA), confidence intervals, F1-scores, and formatted summary reports for display.</p>
 </section>
 <section id="input" class="level1 unnumbered">
 <h1 class="unnumbered">Input</h1>
-<p><strong>User’s Input</strong></p>
-<ol type="1">
-<li>Separability analysis parameters.</li>
-<li>User-specified spectral bands for visualization.</li>
-</ol>
-<p><strong>Input from Other Modules</strong></p>
-<ol type="1">
-<li>Near-cloud-free satellite imagery within the AOI (<a href="module01.html#sec-satellite-imagery-post-processing" class="quarto-xref"><span>Section 1.3</span></a>).</li>
-<li><code>TrainDataFinal</code> (<a href="module03.html#sec-data-splitting" class="quarto-xref"><span>Section 3.5</span></a>).</li>
-</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 37%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name of input</th>
+<th>Input type</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Validation map</td>
+<td>User’s input</td>
+<td>In shapefile format.</td>
+</tr>
+<tr class="even">
+<td>Classified LULC map</td>
+<td>Input from Other Modules</td>
+<td>Module 6</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="output" class="level1 unnumbered">
 <h1 class="unnumbered">Output</h1>
-<ol type="1">
-<li>Basic statistics (mean, median, variance, and standard deviation).</li>
-<li>Separability values.</li>
-</ol>
+<ul>
+<li>Confusion matrix.</li>
+<li>Thematic accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer’s Accuracy (PA), User’s Accuracy (UA).</li>
+</ul>
 </section>
 <section id="process" class="level1 unnumbered">
 <h1 class="unnumbered">Process</h1>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-
-%% Main entry
-A([&lt;a href="#sec-specification-of-separability-analysis-parameters"&gt;Specification of Separability Analysis Parameters&lt;/a&gt;])
-B[/Methodology/]
-C[/ID and Class Name/]
-D[/Pixel Size/]
-E([&lt;a href="#sec-reviewing-separability-results"&gt;Reviewing Separability Results&lt;/a&gt;])
-F[\Separability Analysis\]
-G[\Sample Stat. Calculation\]
-H([&lt;a href="#sec-spectral-profile-visualization"&gt;Spectral Profile Visualization&lt;/a&gt;])
-
-%% Flow connections
-A --&gt; B
-A --&gt; C
-A --&gt; D
-
-B --&gt; E
-C --&gt; E
-D --&gt; E
-
-E --&gt; F
-E --&gt; G
-
-F --&gt; H
-G --&gt; H
-
-F --&gt;|Error|A
-G --&gt;|Error|A
-
-
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<section id="sec-specification-of-separability-analysis-parameters" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="sec-specification-of-separability-analysis-parameters"><span class="header-section-number">4.1</span> Specification of Separability Analysis Parameters</h2>
-<section id="specification-of-separability-analysis-parameters" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="specification-of-separability-analysis-parameters"><span class="header-section-number">4.1.1</span> Specification of Separability Analysis Parameters</h3>
-<p><strong>Front-end</strong></p>
+<section id="sec-checking-prerequisites" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-checking-prerequisites"><span class="header-section-number">7.1</span> Checking Prerequisites from Previous Modules</h2>
+<p>This is a part of <strong>System Response 7.1: Verification data</strong></p>
+<section id="checking-prerequisites-from-previous-modules" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules"><span class="header-section-number">7.1.1</span> Checking Prerequisites from Previous Modules</h3>
+<p><strong>Luma User Journey</strong></p>
 <ol type="1">
-<li>The user defines the parameters and selects the method for separability analysis.</li>
-<li>Inputs include ID, Class Name, and pixel size.</li>
+<li><p>The user is displayed a verification of the required inputs stored in the system.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.</p>
+</div>
+</div></li>
 </ol>
-<p><strong>Back-end</strong></p>
-<p>The system provides three parameters:</p>
+<p><strong>Luma Geospatial Engine</strong></p>
 <ol type="1">
-<li>Methodology: Jeffries-Matusita or Transformed Divergence.</li>
-<li>ID and Class Name as a drop down selection.</li>
-<li>Pixel Size as numeric input.</li>
+<li>The system validates availability of the required inputs.</li>
 </ol>
 </section>
 </section>
-<section id="sec-reviewing-separability-results" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sec-reviewing-separability-results"><span class="header-section-number">4.2</span> Reviewing Separability Results</h2>
-<section id="sec-selection-of-lulc-classification-model" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-selection-of-lulc-classification-model"><span class="header-section-number">4.2.1</span> Reviewing Separability Result</h3>
-<p><strong>Front-end</strong></p>
+<section id="sec-thematic-accuracy-assessment" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sec-thematic-accuracy-assessment"><span class="header-section-number">7.2</span> Thematic Accuracy Assessment</h2>
+<section id="uploading-the-validation-map" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="uploading-the-validation-map"><span class="header-section-number">7.2.1</span> Uploading the Validation Map</h3>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Jorney 7.2 Upload data</strong></p>
 <ol type="1">
-<li>If input parameters are incomplete, the user receives an error message.</li>
-<li>If inputs are complete, the user evaluates whether the separability results are satisfactory.
-<ul>
-<li>If unsatisfactory, the user may refine samples for classes with low separability by adding or removing points through <a href="@sec-module3">Module 3</a> or external editing.</li>
-<li>If satisfactory, the user may proceed to spectral profile visualization (<a href="#sec-spectral-profile-visualization" class="quarto-xref"><span>Section 4.3</span></a>) .</li>
-</ul></li>
+<li><p>The user is prompted to upload the validation map in a <code>.zip</code> file. The user is reminded that the validation map should have the same ID class as the one used for the classification.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation that the validation data has been validated.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows an error message if the uploaded validation map fails the validation process.</p>
+</div>
+</div></li>
+<li><p>The system displays the uploaded validation map on a canvas map along with the tabular data.</p></li>
 </ol>
-<p><strong>Back-end</strong></p>
+<p><strong>Luma Geospatial Engine</strong></p>
 <ol type="1">
-<li><p>The system validates input parameters and prompts the user to review any incomplete entries.</p></li>
-<li><p>If it is incomplete, the system displays an error and prompts the user to review the analysis parameters.</p></li>
-<li><p>The system executes the separability analysis workflow that consist of two processes:</p>
-<ul>
-<li>Sample Statistics Calculation.</li>
-<li>Separability Analysis.</li>
-</ul></li>
-<li><p>The system executes the workflow as follows:</p>
-<ul>
-<li>Calculates the sample proportion for each class.</li>
-<li>Extracts pixel values based on sample locations and the selected imagery.</li>
-<li>Computes basic statistics (mean, median, variance, and standard deviation) per class and stores them in a <code>DataFrame</code> for visualization.</li>
-<li>Runs the separability analysis using <code>TrainDataFinal</code>.</li>
-<li>For each pair of classes, the system calculates separability metrics, identifies the most difficult class pairs to distinguish, and categorizes results into three levels:
-<ul>
-<li>Good separability (&gt;1.8): Classes are well separated.</li>
-<li>Weak/Marginal separability (1.0-1.8): Classes overlap partially.</li>
-<li>Class confusion (&lt;1.0): Classes require improvement.</li>
-</ul></li>
-<li>Results, along with the basic statistics table, are exported as a <code>.TXT</code> report.</li>
-<li>Detailed error messages are provided if any errors occur.</li>
-</ul></li>
+<li><p>The system verifies if the <code>.shp</code> of the validation map is the uploaded inside the <code>.zip</code> file.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system provides an error notification if the <code>.shp</code> file is not found inside the <code>.zip</code> file.</p>
+</div>
+</div></li>
+<li><p>The system conducts geometry fixes on the uploaded validation map.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>input_utils.shapefile_validator.validate_and_fix_geometry():</code>to validate and fix geometries issues.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An error message is displayed if the system failed to run <code>validate_and_fix_geometry()</code>.</p>
+</div>
+</div></li>
+<li><p>The system converts the validation map from <code>.gdf</code> data into Earth Engine Feature Collection format</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>input_utils.shapefile_validator.convert_roi_gdf()</code>: to convert geodataframe into EE Feture Collection. The supported multi-geometries type for this conversions are MultiPoint and MultiPolygon.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An error message is displayed if the system failed to run <code>convert_roi_gdf()</code>.</p>
+</div>
+</div></li>
 </ol>
 </section>
+<section id="starting-the-thematic-accuracy-assessment" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.2</span> Starting the thematic accuracy assessment</h3>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Journey 7.3: Thematic accuracy assessment</strong></p>
+<ol type="1">
+<li><p>The user is prompted to fill in the parameters for the thematic accuracy assessment, including specifying the column that refers to the LULC ID class and the pixel size of the classified LULC map.</p></li>
+<li><p>The user can optionally set the confidence interval for the thematic accuracy assessment.</p></li>
+<li><p>The user is prompted to start the thematic accuracy assessment process.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows an error message if the system fails to run the thematic accuracy assessment.</p>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This is a part of <strong>System Response 7.3: Thematic accuracy assessment</strong></p>
+<ol type="1">
+<li><p>The system performs a thematic accuracy assessment by validating inputs, sampling the classified LULC map at reference points.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>thematic_assessment.Thematic_Accuracy_Assessment.validate_inputs()</code>: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>thematic_assessment.Thematic_Accuracy_Assessment._extract_confusion_matrix_data()</code>: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an <code>ee.ConfusionMatrix</code> object. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>thematic_assessment.Thematic_Accuracy_Assessment._calculate_confidence_interval()</code>: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>thematic_assessment.Thematic_Accuracy_Assessment._calculate_f1_scores()</code>: Calculates the F1 score for each class using the producer’s and user’s accuracy values. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>thematic_assessment.Thematic_Accuracy_Assessment.run_accuracy_assessment()</code>: Executes the full thematic accuracy workflow, including validation, sampling (<code>sampleRegions()</code>), metric extraction (<code>errorMatrix()</code>), confidence interval calculation, and compilation of final results.</p>
+</div>
+</div></li>
+</ol>
 </section>
-<section id="sec-spectral-profile-visualization" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="sec-spectral-profile-visualization"><span class="header-section-number">4.3</span> Spectral Profile Visualization</h2>
-<section id="sec-spectra-signature-visualization" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-spectra-signature-visualization"><span class="header-section-number">4.3.1</span> Spectral Profile Visualization</h3>
-<p><strong>Front-end</strong></p>
+<section id="reviewing-the-thematic-accuracy-result" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.3</span> Reviewing the thematic accuracy result</h3>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Journey 7.4: Preview thematic accuracy result</strong></p>
 <ol type="1">
-<li>The user selects the spectral bands for visualization.</li>
-<li>If satisfied with the result, the user proceed to the next module.</li>
-<li>If not satisfied, the user can return to <a href="@sec-module-3">Module 3</a> to modify the <code>TrainDataFinal</code>.</li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li><p>The system checks the status of the separability analysis:</p>
+<li><p>The system displays the overall accuracy metrics result:</p>
 <ul>
-<li>If successful, visualization proceeds.</li>
-<li>If unsuccessful, visualization is blocked and the user is prompted to complete the parameter specification (<a href="#sec-specification-of-separability-analysis-parameters" class="quarto-xref"><span>Section 4.1</span></a>).</li>
+<li><strong>Overall Accuracy (OA)</strong>: Percentage of correctly classified validation samples</li>
+<li><strong>Kappa Coefficient</strong>: Agreement beyond chance, accounting for class distribution</li>
+<li><strong>Confidence interval at 95%</strong>: The lower and upper bounds that describe the uncertainty range of the overall accuracy estimate at the 95% confidence level</li>
+<li><strong>Validation map number</strong>: The total number of validation samples used in the thematic accuracy assessment</li>
 </ul></li>
-<li><p>A visualization canvas and required Python libraries are provided to support:</p>
+<li><p>The system displays the accuracy metrics result on class-level:</p>
 <ul>
-<li>Histogram</li>
-<li>Box plot</li>
-<li>Scatter plot (2D and 3D)</li>
+<li><strong>Producer’s Accuracy</strong>: Measure of classification completeness (1 - omission error)</li>
+<li><strong>User’s Accuracy</strong>: Measure of classification reliability (1 - commission error)</li>
+<li><strong>F1 score</strong>: Summarizes Producer’s and User’s Accuracy metrics</li>
 </ul></li>
-<li><p>Helper Text guides the user in interpreting the plots effectively.</p></li>
+<li><p>The system displays the confusion matrix.</p></li>
+<li><p>The user is offered the option to download the overall accuracy metrics result summary or the class-level accuracy result in a <code>.csv</code> format.</p></li>
+<li><p>The user is prompted to return to <a href="@sec-module-6">Module 6</a> to improve the model classification quality.</p></li>
 </ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This sub-step does not involve any operations from Luma Geospatial Engine.</p>
 
 
 </section>
@@ -450,13 +578,14 @@ G --&gt;|Error|A
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -800,13 +929,13 @@ G --&gt;|Error|A
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./module03.html" class="pagination-link" aria-label="Module 3: Training Data Generation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span>
+      <a href="./06_classification.html" class="pagination-link" aria-label="LULC Map Generation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module05.html" class="pagination-link" aria-label="Module 5: Improving Model Quality with Multi-Source Data">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./placeholders/module08_placeholder.html" class="pagination-link" aria-label="Post Classification Analysis">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

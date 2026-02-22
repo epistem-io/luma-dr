@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Module 1: Acquisition of Near-Cloud-Free Satellite Imagery – Epistem-X Technical Documentation</title>
+<title>Earth Engine Initialization and Authentication – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,18 +30,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./module02.html" rel="next">
-<link href="./intro.html" rel="prev">
+<link href="./helpers.html" rel="next">
+<link href="./python_setup.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,9 +70,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -85,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module01.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./python_setup.html">General Development Settings</a></li><li class="breadcrumb-item"><a href="./ee_init.html">Earth Engine Initialization and Authentication</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -100,12 +98,14 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Epistem-X Technical Documentation</a> 
+      <a href="./">Luma Development Reference</a> 
         <div class="sidebar-tools-main">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -119,75 +119,109 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About the project</span></a>
+ <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></a>
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span></a>
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></a>
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></a>
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></a>
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span></a>
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Module 8: Post Classification Analysis and Housekeeping</span></span></a>
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -198,36 +232,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. Overview</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">2. Prerequisites</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">3. Output</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">4. Steps</a>
   <ul class="collapse">
-  <li><a href="#sec-selection-of-aoi" id="toc-sec-selection-of-aoi" class="nav-link" data-scroll-target="#sec-selection-of-aoi"><span class="header-section-number">1.1</span> Selection of AOI</a>
+  <li><a href="#a.-manual-authentication-interactive-oauth" id="toc-a.-manual-authentication-interactive-oauth" class="nav-link" data-scroll-target="#a.-manual-authentication-interactive-oauth">4a. Manual authentication (interactive OAuth)</a></li>
+  <li><a href="#b.-service-account-authentication-deployment-and-ci" id="toc-b.-service-account-authentication-deployment-and-ci" class="nav-link" data-scroll-target="#b.-service-account-authentication-deployment-and-ci">4b. Service account authentication (deployment and CI)</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">5. Troubleshooting</a>
   <ul class="collapse">
-  <li><a href="#sec-aoi-from-administrative-boundaries" id="toc-sec-aoi-from-administrative-boundaries" class="nav-link" data-scroll-target="#sec-aoi-from-administrative-boundaries"><span class="header-section-number">1.1.1</span> AOI from Administrative Boundaries</a></li>
-  <li><a href="#sec-aoi-from-shapefile" id="toc-sec-aoi-from-shapefile" class="nav-link" data-scroll-target="#sec-aoi-from-shapefile"><span class="header-section-number">1.1.2</span> AOI from Shapefile</a></li>
-  <li><a href="#sec-aoi-from-on-screen-digitizing" id="toc-sec-aoi-from-on-screen-digitizing" class="nav-link" data-scroll-target="#sec-aoi-from-on-screen-digitizing"><span class="header-section-number">1.1.3</span> AOI from On-Screen Digitizing</a></li>
+  <li><a href="#authentication-fails" id="toc-authentication-fails" class="nav-link" data-scroll-target="#authentication-fails">5.1 Authentication fails</a></li>
+  <li><a href="#quota-project-errors" id="toc-quota-project-errors" class="nav-link" data-scroll-target="#quota-project-errors">5.2 Quota / project errors</a></li>
+  <li><a href="#exports-fail" id="toc-exports-fail" class="nav-link" data-scroll-target="#exports-fail">5.3 Exports fail</a></li>
   </ul></li>
-  <li><a href="#selecting-and-preparing-satellite-imagery" id="toc-selecting-and-preparing-satellite-imagery" class="nav-link" data-scroll-target="#selecting-and-preparing-satellite-imagery"><span class="header-section-number">1.2</span> Selecting and Preparing Satellite Imagery</a>
-  <ul class="collapse">
-  <li><a href="#sec-input-spatial-image-parameters" id="toc-sec-input-spatial-image-parameters" class="nav-link" data-scroll-target="#sec-input-spatial-image-parameters"><span class="header-section-number">1.2.1</span> Input Spatial Image Parameters</a></li>
-  <li><a href="#sec-satellite-imagery-cannot-be-found" id="toc-sec-satellite-imagery-cannot-be-found" class="nav-link" data-scroll-target="#sec-satellite-imagery-cannot-be-found"><span class="header-section-number">1.2.2</span> Satellite Imagery Not Found Based on User’s Parameters</a></li>
-  </ul></li>
-  <li><a href="#sec-satellite-imagery-post-processing" id="toc-sec-satellite-imagery-post-processing" class="nav-link" data-scroll-target="#sec-satellite-imagery-post-processing"><span class="header-section-number">1.3</span> Satellite Imagery Post-Processing</a>
-  <ul class="collapse">
-  <li><a href="#visualization-and-saving-data" id="toc-visualization-and-saving-data" class="nav-link" data-scroll-target="#visualization-and-saving-data"><span class="header-section-number">1.3.1</span> Visualization and Saving Data</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">6. References</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./python_setup.html">General Development Settings</a></li><li class="breadcrumb-item"><a href="./ee_init.html">Earth Engine Initialization and Authentication</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-module-1" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></h1>
+<h1 class="title">Earth Engine Initialization and Authentication</h1>
 </div>
 
 
@@ -244,244 +272,113 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="module-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Module Overview</h1>
-<p>The output of this module is high-quality, near-cloud-free satellite imagery, which is essential for producing accurate and reliable land use and land cover (LULC) datasets. This module focuses on acquiring satellite imagery that has been pre-processed and corrected, including procedures such as cloud masking and shadow removal.</p>
-</section>
-<section id="input" class="level1 unnumbered">
-<h1 class="unnumbered">Input</h1>
-<p><strong>User’s Input</strong></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">1. Overview</h2>
+<p>Luma-GE uses the Google Earth Engine (GEE) Python API for cloud-based geospatial processing. Before any module can call Earth Engine, the runtime must be authorised.</p>
+<p>In practice, “authorisation” is two things glued together:</p>
+<p>First, you authenticate as an identity (a human Google account, or a service account).</p>
+<p>Second, Earth Engine needs a Google Cloud project context so quotas and usage accounting are applied to the right place. Recent Earth Engine Python client changes have made this project context effectively mandatory for common authentication modes. If Earth Engine cannot determine a “quota project”, requests will fail.</p>
+<p>Luma-GE currently supports two working authorisation options, each with clear trade-offs:</p>
 <ol type="1">
-<li>Area of interest (AOI).</li>
-<li>Selection of single or multiple time-series imagery.</li>
-<li>Target map year (YYYY).</li>
-<li>Desired spatial resolution (meters).</li>
-<li>Maximum allowable cloud cover (%).</li>
-</ol>
-<p><strong>Automatic System Input</strong></p>
-<ol type="1">
-<li>Raw satellite imagery.</li>
-<li>Administrative boundaries.</li>
+<li><p>Manual authentication (interactive OAuth) is best for local development and workflows tied to a human identity. It is interactive (browser + copy/paste code) and is not suitable for unattended deployments.</p></li>
+<li><p>Service account authentication is the default for deployments and CI. It is non-interactive and repeatable, but it has no option for exporting to a user’s personal Google Drive.</p></li>
 </ol>
 </section>
-<section id="output" class="level1 unnumbered">
-<h1 class="unnumbered">Output</h1>
-<ol type="1">
-<li>Selected AOI.</li>
-<li>Near-cloud-free satellite imagery.</li>
-</ol>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">2. Prerequisites</h2>
+<p>To use Earth Engine from Python, you need:</p>
+<p>A Google account with Earth Engine access, and a Google Cloud project that is registered for Earth Engine and has the Earth Engine API enabled.</p>
+<p>If you are using service account mode, you also need a service account created in that Cloud project and a JSON private key for it.</p>
+<p>For service accounts, ensure the account has the correct IAM permissions on the project. In practice, the Earth Engine docs point you at Earth Engine resource roles, and some auth modes also require permissions related to Service Usage.</p>
 </section>
-<section id="process" class="level1 unnumbered">
-<h1 class="unnumbered">Process</h1>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-
-A([&lt;a href="#sec-selection-of-aoi"&gt;Selection of AOI&lt;/a&gt;])
-B([&lt;a href="#sec-aoi-from-administrative-boundaries"&gt;AOI from Administrative Boundaries&lt;/a&gt;])
-C([&lt;a href="#sec-aoi-from-a-shapefile"&gt;AOI from a Shapefile&lt;/a&gt;])
-D([&lt;a href="#sec-aoi-from-on-screen-digitizing"&gt;AOI from On-Screen Digitizing&lt;/a&gt;])
-E([&lt;a href="#sec-input-spatial-image-parameters"&gt;Input Spatial Image Parameters&lt;/a&gt;])
-F([&lt;a href="#sec-satellite-imagery-cannot-be-found"&gt;Satellite Imagery Not Found&lt;/a&gt;])
-G([&lt;a href="#sec-satellite-imagery-post-processing"&gt;Satellite Imagery Post-Processing: Visualization &amp; Saving Data&lt;/a&gt;])
-
-%% Flow connections
-A --&gt; B
-A --&gt; C
-A --&gt; D
-
-B --&gt; E
-C --&gt; E
-D --&gt; E
-
-E --&gt;|Imagery available| G
-E --&gt;|Imagery not available| F
-
-F --&gt; E
-
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<section id="sec-selection-of-aoi" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="sec-selection-of-aoi"><span class="header-section-number">1.1</span> Selection of AOI</h2>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="output" class="level2">
+<h2 class="anchored" data-anchor-id="output">3. Output</h2>
+<p>An authorised session allowing Luma-GE functions to execute Earth Engine computations, traceable to a specific Google Cloud project.</p>
+</section>
+<section id="steps" class="level2">
+<h2 class="anchored" data-anchor-id="steps">4. Steps</h2>
+<section id="a.-manual-authentication-interactive-oauth" class="level3">
+<h3 class="anchored" data-anchor-id="a.-manual-authentication-interactive-oauth">4a. Manual authentication (interactive OAuth)</h3>
+<p>Manual authentication is the simplest path for developers working locally. It authenticates you as your own Google account. That matters when you need behaviour tied to a human or organisation identity, such as exporting to your Google Drive.</p>
+<p>In practice, you run an auth function, a browser window opens, you sign in with a Google account that has Earth Engine access, and you paste an authorisation code back into the terminal (or a notebook cell). After that, initialise Earth Engine with an explicit project ID so usage is attributed correctly.</p>
+<p>In Luma-GE, this is implemented in <code>luma_ge/ee_config.py:authenticate_manually()</code>, which calls <code>ee.Authenticate()</code> followed by <code>ee.Initialize(project='YOUR_PROJECT_ID')</code>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#sec-aoi-from-administrative-boundaries" class="quarto-xref"><span>Section 1.1.1</span></a>, <a href="#sec-aoi-from-shapefile" class="quarto-xref"><span>Section 1.1.2</span></a>, <a href="#sec-aoi-from-on-screen-digitizing" class="quarto-xref"><span>Section 1.1.3</span></a> are options.</p>
+<p>Luma-GE does not support running manual authentication inside a Streamlit interface. Earth Engine’s interactive flow expects terminal/browser control that a hosted app generally does not have.</p>
 </div>
 </div>
-<section id="sec-aoi-from-administrative-boundaries" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="sec-aoi-from-administrative-boundaries"><span class="header-section-number">1.1.1</span> AOI from Administrative Boundaries</h3>
-<p><strong>Front-end</strong></p>
-<p>The user selects an administration boundary.</p>
-<p><strong>Back-end</strong></p>
-<p>The system queries the FAO Global Administrative Unit Layers (GAUL) 2015 datasets, which provide standardized information on country and sub-national boundaries, and saves the AOI as a variable</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+</section>
+<section id="b.-service-account-authentication-deployment-and-ci" class="level3">
+<h3 class="anchored" data-anchor-id="b.-service-account-authentication-deployment-and-ci">4b. Service account authentication (deployment and CI)</h3>
+<p>A service account is a non-human Google identity intended for machine-to-machine access. This is the recommended mode for deployments, containers, scheduled jobs, and CI pipelines.</p>
+<p>To create and download a service account key, use Google Cloud IAM: create a service account under your project, then create a JSON key for it. Treat the JSON key like a password. If it leaks, rotate it.</p>
+<p>In Luma-GE, service account auth is implemented in <code>luma_ge/ee_config.py:initialize_with_service_account()</code>. The implementation loads the JSON key, sets <code>GOOGLE_APPLICATION_CREDENTIALS</code>, and initialises Earth Engine. If you do not pass a project ID explicitly, it attempts to infer it from the JSON (<code>project_id</code>).</p>
+<p>Where should the key live? Anywhere except Git.</p>
+<p>For local development, keep the JSON file outside the repo and point to it using <code>GOOGLE_APPLICATION_CREDENTIALS</code>, or store it in a local <code>auth/</code> directory that is excluded by <code>.gitignore</code>.</p>
+<p>For deployments, inject the key via environment variables or a secrets manager. Luma-GE’s credential discovery helper (<code>luma_ge/__init__.py:_find_service_account_file()</code>) searches in this priority order: <code>GOOGLE_SERVICE_ACCOUNT_JSON_B64</code>, then <code>GOOGLE_SERVICE_ACCOUNT_JSON</code>, then <code>GOOGLE_APPLICATION_CREDENTIALS</code>, before looking for local <code>auth/</code> folders and container fallbacks.</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Related function
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>from epistemx.helpers import get_aoi_from_gaul</code></p>
+<p>Never commit a service account key to GitHub. Public repos are scraped, history is hard to erase, and forks/caches persist. If a key is exposed, rotate it immediately.</p>
 </div>
 </div>
-</section>
-<section id="sec-aoi-from-shapefile" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="sec-aoi-from-shapefile"><span class="header-section-number">1.1.2</span> AOI from Shapefile</h3>
-<p><strong>Front-end</strong></p>
-<ol type="1">
-<li><p>The user can upload their <code>.SHP</code> file. in <code>.ZIP</code> format that includes all necessary files (<code>.SHP</code>, <code>.SHX</code>, <code>.DBF</code>, <code>.PRJ</code>).</p></li>
-<li><p>The user will get a feedback such as “AOI conversion completed!”, “Failed to convert AOI to Google Earth Engine Format”, “Geometry Validation Failed”, “Error Reading Shapefile”.</p></li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li>The system currently supports only shapefile in <code>.ZIP</code> format.</li>
-<li>An Upload button is provided, allowing user to uploaded the file. It is then extracted to a temporary directory.</li>
-<li>Next, the system validates and repairs the shapefile geometries (if any errors are found) in a GeoDataFrame (<code>.GDF</code>), converts the cleaned geometries into an Earth Engine objects, and converts the coordinate system into WGS 1984.</li>
-<li>If an error occurs still, the system displays an error message and suggests performing a shapefile simplification process using GIS software.</li>
-<li>The system displays a small preview map centered on the AOI.</li>
-</ol>
-</section>
-<section id="sec-aoi-from-on-screen-digitizing" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="sec-aoi-from-on-screen-digitizing"><span class="header-section-number">1.1.3</span> AOI from On-Screen Digitizing</h3>
-<p><strong>Front-end</strong></p>
-<p>The user is presented with an interactive on-screen digitization process.</p>
-<p><strong>Back-end</strong></p>
-<p>[not developed yet]</p>
+<p>Exports are the main bottleneck with service accounts. Earth Engine supports Drive exports via <code>Export.image.toDrive</code>, but Drive exports target the authenticated identity’s Drive.</p>
+<p>A recent Google Workspace policy change adds a very specific sharp edge. From 15 April 2025, newly created Google Cloud IAM service accounts no longer receive the default Google Workspace storage and cannot own Drive items. In practical terms, a service account created after that date will generally fail to export to “My Drive”, because there is no Drive storage space for it to own the exported file.</p>
+<p>For service accounts, the recommended pathways are exporting to Google Cloud Storage (GCS) or to an Earth Engine Asset, then sharing/copying results as needed. If you must land results in Drive, a more robust pattern is exporting into a Shared Drive, where the Shared Drive owns the file rather than the service account.</p>
+<p>If you want a direct download link for quick debugging or open access downloads (without user login), <code>ee.Image.getDownloadURL()</code> is available but intentionally limited (maximum request size 32 MB and maximum grid dimension 10,000 pixels). It will not work for large rasters.</p>
 </section>
 </section>
-<section id="selecting-and-preparing-satellite-imagery" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="selecting-and-preparing-satellite-imagery"><span class="header-section-number">1.2</span> Selecting and Preparing Satellite Imagery</h2>
-<section id="sec-input-spatial-image-parameters" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="sec-input-spatial-image-parameters"><span class="header-section-number">1.2.1</span> Input Spatial Image Parameters</h3>
-<p><strong>Front-end</strong></p>
-<p>The user is prompted to fill in these parameters:</p>
-<ol type="1">
-<li>Spatial resolution (meters): Specify the desired spatial resolution.</li>
-<li>Input year: Choose either single-date or multi-year imagery.</li>
-<li>Maximum cloud cover: Set a preferred cloud cover threshold, or use the default value of 30%.</li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li><p>The system currently supports Landsat 1-4 at sensor radiance and Landsat 5-9 collection 2 surface reflectance Analysis Ready Data (ARD), excluding the thermal bands. Landsat mission availability is as follows:</p>
-<ul>
-<li>Landsat 1 Multispectral Scanner/MSS (1972 - 1978)</li>
-<li>Landsat 2 Multispectral Scanner/MSS (1978 - 1982)</li>
-<li>Landsat 3 Multispectral Scanner/MSS (1978 - 1983)</li>
-<li>Landsat 4 Thematic Mapper/TM (1982 - 1993)</li>
-<li>Landsat 5 Thematic Mapper/TM (1984 - 2012)</li>
-<li>Landsat 7 Enhanced Thematic Mapper Plus/ETM+ (1999 - 2021)</li>
-<li>Landsat 8 Operational Land Imager/OLI (2013 - present)</li>
-<li>Landsat 9 Operational Land Imager-2/OLI-2 (2021 - present)</li>
-</ul></li>
-<li><p>The system retrieves images that match user’s selected criteria, including spatial resolution, year, and cloud cover. For single-year imagery, the system selects Landsat images from December 31st of year T or the lowest cloud cover scene available that year. For multi-year imagery, the system retrieves the lowest cloud cover image for each year in the specified range.</p></li>
-<li><p>The system crops and mosaics the selected satellite imagery to match the user’s AOI.</p></li>
-<li><p>The system performs cloud masking in three steps: cloud detection, mask refinement, and image compositing. The QA_PIXEL band encodes pixel conditions using specific bit flags. <code>Bitwise AND</code> operations are applied to isolate these conditions, focusing on clouds (bit 4, value 16) and cloud shadows (bit 3, value 8). Pixels matching these flags are excluded to produce a cleaner, near cloud-free image.</p></li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Related function
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>def mask_landsat_sr(image, cloud_conf_thresh=2, shadow_conf_thresh=2, cirrus_conf_thresh=2):</code></p>
-</div>
-</div>
-<ol start="5" type="1">
-<li><p>The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds.</p></li>
-<li><p>If there is no satellite imagery available for the user’s input parameters, proceed to <a href="#sec-satellite-imagery-cannot-be-found" class="quarto-xref"><span>Section 1.2.2</span></a></p></li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Related function
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>from epistemx.module_1 import Reflectance_Data</code></p>
-</div>
-</div>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">5. Troubleshooting</h2>
+<p>Most authorisation failures fall into a handful of predictable buckets.</p>
+<section id="authentication-fails" class="level3">
+<h3 class="anchored" data-anchor-id="authentication-fails">5.1 Authentication fails</h3>
+<p>If Earth Engine says you are not authenticated, you either have no cached user credentials (manual mode) or the service account key was not found/loaded (service account mode). In Luma-GE, <code>get_auth_status()</code> is the quickest sanity check because it performs a trivial request to confirm the session can execute.</p>
+<p>If manual authentication suddenly starts failing after a library update (especially in notebook-style flows), check the Earth Engine Python client library release notes. A common error message asks you to grant <code>roles/serviceusage.serviceUsageConsumer</code> (or the underlying <code>serviceusage.services.use</code> permission) on the relevant project.</p>
+<p>If a service account works on one developer laptop but fails on another, it is usually one of these: the key file path is wrong or unreadable; the project is not registered for Earth Engine access; the Earth Engine API is not enabled; the service account does not have the required IAM roles; or permissions have not yet propagated.</p>
 </section>
-<section id="sec-satellite-imagery-cannot-be-found" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="sec-satellite-imagery-cannot-be-found"><span class="header-section-number">1.2.2</span> Satellite Imagery Not Found Based on User’s Parameters</h3>
-<p><strong>Front-end</strong></p>
-<p>The user is prompted to adjust parameters, such as increasing the cloud cover limit, selecting a different time period, or choosing a different spatial resolution.The user will then get a feedback: “No images found for the selected criteria, increase cloud cover threshold or change the date range”.</p>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li>Before prompting the user to insert new parameters, the system searches imagery from year T to T-2 to replace cloudy areas via image compositing.</li>
-<li>If requirements remain unmet, <a href="#sec-input-spatial-image-parameters" class="quarto-xref"><span>Section 1.2.1</span></a> will re-run based on new user parameters.</li>
-</ol>
+<section id="quota-project-errors" class="level3">
+<h3 class="anchored" data-anchor-id="quota-project-errors">5.2 Quota / project errors</h3>
+<p>If you see an error about a quota project not being set, Earth Engine cannot determine which Cloud project should be charged for requests. The Earth Engine guide recommends setting the project explicitly.</p>
+<p>Ensure that (a) the project is registered for Earth Engine access, (b) the Earth Engine API is enabled in Cloud Console, and (c) you initialise with an explicit project in code: <code>ee.Initialize(project='YOUR_PROJECT_ID')</code>.</p>
+<p>If you are using Application Default Credentials, the Earth Engine guide also suggests running <code>earthengine set_project YOUR_PROJECT_ID</code> or <code>gcloud auth application-default set-quota-project YOUR_PROJECT_ID</code>.</p>
+</section>
+<section id="exports-fail" class="level3">
+<h3 class="anchored" data-anchor-id="exports-fail">5.3 Exports fail</h3>
+<p>Export failures are a common trap. <code>ee.Image.getDownloadURL()</code> is intentionally limited to small downloads (maximum request size 32 MB and maximum grid dimension 10,000). If you exceed those limits, switch to batch exports.</p>
+<p>For service accounts, it is suggested exporting to Cloud Storage (<code>Export.image.toCloudStorage</code>) or to an Earth Engine Asset. For large exports into a user’s personal Drive, use manual authentication.</p>
+<p>To understand limits and constraints applied to a project (task concurrency, storage, request rates, and other quotas), use the Earth Engine quotas and monitoring documentation, plus Cloud Console quota and monitoring pages.</p>
 </section>
 </section>
-<section id="sec-satellite-imagery-post-processing" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="sec-satellite-imagery-post-processing"><span class="header-section-number">1.3</span> Satellite Imagery Post-Processing</h2>
-<section id="visualization-and-saving-data" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="visualization-and-saving-data"><span class="header-section-number">1.3.1</span> Visualization and Saving Data</h3>
-<p><strong>Front-end</strong></p>
-<ol type="1">
-<li><p>The user can visualize the near cloud-free imagery within the web portal and download it as a GeoTIFF (<code>.TIF</code> )</p></li>
-<li><p>Prior to initiating the image download, the user inputs technical parameters of the image that includes: file name, coordinate system, and spatial resolution.</p></li>
-<li><p>If the user chooses not to download it, they may proceed to <a href="@sec-module-2">Module 2</a>.</p></li>
-<li><p>A summary report containing the metadata is provided as a <code>.TXT</code> file that includes:</p>
-<ul>
-<li>Total images found</li>
-<li>Data range of images</li>
-<li>Unique WRS tiles</li>
-<li>Path row tiles</li>
-<li>Scene IDs</li>
-<li>Image acquisition dates</li>
-<li>Average scene cloud cover</li>
-<li>Date range</li>
-<li>Cloud cover range</li>
-</ul></li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li><p>The system produces near-cloud-free Landsat imagery for the defined AOI, saves it as a variable, and visualizes the processed datasets.</p></li>
-<li><p>A summary report of metadata is generated, including acquisition details, cloud cover statistics, and a summary of processing steps applied.</p></li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Related function
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>from epistemx.module_1 import Reflectance_Stats</code></p>
-<p><code>def get_collection_statistics(collection, compute_stats=True, print_report=False):</code></p>
-</div>
-</div>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">6. References</h2>
+<p>Google for Developers (2025) <em>Authentication and Initialization</em>. Google Earth Engine Guides. Available at: <a href="https://developers.google.com/earth-engine/guides/auth">https://developers.google.com/earth-engine/guides/auth</a></p>
+<p>Google for Developers (2025) <em>Earth Engine access</em>. Google Earth Engine Guides. Available at: <a href="https://developers.google.com/earth-engine/guides/access">https://developers.google.com/earth-engine/guides/access</a></p>
+<p>Google for Developers (2025) <em>Service Accounts</em>. Google Earth Engine Guides. Available at: <a href="https://developers.google.com/earth-engine/guides/service_account">https://developers.google.com/earth-engine/guides/service_account</a></p>
+<p>Google for Developers (2024) <em>ee.Image.getDownloadURL</em>. Earth Engine API reference. Available at: <a href="https://developers.google.com/earth-engine/apidocs/ee-image-getdownloadurl">https://developers.google.com/earth-engine/apidocs/ee-image-getdownloadurl</a></p>
+<p>Google for Developers (2025) <em>Export.image.toDrive</em>. Earth Engine API reference. Available at: <a href="https://developers.google.com/earth-engine/apidocs/export-image-todrive">https://developers.google.com/earth-engine/apidocs/export-image-todrive</a></p>
+<p>Google for Developers (2025) <em>Export.image.toCloudStorage</em>. Earth Engine API reference. Available at: <a href="https://developers.google.com/earth-engine/apidocs/export-image-tocloudstorage">https://developers.google.com/earth-engine/apidocs/export-image-tocloudstorage</a></p>
+<p>Google for Developers (2025) <em>Earth Engine Python client library release notes</em>. Available at: <a href="https://developers.google.com/earth-engine/docs/python-client-lib/release-notes">https://developers.google.com/earth-engine/docs/python-client-lib/release-notes</a></p>
+<p>Google for Developers (2025) <em>Earth Engine quotas</em>. Google Earth Engine Guides. Available at: <a href="https://developers.google.com/earth-engine/guides/usage">https://developers.google.com/earth-engine/guides/usage</a></p>
+<p>Google for Developers (2025) <em>Monitoring usage</em>. Google Earth Engine Guides. Available at: <a href="https://developers.google.com/earth-engine/guides/monitoring_usage">https://developers.google.com/earth-engine/guides/monitoring_usage</a></p>
+<p>Google Cloud (2025) <em>Set the quota project</em>. Google Cloud documentation. Available at: <a href="https://docs.cloud.google.com/docs/quotas/set-quota-project">https://docs.cloud.google.com/docs/quotas/set-quota-project</a></p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -536,13 +433,14 @@ Related function
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -886,13 +784,13 @@ Related function
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+      <a href="./python_setup.html" class="pagination-link" aria-label="Python Environment Setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Python Environment Setup</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module02.html" class="pagination-link" aria-label="Module 2: Determining LULC Classification Schema and Classes">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./helpers.html" class="pagination-link" aria-label="Helpers">
+        <span class="nav-page-text">Helpers</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

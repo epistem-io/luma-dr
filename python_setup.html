@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Module 2: Determining LULC Classification Schema and Classes – Epistem-X Technical Documentation</title>
+<title>Python Environment Setup – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,18 +65,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./module03.html" rel="next">
-<link href="./module01.html" rel="prev">
+<link href="./ee_init.html" rel="next">
+<link href="./testing_guidelines.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,9 +105,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -85,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module02.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./python_setup.html">General Development Settings</a></li><li class="breadcrumb-item"><a href="./python_setup.html">Python Environment Setup</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -100,12 +133,14 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Epistem-X Technical Documentation</a> 
+      <a href="./">Luma Development Reference</a> 
         <div class="sidebar-tools-main">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -119,75 +154,109 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About the project</span></a>
+ <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></a>
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span></a>
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Spectral Separability Analysis</span></span></a>
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Module 5: Improving Model Quality with Multi-Source Data</span></span></a>
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 6: LULC Map Generation</span></span></a>
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Module 7: Thematic Accuracy Assessment</span></span></a>
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Module 8: Post Classification Analysis and Housekeeping</span></span></a>
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -198,31 +267,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. Overview</a></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">2. Goals</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">3. Prerequisites</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">4. Output</a></li>
+  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">5. Process</a>
   <ul class="collapse">
-  <li><a href="#sec-selection-of-classification-schema" id="toc-sec-selection-of-classification-schema" class="nav-link" data-scroll-target="#sec-selection-of-classification-schema"><span class="header-section-number">2.1</span> Selection of Classification Schema</a>
-  <ul class="collapse">
-  <li><a href="#sec-user-uploading-their-own-classification" id="toc-sec-user-uploading-their-own-classification" class="nav-link" data-scroll-target="#sec-user-uploading-their-own-classification"><span class="header-section-number">2.1.1</span> User Uploading Their Own Classification</a></li>
-  <li><a href="#sec-user-entering-the-classification-manually" id="toc-sec-user-entering-the-classification-manually" class="nav-link" data-scroll-target="#sec-user-entering-the-classification-manually"><span class="header-section-number">2.1.2</span> User Entering the Classification Manually</a></li>
-  <li><a href="#sec-user-selecting-the-default-system-classification" id="toc-sec-user-selecting-the-default-system-classification" class="nav-link" data-scroll-target="#sec-user-selecting-the-default-system-classification"><span class="header-section-number">2.1.3</span> User Selecting the Default System’s Classification</a></li>
+  <li><a href="#step-1---create-an-isolated-environment" id="toc-step-1---create-an-isolated-environment" class="nav-link" data-scroll-target="#step-1---create-an-isolated-environment">Step 1 - Create an isolated environment</a></li>
+  <li><a href="#step-2---install-luma-ge-from-github" id="toc-step-2---install-luma-ge-from-github" class="nav-link" data-scroll-target="#step-2---install-luma-ge-from-github">Step 2 - Install Luma-GE from GitHub</a></li>
+  <li><a href="#step-3---quick-verification" id="toc-step-3---quick-verification" class="nav-link" data-scroll-target="#step-3---quick-verification">Step 3 - Quick verification</a></li>
+  <li><a href="#step-4---tests-coming-soon" id="toc-step-4---tests-coming-soon" class="nav-link" data-scroll-target="#step-4---tests-coming-soon">Step 4 - Tests (coming soon)</a></li>
   </ul></li>
-  <li><a href="#sec-saving-the-lulc-classification-table" id="toc-sec-saving-the-lulc-classification-table" class="nav-link" data-scroll-target="#sec-saving-the-lulc-classification-table"><span class="header-section-number">2.2</span> Downloading and Saving the LULC Classification Table</a>
-  <ul class="collapse">
-  <li><a href="#downloading-and-saving-the-lulc-classification-table" id="toc-downloading-and-saving-the-lulc-classification-table" class="nav-link" data-scroll-target="#downloading-and-saving-the-lulc-classification-table"><span class="header-section-number">2.2.1</span> Downloading and Saving the LULC Classification Table</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#change-management-three-stream-approach" id="toc-change-management-three-stream-approach" class="nav-link" data-scroll-target="#change-management-three-stream-approach">6. Change management (three-stream approach)</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">7. References</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./python_setup.html">General Development Settings</a></li><li class="breadcrumb-item"><a href="./python_setup.html">Python Environment Setup</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-module-2" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Determining LULC Classification Schema and Classes</span></span></h1>
+<h1 class="title">Python Environment Setup</h1>
 </div>
 
 
@@ -239,137 +305,116 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="module-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Module Overview</h1>
-<p>This module offers a flexible framework for generating Land Use/Land Cover (LULC) maps tailored to various applications, from broad assessments like deforestation monitoring to detailed analyses reflecting specific management practices or prioritized conservation areas. In the initial phase, only non-hierarchical schemas will be implemented. All classes are treated independently, making it suitable for single-level applications such as deforestation mapping or identifying priority conservation areas.</p>
-<p>The output of this module is a well-defined list of LULC classes. The module also manages the selection, input, validation, and storage of LULC classification schemes. Users can select a predefined system schema, upload their own classification file, or enter the classification manually. The module ensures data integrity and provides a downloadable classification table for downstream analysis.</p>
-<p>The module incorporates RESTORE+ LULC classifications from Indonesia to support restoration planning, guiding identification of degraded areas and management priorities. These classes are offered as a predefined data classification system.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">1. Overview</h2>
+<p>Luma stands for Land Use Mapping for All. The geospatial functionalities that powers Luma is called Luma-GE (Luma Geospatial Engine). Luma-GE is shipped as a Python package because it needs to run in more than one context. The same geospatial engine must be importable by an interface layer (for example, a Streamlit-based UI/UX) and also be usable directly from a notebook for development, debugging, and method exploration. Packaging turns “a folder of scripts” into a reliable, versioned engine with a stable import path (<code>import luma_ge</code>), repeatable installs across laptops and CI, and a single place to declare runtime requirements.</p>
+<p>Luma-GE uses <code>pyproject.toml</code> as the source of truth for packaging and installation. This file must live at the repository root. Modern Python tooling (including <code>pip</code>) reads <code>pyproject.toml</code> to understand the package identity, its required Python version, and the dependencies that must be installed alongside the engine. In practical terms, the <code>[project]</code> section is where we define the package name and version, set <code>requires-python</code>, and list the dependencies needed by the functions and methods provided by Luma-GE.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dependencies will be kept <strong>parsimonious</strong>. Only add a dependency when a function or method genuinely needs it. This keeps installs faster, reduces conflicts, and avoids dragging heavy geospatial binaries into environments that don’t need them.</p>
+</div>
+</div>
+<hr>
 </section>
-<section id="input" class="level1 unnumbered">
-<h1 class="unnumbered">Input</h1>
-<p><strong>User’s Input</strong></p>
-<ol type="1">
-<li>Default LULC class list.</li>
-<li>Manually entered LULC class list.</li>
-<li>Uploaded LULC class list.</li>
-</ol>
-<p><strong>Automatic System Input</strong></p>
-<ol type="1">
-<li>FAO LULC classes.</li>
-<li>RESTORE+ LULC classes.</li>
-</ol>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">2. Goals</h2>
+<p>The goal is a developer setup that works the same way on different laptops and in CI. Installs should be standard and boring, and a new contributor should be able to get a working environment quickly without any one-off hacks.</p>
+<hr>
 </section>
-<section id="output" class="level1 unnumbered">
-<h1 class="unnumbered">Output</h1>
-<p>LULC classification table</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">3. Prerequisites</h2>
+<p>You need Git installed because <code>pip</code> installs from a Git URL by calling <code>git</code> under the hood. You also need a Python environment manager. For geospatial stacks, we recommend Miniforge or Mambaforge (Conda-compatible and lightweight) because many geospatial dependencies are easier to install as pre-built binaries than to compile locally.</p>
+<p>To confirm Git and Conda/Mamba are available in your shell, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you are on Windows, avoid adding Python or Conda to your system PATH unless you know exactly why you are doing it. PATH conflicts are a common source of broken environments.</p>
+<hr>
 </section>
-<section id="process" class="level1 unnumbered">
-<h1 class="unnumbered">Process</h1>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-
-A([&lt;a href="#sec-selection-of-classification-schema"&gt;Selection of Classification Schema&lt;/a&gt;])
-B([&lt;a href="#sec-user-selecting-the-default-system-classification"&gt;User Selecting the Default System's Classification&lt;/a&gt;])
-C([&lt;a href="#sec-user-uploading-their-own-classification"&gt;User Uploading Their Own Classification&lt;/a&gt;])
-D([&lt;a href="#sec-user-entering-the-classification-manually"&gt;User Entering the Classification Manually&lt;/a&gt;])
-E([&lt;a href="#validation-of-input-data"&gt;Validation of Input Data&lt;/a&gt;])
-F([&lt;a href="#sec-saving-the-lulc-classification-table"&gt;Downloading and Saving the LULC Classification Table&lt;/a&gt;])
-
-%% Flow connections
-A --&gt; B
-A --&gt; C
-A --&gt; D
-
-B --&gt; E
-C --&gt; E
-D --&gt; E
-
-
-E --&gt;|Valid| F
-E --&gt;|Invalid| A
-</pre>
+<section id="output" class="level2">
+<h2 class="anchored" data-anchor-id="output">4. Output</h2>
+<p>A working development environment that can run Luma-GE via an interface or via a notebook, and can also build package artefacts when needed.</p>
+<hr>
+</section>
+<section id="process" class="level2">
+<h2 class="anchored" data-anchor-id="process">5. Process</h2>
+<section id="step-1---create-an-isolated-environment" class="level3">
+<h3 class="anchored" data-anchor-id="step-1---create-an-isolated-environment">Step 1 - Create an isolated environment</h3>
+<p>Create a dedicated environment for Luma so your system Python stays untouched and dependency conflicts are contained.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> luma python=3.11</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate luma</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you use <code>conda</code> instead of <code>mamba</code>, the commands are the same (just slower).</p>
+</section>
+<section id="step-2---install-luma-ge-from-github" class="level3">
+<h3 class="anchored" data-anchor-id="step-2---install-luma-ge-from-github">Step 2 - Install Luma-GE from GitHub</h3>
+<p>If you want a quick install of the latest code without cloning the repo, install directly from GitHub. By default we install from the main branch.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="st">"luma_ge @ git+https://github.com/epistem-io/luma-stack.git"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you need a specific branch (for example, to test a feature branch or reproduce a bug), pin it explicitly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="st">"luma_ge @ git+https://github.com/epistem-io/luma-stack.git@&lt;branch-name&gt;"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p></p></figure><p></p>
+<div class="callout-title-container flex-fill">
+Important
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>Installing from a Git URL requires <code>git</code> to be installed and available on your PATH.</p>
 </div>
-<section id="sec-selection-of-classification-schema" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="sec-selection-of-classification-schema"><span class="header-section-number">2.1</span> Selection of Classification Schema</h2>
-<p><strong>Front-end</strong></p>
-<p>The user has the option to use the system’s default classification schema, upload a file containing their own classification scheme, or enter the classification manually.</p>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li>If the user chooses the default schema, the system proceeds to <a href="#sec-user-selecting-the-default-system-classification" class="quarto-xref"><span>Section 2.1.3</span></a></li>
-<li>If the user chooses to upload their own schema, the system proceeds to <a href="#sec-user-uploading-their-own-classification" class="quarto-xref"><span>Section 2.1.1</span></a></li>
-<li>If the user chooses to enter the classification manually, the system proceeds to <a href="#sec-user-entering-the-classification-manually" class="quarto-xref"><span>Section 2.1.2</span></a></li>
-</ol>
-<section id="sec-user-uploading-their-own-classification" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="sec-user-uploading-their-own-classification"><span class="header-section-number">2.1.1</span> User Uploading Their Own Classification</h3>
-<p><strong>Front-end</strong></p>
-<ol type="1">
-<li>The user uploads the <code>.XLSX</code>, <code>.XLS</code>, or <code>.CSV</code> file.</li>
-<li>If there is an error, the user receives a warning and is prompted to re-upload the corrected file or format.</li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li><p>The system displays an Upload button.</p></li>
-<li><p>The system validates the uploaded file, checking:</p>
+</div>
+</section>
+<section id="step-3---quick-verification" class="level3">
+<h3 class="anchored" data-anchor-id="step-3---quick-verification">Step 3 - Quick verification</h3>
+<p>Confirm the package imports correctly.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import luma_ge; print('luma_ge import OK')"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you want a concrete example of how Luma-GE functions and methods are used in practice (outside the interface layer), review the implementation notebook in the repository:</p>
+<p><code>notebooks/Module_implementation.ipynb</code></p>
+<pre class="text"><code>https://github.com/epistem-io/luma-stack/blob/main/notebooks/Module_implementation.ipynb</code></pre>
+</section>
+<section id="step-4---tests-coming-soon" class="level3">
+<h3 class="anchored" data-anchor-id="step-4---tests-coming-soon">Step 4 - Tests (coming soon)</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Coming soon</strong></p>
+<p>A PyTest suite is planned but not implemented yet.</p>
+<p>When it lands, this section will document the default test command (<code>pytest -q</code>), where tests live (<code>tests/</code>), naming (<code>test_*.py</code>), and recommended patterns (fixtures, <code>monkeypatch</code>, and mocking for cloud APIs).</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="change-management-three-stream-approach" class="level2">
+<h2 class="anchored" data-anchor-id="change-management-three-stream-approach">6. Change management (three-stream approach)</h2>
+<p>Python environment changes are high-impact when they change the supported Python version, alter core dependency groups (especially geospatial binaries), modify install commands or extras, or change CI behaviour. These changes should follow the three-stream workflow (Notion → luma-dr → luma-stack) so that the documentation and implementation stay in lock-step.</p>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">7. References</h2>
 <ul>
-<li>The file is not corrupt.</li>
-<li>The format is valid.</li>
-<li>The file size is within the allowed limit.</li>
-<li>The file is not password-protected.</li>
-</ul></li>
-<li><p>The system then validates and extracts data from sheets, cells, rows, and columns, converting it into a Pandas DataFrame. It checks whether the data is present or empty.</p></li>
-<li><p>If the validation is successful, the system displays a preview of the data in a table and provides a verification result notification.</p></li>
-</ol>
-</section>
-<section id="sec-user-entering-the-classification-manually" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="sec-user-entering-the-classification-manually"><span class="header-section-number">2.1.2</span> User Entering the Classification Manually</h3>
-<p><strong>Front-end</strong></p>
-<ol type="1">
-<li>The user fills out the input form containing ID, Class, and Color Code fields, and optionally the Description column.</li>
-<li>The system warns the user if the form is incomplete or data conversion fails.</li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li>The system displays the input form and checks that all required columns are filled.</li>
-<li>Once the input form is converted into a Pandas DataFrame, the data are previewed in a table with a verification status.</li>
-</ol>
-</section>
-<section id="sec-user-selecting-the-default-system-classification" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="sec-user-selecting-the-default-system-classification"><span class="header-section-number">2.1.3</span> User Selecting the Default System’s Classification</h3>
-<p><strong>Front-end</strong></p>
-<p>If the default classification schema is selected, the user chooses a list of LULC classes from either the RESTORE+ or LCCS dataset.</p>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li>The system loads the default N classes from the database and displays the classification in tabular format with an N-class template containing the attributes: ID, Class, and Color Code.</li>
-<li>The system then records the user’s selection in its internal database table.</li>
-</ol>
-</section>
-</section>
-<section id="sec-saving-the-lulc-classification-table" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-saving-the-lulc-classification-table"><span class="header-section-number">2.2</span> Downloading and Saving the LULC Classification Table</h2>
-<section id="downloading-and-saving-the-lulc-classification-table" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="downloading-and-saving-the-lulc-classification-table"><span class="header-section-number">2.2.1</span> Downloading and Saving the LULC Classification Table</h3>
-<p><strong>Front-end</strong></p>
-<ol type="1">
-<li>The user can download the table in Excel file format and save it in their local drive.</li>
-<li>The system confirms the download; the user then proceed to <a href="@sec-module-3">Module 3</a>.</li>
-</ol>
-<p><strong>Back-end</strong></p>
-<ol type="1">
-<li>The system provides a button to download the result file.</li>
-<li>The classification table is saved as a variable for use in subsequent modules.</li>
-</ol>
+<li><p>UBC Geography (2024)&nbsp;<em>Getting Started with Conda, Virtual Environments, and Python</em>. Available at:&nbsp;https://ubc-geography.github.io/computing-resources/development-environments/conda-getting-started.html</p></li>
+<li><p>pyOpenSci (2025)&nbsp;<em>Python Package Structure &amp; Layout</em>. pyOpenSci Python Package Guide. Available at:&nbsp;https://www.pyopensci.org/python-package-guide/package-structure-code/python-package-structure.html</p></li>
+<li><p>PyPA (2025)&nbsp;<em>VCS Support</em>. Available at:&nbsp;https://pip.pypa.io/en/stable/topics/vcs-support/</p></li>
+<li><p>PyPA (2025)&nbsp;<em>Writing your pyproject.toml</em>. Python Packaging User Guide. Available at:&nbsp;https://packaging.python.org/en/latest/guides/writing-pyproject-toml/</p></li>
+</ul>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -424,13 +469,14 @@ E --&gt;|Invalid| A
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -774,13 +820,13 @@ E --&gt;|Invalid| A
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./module01.html" class="pagination-link" aria-label="Module 1: Acquisition of Near-Cloud-Free Satellite Imagery">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Acquisition of Near-Cloud-Free Satellite Imagery</span></span>
+      <a href="./testing_guidelines.html" class="pagination-link" aria-label="Testing Guideline for Developers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Testing Guideline for Developers</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module03.html" class="pagination-link" aria-label="Module 3: Training Data Generation">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Training Data Generation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ee_init.html" class="pagination-link" aria-label="Earth Engine Initialization and Authentication">
+        <span class="nav-page-text">Earth Engine Initialization and Authentication</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Sample Data Quality Analysis – Luma Development Reference</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./placeholders/module05_placeholder.html" rel="next">
+<link href="./03_sample_data.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./04_sample_data_quality.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Luma Development Reference</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About Luma</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
+  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
+  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
+  <ul class="collapse">
+  <li><a href="#sec-specification-of-separability-analysis-parameters" id="toc-sec-specification-of-separability-analysis-parameters" class="nav-link" data-scroll-target="#sec-specification-of-separability-analysis-parameters"><span class="header-section-number">4.1</span> Specifying the Separability Analysis Parameter</a>
+  <ul class="collapse">
+  <li><a href="#specifying-the-separability-analysis-parameter" id="toc-specifying-the-separability-analysis-parameter" class="nav-link" data-scroll-target="#specifying-the-separability-analysis-parameter"><span class="header-section-number">4.1.1</span> Specifying the Separability Analysis Parameter</a></li>
+  </ul></li>
+  <li><a href="#conducting-the-separability-analysis" id="toc-conducting-the-separability-analysis" class="nav-link" data-scroll-target="#conducting-the-separability-analysis"><span class="header-section-number">4.2</span> Conducting the Separability Analysis</a>
+  <ul class="collapse">
+  <li><a href="#sec-initialize-separability-analysis" id="toc-sec-initialize-separability-analysis" class="nav-link" data-scroll-target="#sec-initialize-separability-analysis"><span class="header-section-number">4.2.1</span> Initialize the Separability Analysis</a></li>
+  <li><a href="#validating-the-sample-datas-geometry" id="toc-validating-the-sample-datas-geometry" class="nav-link" data-scroll-target="#validating-the-sample-datas-geometry"><span class="header-section-number">4.2.2</span> Validating the sample data’s geometry</a></li>
+  <li><a href="#converting-sample-data-into-earth-engine-format" id="toc-converting-sample-data-into-earth-engine-format" class="nav-link" data-scroll-target="#converting-sample-data-into-earth-engine-format"><span class="header-section-number">4.2.3</span> Converting sample data into Earth Engine format</a></li>
+  <li><a href="#starting-the-separability-analysis-computation" id="toc-starting-the-separability-analysis-computation" class="nav-link" data-scroll-target="#starting-the-separability-analysis-computation"><span class="header-section-number">4.2.4</span> Starting the separability analysis computation</a></li>
+  <li><a href="#sec-sample-stats" id="toc-sec-sample-stats" class="nav-link" data-scroll-target="#sec-sample-stats"><span class="header-section-number">4.2.5</span> Counting sample data statistics</a></li>
+  <li><a href="#extracting-spectral-value" id="toc-extracting-spectral-value" class="nav-link" data-scroll-target="#extracting-spectral-value"><span class="header-section-number">4.2.6</span> Extracting spectral value</a></li>
+  <li><a href="#sec-sample-pixel-stats" id="toc-sec-sample-pixel-stats" class="nav-link" data-scroll-target="#sec-sample-pixel-stats"><span class="header-section-number">4.2.7</span> Calculating the extracted spectral feature statistics</a></li>
+  <li><a href="#sec-caluclate-separability-index" id="toc-sec-caluclate-separability-index" class="nav-link" data-scroll-target="#sec-caluclate-separability-index"><span class="header-section-number">4.2.8</span> Calculating separability index</a></li>
+  </ul></li>
+  <li><a href="#sec-spectral-profile-visualization" id="toc-sec-spectral-profile-visualization" class="nav-link" data-scroll-target="#sec-spectral-profile-visualization"><span class="header-section-number">4.3</span> Visualization of Reference Data’s Spectral Profile</a>
+  <ul class="collapse">
+  <li><a href="#sec-spectra-signature-visualization" id="toc-sec-spectra-signature-visualization" class="nav-link" data-scroll-target="#sec-spectra-signature-visualization"><span class="header-section-number">4.3.1</span> Visualization of Reference Data’s Spectral Profile</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./04_sample_data_quality.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-module-4" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="module-overview" class="level1 unnumbered">
+<h1 class="unnumbered">Module Overview</h1>
+<p>This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1.</p>
+<p>This module is diagnostic only and does not produce inputs for subsequent modules. Its outputs support interpretation of class confusion and provide justification for feature enhancement in later stages of the workflow.</p>
+</section>
+<section id="input" class="level1 unnumbered">
+<h1 class="unnumbered">Input</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name of Input</th>
+<th>Input Type</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Parameters for the separability analysis</td>
+<td>User’s input</td>
+<td><p>Contains:</p>
+<ul>
+<li><p>Spatial resolution of the imagery from Module 1 can be adjusted for the separability analysis</p></li>
+<li><p>Number of maximum pixels which the analysis will run for each pair of classes</p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>Sample dataset</td>
+<td>Input from Other Modules</td>
+<td>Output from Module 3</td>
+</tr>
+<tr class="odd">
+<td>Near-cloud free satellite imagery</td>
+<td>Input from Other Modules</td>
+<td>Output from Module 1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output" class="level1 unnumbered">
+<h1 class="unnumbered">Output</h1>
+<ol type="1">
+<li>Separability analysis result.</li>
+<li>Spectral profile visualization and text description.</li>
+</ol>
+</section>
+<section id="process" class="level1 unnumbered">
+<h1 class="unnumbered">Process</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.</p>
+</div>
+</div>
+<section id="sec-specification-of-separability-analysis-parameters" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-specification-of-separability-analysis-parameters"><span class="header-section-number">4.1</span> Specifying the Separability Analysis Parameter</h2>
+<section id="specifying-the-separability-analysis-parameter" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="specifying-the-separability-analysis-parameter"><span class="header-section-number">4.1.1</span> Specifying the Separability Analysis Parameter</h3>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Journey 4.1: Determining separability analysis parameter</strong></p>
+<ol type="1">
+<li>The user is prompted to fill in the parameters for separability analysis. The system provides a default value for each of the parameters as the following:
+<ul>
+<li>Spatial resolution used for the separability analysis: 30 meter</li>
+<li>Maximum number of pixels which the separability analysis will be conducted to: 5000 for each class, to prevent crash in the analysis.</li>
+</ul></li>
+<li>The system shows a message showing Transformed Divergence method will be used to conduct the analysis. In this development phase, there is no option for the user to change the separability analysis method.</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This sub-step does not involve any operations within the Luma Geospatial Engine.</p>
+</section>
+</section>
+<section id="conducting-the-separability-analysis" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="conducting-the-separability-analysis"><span class="header-section-number">4.2</span> Conducting the Separability Analysis</h2>
+<section id="sec-initialize-separability-analysis" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-initialize-separability-analysis"><span class="header-section-number">4.2.1</span> Initialize the Separability Analysis</h3>
+<p>This is a part of <strong>System Response 4.1: Separability Analysis Workflow</strong></p>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The user is prompted to run the separability analysis</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This sub-step does not involve any operations within the Luma Geospatial Engine.</p>
+</section>
+<section id="validating-the-sample-datas-geometry" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="validating-the-sample-datas-geometry"><span class="header-section-number">4.2.2</span> Validating the sample data’s geometry</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The system shows a progress update indicating that the separability analysis is currently at Step 1 of 7.</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system validates the geometry of the sample data stored in the system from Module 3 output.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>input_utils.shapefile_validator.validate_and_fix_geometry():</code>to validate and fix geometries issues.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An error message is displayed if the system failed to run <code>validate_and_fix_geometry()</code>.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="converting-sample-data-into-earth-engine-format" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="converting-sample-data-into-earth-engine-format"><span class="header-section-number">4.2.3</span> Converting sample data into Earth Engine format</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The system shows a progress update indicating that the separability analysis is currently at Step 2 of 7</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system converts sample data from <code>.gdf</code> data into Earth Engine Feature Collection format</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>input_utils.shapefile_validator.convert_roi_gdf()</code>: to convert geodataframe into EE Feture Collection. The supported multi-geometries type for this conversions are MultiPoint and MultiPolygon.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An error message is displayed if the system failed to run <code>convert_roi_gdf()</code>.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="starting-the-separability-analysis-computation" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="starting-the-separability-analysis-computation"><span class="header-section-number">4.2.4</span> Starting the separability analysis computation</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The system shows a progress update indicating that the separability analysis is currently at Step 3 of 7</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system initializes the Related Function’s for separability analysis with the appropriate required input objects for the <code>class</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_data_quality.sample_quality()</code>: a <code>class</code> to handle all the workflows for separability analysis.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="sec-sample-stats" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="sec-sample-stats"><span class="header-section-number">4.2.5</span> Counting sample data statistics</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The system shows a progress update indicating that the separability analysis is currently at Step 4 of 7.</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system retrieves the basic statistic information of the sample data.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_data_quality.sample_quality.sample_stats()</code> : to retrieve the sample data’s total sample count, unique classes, class-wise sample counts, and class balance, and includes class names when provided.</p>
+<p><code>sample_data_quality.sample_quality.get_sample_stats_df()</code> : to turn the statistic information into a dataframe format.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="extracting-spectral-value" class="level3" data-number="4.2.6">
+<h3 data-number="4.2.6" class="anchored" data-anchor-id="extracting-spectral-value"><span class="header-section-number">4.2.6</span> Extracting spectral value</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The system shows a progress update indicating that the separability analysis is currently at Step 5 of 7. The system also highlights that this step will take some time.</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system extracts the pixel-level spectral values for each sample data by sampling the composite image at the specified scale. The system also limits the maximum number of pixels per LULC class that will be extracted to avoid memory overload.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_data_quality.sample_quality.extract_spectral_values()</code> : to extract and compile spectral reflectance values for all sample data. The result is a dataframe containing band values for each sample data.</p>
+<p><code>sample_data_quality.sample_quality.limit_samples_per_class()</code> : limits (down-samples) the number of sample data per class whenever the number of available samples exceeds the maximum pixel threshold with random sampling.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="sec-sample-pixel-stats" class="level3" data-number="4.2.7">
+<h3 data-number="4.2.7" class="anchored" data-anchor-id="sec-sample-pixel-stats"><span class="header-section-number">4.2.7</span> Calculating the extracted spectral feature statistics</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li>The system shows a progress update indicating that the separability analysis is currently at Step 6 of 7.</li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system computes detailed pixel-level statistics for each LULC class (mean, standard deviation, minimum, maximum, median, and sample count) based on the extracted spectral values and formats these results into a structured summary table.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_data_quality.sample_quality.sample_pixel_stats()</code> : calculates per-class spectral statistics (mean, std, min, max, median, count) for all bands.</p>
+<p><code>sample_data_quality.sample_quality.get_sample_pixel_stats_df()</code> : converts the computed statistics into a dataframe.</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="sec-caluclate-separability-index" class="level3" data-number="4.2.8">
+<h3 data-number="4.2.8" class="anchored" data-anchor-id="sec-caluclate-separability-index"><span class="header-section-number">4.2.8</span> Calculating separability index</h3>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The system shows a progress update indicating that the separability analysis is currently at Step 7 of 7.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation that separability analysis has been successfully conducted.</p>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system computes the class-to-class separability using Transformed Divergence (TD).</p></li>
+<li><p>The system generates a pairwise separability matrix and converts the results into a structured dataframe.</p></li>
+<li><p>The system categorizes the number of good, weak, and poor class pairs as a summary for user.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_data_quality.sample_quality.check_class_separability()</code>: calculates the pairwise separability values between classes using Transformed Divergence. The choice of using TD as the algorithm is still hard-coded.</p>
+<p><code>sample_data_quality.sample_quality.get_separability_df()</code>: converts separability results into a dataframe with class names and interpretation levels.</p>
+<p><code>sample_data_quality.sample_quality.lowest_separability()</code>: extracts the class pairs with the lowest separability scores.</p>
+<p><code>sample_data_quality.sample_quality.sum_separability()</code>: produces a summary report counting how many class pairs fall under good, weak, or poor separability categories.</p>
+</div>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="sec-spectral-profile-visualization" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-spectral-profile-visualization"><span class="header-section-number">4.3</span> Visualization of Reference Data’s Spectral Profile</h2>
+<section id="sec-spectra-signature-visualization" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-spectra-signature-visualization"><span class="header-section-number">4.3.1</span> Visualization of Reference Data’s Spectral Profile</h3>
+<p>This is a part of <strong>User Journey 4.2: Analyzing separability index result and visualizing sample data</strong></p>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The user is shown a summary of the number and proportion of sample data for each LULC class from the output of <a href="#sec-sample-stats" class="quarto-xref"><span>Section 4.2.5</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system displays a summary of the number and proportion of sample data for each LULC class in a tabular format.</p>
+</div>
+</div></li>
+<li><p>The user is shown a summary of the extracted sample features for each LULC class from the output of <a href="#sec-sample-pixel-stats" class="quarto-xref"><span>Section 4.2.7</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system displays a summary of the extracted sample features for each LULC class in a tabular format.</p>
+</div>
+</div></li>
+<li><p>The user is presented with an overall summary of the separability analysis based on the output of <a href="#sec-caluclate-separability-index" class="quarto-xref"><span>Section 4.2.8</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system displays a highlight of separability category (good, weak, or poor) for each class, and highlights which LULC classes require improvement. A dataframe containing details of the pairwise separability is also displayed.</p>
+</div>
+</div></li>
+<li><p>The user is provided with interactive visualizations to explore spectral distributions and clustering. Available visualization options include histograms, boxplots, and scatter plots.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system displays visualization options: histograms, boxplots, 3D scatter plot, and 2D scatter plots.</p>
+</div>
+</div></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system provides four different visualization options of the spectral distributions and clustering.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_data_quality.spectral_plotter.plot_histogram()</code>: generates overlaid interactive histograms of selected bands showing class-wise frequency distributions</p>
+<p><code>sample_data_quality.spectral_plotter.plot_boxplot()</code>: creates interactive boxplots summarizing per-class band statistics (median, quartiles, outliers) for selected bands.</p>
+<p><code>sample_data_quality.spectral_plotter.interactive_scatter_plot()</code>: produces an interactive 2D scatter plot of two bands with class coloring and hover details for exploring class clustering.</p>
+<p><code>sample_data_quality.spectral_plotter.static_scatter_plot()</code>: renders a static 2D scatter plot with optional confidence ellipses</p>
+<p><code>sample_data_quality.spectral_plotter.add_elipse()</code>: draws a confidence ellipse axis for a class’ 2D band distribution (used by <code>static_scatter_plot</code>).</p>
+<p><code>sample_data_quality.spectral_plotter.scatter_plot_3d()</code>: builds an interactive 3D scatter plot to explore three-band feature space and rotate/zoom clusters.</p>
+</div>
+</div></li>
+</ol>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03_sample_data.html" class="pagination-link" aria-label="Sample Data Generation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./placeholders/module05_placeholder.html" class="pagination-link" aria-label="Predictor Introduction">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Luma Development Reference</title>
+<title>Collaborative Development Guideline – Luma Development Reference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./writing_guidelines.html" rel="next">
+<link href="./testing_guidelines.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -82,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">About Luma</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./writing_guidelines.html">Collaborative Development Guideline</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -117,13 +118,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
@@ -231,7 +232,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#about-luma" id="toc-about-luma" class="nav-link active" data-scroll-target="#about-luma">About Luma</a></li>
+  <li><a href="#about-the-three-stream-approach" id="toc-about-the-three-stream-approach" class="nav-link active" data-scroll-target="#about-the-three-stream-approach">About the Three-Stream Approach</a>
+  <ul class="collapse">
+  <li><a href="#steps-of-the-three-stream-approach" id="toc-steps-of-the-three-stream-approach" class="nav-link" data-scroll-target="#steps-of-the-three-stream-approach">Steps of the Three-Stream Approach</a></li>
+  </ul></li>
+  <li><a href="#the-braindump" id="toc-the-braindump" class="nav-link" data-scroll-target="#the-braindump">The “Braindump”</a></li>
+  <li><a href="#version-control" id="toc-version-control" class="nav-link" data-scroll-target="#version-control">Version Control</a>
+  <ul class="collapse">
+  <li><a href="#repositories" id="toc-repositories" class="nav-link" data-scroll-target="#repositories">Repositories</a></li>
+  <li><a href="#branches" id="toc-branches" class="nav-link" data-scroll-target="#branches">Branches</a></li>
+  <li><a href="#pull-requests-prs" id="toc-pull-requests-prs" class="nav-link" data-scroll-target="#pull-requests-prs">Pull-Requests (PRs)</a></li>
+  <li><a href="#contributors-roles" id="toc-contributors-roles" class="nav-link" data-scroll-target="#contributors-roles">Contributor’s Roles</a></li>
+  <li><a href="#security-and-secrets" id="toc-security-and-secrets" class="nav-link" data-scroll-target="#security-and-secrets">Security and Secrets</a></li>
+  <li><a href="#licensing" id="toc-licensing" class="nav-link" data-scroll-target="#licensing">Licensing</a></li>
+  <li><a href="#releases" id="toc-releases" class="nav-link" data-scroll-target="#releases">Releases</a></li>
+  </ul></li>
+  <li><a href="#the-development-reference" id="toc-the-development-reference" class="nav-link" data-scroll-target="#the-development-reference">The Development Reference</a>
+  <ul class="collapse">
+  <li><a href="#writing-guidelines-for-the-development-reference" id="toc-writing-guidelines-for-the-development-reference" class="nav-link" data-scroll-target="#writing-guidelines-for-the-development-reference">Writing Guidelines for the Development Reference</a></li>
+  </ul></li>
+  <li><a href="#python-method-writing-convention" id="toc-python-method-writing-convention" class="nav-link" data-scroll-target="#python-method-writing-convention">Python Method Writing Convention</a></li>
   </ul>
 </nav>
     </div>
@@ -240,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Luma Development Reference</h1>
+<h1 class="title">Collaborative Development Guideline</h1>
 </div>
 
 
@@ -257,9 +277,241 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="about-luma" class="level1 unnumbered">
-<h1 class="unnumbered">About Luma</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut lorem vitae mauris hendrerit eleifend. Etiam consectetur porttitor tortor sit amet sodales. Sed ac tellus vulputate, tempus tellus sed, scelerisque magna. Aliquam lacus neque, interdum non mattis vestibulum, vulputate a leo. Curabitur velit elit, pulvinar ac volutpat quis, sodales sed elit. Nulla risus massa, gravida commodo egestas nec, gravida eget lacus. Proin tincidunt sodales laoreet. Sed volutpat, libero tincidunt rutrum faucibus, diam metus suscipit justo, sit amet rutrum tortor quam et neque.</p>
+<section id="about-the-three-stream-approach" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-three-stream-approach">About the Three-Stream Approach</h2>
+<ul>
+<li><strong>What is the three-stream approach?</strong></li>
+</ul>
+<p>The three-stream approach is a workflow that separates brainstorming, design, and implementation into clear yet connected streams. Each stage of development has its own dedicated space, allowing for a structured and transparent decision-making and implementation process throughout the development cycle instead of mixing ideas, references, and implementations in scattered places.</p>
+<ul>
+<li><strong>Why the three-stream approach?</strong></li>
+</ul>
+<p>The approach intends to solve a common problem in collaborative software development: ideas were discussed in one place, decisions were written somewhere else, and code evolved on its own, making it hard to tell what was current or why something changed. Someone working a week later or in a different time zone would often re-solve the same problem or unknowingly work against an outdated assumption.</p>
+<p>The three-stream approach keeps context visible through <a href="https://handbook.gitlab.com/handbook/company/culture/all-remote/asynchronous/">asynchronous communication</a>, so work stays aligned even when people are not in the same place or working at the same time.</p>
+<ul>
+<li><p><strong>What are the three streams?</strong></p>
+<ul>
+<li><p>The “Braindump” (on Notion)</p>
+<p>This is where ideas start. We use this Braindump to record all notes and discussions regarding future developments and improvements of the Luma Geospatial Engine. Nothing here is final and things are allowed to change or be discarded.</p></li>
+<li><p>The “Development Reference” (using Quarto)</p>
+<p>This is where ideas become decisions. Content here is structured and stable enough for developers to refer to. It provides shared context so contributors can understand past decisions, even if they were not part of the original discussion.</p></li>
+<li><p>The “Code Implementation” (Luma Geospatial Engine Python package)</p>
+<p>The Luma Geospatial Engine is the final implementation of the development, in the form of a Python-based package that powers the Luma platform.</p></li>
+</ul>
+<p>Both the Development Reference and Code Implementation are hosted on GitHub for version control.</p></li>
+</ul>
+<section id="steps-of-the-three-stream-approach" class="level3">
+<h3 class="anchored" data-anchor-id="steps-of-the-three-stream-approach">Steps of the Three-Stream Approach</h3>
+<ol type="1">
+<li><p>Start by writing your comments in the <strong>Braindump</strong> under the relevant section. Tag the person you want to discuss with so your input is visible and does not get missed.</p>
+<ul>
+<li>If someone disagrees with your comment, add the topic to the <strong>To-Settle</strong> list. Use the page to write down the key arguments so they can be discussed efficiently in a meeting. Once the disagreement is resolved, move the topic to <strong>Work in Progress</strong>.</li>
+<li>If there is no disagreement, you can add the topic directly to <strong>Work in Progress</strong>.</li>
+</ul></li>
+<li><p>For agreed development work, create a new branch in <strong>luma-dr</strong> and document the proposed changes there.</p></li>
+<li><p>Next, open a pull request in <strong>luma-dr</strong> from your new branch to the main branch. <strong>Pull requests are reviewed during regular pull request meetings, where changes are either accepted or rejected.</strong></p></li>
+<li><p>Once changes are merged into the main branch of <strong>luma-dr</strong>, contributors can begin implementing them in <strong>luma-stack</strong>. Implementation should always start from a new branch.</p></li>
+<li><p>Submit a pull request on <strong>luma-stack</strong> to propose your changes for review at the next pull request meeting. If needed, also submit a pull request on <strong>luma-dr</strong> to update the documentation describing the changes.</p></li>
+<li><p>During each pull request meeting, the team will:</p>
+<ul>
+<li>Review and accept pull requests in <strong>luma-stack</strong> that implement previously approved changes</li>
+<li>Update <strong>luma-dr</strong> based on approved pull requests</li>
+<li>Review new pull requests in <strong>luma-dr</strong> proposed for future updates</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For more reference on the workflow (including a case example), refer to <a href="https://icrafcifor.sharepoint.com/:p:/r/sites/EPISTEM/Shared%20Documents/EPISTEM%20Consortium/4%20Events/2025111721_BootcampEpistem/epistem_bootcamp_2026.pptx?d=w7c7fb473330a437e9835326eba440760&amp;csf=1&amp;web=1&amp;e=ZdhbnG">this</a> slide presented during the Bootcamp.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-braindump" class="level2">
+<h2 class="anchored" data-anchor-id="the-braindump">The “Braindump”</h2>
+<p>The Braindump serves as the central hub for refining ideas and discussions related to Luma’s development prior to their formal inclusion in the Development Reference. It contains organized pages that ensure alignment with the current Development Reference, along with sections dedicated to other discussion topics.</p>
+<ul>
+<li><p><strong>Structured pages for Luma Geospatial Engine development</strong></p>
+<ul>
+<li><p>The content of each page in this section reflects the latest version of the Development Reference (i.e., the <code>main</code> branch of luma-dr).</p></li>
+<li><p>Ideas and discussions can be provided by commenting on the related section of each page. <strong>Tag the relevant person in the comment to ensure the comment is read by others.</strong></p></li>
+<li><p>The comments will be resolved in two cases:</p>
+<ul>
+<li>No follow-up is needed after the discussion.</li>
+<li>The follow-up has been listed in the <strong>Work in Progress</strong> or <strong>To-Settle</strong> section.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Structured pages for Luma User Interface development</strong></p>
+<p>This section is a database dedicated to the implementation details of the Luma User Interface.</p></li>
+<li><p><strong>To-Settle</strong></p>
+<ul>
+<li>This section is dedicated to listing topics that arise from disagreements among multiple people in the comments on the <strong>Structured pages for Luma Geospatial Engine development</strong> and that require further discussion or a decision before updates are documented in the Development Reference.</li>
+<li>The disagreement should be briefly described inside the page.</li>
+<li>Choose an urgency level of the conflict to determine if the meeting should be scheduled as soon as possible.</li>
+<li>Once the conflict is settled, the issue can either be moved to be listed in the <strong>Work in Progress</strong> or dismissed.</li>
+</ul></li>
+<li><p><strong>Work in Progress</strong></p>
+<ul>
+<li>This section is dedicated for tracking ongoing tasks related to Luma Geospatial Engine updates.</li>
+<li>Each task goes through several stages of development according to the contribution workflow. The stage at which an issue is currently is noted in the <strong>Completion status</strong> column.</li>
+</ul></li>
+<li><p><strong>Unresolved issues from Pull Request approvals</strong></p>
+<p>This section records issues or feedback that emerged during the pull request review process and need additional work or clarification before approval.</p></li>
+<li><p><strong>Meeting Notes</strong></p>
+<p>A collection of notes, summaries, and key decisions from meetings related to Luma’s development activities.</p></li>
+<li><p><strong>Sketchbooks</strong></p>
+<p>A space for “sketching out” ideas or conceptual designs before formal documentation. This section is intentionally unstructured to encourage open exploration.</p></li>
+</ul>
+</section>
+<section id="version-control" class="level2">
+<h2 class="anchored" data-anchor-id="version-control">Version Control</h2>
+<p>Version control is a core component of the Luma ecosystem and is managed through GitHub, which serves as the central platform for tracking both Quarto based Development Reference and Luma Geospatial Engine code implementation. GitHub provides a transparent and traceable environment for managing changes to code and documentation over time. Contributors create a dedicated branch for each feature, fix, or documentation update. Once the work is complete, changes are submitted to the main branch through a pull request. Each pull-request is reviewed and approved before merging to ensure quality control and alignment between the development reference and the geospatial engine.</p>
+<section id="repositories" class="level3">
+<h3 class="anchored" data-anchor-id="repositories">Repositories</h3>
+<ol type="1">
+<li><p>There are two main repositories currently operating:</p>
+<ul>
+<li><a href="https://github.com/epistem-io/luma-stack">luma-stack</a>: This repository is used to host Luma Geospatial Engine Python package. To contribute to this repository, please refer to <code>README.md</code> in this repository for detailed instructions on setting up a developer environment and configuring your local machine.</li>
+<li><a href="https://github.com/epistem-io/luma-dr">luma-dr</a>: This repository hosts Luma Development Reference. Contributions follow this workflow:
+<ol type="1">
+<li>Clone the repository to your local machine.</li>
+<li>Create a new branch for your changes.</li>
+<li>Edit the relevant <code>.qmd</code> files to implement your updates.</li>
+<li>Document your modifications in the Braindump under the “Work in Progress” section.</li>
+<li>Test your changes by rendering the Quarto book locally to ensure correctness.</li>
+<li>Commit and push your changes to your branch.</li>
+<li>Submit a pull request for review. All changes must be merged via pull request.</li>
+<li>Proposed changes will be discussed, and once approved, merged into the main branch. Your feature branch will then be deleted.</li>
+</ol></li>
+</ul></li>
+<li><p>If a new repository is needed (e.g., for an experimental module, plugin, or related service), please consult with an Epistem admin before proceeding.</p></li>
+</ol>
+</section>
+<section id="branches" class="level3">
+<h3 class="anchored" data-anchor-id="branches">Branches</h3>
+<ol type="1">
+<li><p>Every repository should at least have one <code>main</code> branch. This branch represents the most up-to-date and stable version of the project.</p></li>
+<li><p>A <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule">branch protection</a> is targeted for the <code>main</code> branch. This means contributors cannot directly make changes to the <code>main</code> branch. Instead, all updates must go through a pull request (PR) process to ensure the code is reviewed and tested before merging. The branch protection rules are as the following:</p>
+<ul>
+<li>Require a pull-request before merging (please refer to the <strong>Pull-Requests (PRs)</strong> section in this page for more details)</li>
+<li>Require at least one approval before merging.</li>
+</ul></li>
+<li><p>Each contributor should create a personal working branch from the <code>main</code> branch when developing new features or fixes. Once the work is complete, open a pull request to propose merging those changes into the <code>main</code> branch, unless there are circumstances where new branch can be created from another feature branch if the work is closely related.</p></li>
+<li><p>Branch naming convention to specify the specific type of a contribution should be further discussed (e.g., <code>feature/</code>, <code>bugfix/</code>)</p></li>
+</ol>
+</section>
+<section id="pull-requests-prs" class="level3">
+<h3 class="anchored" data-anchor-id="pull-requests-prs">Pull-Requests (PRs)</h3>
+<ol type="1">
+<li><p>All contributions should be submitted through a pull request (PR) from your own branch. A PR is a formal request for your changes to be reviewed and merged into the <code>main</code> branch.</p></li>
+<li><p>Keep a PR focused on a specific topic. This specific topic should also correspond to a task in the <strong>Work in Progress</strong> list in Notion. To help identify the task, name the PR title accordingly with what is written in the <strong>Work in Progress</strong> task list.</p></li>
+<li><p><em>Only for <code>luma-stack</code> and <code>luma-dr</code> repository</em>: when an update in one repository depends on or affects the other, link the related PRs in their descriptions. For example, if a <code>luma-stack</code> update requires changes in <code>luma-dr</code>, include a link to the corresponding PR in each repository to maintain traceability.</p></li>
+<li><p>As required by the branch protection rules, every PR must receive at least one approval before merging. This approval should come from an Epistem admin. You may also request additional reviewers for feedback.</p></li>
+<li><p>Reviewers should check for correctness, clarity, performance, and proper documentation. Use GitHub’s review options:</p>
+<ul>
+<li>Comment: suggest improvements</li>
+<li>Request changes: block merge until issues are resolved</li>
+<li>Approve: accept the PR as ready to merge</li>
+</ul></li>
+<li><p>The PR title should reflect the main change made. This title will be used as the commit message when the PR is merged into the main branch.</p></li>
+</ol>
+</section>
+<section id="contributors-roles" class="level3">
+<h3 class="anchored" data-anchor-id="contributors-roles">Contributor’s Roles</h3>
+<ol type="1">
+<li><p>Only members of the Epistem consortium are authorized contributors to these repositories.</p></li>
+<li><p>There are three different roles set in the <a href="https://github.com/epistem-io">epistem-io</a> organization, each with different levels of access:</p>
+<ul>
+<li>Admin: has full control of repositories (e.g., create/delete repositories, manage access, merge pull requests).</li>
+<li>Manage: can review and approve contributions, manage issues, and organize repository settings.</li>
+<li>Write: can create branches, push code, and submit pull requests for review.</li>
+</ul>
+<p>Contributors should know their assigned role before making any changes to ensure proper permissions are in place.</p></li>
+</ol>
+</section>
+<section id="security-and-secrets" class="level3">
+<h3 class="anchored" data-anchor-id="security-and-secrets">Security and Secrets</h3>
+<p><strong>Never commit secrets</strong> such as passwords, access tokens, or API keys. Add <code>.gitignore</code> file to prevent private files from being accidentally uploaded.</p>
+</section>
+<section id="licensing" class="level3">
+<h3 class="anchored" data-anchor-id="licensing">Licensing</h3>
+<p>To be developed. A standardized licensing framework will be provided to ensure consistent open-source and internal usage across repositories.</p>
+</section>
+<section id="releases" class="level3">
+<h3 class="anchored" data-anchor-id="releases">Releases</h3>
+<p>To be developed. The release process defines how stable versions of Luma tools and documentation are packaged, tagged, and shared. Releases ensure that users and collaborators can always access a verified version of the software or documentation.</p>
+</section>
+</section>
+<section id="the-development-reference" class="level2">
+<h2 class="anchored" data-anchor-id="the-development-reference">The Development Reference</h2>
+<p>The development reference is dedicated as a platform for mainly two purposes:</p>
+<ol type="1">
+<li><strong>Formalized the decision made in the Braindump.</strong> All discussions’ results that were made in the Braindump are documented accordingly, so that all developments made for the Code Implementation are well-tracked.</li>
+<li><strong>Facilitate the development of Luma’s technical documentation for end-users.</strong> With the use of the development reference as a structured documentation of Luma’s development, this documentation can also be a starting point to create Luma’s technical documentation for end-users in the future, with reduced effort.</li>
+</ol>
+<section id="writing-guidelines-for-the-development-reference" class="level3">
+<h3 class="anchored" data-anchor-id="writing-guidelines-for-the-development-reference">Writing Guidelines for the Development Reference</h3>
+<ul>
+<li><p>The development reference includes several pages, each serving a different thematic purpose in Luma technology</p></li>
+<li><p>Each of the pages is written in the following structure:</p>
+<ol type="1">
+<li><strong>Title of the page</strong></li>
+<li><strong>Input</strong>: a list of input data needed for the related process in the related page. The inputs are divided into:
+<ul>
+<li>User’s Input: list of inputs provided by Luma’s users.</li>
+<li>Input from External Sources: list of inputs received from sources other than Luma’s user.</li>
+<li>Input from Other Modules: list of inputs from other modules in Luma.</li>
+</ul></li>
+<li><strong>Output</strong>: list of expected output from the process defined in the page.</li>
+<li><strong>Process</strong>: a detailed step-by-step the execution logic of the functionality described on the page. The process should be defined into the following sub-headings:
+<ul>
+<li><strong>Step</strong>: a step represents a distinct change in system state or responsibility. A new step must be introduced when:
+<ul>
+<li>ownership shifts (e.g.&nbsp;from user action to system execution, or between modules), or</li>
+<li>a new input set is consumed, or</li>
+<li>an intermediate output is produced that is required by subsequent logic.</li>
+</ul></li>
+<li><strong>Sub-step</strong>: a sub-step represents an atomic action required to complete a step. Sub-steps must not introduce new inputs or outputs beyond those defined for the parent step.
+<ul>
+<li><strong>Luma User Journey</strong>: the description of the processes that occur in the user interface. This part is equivalent to the “User Journey” in the Visio workflow diagram.
+<ol type="1">
+<li>An error notification should be written in the <code>callout-important</code> block type with the title “Error Handling Notification”.</li>
+<li>A success notification should be written in the <code>callout-note</code> block type with the title “Success Notification”.</li>
+</ol></li>
+<li><strong>Luma Geospatial Engine</strong>: the description of the processes that occur in the back-end part. This part is equivalent to the “System Response” in the Visio workflow diagram.
+<ol type="1">
+<li>The defined function of the related process in the sub-step should be written in the <code>callout-tip</code> block type with the title “Related Function”.</li>
+</ol></li>
+</ul></li>
+</ul></li>
+</ol></li>
+<li><p>Write the Development Reference using clear and easy-to-understand wording that can be understood by audiences with different levels of technical expertise. Avoid technical jargon where possible while still ensuring that all critical elements of the process are clearly and sufficiently described.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When writing descriptions of a process, make sure to include all the crucial steps that need to be taken in the related process.</p>
+</div>
+</div></li>
+</ul>
+</section>
+</section>
+<section id="python-method-writing-convention" class="level2">
+<h2 class="anchored" data-anchor-id="python-method-writing-convention">Python Method Writing Convention</h2>
+<p>To be developed</p>
 
 
 </section>
@@ -667,10 +919,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="About Luma">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About Luma</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./writing_guidelines.html" class="pagination-link" aria-label="Collaborative Development Guideline">
-        <span class="nav-page-text">Collaborative Development Guideline</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./testing_guidelines.html" class="pagination-link" aria-label="Testing Guideline for Developers">
+        <span class="nav-page-text">Testing Guideline for Developers</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
