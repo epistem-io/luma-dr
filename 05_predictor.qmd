@@ -1,109 +1,182 @@
-# Module 5: Improving Model Quality with Multi-Source Data {#module-5}
+# Predictor Generation {#sec-module-5}
 
 # Module Overview {.unnumbered}
 
-::: callout-caution
-This module is not available in Phase 1
-:::
+The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.
 
-This optional module enables users to refine the model based on feedback from Module 4. It supports the integration of additional covariates to enhance model accuracy and robustness. Users can incorporate additional covariates, including radar, spectral, and non-spectral types (For details please see @sec-manual-covariate). The updated configuration facilitates the generation of a higher-quality model compared to the previous iteration.
+The module outputs a comprehensive predictor stack that serves as input for LULC map generation in Module 6.
 
 # Input {.unnumbered}
 
-**User's Input**
-
-1.  User-selected covariate set
-
-**Automatic System Input**
-
-1.  Default covariates.
-2.  Radar-based covariates.
-3.  Spectral transformations covariates.
-4.  Non-spectral covariates.
-
-**Input from Other Modules**
-
-1.  Near-cloud-free satellite imagery.
-2.  LULC classification table.
+| Name of Input | Input Type | Details |
+|------------------------|------------------------|------------------------|
+| Spectral transformations indices | System’s input | Retrieve the data from the `spyndex` library |
+| Terrain-based metrics | System’s input |  |
+| Distance-based metrics | System’s input |  |
+| AOI | Input from Other Modules | Output from @sec-module-1 |
+| Near-cloud free satellite imagery | Input from Other Modules | Output from @sec-module-1 |
+| Sample data | Input from Other Modules | Output from @sec-module-3 |
 
 # Output {.unnumbered}
 
-1.  List of covariates and descriptive table.
-2.  Variables as a covariate stack.
-3.  Variables as extracted features.
-4.  Table/chart of variable importance/influence.
+Covariate stack used in the classification model (Module 6)
 
 # Process {.unnumbered}
 
-## Selection of Covariate {#sec-selection-of-covariate}
+## Selection of Predictors {#sec-selection-of-predictors}
 
-### Selection of Covariate
+**Luma User Journey**
 
-**Front-end:**
+This is part of User Journey 5.1: User Predictors Selection
 
-1.  The user selects a list of covariates according to the classification objectives and receives system recommendations.
-2.  If a Default Covariates is chosen, the user can either:
-    -   Accept the default covariates set to proceed with retraining the model, or
-    -   Modify the covariates list, which redirects to the covariate customization options.
-3.  If a Manual Covariates is chosen, the user selects the three covariates options with system guidance.
+1.  The system provide the list of predictors currently supported by Luma Geospatial Engine
 
-**Back-end:**
+2.  The user manually select the predictors by using check boxes
 
-1.  The system provides two selection modes:
-    -   System Default Covariates: Retrieves and displays a default set of covariates used in the classification model, including metadata (e.g., description, intended use).
-    -   Manual Covariate: Displays categorized options:
-        -   Radar-based covariates.
-        -   Spectral transformations.
-        -   Non-spectral covariates.
-2.  The system also provides recommendations for effective covariate use.
+**Luma Geospatial Engine**
 
-## System Default Covariates
+1.  The system presents a list of available predictor categories, which include:
 
-### System Default Covariates
+    -   Spectral transformation (indices)
 
-**Front-end:**
+    -   Terrain-based metrics
 
-1.  The user reviews and optionally adjusts the default covariate list.
+    -   Distance-based metrics
 
-**Back-end:**
+## Calculation of Predictors
 
-1.  The system displays the default covariates and allows user modifications.
-2.  Provides information on the trade-offs involved in adjusting covariate set.
+**Luma Geospatial Engine**
 
-## Manual Covariates {#sec-manual-covariate}
+1.  The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:
 
-### Manual Covariates
+    -   Terrain-based metrics
 
-**Front-end:**
+        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
 
-1.  The user reviews a detailed overview of selected covariates and can adjust them through customization options.
+        -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree (0-90)
 
-**Back-end:**
+        -   **Aspect**: Similar to slope, this data is derived from selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
-1.  The system summarizes the chosen covariates before returning to the workflow from [Module 4](@sec-module-2).
-2.  Detailed covariate categories include:
-    -   Radar-based covariates: Includes raw radar backscatter (Sentinel-1, PALSAR), temporal and seasonal composites, and derived features (ratios, texture, vegetation indices).
-    -   Spectral transformations that consists of four parts:
-        -   Built-up/Soil indices: OSAVI (Optimized Soil-Adjusted Vegetation Index), MSAVI (Modified Soil Adjusted Vegetation Index), NDBI (Normalized Difference Built-up Index), SAVI (Soil Adjusted Vegetation Index).
-        -   Vegetation indices: GBNDVI (Green-Blue Normalized Difference Vegetation Index), ARVI (Atmospherically Resistant Vegetation Index), CVI (Chlorophyll Vegetation Index), RVMI (Red-Edge Vegetation Moisture Index), GNDVI (Green Normalized Difference Vegetation Index), NDVI (Normalized Difference Vegetation Index), EVI (Enhanced Vegetation Index).
-        -   Water or water-related indices: AWEI (Automated Water Extraction Index), MNDWI (Modified Normalized Difference Water Index), NDMI (Normalized Difference Moisture Index), NDWI (Normalized Difference Water Index), MNDWI (Modified NDWI).
-        -   Burn index: NBR (Normalized Burn Ratio).
-    -   Non-spectral covariates: Includes terrain metrics (elevation, slope, aspect) and distance metrics (to roads, coastlines, and settlements).
-3.  The system highlights the trade-offs between covariate selection and model training efficiency.
+        ::: callout-tip
+        ## Related Functions
 
-## Model Evaluation and Optimization Feedback {#sec-model-evaluation-and-optimization-feedback}
+        `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
 
-### Model Evaluation and Optimization Feedback
+        `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
 
-**Front-end:**
+        `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
+        :::
 
-1.  The user evaluates model performance: “Improved” or “Not Improved”.
-    -   If Improved, the system outputs the LULC classification model with the optimized covariate set.
-    -   If Not Improved, the user reviews the optimized covariates and decides whether to apply them to generate the LULC classification model.
+    -   Distance-based metrics
 
-**Back-end:**
+        The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.
 
-1.  After adjustment, the system prompts the user to evaluate: *“Has model quality now improved?”* If No:
-    -   The system provides recommendations for covariate ranking analysis and reselection.
-    -   Covariate optimization is performed to identify the most influential variables.
-2.  Once finalized, the system proceeds with model retraining using the optimized covariate set.
+        ::: callout-tip
+        ## Related Functions
+
+        `predictor.distance_calculator.calculate_distance_metrics`: Core function to intialize the distance calculation logic for coastline, road, and settlement
+        :::
+
+        Currently, the system support distance calculation from the following source:
+
+        -   Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
+
+        -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
+
+        -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap data
+
+    -   Spectral transformation indices
+
+        The system retrieves various spectral indices from the `spyndex` library. The following indices have been adapted for Luma-GE from the library:
+
+        -   Vegetation-related indices:
+
+            -   NDVI (Normalized Difference Vegetation Index)
+
+            -   EVI (Enhanced Vegetation Index)
+
+            -   SAVI (Soil Adjusted Vegetation Index)
+
+            -   MSAVI (Modified Soil Adjusted Vegetation Index)
+
+            -   OSAVI (Optimized Soil Adjusted Vegetation Index)
+
+            -   ARVI (Atmospherically Resistant Vegetation Index)
+
+            -   GBNDVI (Green-Blue Normalized Difference Vegetation Index)
+
+            -   GNDVI (Green Normalized Difference Vegetation Index)
+
+        -   Water-related indices:
+
+            -   MNDWI (Modified Normalized Difference Water Index)
+
+            -   NDMI (Normalized Difference Moisture Index)
+
+            -   AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
+
+        -   Soil / built-up-related indices:
+
+            -   NDBI (Normalized Difference Build-Up Index)
+
+            -   DBSI (Dry Bareness Soil Index)
+
+            -   MBI (Modified Build-up Index)
+
+        ::: callout-tip
+        ## Related Functions
+
+        `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
+
+        `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
+
+        `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
+
+        `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
+
+        `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
+
+        `predictor.SpectralCalculator.get_calculation_summary`
+        :::
+
+2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `predictor.PredictorCalculation.validate_prerequisites:` Validate that required inputs are available for predictor computation. Required input are composite (`ee.Image`), AOI (`ee.FeatureCollection`) , and raw image collection (`ee.Image.Collection`)
+
+    `predictor.PredictorCalculation.compute_predictors` : Orchestrates predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
+
+    `predictor.PredictorCalculation.prepare_module6_summary:` Prepare summary metadata for module 6
+    :::
+
+## Predictors Result Visualization and Analysis
+
+**Luma User Journey**
+
+1.  The users can visualize the selected predictors, applying the custom color color palette
+
+2.  The system provides functionality to conduct correlation analysis between predictors.
+
+3.  The user inspect the correlation coefficient that have been visualize using heatmap and table
+
+**Luma Geospatial Engine**
+
+1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
+
+    -   Creates a random sampling across the AOI (default value is 5000 points)
+
+    -   Computes correlation analysis using GEE's core function
+
+2.  The correlation analysis is conducted across all predictors, including the original multispectral band
+
+    ::: callout-tip
+    ## Related Functions
+
+    `predictor.EECorrelationAnalysis.generate_random_sampling`: Generate random sample across the AOI. Use default value of 5000 sample
+
+    `predictor.EECorrelationAnalysis.compute_correlation`: Main function to compute Pearson correlation analysis based on the random samples generated. Return the panda data frame use for visualization.
+
+    `predictor.EECorrelationAnalysis.visualize`: Visualize the correlation analysis result using heatmap
+    :::
