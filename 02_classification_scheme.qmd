@@ -153,7 +153,9 @@ This is a part of **System Response 2.1.b: Manually define classification scheme
 
 1.  The user is prompted to select a default classification scheme. In the current development, only classification scheme from RESTORE+ is available.
 
-2.  The user is prompted to finalize the scheme by clicking a button.
+2.  The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.
+
+3.  The user is prompted to finalize the scheme by clicking a button.
 
     ::: callout-note
     ## Success Notification
@@ -173,6 +175,14 @@ This is a part of **Response System 2.1.c: Using default classification scheme**
     `classification_scheme.LULC_scheme_Manager.load_default_scheme()`: to load an existing classification scheme from a dataset.
 
     `classification_scheme.LULC_scheme_Manager.get_default_schemes()`: stores the RESTORE+ LULC class in a dictionary.
+    :::
+
+2.  If the user selects a subset of the default classes, the system stores the selection into a variable that will be used for the reclassification process in [Module 6](#sec-module-6).
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification_scheme.LULC_scheme_Manager.store_classes_of_interest()`: to store the user's class of interest as a variable that will be used for the reclassification process in Module 6.
     :::
 
 ## Saving and Downloading the LULC Classification Table {#sec-saving-the-lulc-classification-table}
