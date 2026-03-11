@@ -11,7 +11,7 @@ This module performs supervised Random Forest classification to generate a land 
 | Sample data split proportion | User's input | Optional, if not set then use default value |
 | Random Forest (RF) parameters | User's input | Optional, if not set then use default value |
 | Satellite imagery within the AOI | Input from other modules | Module 1 |
-| LULC classes | Input from other modules | Module 2 |
+| LULC classes | Input from other modules | Module 2, including the selection of the classes of interest if the user uses the default classification scheme. |
 | Sample data | Input from other modules | Module 3 |
 
 # Output {.unnumbered}
@@ -170,9 +170,19 @@ This is a part of **System Response 6.3: Testing model's accuracy**
 
 2.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
 
+3.  If the user selected a subset of classes of the default classes in Module 2, the map will only show the classes of the user's interest. The rest of the default classes that are not selected will be shown as "Others".
+
 **Luma Geospatial Engine**
 
-This sub-step does not involve any operations from Luma Geospatial Engine.
+1.  The system loads the user's class of interest stored from Module 2.
+
+2.  The system reclassifies the default classification scheme's map into a map that only shows the user's class of interest and an additional class labeled as "Others".
+
+    ::: callout-tip
+    ## Related Functions
+
+    `classification.Generate_LULC.reclassify_map_by_classes()`: reclassifies the default classification scheme final map to only show the user's class of interest and show the other classes as "Others".
+    :::
 
 ### Downloading the LULC classification map result
 
