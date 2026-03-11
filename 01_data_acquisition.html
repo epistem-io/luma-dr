@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-00ccf60c28c3bdf2d57f5131fbf16f11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -240,6 +240,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sec-selection-of-aoi" id="toc-sec-selection-of-aoi" class="nav-link" data-scroll-target="#sec-selection-of-aoi"><span class="header-section-number">1.1</span> Selection of AOI</a>
   <ul class="collapse">
   <li><a href="#sec-aoi-from-shapefile" id="toc-sec-aoi-from-shapefile" class="nav-link" data-scroll-target="#sec-aoi-from-shapefile"><span class="header-section-number">1.1.1</span> AOI from Shapefile</a></li>
+  <li><a href="#aoi-from-indonesia-administrative-boundaries" id="toc-aoi-from-indonesia-administrative-boundaries" class="nav-link" data-scroll-target="#aoi-from-indonesia-administrative-boundaries"><span class="header-section-number">1.1.2</span> AOI from Indonesia Administrative Boundaries</a></li>
   </ul></li>
   <li><a href="#sec-validation-of-shapefile-geometries" id="toc-sec-validation-of-shapefile-geometries" class="nav-link" data-scroll-target="#sec-validation-of-shapefile-geometries"><span class="header-section-number">1.2</span> Correction of Shapefile Geometries</a>
   <ul class="collapse">
@@ -370,6 +371,37 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p><strong>Luma Geospatial Engine</strong></p>
 <p>This sub-step does not involve any operations within the Luma Geospatial Engine.</p>
+</section>
+<section id="aoi-from-indonesia-administrative-boundaries" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="aoi-from-indonesia-administrative-boundaries"><span class="header-section-number">1.1.2</span> AOI from Indonesia Administrative Boundaries</h3>
+<p>In addition to user define upload the system supports the selection of AOI from Indonesia administrative boundaries at regency level.</p>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The user selects an AOI based on a drop down list of Indonesian regency administrative boundaries</p></li>
+<li><p>The system provides a preview of the selected boundary</p></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li>Load <code>ee.FeatureCollection</code> containing Indonesian administrative boundaries from Badan Informasi Geospasial. The data should be uploaded as GEE asset and the link for it must be provided and shared publicly</li>
+<li>The system extracts the regency name and provide complete list of the available regencies for the user</li>
+<li>The system convert the <code>ee.FeatureCollection</code> to <code>geodataframe</code> for visualization, while using the unconverted one as an AOI for the imagery search</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>input_utils.load_regency_asset:</code> Fetching GEE asset containing Indonesia administrative boundaries</p>
+<p><code>input_utils.get_regency_name</code>: Creating a list of regency name for the user</p>
+<p><code>input_utils.get_regency_geometry:</code> Get geometry for the selected regency</p>
+<p><code>input_utils.convert_gee_features_to_gdf:</code> convert <code>ee.FeatureCollection</code> to <code>geodataframe</code> for visualization in the system</p>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-validation-of-shapefile-geometries" class="level2" data-number="1.2">

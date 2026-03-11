@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-00ccf60c28c3bdf2d57f5131fbf16f11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -316,7 +316,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>LULC classes</td>
 <td>Input from other modules</td>
-<td>Module 2</td>
+<td>Module 2, including the selection of the classes of interest if the user uses the default classification scheme.</td>
 </tr>
 <tr class="odd">
 <td>Sample data</td>
@@ -539,9 +539,26 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li><p>The user can visualizes the LULC classification result on a canvas map along with the training data layer.</p></li>
 <li><p>The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in <a href="@sec-module-2">Module 2</a>.</p></li>
+<li><p>If the user selected a subset of classes of the default classes in Module 2, the map will only show the classes of the user’s interest. The rest of the default classes that are not selected will be shown as “Others”.</p></li>
 </ol>
 <p><strong>Luma Geospatial Engine</strong></p>
-<p>This sub-step does not involve any operations from Luma Geospatial Engine.</p>
+<ol type="1">
+<li><p>The system loads the user’s class of interest stored from Module 2.</p></li>
+<li><p>The system reclassifies the default classification scheme’s map into a map that only shows the user’s class of interest and an additional class labeled as “Others”.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>classification.Generate_LULC.reclassify_map_by_classes()</code>: reclassifies the default classification scheme final map to only show the user’s class of interest and show the other classes as “Others”.</p>
+</div>
+</div></li>
+</ol>
 </section>
 <section id="downloading-the-lulc-classification-map-result" class="level3" data-number="6.3.4">
 <h3 data-number="6.3.4" class="anchored" data-anchor-id="downloading-the-lulc-classification-map-result"><span class="header-section-number">6.3.4</span> Downloading the LULC classification map result</h3>
