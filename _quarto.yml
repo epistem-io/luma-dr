@@ -35,6 +35,8 @@ book:
         href: https://epistem.io/
       - icon: file-pdf
         href: files/visio_bootcamp.pdf
+      - icon: github
+        href: https://github.com/epistem-io/luma-stack
 bibliography: references.bib
 
 format:
