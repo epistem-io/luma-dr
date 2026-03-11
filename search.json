@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Luma Development Reference",
     "section": "",
-    "text": "About Luma\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut lorem vitae mauris hendrerit eleifend. Etiam consectetur porttitor tortor sit amet sodales. Sed ac tellus vulputate, tempus tellus sed, scelerisque magna. Aliquam lacus neque, interdum non mattis vestibulum, vulputate a leo. Curabitur velit elit, pulvinar ac volutpat quis, sodales sed elit. Nulla risus massa, gravida commodo egestas nec, gravida eget lacus. Proin tincidunt sodales laoreet. Sed volutpat, libero tincidunt rutrum faucibus, diam metus suscipit justo, sit amet rutrum tortor quam et neque.",
+    "text": "About Luma\nLand Use Mapping for All (Luma) is an online mapping platform that integrates open-source spatial data and cloud-based computing for generating land use and land cover (LULC) maps. Luma is designed to accommodate a wide range of users through its user-friendly interface and guided steps, enabling anyone to easily produce custom LULC maps tailored to their needs.\nThis work is part of the Evolving Participatory Information System for Nature-based Climate Solutions (Epistem) initiative, which aims to develop an open-source landscape monitoring technology that can address multiple thematic requirements of diverse actors and stakeholders of nature-based climate solutions.",
     "crumbs": [
       "About Luma"
     ]
