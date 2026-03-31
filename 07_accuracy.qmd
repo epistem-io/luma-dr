@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-This module performs a comprehensive thematic accuracy assessment of the land cover map using an independent ground reference data. The framework for this module are based on the publication, *Good Practices for Estimating Area and Assessing Accuracy of Land Change*, by [Olofsson et al 2014](https://doi.org/10.1016/j.rse.2014.02.015). This framework separates accuracy assessment into three major components, namely sampling design, response design, and analysis. The geospatial engine adapt the sampling design and analysis components. Since the response design consist of protocols and guideline in obtaining the ground reference data, this component are currently not implemented.
+This module performs a comprehensive thematic accuracy assessment of the land cover map using an independent ground reference data. The framework for this module are based on the publication, *Good Practices for Estimating Area and Assessing Accuracy of Land Change*, by [Olofsson et al 2014](https://doi.org/10.1016/j.rse.2014.02.015). This framework separates accuracy assessment into three major components, namely sampling design, response design, and analysis. The Luma-GE only adapt the sampling design and analysis components. Since the response design consist of protocols and guideline in obtaining the ground reference data, this component are currently not implemented.
 
 # Input {.unnumbered}
 
@@ -106,11 +106,11 @@ Sample size calculation for stratified random sample is calculated using the for
 ::: callout-tip
 ## Related Function
 
-`sample_size_calc.get_pixel_count_class:` calculate pixel count for each class using earth engine's reducer
+`sample_size_calculator.get_pixel_count_per_class:` calculate pixel count for each class using earth engine's reducer
 
-`sample_size_calc.validaete_input:` Input validation prior to main sample size calculation
+`sample_size_calculator.validaete_sample_size_inputs:` Input validation prior to main sample size calculation
 
-`sample_size_calc.calculate_strata_sample:` Main function that calculate sample size for each class
+`sample_size_calculator.calculate_strata_sample:` Main function that calculate sample size for each class
 :::
 
 **Sample Allocation**
@@ -120,9 +120,9 @@ The required sample for each class is allocated in the area of interest using `e
 ::: callout-tip
 ## Related Function
 
-`sample_size_calc.generate_stratified_samples:` Generate the reference samples based sample size calculation
+`sample_size_calculator.generate_stratified_samples:` Generate the reference samples based sample size calculation
 
-`sample_size_calc.export_samples_to_shp:` Export the generated samples
+`sample_size_calculator.export_samples_to_shp:` Export the generated samples
 :::
 
 ### Accuracy Computation Workflow
@@ -212,15 +212,15 @@ This is a part of **System Response 7.3: Thematic accuracy assessment**
     ::: callout-tip
     ## Related Functions
 
-    `accuracy.Thematic_Accuracy_Assessment.validate_inputs()`: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in `run_accuracy_assessment()`.
+    `accuracy.thematic_accuracy.validate_assessment_inputs()`: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in `run_accuracy_assessment()`.
 
-    `accuracy.Thematic_Accuracy_Assessment._extract_confusion_matrix_data()`: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an `ee.ConfusionMatrix` object. This function is used in `run_accuracy_assessment()`.
+    `accuracy.thematic_accuracy._extract_confusion_matrix_data()`: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an `ee.ConfusionMatrix` object. This function is used in `run_accuracy_assessment()`.
 
-    `accuracy.thematic_assessment.Thematic_Accuracy_Assessment._calculate_confidence_interval()`: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in `run_accuracy_assessment()`.
+    `accuracy.thematic_accuracy._calculate_confidence_interval()`: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in `run_accuracy_assessment()`.
 
-    `accuracy.Thematic_Accuracy_Assessment._calculate_f1_scores()`: Calculates the F1 score for each class using the producer's and user's accuracy values. This function is used in `run_accuracy_assessment()`.
+    `accuracy.thematic_accuracy._calculate_f1_scores()`: Calculates the F1 score for each class using the producer's and user's accuracy values. This function is used in `run_accuracy_assessment()`.
 
-    `accuracy.Thematic_Accuracy_Assessment.run_accuracy_assessment()`: Executes the full thematic accuracy workflow, including validation, sampling (`sampleRegions()`), metric extraction (`errorMatrix()`), confidence interval calculation, and compilation of final results.
+    `accuracy.thematic_accuracy.run_accuracy_assessment()`: Executes the full thematic accuracy workflow, including validation, sampling (`sampleRegions()`), metric extraction (`errorMatrix()`), confidence interval calculation, and compilation of final results.
     :::
 
 2.  Thematic Accuracy Metrics
@@ -282,9 +282,9 @@ This function provide reference data flagging for visualizing the spatial error 
 ::: callout-tip
 ## Related Function
 
-`accuracy.RefDataFlagging.flag_data()`: core function to perform correctness flagging to the classification map
+`accuracy.validation_error_flag.classify_validation_points()`: core function to perform correctness flagging to the classification map
 
-`accuracy.RefDataFlagging.generate_popup_html()`: create a pop up html for visualizing the error flag
+`accuracy.validation_error_flag.generate_popup_html()`: create a pop up html for visualizing the error flag
 :::
 
 ### Reviewing the thematic accuracy result
