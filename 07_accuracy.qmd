@@ -85,7 +85,7 @@ Sample size calculation for stratified random sample is calculated using the for
 
     Ui = expected accuracy for class
 
-2.   Calculate stratum weight: `Wi = Ni / N`
+2.  Calculate stratum weight: `Wi = Ni / N`
 
     Wi = weight of stratum i
 
@@ -212,16 +212,80 @@ This is a part of **System Response 7.3: Thematic accuracy assessment**
     ::: callout-tip
     ## Related Functions
 
-    `thematic_assessment.Thematic_Accuracy_Assessment.validate_inputs()`: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in `run_accuracy_assessment()`.
+    `accuracy.Thematic_Accuracy_Assessment.validate_inputs()`: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in `run_accuracy_assessment()`.
 
-    `thematic_assessment.Thematic_Accuracy_Assessment._extract_confusion_matrix_data()`: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an `ee.ConfusionMatrix` object. This function is used in `run_accuracy_assessment()`.
+    `accuracy.Thematic_Accuracy_Assessment._extract_confusion_matrix_data()`: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an `ee.ConfusionMatrix` object. This function is used in `run_accuracy_assessment()`.
 
-    `thematic_assessment.Thematic_Accuracy_Assessment._calculate_confidence_interval()`: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in `run_accuracy_assessment()`.
+    `accuracy.thematic_assessment.Thematic_Accuracy_Assessment._calculate_confidence_interval()`: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in `run_accuracy_assessment()`.
 
-    `thematic_assessment.Thematic_Accuracy_Assessment._calculate_f1_scores()`: Calculates the F1 score for each class using the producer's and user's accuracy values. This function is used in `run_accuracy_assessment()`.
+    `accuracy.Thematic_Accuracy_Assessment._calculate_f1_scores()`: Calculates the F1 score for each class using the producer's and user's accuracy values. This function is used in `run_accuracy_assessment()`.
 
-    `thematic_assessment.Thematic_Accuracy_Assessment.run_accuracy_assessment()`: Executes the full thematic accuracy workflow, including validation, sampling (`sampleRegions()`), metric extraction (`errorMatrix()`), confidence interval calculation, and compilation of final results.
+    `accuracy.Thematic_Accuracy_Assessment.run_accuracy_assessment()`: Executes the full thematic accuracy workflow, including validation, sampling (`sampleRegions()`), metric extraction (`errorMatrix()`), confidence interval calculation, and compilation of final results.
     :::
+
+2.  Thematic Accuracy Metrics
+
+    Several accuracy metrics is calculated to provide comprehensive report of the map's thematic quality.
+
+    -   **Overall Accuracy**
+
+        Overall Accuracy (OA): Sum of the major diagonal (correctly classified pixels) divided by the total pixels in the entire confusion matrix
+
+        `OA = Σ(n_ii) / N`
+
+    -   **Kappa Coefficient**
+
+        Kappa coefficient is statistical test generated from the error matrix. Kappa coefficient show how well the classification performed as compared to just randomly assigning values. Kappa value range from -1 to 1, in which the value of 0 indicate that the classification is no better than a random classification. The negative value indicate that the classification is worse than random classification. The value closer to 1 indicate that the classification is better than random classification.
+
+        `κ = (Po - Pe) / (1 - Pe) Po = Σ(n_ii) / N Pe = Σ(n_i+ × n_+i) / N²`
+
+        Where:
+
+        Po = Observed Aggreement (OA)
+
+        Pe = Expected agreement by chance
+
+    -   **Producers's Accuracy (Recall/Sensitivity)**
+
+        One of the class level accuracy metric, which answer the question, *"What fraction of actual class was correctly mapped?”*
+
+        `PA_i = n_ii / n_i+`
+
+        Where:
+
+        `n_ii` = correctly classified samples for class i `n_i+` = total reference samples for class i (row sum)
+
+    -   **User's Accuracy (Precision)**
+
+        One of the class level error metric, which answer the question *"What fraction of predicted class i is actually class i?”*
+
+        `UA_i = n_ii / n_+i`
+
+        Where:
+
+        `n_ii` = correctly classified samples for class i `n_+i` = total predicted samples for class i (column sum)
+
+### Spatial Distribution of Error
+
+**Luma Geospatial Engine**
+
+This is part of System Response 7.3: Thematic accuracy assessment
+
+This function provide reference data flagging for visualizing the spatial error distribution, improving the error analysis by tagging each point with whether the classifier got it right or wrong. Currently, this function only works if the reference data unit is point (single pixel). If the reference data consist of polygons, this function will not work.
+
+1.  The system conduct checks if reference data geodataframe is available.
+
+2.  Add actual and predicted class to the geodataframe as key point in determining correctness of the map
+
+3.  Generate a pop-up html with comprehensive information regarding the status of the corresponding reference sites
+
+::: callout-tip
+## Related Function
+
+`accuracy.RefDataFlagging.flag_data()`: core function to perform correctness flagging to the classification map
+
+`accuracy.RefDataFlagging.generate_popup_html()`: create a pop up html for visualizing the error flag
+:::
 
 ### Reviewing the thematic accuracy result
 
@@ -234,19 +298,20 @@ This is a part of **User Journey 7.4: Preview thematic accuracy result**
     -   **Overall Accuracy (OA)**: Percentage of correctly classified validation samples
     -   **Kappa Coefficient**: Agreement beyond chance, accounting for class distribution
     -   **Confidence interval at 95%**: The lower and upper bounds that describe the uncertainty range of the overall accuracy estimate at the 95% confidence level
-    -   **Validation map number**: The total number of validation samples used in the thematic accuracy assessment
+    -   **Reference Data**: The total number of validation samples used in the thematic accuracy assessment
 
 2.  The system displays the accuracy metrics result on class-level:
 
     -   **Producer's Accuracy**: Measure of classification completeness (1 - omission error)
     -   **User's Accuracy**: Measure of classification reliability (1 - commission error)
     -   **F1 score**: Summarizes Producer's and User's Accuracy metrics
+    -   The user can inspect where the miss-classification happens using the spatial distribution of error map
 
-3.  The system displays the confusion matrix.
+3.  The system displays the confusion matrix using heatmap visualization
 
 4.  The user is offered the option to download the overall accuracy metrics result summary or the class-level accuracy result in a `.csv` format.
 
-5.  The user is prompted to return to [Module 6](@sec-module-6) to improve the model classification quality.
+5.  The user is provided with several option to improve the map quality or repeating the accuracy assessment. They can return to Module 6 to change classification parameters, return to Module 5 to add predictors, return to Module 3 to add more training data, and return to Module 2 to change their classification scheme. Each options is arrange according to easiest modification (module 6) to the hardest (module 2).
 
 **Luma Geospatial Engine**
 
