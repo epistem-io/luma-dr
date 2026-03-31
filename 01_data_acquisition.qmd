@@ -241,6 +241,8 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ## Related Functions
 
     `data_acquisition.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
+
+    `data_acqusition.parse_date_input():` Parse date input to YYYY-MM-DD format. Accepts either a year (int or 4-digit string) or a full date string. For year inputs, returns Jan 1 for start dates or Dec 31 for end dates.
     :::
 
     -   The system performs cloud masking using the quality assurance band (QA_PIXEL) QA_PIXEL band that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
@@ -325,11 +327,23 @@ The final image (single layer) which will be presented to the user is created us
 
 This is a part of **User Journey 1.3: Download Satellite Imagery**
 
-1.  The system visualize the satellite imagery on a canvas map in bands NIR (near-Infrared), RED, and GREEN. The map is centralized on the AOI.
+1.  The system visualize the satellite imagery on a canvas map using true color composite (RED, GREEN, BLUE bands) as default visualization. The map is centralized on the AOI.
 
-2.  The user can download the satellite imagery through two options:
+2.  The user is able to change the imagery composite using several commonly used composites or manually define their own band composite. The commonly used composites used in Luma-GE are:
 
-    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB. Direct download settings are defined from Streamlit.
+    1.  True Color Composites (RED, GREEN, BLUE)
+
+    2.  False Color Infrared Composites (NIR, RED, GREEN)
+
+    3.  Short-wave Infrared Composites (SWIR2, NIR, RED)
+
+    4.  Land/Water (NIR, SWIR1, RED)
+
+3.  The user can also change visualization parameters to adjust the imagery brightness and contrast
+
+4.  The user can download the satellite imagery through two options:
+
+    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB.
 
     ::: callout-note
     ## Success Notification
@@ -357,7 +371,7 @@ This is a part of **User Journey 1.3: Download Satellite Imagery**
     The system provides an error notification if the system fails to export the image to Google Cloud Storage.
     :::
 
-3.  The user is given the option to continue to [Module 2](@sec-module-2)
+5.  The user is given the option to continue to [Module 2](@sec-module-2)
 
     ::: callout-important
     ## Error Handling Notification
@@ -375,6 +389,12 @@ This is a part of **System Response 1.3: Download Satellite Imagery and Continue
     ## Related Functions
 
     `data_acquisition.Reflactance_Stats.get_collection_statistics():` to get comprehensive statistics about the gathered image collection.
+
+    `data_acquisition.visualization_params.get_combination_names()`
+
+    `data_acquisition.visualization_params.get_vis_params():`
+
+    `data_acquisition.visualization_params.build_custom_combination()`
     :::
 
 2.  For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.
