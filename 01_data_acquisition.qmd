@@ -221,7 +221,9 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-tip
     ## Related Functions
 
-    `data_acquisition.Reflectance_Data.OPTICAL_DATASETS` defines the properties of Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) to be fetched for optical data processing.
+    `data_acquisition.Reflectance_Data.OPTICAL_DATASETS` defines the properties of Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) to be fetched for optical data processing. In this list, the metadata for reporting the data retrieval is also define. More satellite sensor can be define here
+
+    `data_acquisition.Reflectance_Data.THERMAL_DATASETS` Define the properties of Landsat Top-of-Atmosphere (TOA) thermal bands. Since some landsat mission have different band names designation, the thermal band is refer in the list
     :::
 
     The system currently supports Landsat 1-3 RAW collection and and Landsat 4-9 surface reflectance (SR) collection. Additionally, Landsat 4 - 9 Top-of-Atmosphere (TOA) is used for retrieving thermal band as additional input band for the classification. This consideration stems from Landsat SR collection thermal band quality which often resulted in no data and prone to over-correction in high contrast land cover feature. Landsat mission availability is as follows:
@@ -274,7 +276,9 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-tip
     ## Related Functions
 
-    `data_acquisition.Reflactance_Data.get_thermal_bands():` to retrieve and the Landsat image collection based on the input parameters.
+    `data_acquisition.Reflectance_Data.has_thermal_capability():` Function to check if the landsat mission selected contain thermal bands
+
+    `data_acquisition.Reflactance_Data.get_thermal_bands():` to retrieve thermal band from landsat collection 2 TOA data
     :::
 
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
