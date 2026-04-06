@@ -50,3 +50,69 @@ Prior to export any earth engine image, the user must define several parameters 
 2.   Extract the geometry from the selected AOI, as prerequisites for export
 
 3.  Validate scale and CRS and raise a helpful error if invalid scale or CRS is detected
+
+::: callout-tip
+## Related Function
+
+`helper.EE_Export_Manager.santize_export_name()`: Standardize user input file name according to the system need. Replace invalid characters for GCS, Drive, and local file system
+
+`helper.EE_Export_Manager.extract_geometry()`: Extract the geometry from `ee.featureCollection`(AOI) for export purpose
+
+`helper.EE_Export_Manager.validate_scale()`: Validate user input pixel size value, design to avoid negative value what might cause the system to break. Default value use 30 m
+
+`helper.EE_Export_Manager.validate_crs()` : Perform semantic validation for user input CRS code. The CRS content itself is not validated. Default values is WGS 1984 (EPSG:4326)
+
+`helper.EE_Export_Manager.validate_image()` : Validate if the object pass to export manager is an `ee.image`
+
+`helper.EE_Export_Manager.validate_export_params()` : validate the entire export parameters, raise helpful errors if detected
+:::
+
+### Export Process
+
+#### Direct Download
+
+Luma Geospatial Engine
+
+1.  The direct download function in Luma-GE used Earth Engine’s ee.Image.getDownloadURL function, which generate a link for small chunks of image data in GeoTIFF or NumPy format. Maximum request size is 32 MB, maximum grid dimension is 10000.
+
+2.  The parameters used for the export is passed from user input
+
+::: callout-tip
+## Related Function
+
+`helper.EE_Export_Manager._export_direct_download` : Generate a data download link for direct download option
+
+`helper.EE_Export_Manager.export_image` : Function to initialize earth engine export with input parameters validation while supporting several export option
+:::
+
+#### Google Cloud Storage Export
+
+*To be developed*
+
+#### Google Drive Export
+
+*To be developed*
+
+### Export Task Monitoring
+
+**Luma User Journey**
+
+1.   The user can monitor the status of their export directly in Luma
+
+2.   If there’s no update within 1 minute, they can refresh the task monitor to acquired the latest update of current task status
+
+3.   The user receive feedback regarding the status of the export task (in progress, complete, failed, etc)
+
+**Luma Geospatial Engine**
+
+::: callout-tip
+## Related Function
+
+`helper.EE_Export_Manager.get_task_status():` Return task status using cache to reduce API calls
+
+`helper.EE_Export_Manager.get_active_task():` Return activate task information, especially the “ready” and “running” state
+
+`helper.EE_Export_Manager.remove_task():` Remove task from local tracking without affecting the task in earth engine task monitor
+
+`helper.EE_Export_Manager.remove_completed_task():` Remove all completed task for future monitoring. The removed task include all of the terminal states (complete, failed, or canceled export task)
+:::
