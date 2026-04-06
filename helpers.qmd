@@ -1,1 +1,52 @@
-# Helpers {.unnumbered}
+# Helpers {#sec-helpers}
+
+# Overview
+
+The helper module is design to handle features or operations that will be utilized by several modules. Currently, the module handle data output specially raster based data. This operations is utilized by module 1, 5, and 6. Furthermore, there are several options for data output namely, direct download, google drive download, and cloud storage export. The complex export options are wrapped by helpers module for ease integration with front end code
+
+# Input {.unnumbered}
+
+| Name of Input | Input Type | Details |
+|--------------------------------|--------------------|--------------------|
+| Earth Engine image (ee.Image) | Module output | magery composite (module 1), predictors (module 5), and classification image (module 6) |
+| Export parameters | User's input | File name, destination, projection, and scale (pixel size) |
+
+# Output {.unnumbered}
+
+Raster based data (GeoTiff)
+
+# Process
+
+## Earth Engine Export Utilities
+
+### Export Parameters
+
+Prior to export any earth engine image, the user must define several parameters required for export
+
+**Luma User Journey**
+
+1.  The user select which export option they are going to use
+
+2.  The user define the required parameters for export. These parameters are as follows:
+
+    1.  File name (default file name is provided according to each module output)
+
+    2.  Spatial resolution (default to 30 m, since Landsat mission is the only one supported)
+
+    3.   Coordinate Reference System (CRS). Use WGS 1984 (EPSG:4326) as the default value. If the user wish to use different CRS, they must specified the EPSG code (i.e *'EPSG:4326', 'ESRI:54009'*, or *'SR-ORG:6864’*)
+
+    4.  For module 5, the user select which predictors to be exported. The predictor can be selected one by one, stacked of predictors, or by category
+
+    ::: callout-caution
+    ## Feature Note
+
+    Current version of Luma GE only support direct download, which limits the data size to 32 MB. Google Cloud Storage (GCS) and google drive download are not supported in this phase.
+    :::
+
+**Luma Geospatial Engine**
+
+1.   The system creates a predefined default names according to the module and dataset exported.
+
+2.   Extract the geometry from the selected AOI, as prerequisites for export
+
+3.  Validate scale and CRS and raise a helpful error if invalid scale or CRS is detected
