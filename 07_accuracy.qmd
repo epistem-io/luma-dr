@@ -15,7 +15,8 @@ This module performs a comprehensive thematic accuracy assessment of the land co
 
 -   Confusion matrix.
 -   Thematic accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
--   Reference data sites, if requested
+-   Reference data sites (optional, for users who do not have reference data, the system will generate reference data sites for them to label outside Luma-GE).
+-   Spatial distribution of error
 
 # Process {.unnumbered}
 
@@ -43,7 +44,7 @@ This is a part of **System Response 7.1: Verification data**
 
 ### Selecting The Workflow
 
-Two workflow are available for module 7. The first workflow is design for the user who did not have reference data. The second workflow is for the user who already have a reference data.
+Two workflow are available for Module 7. The first workflow is design for the user who did not have reference data. The second workflow is for the user who already have a reference data.
 
 **Luma User Journey**
 
@@ -108,7 +109,7 @@ Sample size calculation for stratified random sample is calculated using the for
 
 `sample_size_calculator.get_pixel_count_per_class:` calculate pixel count for each class using earth engine's reducer
 
-`sample_size_calculator.validaete_sample_size_inputs:` Input validation prior to main sample size calculation
+`sample_size_calculator.validate_sample_size_inputs:` Input validation prior to main sample size calculation
 
 `sample_size_calculator.calculate_strata_sample:` Main function that calculate sample size for each class
 :::
@@ -129,7 +130,7 @@ The required sample for each class is allocated in the area of interest using `e
 
 **Luma User Journey**
 
-This is a part of **User Jorney 7.2 Upload data**
+This is a part of **User Journey 7.2 Upload data**
 
 1.  The user is prompted to upload the validation map in a `.zip` file. The user is reminded that the validation map should have the same ID class as the one used for the classification.
 
@@ -305,7 +306,7 @@ This is a part of **User Journey 7.4: Preview thematic accuracy result**
     -   **Producer's Accuracy**: Measure of classification completeness (1 - omission error)
     -   **User's Accuracy**: Measure of classification reliability (1 - commission error)
     -   **F1 score**: Summarizes Producer's and User's Accuracy metrics
-    -   The user can inspect where the miss-classification happens using the spatial distribution of error map
+    -   The user can inspect where the misclassification happens using the spatial distribution of error map
 
 3.  The system displays the confusion matrix using heatmap visualization
 
