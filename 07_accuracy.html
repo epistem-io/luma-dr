@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>7&nbsp; Thematic Accuracy Assessment – Luma Development Reference</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -34,15 +37,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="./06_classification.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-00ccf60c28c3bdf2d57f5131fbf16f11.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-36bf55b16c7cb4b1420f41495cb5446a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -244,9 +246,12 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#sec-thematic-accuracy-assessment" id="toc-sec-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#sec-thematic-accuracy-assessment"><span class="header-section-number">7.2</span> Thematic Accuracy Assessment</a>
   <ul class="collapse">
-  <li><a href="#uploading-the-validation-map" id="toc-uploading-the-validation-map" class="nav-link" data-scroll-target="#uploading-the-validation-map"><span class="header-section-number">7.2.1</span> Uploading the Validation Map</a></li>
-  <li><a href="#starting-the-thematic-accuracy-assessment" id="toc-starting-the-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.2</span> Starting the thematic accuracy assessment</a></li>
-  <li><a href="#reviewing-the-thematic-accuracy-result" id="toc-reviewing-the-thematic-accuracy-result" class="nav-link" data-scroll-target="#reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.3</span> Reviewing the thematic accuracy result</a></li>
+  <li><a href="#selecting-the-workflow" id="toc-selecting-the-workflow" class="nav-link" data-scroll-target="#selecting-the-workflow"><span class="header-section-number">7.2.1</span> Selecting The Workflow</a></li>
+  <li><a href="#generate-reference-sample-workflow" id="toc-generate-reference-sample-workflow" class="nav-link" data-scroll-target="#generate-reference-sample-workflow"><span class="header-section-number">7.2.2</span> Generate Reference Sample Workflow</a></li>
+  <li><a href="#accuracy-computation-workflow" id="toc-accuracy-computation-workflow" class="nav-link" data-scroll-target="#accuracy-computation-workflow"><span class="header-section-number">7.2.3</span> Accuracy Computation Workflow</a></li>
+  <li><a href="#starting-the-thematic-accuracy-assessment" id="toc-starting-the-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.4</span> Starting the thematic accuracy assessment</a></li>
+  <li><a href="#spatial-distribution-of-error" id="toc-spatial-distribution-of-error" class="nav-link" data-scroll-target="#spatial-distribution-of-error"><span class="header-section-number">7.2.5</span> Spatial Distribution of Error</a></li>
+  <li><a href="#reviewing-the-thematic-accuracy-result" id="toc-reviewing-the-thematic-accuracy-result" class="nav-link" data-scroll-target="#reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.6</span> Reviewing the thematic accuracy result</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -276,7 +281,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="module-overview" class="level1 unnumbered">
 <h1 class="unnumbered">Module Overview</h1>
-<p>This module performs a comprehensive thematic accuracy assessment of the land cover map using ground reference data. It includes data verification, upload/validation of test data, accuracy matrix calculation (OA, Kappa, PA, UA), confidence intervals, F1-scores, and formatted summary reports for display.</p>
+<p>This module performs a comprehensive thematic accuracy assessment of the land cover map using an independent ground reference data. The framework for this module are based on the publication, <em>Good Practices for Estimating Area and Assessing Accuracy of Land Change</em>, by <a href="https://doi.org/10.1016/j.rse.2014.02.015">Olofsson et al 2014</a>. This framework separates accuracy assessment into three major components, namely sampling design, response design, and analysis. The Luma-GE only adapt the sampling design and analysis components. Since the response design consist of protocols and guideline in obtaining the ground reference data, this component are currently not implemented.</p>
 </section>
 <section id="input" class="level1 unnumbered">
 <h1 class="unnumbered">Input</h1>
@@ -312,6 +317,8 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Confusion matrix.</li>
 <li>Thematic accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer’s Accuracy (PA), User’s Accuracy (UA).</li>
+<li>Reference data sites (optional, for users who do not have reference data, the system will generate reference data sites for them to label outside Luma-GE).</li>
+<li>Spatial distribution of error</li>
 </ul>
 </section>
 <section id="process" class="level1 unnumbered">
@@ -346,10 +353,84 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sec-thematic-accuracy-assessment" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-thematic-accuracy-assessment"><span class="header-section-number">7.2</span> Thematic Accuracy Assessment</h2>
-<section id="uploading-the-validation-map" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="uploading-the-validation-map"><span class="header-section-number">7.2.1</span> Uploading the Validation Map</h3>
+<section id="selecting-the-workflow" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="selecting-the-workflow"><span class="header-section-number">7.2.1</span> Selecting The Workflow</h3>
+<p>Two workflow are available for Module 7. The first workflow is design for the user who did not have reference data. The second workflow is for the user who already have a reference data.</p>
 <p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>User Jorney 7.2 Upload data</strong></p>
+<ol type="1">
+<li><p>If the user did not have reference samples, the user select the “<em>generate reference sample</em>” workflow.</p>
+<ol type="1">
+<li><p>The user specified desire standard error (margin of error) of the map. The range of valid value is 0.1% - 10%, with smaller value resulting in larger sample requirement</p></li>
+<li><p>The user determine the minimum expected accuracy for each class. This option is set to optional, with the default value of 85% for all class</p></li>
+<li><p>User are able to generate the sample and check the allocation as well as the spatial distribution in the map canvas.</p></li>
+<li><p>The user download the reference data and proceed to labeled the data using visual interpretation of higher resolution imagery, field survey, or combination of both. This process are conducted outside Luma-GE</p></li>
+</ol></li>
+<li><p>If the user already have reference sample, they choose the “compute accuracy workflow”</p>
+<ol type="1">
+<li><p>The user prompted to upload their reference samples. Currently, the Luma-GE only support shapefile data</p></li>
+<li><p>The user select column header that correspond to class ID and class name.</p></li>
+<li><p>The user perform the accuracy assessment and decide if their classification is meet their accuracy needs</p></li>
+</ol></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>For each workflow, the geospatial engine perform the following operation</p>
+</section>
+<section id="generate-reference-sample-workflow" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="generate-reference-sample-workflow"><span class="header-section-number">7.2.2</span> Generate Reference Sample Workflow</h3>
+<p>This workflow consist of two steps, steps, namely sample size calculation and sample allocation. The result of each steps is how many minimum sample required for each class and the location for the samples.</p>
+<p><strong>Sample Size Calculation</strong></p>
+<p>Sample size calculation for stratified random sample is calculated using the formula provided by <a href="https://scholar.google.com/scholar_lookup?title=Sampling%20techniques&amp;publication_year=1977&amp;author=W.G.%20Cochran">Cochran (1977, Eq. (5.25))</a>. The samples are proportionally allocated for each strata (class), resulting in balance sample allocation. The key steps for sample size calculation is as follows:</p>
+<ol type="1">
+<li><p>Calculate stratum standard deviation: <code>Si = √(Ui × (1 - Ui))</code></p>
+<p>Where:</p>
+<p>Si = standard deviation for stratum i</p>
+<p>Ui = expected accuracy for class</p></li>
+<li><p>Calculate stratum weight: <code>Wi = Ni / N</code></p>
+<p>Wi = weight of stratum i</p>
+<p>Ni = Number of pixels in class i</p>
+<p>N = Total number of pixels</p></li>
+<li><p>Calculate total sample size: <code>n = (Σ(Wi × Si) / SE)²</code></p>
+<p>n = Total required samples</p>
+<p>SE = desire standard error</p></li>
+<li><p>Allocate sample per stratum <code>ni = n × (Wi × Si) / Σ(Wi × Si)</code></p>
+<p>ni = Number of samples for stratum i</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_size_calculator.get_pixel_count_per_class:</code> calculate pixel count for each class using earth engine’s reducer</p>
+<p><code>sample_size_calculator.validate_sample_size_inputs:</code> Input validation prior to main sample size calculation</p>
+<p><code>sample_size_calculator.calculate_strata_sample:</code> Main function that calculate sample size for each class</p>
+</div>
+</div>
+<p><strong>Sample Allocation</strong></p>
+<p>The required sample for each class is allocated in the area of interest using <code>ee.Image.stratifiedSample()</code> . The sample size are based on the sample size calculation result. The feature collection from this process only contain class ID for each land cover class. Class name will be added in the future update. The user are able to download the samples, therefore they can labeled the sample outside Luma GE. Current function only support shapefiles.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sample_size_calculator.generate_stratified_samples:</code> Generate the reference samples based sample size calculation</p>
+<p><code>sample_size_calculator.export_samples_to_shp:</code> Export the generated samples</p>
+</div>
+</div>
+</section>
+<section id="accuracy-computation-workflow" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="accuracy-computation-workflow"><span class="header-section-number">7.2.3</span> Accuracy Computation Workflow</h3>
+<p><strong>Luma User Journey</strong></p>
+<p>This is a part of <strong>User Journey 7.2 Upload data</strong></p>
 <ol type="1">
 <li><p>The user is prompted to upload the validation map in a <code>.zip</code> file. The user is reminded that the validation map should have the same ID class as the one used for the classification.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -452,8 +533,8 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 </ol>
 </section>
-<section id="starting-the-thematic-accuracy-assessment" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.2</span> Starting the thematic accuracy assessment</h3>
+<section id="starting-the-thematic-accuracy-assessment" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.4</span> Starting the thematic accuracy assessment</h3>
 <p><strong>Luma User Journey</strong></p>
 <p>This is a part of <strong>User Journey 7.3: Thematic accuracy assessment</strong></p>
 <ol type="1">
@@ -488,17 +569,65 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>thematic_assessment.Thematic_Accuracy_Assessment.validate_inputs()</code>: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in <code>run_accuracy_assessment()</code>.</p>
-<p><code>thematic_assessment.Thematic_Accuracy_Assessment._extract_confusion_matrix_data()</code>: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an <code>ee.ConfusionMatrix</code> object. This function is used in <code>run_accuracy_assessment()</code>.</p>
-<p><code>thematic_assessment.Thematic_Accuracy_Assessment._calculate_confidence_interval()</code>: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in <code>run_accuracy_assessment()</code>.</p>
-<p><code>thematic_assessment.Thematic_Accuracy_Assessment._calculate_f1_scores()</code>: Calculates the F1 score for each class using the producer’s and user’s accuracy values. This function is used in <code>run_accuracy_assessment()</code>.</p>
-<p><code>thematic_assessment.Thematic_Accuracy_Assessment.run_accuracy_assessment()</code>: Executes the full thematic accuracy workflow, including validation, sampling (<code>sampleRegions()</code>), metric extraction (<code>errorMatrix()</code>), confidence interval calculation, and compilation of final results.</p>
+<p><code>accuracy.thematic_accuracy.validate_assessment_inputs()</code>: checks whether the classified LULC map, validation map, LULC ID class field, and pixel size parameter meet the required conditions before the assessment runs. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>accuracy.thematic_accuracy._extract_confusion_matrix_data()</code>: extracts overall accuracy, kappa, per-class accuracies, and the confusion matrix array from an <code>ee.ConfusionMatrix</code> object. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>accuracy.thematic_accuracy._calculate_confidence_interval()</code>: Computes the confidence interval for overall accuracy using a normal approximation based on the number of correct and total samples. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>accuracy.thematic_accuracy._calculate_f1_scores()</code>: Calculates the F1 score for each class using the producer’s and user’s accuracy values. This function is used in <code>run_accuracy_assessment()</code>.</p>
+<p><code>accuracy.thematic_accuracy.run_accuracy_assessment()</code>: Executes the full thematic accuracy workflow, including validation, sampling (<code>sampleRegions()</code>), metric extraction (<code>errorMatrix()</code>), confidence interval calculation, and compilation of final results.</p>
 </div>
 </div></li>
+<li><p>Thematic Accuracy Metrics</p>
+<p>Several accuracy metrics is calculated to provide comprehensive report of the map’s thematic quality.</p>
+<ul>
+<li><p><strong>Overall Accuracy</strong></p>
+<p>Overall Accuracy (OA): Sum of the major diagonal (correctly classified pixels) divided by the total pixels in the entire confusion matrix</p>
+<p><code>OA = Σ(n_ii) / N</code></p></li>
+<li><p><strong>Kappa Coefficient</strong></p>
+<p>Kappa coefficient is statistical test generated from the error matrix. Kappa coefficient show how well the classification performed as compared to just randomly assigning values. Kappa value range from -1 to 1, in which the value of 0 indicate that the classification is no better than a random classification. The negative value indicate that the classification is worse than random classification. The value closer to 1 indicate that the classification is better than random classification.</p>
+<p><code>κ = (Po - Pe) / (1 - Pe) Po = Σ(n_ii) / N Pe = Σ(n_i+ × n_+i) / N²</code></p>
+<p>Where:</p>
+<p>Po = Observed Aggreement (OA)</p>
+<p>Pe = Expected agreement by chance</p></li>
+<li><p><strong>Producers’s Accuracy (Recall/Sensitivity)</strong></p>
+<p>One of the class level accuracy metric, which answer the question, <em>“What fraction of actual class was correctly mapped?”</em></p>
+<p><code>PA_i = n_ii / n_i+</code></p>
+<p>Where:</p>
+<p><code>n_ii</code> = correctly classified samples for class i <code>n_i+</code> = total reference samples for class i (row sum)</p></li>
+<li><p><strong>User’s Accuracy (Precision)</strong></p>
+<p>One of the class level error metric, which answer the question <em>“What fraction of predicted class i is actually class i?”</em></p>
+<p><code>UA_i = n_ii / n_+i</code></p>
+<p>Where:</p>
+<p><code>n_ii</code> = correctly classified samples for class i <code>n_+i</code> = total predicted samples for class i (column sum)</p></li>
+</ul></li>
 </ol>
 </section>
-<section id="reviewing-the-thematic-accuracy-result" class="level3" data-number="7.2.3">
-<h3 data-number="7.2.3" class="anchored" data-anchor-id="reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.3</span> Reviewing the thematic accuracy result</h3>
+<section id="spatial-distribution-of-error" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="spatial-distribution-of-error"><span class="header-section-number">7.2.5</span> Spatial Distribution of Error</h3>
+<p><strong>Luma Geospatial Engine</strong></p>
+<p>This is part of&nbsp;System Response 7.3: Thematic accuracy assessment</p>
+<p>This function provide reference data flagging for visualizing the spatial error distribution, improving the error analysis by tagging each point with whether the classifier got it right or wrong. Currently, this function only works if the reference data unit is point (single pixel). If the reference data consist of polygons, this function will not work.</p>
+<ol type="1">
+<li><p>The system conduct checks if reference data geodataframe is available.</p></li>
+<li><p>Add actual and predicted class to the geodataframe as key point in determining correctness of the map</p></li>
+<li><p>Generate a pop-up html with comprehensive information regarding the status of the corresponding reference sites</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>accuracy.validation_error_flag.classify_validation_points()</code>: core function to perform correctness flagging to the classification map</p>
+<p><code>accuracy.validation_error_flag.generate_popup_html()</code>: create a pop up html for visualizing the error flag</p>
+</div>
+</div>
+</section>
+<section id="reviewing-the-thematic-accuracy-result" class="level3" data-number="7.2.6">
+<h3 data-number="7.2.6" class="anchored" data-anchor-id="reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.6</span> Reviewing the thematic accuracy result</h3>
 <p><strong>Luma User Journey</strong></p>
 <p>This is a part of <strong>User Journey 7.4: Preview thematic accuracy result</strong></p>
 <ol type="1">
@@ -507,17 +636,18 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Overall Accuracy (OA)</strong>: Percentage of correctly classified validation samples</li>
 <li><strong>Kappa Coefficient</strong>: Agreement beyond chance, accounting for class distribution</li>
 <li><strong>Confidence interval at 95%</strong>: The lower and upper bounds that describe the uncertainty range of the overall accuracy estimate at the 95% confidence level</li>
-<li><strong>Validation map number</strong>: The total number of validation samples used in the thematic accuracy assessment</li>
+<li><strong>Reference Data</strong>: The total number of validation samples used in the thematic accuracy assessment</li>
 </ul></li>
 <li><p>The system displays the accuracy metrics result on class-level:</p>
 <ul>
 <li><strong>Producer’s Accuracy</strong>: Measure of classification completeness (1 - omission error)</li>
 <li><strong>User’s Accuracy</strong>: Measure of classification reliability (1 - commission error)</li>
 <li><strong>F1 score</strong>: Summarizes Producer’s and User’s Accuracy metrics</li>
+<li>The user can inspect where the misclassification happens using the spatial distribution of error map</li>
 </ul></li>
-<li><p>The system displays the confusion matrix.</p></li>
+<li><p>The system displays the confusion matrix using heatmap visualization</p></li>
 <li><p>The user is offered the option to download the overall accuracy metrics result summary or the class-level accuracy result in a <code>.csv</code> format.</p></li>
-<li><p>The user is prompted to return to <a href="@sec-module-6">Module 6</a> to improve the model classification quality.</p></li>
+<li><p>The user is provided with several option to improve the map quality or repeating the accuracy assessment. They can return to Module 6 to change classification parameters, return to Module 5 to add predictors, return to Module 3 to add more training data, and return to Module 2 to change their classification scheme. Each options is arrange according to easiest modification (module 6) to the hardest (module 2).</p></li>
 </ol>
 <p><strong>Luma Geospatial Engine</strong></p>
 <p>This sub-step does not involve any operations from Luma Geospatial Engine.</p>
