@@ -221,7 +221,9 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-tip
     ## Related Functions
 
-    `data_acquisition.Reflectance_Data.OPTICAL_DATASETS` defines the properties of Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) to be fetched for optical data processing.
+    `data_acquisition.Reflectance_Data.OPTICAL_DATASETS` defines the properties of Landsat Surface Reflectance (SR) collections (Collection 2, Level-2) to be fetched for optical data processing. In this list, the metadata for reporting the data retrieval is also define. More satellite sensor can be define here
+
+    `data_acquisition.Reflectance_Data.THERMAL_DATASETS` Define the properties of Landsat Top-of-Atmosphere (TOA) thermal bands. Since some landsat mission have different band names designation, the thermal band is refer in the list
     :::
 
     The system currently supports Landsat 1-3 RAW collection and and Landsat 4-9 surface reflectance (SR) collection. Additionally, Landsat 4 - 9 Top-of-Atmosphere (TOA) is used for retrieving thermal band as additional input band for the classification. This consideration stems from Landsat SR collection thermal band quality which often resulted in no data and prone to over-correction in high contrast land cover feature. Landsat mission availability is as follows:
@@ -240,6 +242,8 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-tip
     ## Related Functions
 
+    `data_acqusition.parse_date_input():` Parse date input to YYYY-MM-DD format. Accepts either a year (int or 4-digit string) or a full date string. For year inputs, returns Jan 1 for start dates or Dec 31 for end dates. This function is used by `get_optical_data` and `get_thermal_bands`
+
     `data_acquisition.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
     :::
 
@@ -256,7 +260,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         ::: callout-tip
         ## Related Functions
 
-        `data_acquisition.Reflactance_Data.apply_scale_factors()`: to apply Landsat collection 2 scalling factors using the following formula: Digital Number (DN) \* scale_factor + offset. The scale factor will only be applied to optical bands.
+        `data_acquisition.Reflactance_Data.apply_scale_factors()`: to apply Landsat collection 2 scaling factors using the following formula: Digital Number (DN) \* scale_factor + offset. The scale factor will only be applied to optical bands.
         :::
 
     -   The system renames the bands accordingly with the sensor type input.
@@ -272,7 +276,9 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-tip
     ## Related Functions
 
-    `data_acquisition.Reflactance_Data.get_thermal_bands():` to retrieve and the Landsat image collection based on the input parameters.
+    `data_acquisition.Reflectance_Data.has_thermal_capability():` Function to check if the landsat mission selected contain thermal bands
+
+    `data_acquisition.Reflactance_Data.get_thermal_bands():` to retrieve thermal band from landsat collection 2 TOA data
     :::
 
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
@@ -325,11 +331,15 @@ The final image (single layer) which will be presented to the user is created us
 
 This is a part of **User Journey 1.3: Download Satellite Imagery**
 
-1.  The system visualize the satellite imagery on a canvas map in bands NIR (near-Infrared), RED, and GREEN. The map is centralized on the AOI.
+1.  The system visualize the satellite imagery on a canvas map using true color composite (RED, GREEN, BLUE bands) as default visualization. The map is centralized on the AOI.
 
-2.  The user can download the satellite imagery through two options:
+2.  The user is able to change the imagery composite using several commonly used composites or manually define their own band composite
 
-    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB. Direct download settings are defined from Streamlit.
+3.  The user can also change visualization parameters to adjust the imagery brightness and contrast
+
+4.  The user can download the satellite imagery through two options:
+
+    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB.
 
     ::: callout-note
     ## Success Notification
@@ -357,7 +367,7 @@ This is a part of **User Journey 1.3: Download Satellite Imagery**
     The system provides an error notification if the system fails to export the image to Google Cloud Storage.
     :::
 
-3.  The user is given the option to continue to [Module 2](@sec-module-2)
+5.  The user is given the option to continue to [Module 2](@sec-module-2)
 
     ::: callout-important
     ## Error Handling Notification
@@ -377,6 +387,34 @@ This is a part of **System Response 1.3: Download Satellite Imagery and Continue
     `data_acquisition.Reflactance_Stats.get_collection_statistics():` to get comprehensive statistics about the gathered image collection.
     :::
 
-2.  For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.
+2.  The system provide a preset of commonly used band combinations as well as optimal value range for the imagery. The commonly used composites define in Luma-GE are:
 
-3.  The system saved the satellite imagery as an object to be loaded in the next modules.
+    1.  True Color Composites (RED, GREEN, BLUE)
+
+    2.  False Color Infrared Composites (NIR, RED, GREEN)
+
+    3.  Short-wave Infrared Composites (SWIR2, NIR, RED)
+
+    4.  Land/Water (NIR, SWIR1, RED)
+
+    ::: callout-tip
+    ## Related Function
+
+    `data_acquisition.Vis_Params.BAND_COMBINATIONS:` The list of preset band combinations as well as their default value
+
+    `data_acquisition.Vis_Params.get_combinations_names():` function to fetch band combinations names from the preset
+
+    `data_acquisition.Vis_Params.get_vis_params()`: function to retrieve band combinations and visualization parameters from the define list
+    :::
+
+3.  The system provide tools for the user to build their own band combinations and modified the imagery minimum/maximum value as well as the gamma value, improving the visualization of the data
+
+    ::: callout-tip
+    ## Related Function
+
+    `data_acquisition.build_custom_vis_param()`: function to allow the user to build their own band combinations
+    :::
+
+4.  For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.
+
+5.  The system saved the satellite imagery as an object to be loaded in the next modules.
