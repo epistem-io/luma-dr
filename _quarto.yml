@@ -21,7 +21,7 @@ book:
       - 02_classification_scheme.qmd
       - 03_sample_data.qmd
       - 04_sample_data_quality.qmd
-      - placeholders/module05_placeholder.qmd
+      - 05_predictor.qmd.qmd
       - 06_classification.qmd
       - 07_accuracy.qmd
       - placeholders/module08_placeholder.qmd
