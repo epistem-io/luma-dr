@@ -247,17 +247,19 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
     `data_acquisition.Reflectance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
 
-    `data_acquisition.Reflectance_Data.get_s2_optical_data():` Retrieve Sentinel 2 image collection based on input parameters provided. This function uses the
+    `data_acquisition.Reflectance_Data.get_s2_optical_data():` Retrieve Sentinel 2 image collection based on input parameters provided. This function uses the `mask_s2_clouds`, `apply_s2_scale_factors`, and `rename_s2_bands` to return a standardize and ready to use image collection
     :::
 
     -   The system performs cloud masking using the quality assurance band (QA_PIXEL) QA_PIXEL band that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
 
-    -   Cloud masking for Sentinel-2 data use Cloud Score+ methods which implement weakly deep learning approach to grade the quality of individual image pixels and assign per-pixel quality assessment scores. Cloud Score+ resulted in cleaner imagery when compared with other cloud masking methods, such as s2cloudless and QA60. Methodological description of Cloud Score+ can be found in [Pasquarella (2023)](https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e)
+    -   Cloud masking for Sentinel-2 data use Cloud Score+ methods which implement weakly deep learning approach to grade the quality of individual image pixels and assign per-pixel quality assessment scores. Cloud Score+ resulted in cleaner imagery when compared with other cloud masking methods, such as s2cloudless and QA60. Methodological description of Cloud Score+ can be found in [Pasquarella (2023)](https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e).
 
         ::: callout-tip
         ## Related Functions
 
         `data_acquisition.Reflectance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band with confidence threshold
+
+        `data_acquisition.Reflectance_Data.mask_s2_clouds()`: Mask cloudy, hazy, and cirrus-affected pixels in a Sentinel-2 image using Cloud Score+ algorithm
         :::
 
     -   The system applies scaling to the optical reflectance bands to convert the raw digital numbers (DNs) into physically meaningful surface reflectance values. A scale factor 0.0000275 and offset -0.2 are applied, as defined in the Landsat Collection 2 Surface Reflectance metadata. This conversion standardize the reflectance values to a range of approximately 0 to 1, enabling accurate comparison and analysis across different scenes and sensors.
@@ -277,7 +279,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
         `data_acquisition.Reflectance_Data.rename_landsat_bands()`: to standardize Landsat Surface Reflectance (SR) band names based on sensor type. From 'SR_B*' or 'B*' to 'NIR', 'GREEN', etc.
 
-        `data_acquisition.Reflectance_Data.rename_s2_bands()`: Rename Sentinel 2 SR bands to standardized semantic names (i.e B5 to RED_EDGE1\_
+        `data_acquisition.Reflectance_Data.rename_s2_bands()`: Rename Sentinel 2 SR bands to standardized semantic names (i.e B5 to RED_EDGE1)
         :::
 
 3.  The system then use the same parameter as multi-spectral data and use it to search collection 2 TOA data, except for Landsat 1-3 MSS. The TOA data thermal band (namely, band 10) is then stacked with multi-spectral band from SR data. Since band 11, contain larger calibration uncertainty, only band 10 is used. No additional pre-processing is conducted for thermal band since digital number value alone is considered satisfactory for discriminating land cover features.
@@ -297,6 +299,10 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 Sentinel-2 bands have three spatial resolution: 10 m (Blue, Green, Red, NIR), 20 m (Red Edge 1, Red Edge 2, Red Edge, 3, Red Edge 4, SWIR 1, SWIR 2), and 60 m (Aerosol, Water vapor). For the final imagery reported to the user, the 60 m bands will not be dropped since it did not fully contribute for the classification. To utilize the spectral richness of sentinel 2 imagery, image downscaling is implemented, transforming the 20 m bands to 10 m. Since Earth Engine did not have built-in pan sharpening algorithm, High Pass Filter (HPF) approach is used to sharpen the 20 m bands.
 
 HPF is traditional image fusion algorithm based on Multi-Resolution Analysis (MRA). HPF extract high frequency information from higher resolution image and inject them to lower resolution multi-spectral images by specified weights. This approach is chosen since some studies that HPF produce more accurate sharpened image ([Du et al, 2016](https://doi.org/10.3390/rs8040354); [Zheng et al, 2017](https://doi.org/10.3390/rs9121274)). Since Sentinel 2 did not panchromatic band, the average value of visible and near infrared bands can be used a substitute for panchromatic band in pan-sharpening approach [(Kaplan, 2019)](https://doi.org/10.3390/ecrs-2-05158)
+
+::: callout-tip
+## Related Function
+:::
 
 ## Mosaic and Composite for Satellite Imagery
 
@@ -430,6 +436,6 @@ This is a part of **System Response 1.3: Download Satellite Imagery and Continue
     `data_acquisition.build_custom_vis_param()`: function to allow the user to build their own band combinations
     :::
 
-4.  For details on exporting to Google Cloud Storage, Google Drive, and direct download, refer to helper modules
+4.  For details on exporting to Google Cloud Storage, Google Drive, and direct download, refer to helper module
 
 5.  The system saved the satellite imagery as an object to be loaded in the next modules.
