@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-The output of this module is near–cloud-free satellite imagery that corresponds to the user-defined area of interest, which is essential for generating accurate and reliable land use and land cover (LULC) datasets. This module emphasizes the generation of pre-processed and corrected satellite imagery, incorporating procedures such as cloud masking and shadow removal.
+The output of this module is near–cloud-free satellite imagery that corresponds to the user-defined area of interest, which is essential for generating accurate and reliable land use and land cover (LULC) datasets. This module emphasizes the generation of pre-processed and corrected satellite imagery, incorporating procedures such as cloud masking, band and value standardization, as well as compositing.
 
 # Input {.unnumbered}
 
@@ -249,7 +249,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
     `data_acquisition.Reflectance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a standardize and ready to use image collection
 
-    `data_acquisition.Reflectance_Data.get_s2_optical_data():` Retrieve Sentinel 2 image collection based on input parameters provided. This function uses the `mask_s2_clouds`, `apply_s2_scale_factors`, and `rename_s2_bands` to return a standardize and ready to use image collection
+    `data_acquisition.Reflectance_Data.get_s2_optical_data():` Retrieve Sentinel 2 image collection based on input parameters provided. This function uses the `mask_s2_clouds`, and `rename_s2_bands` to return a standardize and ready to use image collection
     :::
 
     -   For Landsat imagery, cloud masking is applied using the quality assurance band (QA_PIXEL) that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
@@ -270,8 +270,6 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         ## Related Functions
 
         `data_acquisition.Reflectance_Data.apply_scale_factors()`: to apply Landsat collection 2 scaling factors using the following formula: Digital Number (DN) \* scale_factor + offset. The scale factor will only be applied to optical bands.
-
-        `data_acquisition.Reflectance_Data.apply_s2_scale_factors():` Scaled Sentinel-2 surface reflectance values by multiplying the optical bands by 0.0001
         :::
 
     -   The spectral band is standardized according to the semantic names of the band itself. The common naming convention shared across the luma-ge pipeline, enabling downstream modules to reference bands by semantic name rather than sensor specific identifiers.
@@ -303,9 +301,7 @@ HPF is traditional image fusion algorithm based on Multi-Resolution Analysis (MR
 ::: callout-tip
 ## Related Functions
 
-`data_acquisition.Reflectance_data.mock_pan_band():` Create a mock panchromatic band from average value of visible and near infrared bands. The mock panchromatic band is used as input for high-pass filter sharpening approach
-
-`data_acquisition.Reflectance_data.sharpen_s2_bands():` Perform image sharpening for the 20m Sentinel-2 bands, resulting in 10 m bands. This function utilize high-pass filter algorithm with panchromatic band created using `mock_pan_band()`
+`data_acquisition.Reflectance_data.sharpen_s2_bands():` Perform image sharpening for the 20m Sentinel-2 bands using high pass filter (HPF). HPF sharpening consist of three main steps: (1) build pseudo-panchromatic bands from the average value of VIS-NIR band. (2) Applied Laplacian HPF kernel, perform bilinear resampling, and inject spectral reflectance detail. (3) Stack the sharpen image with VIS-NIR band
 
 `data_acquisition.Reflectance_data.resample_s2_band():` Alternative approach for sentinel-2 band spatial resolution normalization. This approach only change the pixel size, without improving the spatial resolution of the 20 m bands.
 :::
