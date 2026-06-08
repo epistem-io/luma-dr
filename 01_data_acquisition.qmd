@@ -58,14 +58,15 @@ In addition to user define upload the system supports the selection of AOI from 
 
 **Luma Geospatial Engine**
 
-1.  Load `ee.FeatureCollection` containing Indonesian administrative boundaries from Badan Informasi Geospasial. The data should be uploaded as GEE asset and the link for it must be provided and shared publicly
+1.  Load `ee.FeatureCollection` asset containing Indonesian administrative boundaries from Indonesian Geospatial Agency (*Badan Informasi Geospasial*/BIG).
 2.  The system extracts the regency name and provide complete list of the available regencies for the user
-3.  The system convert the `ee.FeatureCollection` to `geodataframe` for visualization, while using the unconverted one as an AOI for the imagery search
+3.  Extract the geometry of the selected regency boundaries and use them as criteria in the imagery filtering
+4.  Convert the `ee.FeatureCollection` to `geodataframe` and visualize in the map canvas
 
 ::: callout-tip
 ## Related Function
 
-`input_utils.load_regency_asset:` Fetching GEE asset containing Indonesia administrative boundaries
+`input_utils.load_regency_asset:` Retrieve `ee.FeatureCollection` of Indonesia regency/city level administrative boundaries from earth engine asset
 
 `input_utils.get_regency_name`: Creating a list of regency name for the user
 
@@ -228,7 +229,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     `data_acquisition.Reflectance_Data.S2_DATASETS` class-level dictionary for Sentinel-2 image collection, currently only support Level 2A Surface Reflectance collection. This dictionary has similar structure with `OPTICAL_DATASETS`
     :::
 
-    The system supports Landsat 1-3 Raw collection, Landsat 4-9 Level 2 Surface Reflectance (SR) collection, and Sentinel-2A/B Level 2A Harmonized collection. Additionally, Landsat 4 - 9 Top-of-Atmosphere (TOA) collection is used for retrieving thermal band as additional input band for the classification. Since Landsat Surface Temperature (ST) Level 2 SR data tends to result in over-correction in high contrast land cover feature, the TOA collection thermal band is used. Landsat mission availability is as follows:
+    The system currently supports Analysis Ready Data (ARD) for Landsat and Sentinel-2 satellite mission. The detailed mission and temporal coverage for each satellite data is as follows:
 
     -   Landsat 1 Multispectral Scanner/MSS (1972 - 1978)
     -   Landsat 2 Multispectral Scanner/MSS (1978 - 1982)
@@ -245,7 +246,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-tip
     ## Related Functions
 
-    `data_acqusition.parse_date_input():` Parse date input to YYYY-MM-DD format. Accepts either a year (int or 4-digit string) or a full date string. For year inputs, returns Jan 1 for start dates or Dec 31 for end dates. This function is used by `get_optical_data` and `get_thermal_bands`
+    `data_acqusition.parse_date_input():` Parse date input to YYYY-MM-DD format. Accepts either a year (int or 4-digit string) or a full date string. For year inputs, returns Jan 1 for start dates and Dec 31 for end dates. This function is used by `get_s2_optical_data`, `get_optical_data` and `get_thermal_bands`
 
     `data_acquisition.Reflectance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a standardize and ready to use image collection
 
@@ -254,7 +255,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
     -   For Landsat imagery, cloud masking is applied using the quality assurance band (QA_PIXEL) that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
 
-    -   For Sentinel-2 imagery, Cloud masking is implemented using Cloud Score+ approach. This approach implement weakly deep learning approach to grade the quality of individual image pixels and assign per-pixel quality assessment scores. Cloud Score+ resulted in cleaner imagery when compared with other cloud masking methods, such as s2cloudless and QA60. Methodological description of Cloud Score+ can be found in [Pasquarella (2023)](https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e).
+    -   For Sentinel-2 imagery, cloud masking is implemented using Cloud Score+ quality assessment processor. This approach use weakly deep learning approach to grade the quality of individual image pixels and assign per-pixel quality assessment scores. This masking approach is conducted using link collection function in GEE, since Cloud Score+ collection have the same id and `system:index` properties as the individual Sentinel-2 image collection. Cloud Score+ produce more accurate cloud masking compared to other cloud masking approach such as s2cloudless and QA60. Methodological description of Cloud Score+ can be found in [Pasquarella](https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e)
 
         ::: callout-tip
         ## Related Functions
@@ -416,7 +417,7 @@ This is a part of **System Response 1.3: Download Satellite Imagery and Continue
     `data_acquisition.Reflectance_Stats.get_collection_statistics():` to get comprehensive statistics about the gathered image collection.
     :::
 
-2.  The system provide a preset of commonly used band combinations as well as optimal value range for the imagery. The commonly used composites define in Luma-GE are:
+2.  The system provide a preset of commonly used band combinations as well as optimal value range for the imagery. The commonly used band composites define in Luma-GE are as follows:
 
     1.  True Color Composites (RED, GREEN, BLUE)
 
@@ -436,7 +437,7 @@ This is a part of **System Response 1.3: Download Satellite Imagery and Continue
     `data_acquisition.Vis_Params.get_vis_params()`: function to retrieve band combinations and visualization parameters from the define list
     :::
 
-3.  The system provide tools for the user to build their own band combinations and modified the imagery minimum/maximum value as well as the gamma value, improving the visualization of the data
+3.  The system provide tools for the user to build their own band combinations and modified the imagery minimum/maximum value as well as the gamma value.
 
     ::: callout-tip
     ## Related Function
