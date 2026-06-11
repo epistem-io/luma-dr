@@ -291,6 +291,16 @@ Since Sentinel-2 is already topographically corrected, this option is available 
 
 The SCS method consist of two primary steps, namely illumination condition and illumination correction. The illumination condition (IC) determine the pixel brightness given its slope and orientation. The illumination correction is applied for each spectral band with empirically derived c-value by running a linear regression between reflectance value and IC. However, this correction is applied selectively, according to a mask to only work on pixels in which corrections is meaningful ([Poortinga et. al. 2019](https://doi.org/10.3390/rs11070831)).
 
+::: callout-note
+## Related Function
+
+`data_acquisition.additional_correction.illumination_condition():` Compute the illumination condition (IC) for a single image and append it as an additional band along with cosZ, cosS, and slope.
+
+`data_acquisition.additional_correction.illumination_correction():` Perform illumination correction by fitting a linear model between IC and the given band over masked pixels, derive the empirical c-value, and apply the SCSc correction formula.
+
+`data_acquisition.additional_correction.apply_topo_corr():` Single function wrapper that executes both IC and illumination correction.
+:::
+
 ## Mosaic and Composite for Satellite Imagery
 
 **Luma Geospatial Engine**
