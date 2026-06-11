@@ -283,6 +283,14 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
 
+### Topographic Correction
+
+Topographic correction are additional pre-processing for satellite imagery to mitigate the influence of rugged terrain on surface reflectance data. This pre-processing approach is crucial if there's variation in surface reflectance values between pixels with similar land cover and biophysical-structural properties.
+
+Since Sentinel-2 is already topographically corrected, this option is available for Landsat collections only. Luma-GE applied the a pixel-wise Sun-Canopy-Sensor with a c-correction (SCSc) proposed by [Soenen et. al. (2005)](https://doi.org/10.1109/TGRS.2005.852480). This approach use the sun-canopy-sensor (SCS) with a semi-empirical moderator (C) to account for diffuse radiation ([Poortinga et. al. 2019](https://doi.org/10.3390/rs11070831)). The ALOS 30m Global Surface Model version 4 is used for topographical base.
+
+The SCS method consist of two primary steps, namely illumination condition and illumination correction. The illumination condition (IC) determine the pixel brightness given its slope and orientation. The illumination correction is applied for each spectral band with empirically derived c-value by running a linear regression between reflectance value and IC. However, this correction is applied selectively, according to a mask to only work on pixels in which corrections is meaningful ([Poortinga et. al. 2019](https://doi.org/10.3390/rs11070831)).
+
 ## Mosaic and Composite for Satellite Imagery
 
 **Luma Geospatial Engine**
