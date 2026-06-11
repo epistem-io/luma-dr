@@ -241,7 +241,15 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     -   Landsat 9 Operational Land Imager-2/OLI-2 (2021 - present)
     -   Sentinel 2A/B Multispectral Instrument/MSI (2015 - present)
 
-2.  The system retrieves images that match user’s selected criteria, including spatial resolution, target year, and cloud cover based on the following input parameters: AOI, target map date, and cloud cover threshold.
+    ::: callout-note
+    **Feature Warning**
+
+    Sentinel-2 Level 2A only extends back to march 2017, since the European Space Agency (ESA) did not systematically generate Level 2A product unil then. Furthermore, the sentinel-2 atmospheric processor (Sen2cor) was release in late 2016.
+    :::
+
+2.  To address the limited coverage of Sentinel-2 in 2015-2017, Luma automatically select the Level 1C ToA reflectance data if the user select those years. Atmospheric correction of this data is not applied due to complexity of sentinel-2 pre-processing pipeline. Atmospheric correction for this data will be applied in the upcoming update.
+
+3.  The system retrieves images that match user’s selected criteria, including spatial resolution, target year, and cloud cover based on the following input parameters: AOI, target map date, and cloud cover threshold.
 
     ::: callout-tip
     ## Related Functions
@@ -255,7 +263,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
     -   For Landsat imagery, cloud masking is applied using the quality assurance band (QA_PIXEL) that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
 
-    -   For Sentinel-2 imagery, cloud masking is implemented using Cloud Score+ quality assessment processor. This approach use weakly deep learning approach to grade the quality of individual image pixels and assign per-pixel quality assessment scores. This masking approach is conducted using link collection function in GEE, since Cloud Score+ collection have the same id and `system:index` properties as the individual Sentinel-2 image collection. Cloud Score+ produce more accurate cloud masking compared to other cloud masking approach such as s2cloudless and QA60. Methodological description of Cloud Score+ can be found in [Pasquarella](https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e)
+    -   For Sentinel-2 imagery, cloud masking is implemented using Cloud Score+ quality assessment processor. This approach use weakly deep learning approach to grade the quality of individual image pixels and assign per-pixel quality assessment scores. This masking approach is conducted using link collection function in GEE, since Cloud Score+ collection have the same id and `system:index` properties as the individual Sentinel-2 image collection. Cloud Score+ produce more accurate cloud masking compared to other cloud masking approach such as s2cloudless and QA60. Methodological description of Cloud Score+ can be found in [Pasquarella 2023](https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e)
 
         ::: callout-tip
         ## Related Functions
@@ -283,7 +291,7 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
         `data_acquisition.Reflectance_Data.rename_s2_bands()`: Rename Sentinel 2 SR bands to standardized semantic names (i.e B5 to RED_EDGE1)
         :::
 
-3.  The system then use the same parameter in `optical_data` and use it to search collection 2 TOA data and (except for Landsat 1-3) select the thermal band. The selected thermal band is then stacked with multi-spectral band from SR data. Since band 11, contain larger calibration uncertainty, only band 10 is used. No additional pre-processing is conducted for thermal band since digital number value alone is considered satisfactory for discriminating land cover features.
+4.  The system then use the same parameter in `optical_data` and use it to search collection 2 TOA data and (except for Landsat 1-3) select the thermal band. The selected thermal band is then stacked with multi-spectral band from SR data. Since band 11, contain larger calibration uncertainty, only band 10 is used. No additional pre-processing is conducted for thermal band since digital number value alone is considered satisfactory for discriminating land cover features.
 
     ::: callout-tip
     ## Related Functions
