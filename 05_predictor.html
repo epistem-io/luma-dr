@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Predictor Introduction – Luma Development Reference</title>
+<title>5&nbsp; Predictor Generation – Luma Development Reference</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,25 +26,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../06_classification.html" rel="next">
-<link href="../04_sample_data_quality.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-30f7eecba5f8069135bf6061ca14b3f2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./06_classification.html" rel="next">
+<link href="./04_sample_data_quality.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3f70bac5631458d474a321d4182f9338.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="../placeholders/module05_placeholder.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./05_predictor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -99,15 +99,15 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Luma Development Reference</a> 
+      <a href="./">Luma Development Reference</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
-    <a href="../files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
     <a href="https://github.com/epistem-io/luma-stack" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
 </div>
     </div>
@@ -121,19 +121,19 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About Luma</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../writing_guidelines.html" class="sidebar-item-text sidebar-link">
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Collaborative Development Guideline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../testing_guidelines.html" class="sidebar-item-text sidebar-link">
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Testing Guideline for Developers</span></a>
   </div>
 </li>
@@ -148,20 +148,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../python_setup.html" class="sidebar-item-text sidebar-link">
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python Environment Setup</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ee_init.html" class="sidebar-item-text sidebar-link">
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../helpers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Helpers</span></span></a>
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
   </div>
 </li>
       </ul>
@@ -177,50 +177,50 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01_data_acquisition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02_classification_scheme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../03_sample_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../placeholders/module05_placeholder.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></span></a>
+  <a href="./05_predictor.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../06_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../07_accuracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,15 +230,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
+  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
+  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
+  <ul class="collapse">
+  <li><a href="#sec-selection-of-predictors" id="toc-sec-selection-of-predictors" class="nav-link" data-scroll-target="#sec-selection-of-predictors"><span class="header-section-number">5.1</span> Selection of Predictors</a></li>
+  <li><a href="#calculation-of-predictors" id="toc-calculation-of-predictors" class="nav-link" data-scroll-target="#calculation-of-predictors"><span class="header-section-number">5.2</span> Calculation of Predictors</a></li>
+  <li><a href="#predictors-result-visualization-and-analysis" id="toc-predictors-result-visualization-and-analysis" class="nav-link" data-scroll-target="#predictors-result-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Result Visualization and Analysis</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="../placeholders/module05_placeholder.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./05_predictor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predictor Introduction</span></h1>
+<h1 class="title"><span id="sec-module-5" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></span></h1>
 </div>
 
 
@@ -255,21 +269,232 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-caution callout-titled">
+<section id="module-overview" class="level1 unnumbered">
+<h1 class="unnumbered">Module Overview</h1>
+<p>The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.</p>
+<p>The module outputs a comprehensive predictor stack that serves as input for LULC map generation in Module 6.</p>
+</section>
+<section id="input" class="level1 unnumbered">
+<h1 class="unnumbered">Input</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name of Input</th>
+<th>Input Type</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Spectral transformations indices</td>
+<td>System’s input</td>
+<td>Retrieve the data from the <code>spyndex</code> library</td>
+</tr>
+<tr class="even">
+<td>Terrain-based metrics</td>
+<td>System’s input</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Distance-based metrics</td>
+<td>System’s input</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>AOI</td>
+<td>Input from Other Modules</td>
+<td>Output from <a href="01_data_acquisition.html" class="quarto-xref"><span>Chapter 1</span></a></td>
+</tr>
+<tr class="odd">
+<td>Near-cloud free satellite imagery</td>
+<td>Input from Other Modules</td>
+<td>Output from <a href="01_data_acquisition.html" class="quarto-xref"><span>Chapter 1</span></a></td>
+</tr>
+<tr class="even">
+<td>Sample data</td>
+<td>Input from Other Modules</td>
+<td>Output from <a href="03_sample_data.html" class="quarto-xref"><span>Chapter 3</span></a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output" class="level1 unnumbered">
+<h1 class="unnumbered">Output</h1>
+<p>Covariate stack used in the classification model (Module 6)</p>
+</section>
+<section id="process" class="level1 unnumbered">
+<h1 class="unnumbered">Process</h1>
+<section id="sec-selection-of-predictors" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-selection-of-predictors"><span class="header-section-number">5.1</span> Selection of Predictors</h2>
+<p><strong>Luma User Journey</strong></p>
+<p>This is part of User Journey 5.1: User Predictors Selection</p>
+<ol type="1">
+<li><p>The system provide the list of predictors currently supported by Luma Geospatial Engine</p></li>
+<li><p>The user manually select the predictors by using check boxes</p></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system presents a list of available predictor categories, which include:</p>
+<ul>
+<li><p>Spectral transformation (indices)</p></li>
+<li><p>Terrain-based metrics</p></li>
+<li><p>Distance-based metrics</p></li>
+</ul></li>
+</ol>
+</section>
+<section id="calculation-of-predictors" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="calculation-of-predictors"><span class="header-section-number">5.2</span> Calculation of Predictors</h2>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:</p>
+<ul>
+<li><p>Terrain-based metrics</p>
+<ul>
+<li><p><strong>Elevation</strong>: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely <a href="https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id">NASADEM</a>, <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands">Copernicus GLO-30</a>, and <a href="https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1">ALOS DSM V4</a>. The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m</p></li>
+<li><p><strong>Slope</strong>: The calculation of slope is derived from the selected DEM using <code>ee.Terrain.slope</code> function. Slope unit is presented in degree (0-90)</p></li>
+<li><p><strong>Aspect</strong>: Similar to slope, this data is derived from selected DEM, using <code>ee.Terrain.aspect</code>. The units are degree where 0=N, 90=E, 180=S, 270 =W</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>Under development
+<span class="screen-reader-only">Tip</span>Related Functions
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This module’s backend is not available yet. This module is not available in Phase 1.</p>
+<p><code>predictor.terrain_calculator.calculate_elevation</code> : Core function to fetch DEM data from GEE catalog.</p>
+<p><code>predictor.terrain_calculator.calculate_slope</code> : Core function to calculate slope from selected DEM data</p>
+<p><code>predictor.terrain_calculator.calculate_aspect</code> : Core function to calculate aspect data from selected DEM data</p>
+</div>
+</div></li>
+<li><p>Distance-based metrics</p>
+<p>The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.distance_calculator.calculate_distance_metrics</code>: Core function to intialize the distance calculation logic for coastline, road, and settlement</p>
+</div>
+</div>
+<p>Currently, the system support distance calculation from the following source:</p>
+<ul>
+<li><p>Coastiline: <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/">Natural Earth 10m coastline data</a>,</p></li>
+<li><p>Settlement: <a href="https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps">Facebook High Resolution Settlement Layer (HRSL)</a></p></li>
+<li><p>Road: Indonesian Topographic Map (<em>Rupa Bumi Indonesia</em>) and OpenStreetMap data</p></li>
+</ul></li>
+<li><p>Spectral transformation indices</p>
+<p>The system retrieves various spectral indices from the <code>spyndex</code> library. The following indices have been adapted for Luma-GE from the library:</p>
+<ul>
+<li><p>Vegetation-related indices:</p>
+<ul>
+<li><p>NDVI (Normalized Difference Vegetation Index)</p></li>
+<li><p>EVI (Enhanced Vegetation Index)</p></li>
+<li><p>SAVI (Soil Adjusted Vegetation Index)</p></li>
+<li><p>MSAVI (Modified Soil Adjusted Vegetation Index)</p></li>
+<li><p>OSAVI (Optimized Soil Adjusted Vegetation Index)</p></li>
+<li><p>ARVI (Atmospherically Resistant Vegetation Index)</p></li>
+<li><p>GBNDVI (Green-Blue Normalized Difference Vegetation Index)</p></li>
+<li><p>GNDVI (Green Normalized Difference Vegetation Index)</p></li>
+</ul></li>
+<li><p>Water-related indices:</p>
+<ul>
+<li><p>MNDWI (Modified Normalized Difference Water Index)</p></li>
+<li><p>NDMI (Normalized Difference Moisture Index)</p></li>
+<li><p>AWEInsh (Automatic Water Extraction Index with Shadow Elimination)</p></li>
+</ul></li>
+<li><p>Soil / built-up-related indices:</p>
+<ul>
+<li><p>NDBI (Normalized Difference Build-Up Index)</p></li>
+<li><p>DBSI (Dry Bareness Soil Index)</p></li>
+<li><p>MBI (Modified Build-up Index)</p></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.SpectralCalculator.get_avaliable_indices</code>: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references</p>
+<p><code>predictor.SpectralCalculator.get_index_coefficients</code>: Get default coefficient values for a spectral index that needs user-define coefficients and parameters</p>
+<p><code>predictor.SpectralCalculator.validate_coefficients</code>: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.</p>
+<p><code>predictor.SpectralCalculator.validate_index_requirements</code> : Validate that required bands are available for index computation.</p>
+<p><code>predictor.SpectralCalculator.calculate_indices_with_collection</code>: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.</p>
+<p><code>predictor.SpectralCalculator.get_calculation_summary</code></p>
+</div>
+</div></li>
+</ul></li>
+<li><p>The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.PredictorCalculation.validate_prerequisites:</code> Validate that required inputs are available for predictor computation. Required input are composite (<code>ee.Image</code>), AOI (<code>ee.FeatureCollection</code>) , and raw image collection (<code>ee.Image.Collection</code>)</p>
+<p><code>predictor.PredictorCalculation.compute_predictors</code> : Orchestrates predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.</p>
+<p><code>predictor.PredictorCalculation.prepare_module6_summary:</code> Prepare summary metadata for module 6</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="predictors-result-visualization-and-analysis" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="predictors-result-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Result Visualization and Analysis</h2>
+<p><strong>Luma User Journey</strong></p>
+<ol type="1">
+<li><p>The users can visualize the selected predictors, applying the custom color color palette</p></li>
+<li><p>The system provides functionality to conduct correlation analysis between predictors.</p></li>
+<li><p>The user inspect the correlation coefficient that have been visualize using heatmap and table</p></li>
+</ol>
+<p><strong>Luma Geospatial Engine</strong></p>
+<ol type="1">
+<li><p>If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach</p>
+<ul>
+<li><p>Creates a random sampling across the AOI (default value is 5000 points)</p></li>
+<li><p>Computes correlation analysis using GEE’s core function</p></li>
+</ul></li>
+<li><p>The correlation analysis is conducted across all predictors, including the original multispectral band</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.EECorrelationAnalysis.generate_random_sampling</code>: Generate random sample across the AOI. Use default value of 5000 sample</p>
+<p><code>predictor.EECorrelationAnalysis.compute_correlation</code>: Main function to compute Pearson correlation analysis based on the random samples generated. Return the panda data frame use for visualization.</p>
+<p><code>predictor.EECorrelationAnalysis.visualize</code>: Visualize the correlation analysis result using heatmap</p>
+</div>
+</div></li>
+</ol>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -674,13 +899,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../04_sample_data_quality.html" class="pagination-link" aria-label="Sample Data Quality Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span>
+      <a href="./04_sample_data_quality.html" class="pagination-link" aria-label="Sample Data Quality Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../06_classification.html" class="pagination-link" aria-label="LULC Map Generation">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06_classification.html" class="pagination-link" aria-label="LULC Map Generation">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
