@@ -244,10 +244,10 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     ::: callout-note
     **Feature Warning**
 
-    Sentinel-2 Level 2A only extends back to march 2017, since the European Space Agency (ESA) did not systematically generate Level 2A product unil then. Furthermore, the sentinel-2 atmospheric processor (Sen2cor) was release in late 2016.
+    Sentinel-2 Level 2A only extends back to march 2017, since the European Space Agency (ESA) did not systematically generate Level 2A product until then. Additionally, the 2017-2018 level 2A coverage in the earth engine collection is not yet global.
     :::
 
-2.  To address the limited coverage of Sentinel-2 in 2015-2017, Luma automatically select the Level 1C ToA reflectance data if the user select those years. Atmospheric correction of this data is not applied due to complexity of sentinel-2 pre-processing pipeline. Atmospheric correction for this data will be applied in the upcoming update.
+2.  To address the limited coverage of Sentinel-2 in 2015-2017, Luma automatically select the Level 1C ToA reflectance data if the user select those years. Atmospheric correction of this data is not applied due to complexity of sentinel-2 pre-processing pipeline. Atmospheric correction for level 1C data will be applied in the upcoming update.
 
 3.  The system retrieves images that match user’s selected criteria, including spatial resolution, target year, and cloud cover based on the following input parameters: AOI, target map date, and cloud cover threshold.
 
@@ -318,7 +318,13 @@ HPF is traditional image fusion algorithm based on Multi-Resolution Analysis (MR
 ::: callout-caution
 ## Feature Note
 
-The approach as well as the procedure used to perform spatial harmonization is not shown to the user. The user only receive the harmonize imagery and note regarding the approach used
+The approach as well as the procedure used to perform spatial harmonization is not shown to the user. The user only receive the harmonize imagery and note regarding the approach used.
+:::
+
+::: callout-note
+## Feature Warning
+
+The HPF operations required significant computation time and resource for large area. Sharpening for large area (primary regency level) might hit Earth Engine's user memory limit. If this happen, set the sharpening to false `data_acquisition.final_Image.get_temporal_composite(Sharpen=False):`
 :::
 
 ## Mosaic and Composite for Satellite Imagery
