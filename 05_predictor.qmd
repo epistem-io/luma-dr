@@ -181,8 +181,77 @@ This is part of User Journey 5.1: User Predictors Selection
     `predictor.EECorrelationAnalysis.visualize`: Visualize the correlation analysis result using heatmap
     :::
 
-## Semi Automatic Predictor List Optimization
+## Semi Automatic Predictor Selection Optimization
 
 Evaluating the user's predictor selection is crucial step in determining the best combination of predictors that resulted in the optimal model performance. This approach is more commonly known as feature engineering in machine learning terminology. One of the commonly use feature engineering approach is Recursive Feature Elimination (RFE). RFE applied a backward step-wise selection process to find optimal combination of predictors based on its contribution to the model. The RFE starts with training the model with all input predictors and discards the weakest predictor one iteration at a time, while re-evaluating their importance after each removal. The workflow for RFE is shown in the figure below:
 
-![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low-3.png){fig-align="center" width="643"}
+![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low.png){fig-align="center" width="710"}
+
+**Luma User Journey**
+
+1.  The user select the ancillary data predictors to be added with satellite imagery bands
+
+2.  The user run RFE workflow to optimize their feature selection
+
+3.  User receive reports regarding the feature selection, containing accuracy curve, list of selected and eliminated features
+
+4.  The user is given the option to run the classification based on the selected features or ignore the RFE result
+
+**Luma Geospatial Engine**
+
+1.  The system perform input validation prior to RFE
+    -   If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
+
+    -   If the input is valid, proceed with RFE calculation
+
+        ::: callout-note
+        ## Related Function
+
+        `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+        :::
+2.  The system perform RFE with default configuration and report the optimal predictors to the user.
+    -    the default configuration are as follow:
+
+        1.   Minimum feature to select: 10
+
+        2.  number of random forest tree: 100
+
+        3.  training data: 70% of input sample
+
+        4.  test data: 30% of input sample
+
+    -   Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
+
+        ::: callout-note
+        ## Related Function
+
+        `predictor.RfeGee._train_classifier()` : core function to perform random forest classification with default configuration.
+
+        `predictor.RfeGee._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
+
+        `predictor.RfeGee._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
+
+        `predictor.RfeGee.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.
+        :::
+
+    -   To optimize API calls in earth engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.
+
+    -   The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve
+
+        ::: callout-note
+        ## Related Function
+
+        `predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+
+        `predictor.RfeGee.get_ranking` Function to rank importance of each predictors
+
+        `predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
+
+        `predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
+
+        `predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
+
+        `predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+        :::
+
+    -   Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
