@@ -87,7 +87,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Spectral transformation indices
 
-        The system retrieves various spectral indices from the `spyndex` library. The following indices have been adapted for Luma-GE from the library:
+        The system retrieves various spectral indices from the [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI), a standardized ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0). The following indices have been adapted for Luma-GE:
 
         -   Vegetation-related indices:
 
@@ -180,3 +180,9 @@ This is part of User Journey 5.1: User Predictors Selection
 
     `predictor.EECorrelationAnalysis.visualize`: Visualize the correlation analysis result using heatmap
     :::
+
+## Semi Automatic Predictor List Optimization
+
+Evaluating the user's predictor selection is crucial step in determining the best combination of predictors that resulted in the optimal model performance. This approach is more commonly known as feature engineering in machine learning terminology. One of the commonly use feature engineering approach is Recursive Feature Elimination (RFE). RFE applied a backward step-wise selection process to find optimal combination of predictors based on its contribution to the model. The RFE starts with training the model with all input predictors and discards the weakest predictor one iteration at a time, while re-evaluating their importance after each removal. The workflow for RFE is shown in the figure below:
+
+![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low-3.png){fig-align="center" width="643"}
