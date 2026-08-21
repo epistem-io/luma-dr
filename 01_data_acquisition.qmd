@@ -26,24 +26,6 @@ The output of this module is near–cloud-free satellite imagery that correspond
 
 ### AOI from Shapefile {#sec-aoi-from-shapefile}
 
-**Luma User Journey**
-
-This is a part of **User Journey 1.1: Prerequisite Check**
-
-1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system emphasizes on all required shapefile components that needs to be put in the `.zip` file. The system also supports uploads of `.kml` or `.kmz` files.
-
-2.  The system validates whether the `.zip` file includes all the required shapefile components.
-
-::: callout-important
-## Error Handling Notification
-
-The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
-:::
-
-3.  The AOI file is saved in a temporary directory, allowing users to go back-and-forth in between modules without having to re-uploading the AOI file.
-
-**Luma Geospatial Engine**
-
 This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### AOI from Indonesia Administrative Boundaries
@@ -104,7 +86,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
 
 1.  The system performs a multi-step geometry sanitization process before converting any shapefile or GeoDataFrame into Earth Engine objects. **These input validation processes for shapefiles are designed mainly for Streamlit compatibility**. Each correction is handled by exactly one dedicated function:
 
-    -   The Coordinate Reference System (CRS) is automatically corrected and reprojected to WGS 1984 (EPSG:4326).
+    - The Coordinate Reference System (CRS) is automatically corrected and reprojected to WGS 1984 (EPSG:4326).
 
     ::: callout-tip
     ## Related Functions
@@ -112,7 +94,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.fix_crs():` to resolve coordinate reference system issues.
     :::
 
-    -   Invalid, empty, or topologically broken geometries are detected and repaired.
+    - Invalid, empty, or topologically broken geometries are detected and repaired.
 
     ::: callout-tip
     ## Related Functions
@@ -120,7 +102,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.clean_geometries():` to repair invalid geometries.
     :::
 
-    -   An initial structural validation and basic geometry fixing.
+    - An initial structural validation and basic geometry fixing.
 
     ::: callout-tip
     ## Related Functions
@@ -128,7 +110,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.validate_and_fix_geometry():`to validate and fix geometries issues.
     :::
 
-    -   Polygon-specific validation, including removal of invalid coordinates and simplification of overly complex shapes.
+    - Polygon-specific validation, including removal of invalid coordinates and simplification of overly complex shapes.
 
     ::: callout-tip
     ## Related Functions
@@ -136,7 +118,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.validate_polygons():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
     :::
 
-    -   Every individual coordinate is checked to ensure it falls within valid global latitude/longitude ranges.
+    - Every individual coordinate is checked to ensure it falls within valid global latitude/longitude ranges.
 
     ::: callout-tip
     ## Related Functions
@@ -144,7 +126,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.is_valid_coordinate():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
     :::
 
-    -   The number of vertices in each geometry is counted and logged (for diagnostic and simplification decisions).
+    - The number of vertices in each geometry is counted and logged (for diagnostic and simplification decisions).
 
     ::: callout-tip
     ## Related Functions
@@ -152,7 +134,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
     `input_utils.shapefile_validator.count_vertices():` to checks point geometries, remove invalid coordinates, and simplify polygon geometries.
     :::
 
-    -   Finally, a comprehensive pre-upload validation is executed to guarantee that every geometry is valid, non-empty, correctly typed, and fully compatible with Earth Engine.
+    - Finally, a comprehensive pre-upload validation is executed to guarantee that every geometry is valid, non-empty, correctly typed, and fully compatible with Earth Engine.
 
     ::: callout-tip
     ## Related Functions
@@ -167,11 +149,11 @@ This is a part of **System Response 1.1: Area of Interest Definition**
 
 `input_utils.EE_converter.convert_aoi_gdf():` to conduct the conversion of `.gdf` input file into `ee.geometry` . Three different conversion approaches was defined in this function:
 
--   Primary method: using `geemap.gdf_to_ee()`
+- Primary method: using `geemap.gdf_to_ee()`
 
--   If primary method fails, proceed to secondary method: manual GeoJSON conversion by union multiple geometries first (`gpd.GeoDataFrame([{'geometry': union_geom}], crs=gdf.crs)`) and convert it to GeoJSON (`gdf.to_json()`). **Only polygon and multipolygon geometry type is supported in this method**.
+- If primary method fails, proceed to secondary method: manual GeoJSON conversion by union multiple geometries first (`gpd.GeoDataFrame([{'geometry': union_geom}], crs=gdf.crs)`) and convert it to GeoJSON (`gdf.to_json()`). **Only polygon and multipolygon geometry type is supported in this method**.
 
--   If both primary and secondary method fails, proceed to the last option: bounding box conversion to estimate the rectangular approximation of the AOI (`ee.Geometry.Rectangle([bounds[0], bounds[1], bounds[2], bounds[3]])`).
+- If both primary and secondary method fails, proceed to the last option: bounding box conversion to estimate the rectangular approximation of the AOI (`ee.Geometry.Rectangle([bounds[0], bounds[1], bounds[2], bounds[3]])`).
 :::
 
 ## Selection and Preparation of Satellite Imagery
@@ -184,19 +166,19 @@ This is a part of **User Journey 1.2: Determining Satellite Imageries Parameters
 
 1.  The user is prompted to fill in these parameters for the satellite imagery:
 
-    -   Target map date: Choose the range of period of satellite imagery in a single year format (YYYY) or full-date format (YYYY-MM-DD). If YYYY is used as the input format, the year option starts from 1972 until present year. The year 2020 is shown as the default option.
+    - Target map date: Choose the range of period of satellite imagery in a single year format (YYYY) or full-date format (YYYY-MM-DD). If YYYY is used as the input format, the year option starts from 1972 until present year. The year 2020 is shown as the default option.
 
-    -   Spatial resolution: Specify the desired spatial resolution. During Phase 1, only Landsat data will be utilized; therefore, the spatial resolution will be set on default to 30 meters.
+    - Spatial resolution: Specify the desired spatial resolution. During Phase 1, only Landsat data will be utilized; therefore, the spatial resolution will be set on default to 30 meters.
 
-    -   Sensor type: a list of sensors available based on the selected target map date input parameter. Landsat 8 OLI is shown to be the default option. A warning message will show about the limited availability of Landsat 1-3 data if the user uses temporal scope input between 1972-1984.
+    - Sensor type: a list of sensors available based on the selected target map date input parameter. Landsat 8 OLI is shown to be the default option. A warning message will show about the limited availability of Landsat 1-3 data if the user uses temporal scope input between 1972-1984.
 
-        ::: callout-important
-        ## Error Handling Notification
+      ::: callout-important
+      ## Error Handling Notification
 
-        Since only Landsat data is utilized, the system provides an error notification if no Landsat sensor is available in the selected time range.
-        :::
+      Since only Landsat data is utilized, the system provides an error notification if no Landsat sensor is available in the selected time range.
+      :::
 
-    -   Maximum cloud cover: Set a preferred cloud cover threshold, or use the default value of 30%.
+    - Maximum cloud cover: Set a preferred cloud cover threshold, or use the default value of 30%.
 
 2.  The system provides information on satellite image availability shows the number of total satellite images found based on the user parameter input. The information includes total images found, date range of images, WRS tiles, path row tiles, scene IDs, image acquisition dates, average scene cloud cover, date range, and cloud cover range.
 
@@ -228,14 +210,14 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 
     The system currently supports Landsat 1-3 RAW collection and and Landsat 4-9 surface reflectance (SR) collection. Additionally, Landsat 4 - 9 Top-of-Atmosphere (TOA) is used for retrieving thermal band as additional input band for the classification. This consideration stems from Landsat SR collection thermal band quality which often resulted in no data and prone to over-correction in high contrast land cover feature. Landsat mission availability is as follows:
 
-    -   Landsat 1 Multispectral Scanner/MSS (1972 - 1978)
-    -   Landsat 2 Multispectral Scanner/MSS (1978 - 1982)
-    -   Landsat 3 Multispectral Scanner/MSS (1978 - 1983)
-    -   Landsat 4 Thematic Mapper/TM (1982 - 1993)
-    -   Landsat 5 Thematic Mapper/TM (1984 - 2012)
-    -   Landsat 7 Enhanced Thematic Mapper Plus/ETM+ (1999 - 2021)
-    -   Landsat 8 Operational Land Imager/OLI (2013 - present)
-    -   Landsat 9 Operational Land Imager-2/OLI-2 (2021 - present)
+    - Landsat 1 Multispectral Scanner/MSS (1972 - 1978)
+    - Landsat 2 Multispectral Scanner/MSS (1978 - 1982)
+    - Landsat 3 Multispectral Scanner/MSS (1978 - 1983)
+    - Landsat 4 Thematic Mapper/TM (1982 - 1993)
+    - Landsat 5 Thematic Mapper/TM (1984 - 2012)
+    - Landsat 7 Enhanced Thematic Mapper Plus/ETM+ (1999 - 2021)
+    - Landsat 8 Operational Land Imager/OLI (2013 - present)
+    - Landsat 9 Operational Land Imager-2/OLI-2 (2021 - present)
 
 2.  The system retrieves images that match user’s selected criteria, including spatial resolution, year, and cloud cover based on the following input parameters: AOI, target map date, and cloud cover threshold.
 
@@ -247,29 +229,29 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
     `data_acquisition.Reflactance_Data.get_optical_data():` to retrieve and the Landsat image collection based on the input parameters. This function uses the `mask_landsat_sr`, `apply_scale_factors`, and `rename_landsat_bands` to return a masked, scaled, and renamed image collection.
     :::
 
-    -   The system performs cloud masking using the quality assurance band (QA_PIXEL) QA_PIXEL band that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
+    - The system performs cloud masking using the quality assurance band (QA_PIXEL) QA_PIXEL band that encodes pixel conditions as bitwise flags using specific bit flags. Deterministic bit tests are applied to identify and exclude pixels affected by cirrus, clouds and cloud shadows. The bit value is adjusted based on the Landsat sensor selected by the user. Landsat 8-9 QA_PIXEL stored per-pixel confidence levels for clouds cirrus, and clouds shadow. These confidence values (ranging from 0–3) are extracted and filtered using hard-coded thresholds, such that pixels with medium to high confidence are masked out. Other Landsat sensor did not have confidence bit, therefore, only deterministic bit are used for cloud masking
 
-        ::: callout-tip
-        ## Related Functions
+      ::: callout-tip
+      ## Related Functions
 
-        `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band with confidence threshold
-        :::
+      `data_acquisition.Reflactance_Data.mask_landsat_sr()`: Mask clouds, shadows and cirrus for Landsat Collection 2 SR using QA_PIXEL band with confidence threshold
+      :::
 
-    -   The system applies scaling to the optical reflectance bands to convert the raw digital numbers (DNs) into physically meaningful surface reflectance values. A scale factor 0.0000275 and offset -0.2 are applied, as defined in the Landsat Collection 2 Surface Reflectance metadata. This conversion standardize the reflectance values to a range of approximately 0 to 1, enabling accurate comparison and analysis across different scenes and sensors.
+    - The system applies scaling to the optical reflectance bands to convert the raw digital numbers (DNs) into physically meaningful surface reflectance values. A scale factor 0.0000275 and offset -0.2 are applied, as defined in the Landsat Collection 2 Surface Reflectance metadata. This conversion standardize the reflectance values to a range of approximately 0 to 1, enabling accurate comparison and analysis across different scenes and sensors.
 
-        ::: callout-tip
-        ## Related Functions
+      ::: callout-tip
+      ## Related Functions
 
-        `data_acquisition.Reflactance_Data.apply_scale_factors()`: to apply Landsat collection 2 scaling factors using the following formula: Digital Number (DN) \* scale_factor + offset. The scale factor will only be applied to optical bands.
-        :::
+      `data_acquisition.Reflactance_Data.apply_scale_factors()`: to apply Landsat collection 2 scaling factors using the following formula: Digital Number (DN) \* scale_factor + offset. The scale factor will only be applied to optical bands.
+      :::
 
-    -   The system renames the bands accordingly with the sensor type input.
+    - The system renames the bands accordingly with the sensor type input.
 
-        ::: callout-tip
-        ## Related Functions
+      ::: callout-tip
+      ## Related Functions
 
-        `data_acquisition.Reflactance_Data.rename_landsat_bands()`: to standardize Landsat Surface Reflectance (SR) band names based on sensor type. From 'SR_B*' or 'B*' to 'NIR', 'GREEN', etc.
-        :::
+      `data_acquisition.Reflactance_Data.rename_landsat_bands()`: to standardize Landsat Surface Reflectance (SR) band names based on sensor type. From 'SR_B*' or 'B*' to 'NIR', 'GREEN', etc.
+      :::
 
 3.  The system then use the same parameter as multispectral data and use it to search collection 2 TOA data, except for Landsat 1-3 MSS. The TOA data thermal band (namely, band 10) is then stacked with multispectral band from SR data. Since band 11, contain larger calibration uncertainty, only band 10 is used. No additional pre-processing is conducted for thermal band since digital number value alone is considered satisfactory for discriminating land cover features.
 

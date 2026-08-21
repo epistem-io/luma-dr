@@ -1,4 +1,39 @@
----
-title: "Untitled"
-format: html
----
+# Map Generation {#sec-map-generation .unnumbered}
+
+# Overview {.unnumbered}
+
+In this workflow, user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. The user cannot skip steps; each step unlocks the next only after the Geospatial Engine (GE) confirms the required output has been produced and saved.
+
+## Step 1: Basic Information
+
+**Overview**
+
+Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite source.
+
+### Step 1.1: Geographic Area
+
+**Overview**
+
+This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map.
+
+#### Step 1.1.1: Upload Area
+
+**Overview**
+
+User uploads a polygon file to define the geographic boundary of the area they want to map.
+
+**Flow of information**
+
+1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system emphasizes on all required shapefile components that needs to be put in the `.zip` file. The system also supports uploads of `.kml` or `.kmz` files.
+
+2.  The system validates whether the `.zip` file includes all the required shapefile components.
+
+::: callout-important
+## Error Handling Notification
+
+The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
+:::
+
+3.  The AOI file is saved in a temporary directory, allowing users to go back-and-forth in between modules without having to re-uploading the AOI file.
+
+**Process**

@@ -1,5 +1,1 @@
----
-title: "Untitled"
-format: html
----
-
+# Collaborative Mapping {#sec-collaborative-mapping .unnumbered}
