@@ -31,13 +31,13 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    If shapefile components are all good, allowed to continue to Process 3
+    If all shapefile components pass validation, continue to Process 3
     :::
 
     ::: callout-important
     ## Error Handling Notification
 
-    If shapefile components do not match, error warning displayed: 'No `.shp` file found in the `.zip` file.’
+    If the shapefile components do not match, an error warning is displayed: 'No `.shp` file found in the `.zip` file.’
     :::
 
 3.  The system retrieves AOI file information.
@@ -45,13 +45,13 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    If file information are all good, allowed to continue to Process 4
+    If all file information is correct, continue to Process 4
     :::
 
     ::: callout-important
     ## Error Handling Notification
 
-    If file information cannot be found, error warning displayed: 'AOI not found’
+    If the file information cannot be found, an error warning is displayed: 'AOI not found’
     :::
 
 4.  The system retrieves AOI file area size information.
@@ -59,13 +59,13 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    If area size information is within maximum area allowed, continue to Process 5
+    If the area size information is within the maximum area allowed, continue to Process 5
     :::
 
     ::: callout-important
     ## Error Handling Notification
 
-    If area size information is too large, error warning displayed: 'Draw area exceeds maximum limit’
+    If the area size information is too large, an error warning is displayed: 'Draw area exceeds maximum limit’
     :::
 
 5.  The system validates the geometry of the AOI for both `.shp` and `.kml` using [the `shapefile_validator` functions](@sec-validation-of-shapefile-geometries).
@@ -73,13 +73,13 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    If validation is all good, allowed to continue to Process 6
+    If validation is successful, continue to Process 6
     :::
 
     ::: callout-important
     ## Error Handling Notification
 
-    If validation is not good, Interface will have an error warning displayed: 'Geometry validation failed.'
+    If validation failed, an error warning is displayed: 'Geometry validation failed.'
     :::
 
 6.  The system returns the validated and processed shapefile.
@@ -87,7 +87,7 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    The system shows a confirmation when the AOI is loaded successfully by showing a purple box with "Approximate size of your mapping area: X [number] Ha" displayed
+    The system shows a confirmation when the AOI is loaded successfully by showing a purple box with 'Approximate size of your mapping area: X \[number\] Ha' displayed
     :::
 
 7.  If the user clicks on "Reselect Area", the uploaded file is deleted, and the user will be redirected to @sec-map-generation-basic-information.
@@ -107,13 +107,13 @@ The user draws their area of interest directly on the map by creating borders of
     ::: callout-note
     ## Success Notification
 
-    The system shows a confirmation when the AOI is loaded successfully by showing a purple box with "Approximate size of your mapping area: X [number] Ha" displayed
+    The system shows a confirmation when the AOI is loaded successfully by showing a purple box with 'Approximate size of your mapping area: X \[number\] Ha' displayed
     :::
 
     ::: callout-important
     ## Error Handling Notification
 
-    If area size information is too large, error warning displayed: 'Draw area exceeds maximum limit’
+    If the area size information is too large, an error warning is displayed: 'Draw area exceeds maximum limit’
     :::
 
 3.  If the user clicks on "Reselect Area", the polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
@@ -138,7 +138,7 @@ The user defines the time period for the land use and land cover map. User choos
 
 **Process**
 
-1.  The user chooses a time interval selection ("By year") and a year (1972–current year).
+1.  The user chooses a time interval selection "By year" and a year (1972–current year).
 
 2.  The system retrieves the selected year and the options for the Satellite Imagery (@sec-map-generation-satellite-imagery) are limited to the available sensor images depending on the selected year.
 
@@ -154,7 +154,7 @@ The user defines the time period for the land use and land cover map. User choos
     If time interval nor year is not selected, the options on Satellite Imagery (@sec-map-generation-satellite-imagery) are not available
     :::
 
-3.  The user chooses a time interval selection (”Custom date range”) along with the start and end dates.
+3.  The user chooses a time interval selection ”Custom date range” along with the start and end dates.
 
 4.  The system provides a preview of calendar for user to choose the start and end dates.
 
@@ -187,7 +187,7 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     ::: callout-note
     ## Success Notification
 
-    When all information is collected, allowed to continue to Process 4
+    When all information is collected, continue to Process 4
     :::
 
     ::: callout-important
@@ -209,8 +209,8 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 
     Two buttons appear:
 
-    - Change Input; if selected, continue to Process 5
-    - View Satellite Imagery; if selected, continue to Process 8
+    - "Change Input"; continue to Process 5
+    - "View Satellite Imagery"; continue to Process 8
     :::
 
     ::: callout-important
@@ -236,11 +236,11 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     - A table of Generated Composite of Imagery Obtained appeared under the User’s Input Summary along with Cloud Coverage Statistic.
     - Composite of satellite imagery appears on the base map, with default setting of true colour (RGB).
     - Layers option appears on the bottom right corner of the screen, includes:
-    - Mapping area; with polygon toggle
-    - Composite of satellite imagery; with true colour (RGB), false colour infrared (NIR/Red/Green), land/water (NIR/SWIR1/RED) toggle options
-    - LULC class; still disabled in this step
+      - Mapping area; with polygon toggle
+      - Composite of satellite imagery; with true colour (RGB), false colour infrared (NIR/Red/Green), land/water (NIR/SWIR1/RED) toggle options
+      - LULC class; still disabled in this step
     - User can then download the composite, leading to Process 9.
-    - Next button appears, which leads to @sec-map-generation-lulc-classification.
+    - "Next" button appears, which leads to @sec-map-generation-lulc-classification.
     :::
 
 9.  If the user downloads composite, a `.zip` file containing satellite image composite is downloaded to user’s local device.
@@ -250,3 +250,162 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 **Overview**
 
 The user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step. The Epistem-AI feature is also available here.
+
+## Step 2.1: Land Use & Land Cover Classification Scheme
+
+**Overview**
+
+Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.
+
+### Step 2.1.1: Own Classification
+
+**Overview**
+
+The user creates their own classification scheme manually or by uploading a file.
+
+#### Step 2.1.1.1: Manual Input {#sec-map-generation-manual-input}
+
+**Overview**
+
+The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.
+
+**Process**
+
+1.  The user enters LULC class name and pick a colour out of 28 colour options.
+
+2.  The system stores each class entry individually as it is added.
+
+3.  The system validates class ID, name, and checks for uniqueness with the functions in @sec-user-entering-the-classification-manually.
+
+    ::: callout-note
+    ## Success Notification
+
+    - All added classes are displayed in the class recorded table for preview
+    - Upload Classes option still available; if clicked, continue to @sec-map-generation-upload-classes Process 1
+    - Confirm LULC Class enabled; once clicked, all inputs are locked and a summary table is previewed, along with three options:
+      - "Edit" (pencil icon); continue to Process 4
+      - "Download LULC classes (CSV)"; A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
+      - "Next"; continue to Process 5
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system returns a validity flag with an error message if invalid
+    :::
+
+4.  If the user edits or deletes the classes in the summary table preview, the system stores each class entry individually as it is added and runs the functions in @sec-user-entering-the-classification-manually.
+
+    ::: callout-note
+    ## Success Notification
+
+    - Each class row can be edited individually
+    - New classes can be added with Add Class button
+    - If all classes are deleted, back to the beginning of @sec-map-generation-lulc-classification
+    - "Done" button appears; if clicked:
+      - "Next" button appears; continue to Process 5
+      - "Download LULC classes (CSV)" appears; A `.csv` file containing the inputted classification scheme is downloaded to user’s local device
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system returns a validity flag with an error message if invalid
+    :::
+
+5.  If the user clicks on the "Next" button, the user will be directed to @sec-map-generation-sample-data.
+
+6.  If the user clicks on the "Back" (chevron) button, The panel of @sec-map-generation-satellite-imagery Process 8 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
+
+#### Step 2.1.1.2: Upload Classes {#sec-map-generation-upload-classes}
+
+**Overview**
+
+The user downloads a classification template `.csv` file and uses it to list the land use and land cover classes they want to map. After filling the template, they need to upload the file to be used as the custom classification scheme.
+
+**Process**
+
+1.  The user downloads the `.csv` file containing the classification scheme information template into the user’s local device.
+
+2.  The user uploads the `.csv` file containing the classification scheme information.
+
+3.  The system stores the file uploaded and runs the functions in @sec-user-uploading-their-own-classification.
+
+    ::: callout-note
+    ## Success Notification
+
+    If the classification scheme file successfully uploaded:
+
+    - A purple box indicating the uploaded file with its file size appears
+
+    - A summary table of recorded classes with its ID number and colour class appears
+
+    - Manual Input option still available; if clicked, continue to @sec-map-generation-manual-input Process 3
+
+    - Confirm LULC Class enabled, if clicked, a summary table is previewed, along with three options:
+
+      - "Edit" (pencil icon); continue to Process 4
+      - "Download LUCL classes (CSV)"; A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
+      - "Next"; continue to Process 5
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system returns a validity flag with an error message if invalid
+    :::
+
+4.  If the user clicks on the "Edit" button, each class row can be edited individually. The uploaded file can be deleted, if clicked, all inputs are being reset, back to the beginning of @sec-map-generation-lulc-classification.
+
+5.  If the user clicks on the "Next" button, the user will be directed to @sec-map-generation-sample-data.
+
+6.  If the user clicks on the "Back" (chevron) button, The panel of @sec-map-generation-satellite-imagery Process 8 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
+
+### Step 2.1.2: Default Classification
+
+**Overview**
+
+The user activates class options from default Luma land use and land cover classification scheme. The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.
+
+**Process**
+
+1.  The user selects subsets of the default classes.
+
+2.  The classification table is being saved to the system.
+
+3.  The system loads the selected classes from a dataset by running functions in @sec-user-select-existing-lulc-template.
+
+    ::: callout-note
+    ## Success Notification
+
+    - A summary table of recorded classes with its ID number and colour class appears
+    - Two buttons appear:
+      - "Reset classification"; continue to Process 4
+      - "Next"; continue to Process 5
+    :::
+
+4.  If the user clicks on "Reset classification", All inputs are being reset, back to the beginning of @sec-map-generation-lulc-classification.
+
+5.  If the user clicks on the "Next" button, the user will be directed to @sec-map-generation-sample-data.
+
+6.  If the user clicks on the "Edit" button, all inputs are being reset, back to the beginning of @sec-map-generation-lulc-classification.
+
+7.  If the user clicks on the "Back" (chevron) button, The panel of @sec-map-generation-satellite-imagery Process 8 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
+
+## Step 2.2: Try Epistem-AI Recommendations
+
+**Overview**
+
+This feature is coming soon.
+
+# Step 3: Mapping Sample Data {#sec-map-generation-sample-data}
+
+**Overview**
+
+The user prepares the sample data for land use and land cover classification in their mapping area. The user can upload existing data or create samples directly in Luma through on-screen sampling. In this step the Sample Data Summary selected in the previous step is also shown. The spectral separability of LULC classes is also being assessed in this step using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Step 1.
+
+## Step 3.1: Upload Sample Data
+
+**Overview**
+
+The user uploads their existing sample data in `.zip` file format.

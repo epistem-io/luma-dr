@@ -52,8 +52,6 @@ In addition to user define upload the system supports the selection of AOI from 
 
 ### Correction of Shapefile Geometries
 
-This is a part of **System Response 1.1: Area of Interest Definition**
-
 1.  The system performs a multi-step geometry sanitization process before converting any shapefile or GeoDataFrame into Earth Engine objects. **These input validation processes for shapefiles are designed mainly for Streamlit compatibility**. Each correction is handled by exactly one dedicated function:
 
     - The Coordinate Reference System (CRS) is automatically corrected and reprojected to WGS 1984 (EPSG:4326).
@@ -130,8 +128,6 @@ This is a part of **System Response 1.1: Area of Interest Definition**
 
 ### Satellite Data Acquisition and Filtering {#sec-input-spatial-image-parameters}
 
-This is a part of **System Response 1.2: Search and Filter Imagery**
-
 1.  The system specifies Landsat data collections for optical processing.
 
     ::: callout-tip
@@ -200,8 +196,6 @@ This is a part of **System Response 1.2: Search and Filter Imagery**
 4.  The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the `median()` function from Earth Engine. The system also then clips and mosaics the satellite imagery.
 
 ## Mosaic and Composite for Satellite Imagery
-
-This is a part of **System Response 1.2: Search and Filter Imagery**
 
 The final image (single layer) which will be presented to the user is created using `final_image` methods, which resulted in mosaic imagery or temporal aggregation composite imagery.
 
