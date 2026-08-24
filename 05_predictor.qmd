@@ -10,7 +10,7 @@ The module outputs a comprehensive predictor stack that serves as input for LULC
 
 | Name of Input | Input Type | Details |
 |------------------------|------------------------|------------------------|
-| Spectral transformations indices | System’s input | Retrieve the data from the `spyndex` library |
+| supported spectral transformations | System’s input | Retrieve the pre-define function from existing library |
 | Terrain-based metrics | System’s input |  |
 | Distance-based metrics | System’s input |  |
 | AOI | Input from Other Modules | Output from @sec-module-1 |
@@ -51,9 +51,9 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Terrain-based metrics
 
-        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
+        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
 
-        -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree (0-90)
+        -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
 
         -   **Aspect**: Similar to slope, this data is derived from selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
@@ -136,7 +136,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
         `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
 
-        `predictor.SpectralCalculator.get_calculation_summary`
+        `predictor.SpectralCalculator.get_calculation_summary` : provide summary of the calculation process of predictors
         :::
 
 2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
@@ -146,12 +146,14 @@ This is part of User Journey 5.1: User Predictors Selection
 
     `predictor.PredictorCalculation.validate_prerequisites:` Validate that required inputs are available for predictor computation. Required input are composite (`ee.Image`), AOI (`ee.FeatureCollection`) , and raw image collection (`ee.Image.Collection`)
 
-    `predictor.PredictorCalculation.compute_predictors` : Orchestrates predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
+    `predictor.PredictorCalculation.compute_predictors` : Initialize predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
 
     `predictor.PredictorCalculation.prepare_module6_summary:` Prepare summary metadata for module 6
     :::
 
-## Predictors Result Visualization and Analysis
+## Predictors Visualization and Analysis
+
+This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data.
 
 **Luma User Journey**
 
@@ -166,6 +168,8 @@ This is part of User Journey 5.1: User Predictors Selection
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
     -   Creates a random sampling across the AOI (default value is 5000 points)
+
+    -   Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors
 
     -   Computes correlation analysis using GEE's core function
 
@@ -200,6 +204,7 @@ Evaluating the user's predictor selection is crucial step in determining the bes
 **Luma Geospatial Engine**
 
 1.  The system perform input validation prior to RFE
+
     -   If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
 
     -   If the input is valid, proceed with RFE calculation
@@ -209,16 +214,15 @@ Evaluating the user's predictor selection is crucial step in determining the bes
 
         `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
         :::
+
 2.  The system perform RFE with default configuration and report the optimal predictors to the user.
-    -    the default configuration are as follow:
 
-        1.   Minimum feature to select: 10
+    -   the default configuration are as follow:
 
-        2.  number of random forest tree: 100
-
-        3.  training data: 70% of input sample
-
-        4.  test data: 30% of input sample
+        -   Minimum feature to select: 10
+        -   Minimum random forest tree: 100
+        -   Training data (for RFE): 70% of user input
+        -   Test data (for RFE): 30% of user input
 
     -   Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
 
