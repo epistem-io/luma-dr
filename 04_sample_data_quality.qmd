@@ -2,25 +2,25 @@
 
 # Module Overview {.unnumbered}
 
-This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1. 
+This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1.
 
 This module is diagnostic only and does not produce inputs for subsequent modules. Its outputs support interpretation of class confusion and provide justification for feature enhancement in later stages of the workflow.
 
 # Input {.unnumbered}
 
-+------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
-| Name of Input                            | Input Type               | Details                                                                                           |
-+==========================================+==========================+===================================================================================================+
-| Parameters for the separability analysis | User's input             | Contains:                                                                                         |
-|                                          |                          |                                                                                                   |
-|                                          |                          | -   Spatial resolution of the imagery from Module 1 can be adjusted for the separability analysis |
-|                                          |                          |                                                                                                   |
-|                                          |                          | -   Number of maximum pixels which the analysis will run for each pair of classes                 |
-+------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
-| Sample dataset                           | Input from Other Modules | Output from Module 3                                                                              |
-+------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
-| Near-cloud free satellite imagery        | Input from Other Modules | Output from Module 1                                                                              |
-+------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
++------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
+| Name of Input                            | Input Type               | Details                                                                                         |
++==========================================+==========================+=================================================================================================+
+| Parameters for the separability analysis | User's input             | Contains:                                                                                       |
+|                                          |                          |                                                                                                 |
+|                                          |                          | - Spatial resolution of the imagery from Module 1 can be adjusted for the separability analysis |
+|                                          |                          |                                                                                                 |
+|                                          |                          | - Number of maximum pixels which the analysis will run for each pair of classes                 |
++------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
+| Sample dataset                           | Input from Other Modules | Output from Module 3                                                                            |
++------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
+| Near-cloud free satellite imagery        | Input from Other Modules | Output from Module 1                                                                            |
++------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
 
 # Output {.unnumbered}
 
@@ -39,40 +39,15 @@ This module cannot be accessed if the system is missing the required inputs from
 
 ### Specifying the Separability Analysis Parameter
 
-**Luma User Journey**
-
-This is a part of **User Journey 4.1: Determining separability analysis parameter**
-
-1.  The user is prompted to fill in the parameters for separability analysis. The system provides a default value for each of the parameters as the following:
-    -   Spatial resolution used for the separability analysis: 30 meter
-    -   Maximum number of pixels which the separability analysis will be conducted to: 5000 for each class, to prevent crash in the analysis.
-2.  The system shows a message showing Transformed Divergence method will be used to conduct the analysis. In this development phase, there is no option for the user to change the separability analysis method.
-
-**Luma Geospatial Engine**
-
 This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ## Conducting the Separability Analysis
 
 ### Initialize the Separability Analysis {#sec-initialize-separability-analysis}
 
-This is a part of **System Response 4.1: Separability Analysis Workflow**
-
-**Luma User Journey**
-
-1.  The user is prompted to run the separability analysis
-
-**Luma Geospatial Engine**
-
 This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### Validating the sample data's geometry
-
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 1 of 7.
-
-**Luma Geospatial Engine**
 
 1.  The system validates the geometry of the sample data stored in the system from Module 3 output.
 
@@ -90,12 +65,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### Converting sample data into Earth Engine format
 
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 2 of 7
-
-**Luma Geospatial Engine**
-
 1.  The system converts sample data from `.gdf` data into Earth Engine Feature Collection format
 
     ::: callout-tip
@@ -112,12 +81,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### Starting the separability analysis computation
 
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 3 of 7
-
-**Luma Geospatial Engine**
-
 1.  The system initializes the Related Function's for separability analysis with the appropriate required input objects for the `class`.
 
     ::: callout-tip
@@ -127,12 +90,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     :::
 
 ### Counting sample data statistics {#sec-sample-stats}
-
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 4 of 7.
-
-**Luma Geospatial Engine**
 
 1.  The system retrieves the basic statistic information of the sample data.
 
@@ -146,12 +103,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### Extracting spectral value
 
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 5 of 7. The system also highlights that this step will take some time.
-
-**Luma Geospatial Engine**
-
 1.  The system extracts the pixel-level spectral values for each sample data by sampling the composite image at the specified scale. The system also limits the maximum number of pixels per LULC class that will be extracted to avoid memory overload.
 
     ::: callout-tip
@@ -164,12 +115,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### Calculating the extracted spectral feature statistics {#sec-sample-pixel-stats}
 
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 6 of 7.
-
-**Luma Geospatial Engine**
-
 1.  The system computes detailed pixel-level statistics for each LULC class (mean, standard deviation, minimum, maximum, median, and sample count) based on the extracted spectral values and formats these results into a structured summary table.
 
     ::: callout-tip
@@ -181,18 +126,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     :::
 
 ### Calculating separability index {#sec-caluclate-separability-index}
-
-**Luma User Journey**
-
-1.  The system shows a progress update indicating that the separability analysis is currently at Step 7 of 7.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation that separability analysis has been successfully conducted.
-    :::
-
-**Luma Geospatial Engine**
 
 1.  The system computes the class-to-class separability using Transformed Divergence (TD).
 
@@ -215,44 +148,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 ## Visualization of Reference Data's Spectral Profile {#sec-spectral-profile-visualization}
 
 ### Visualization of Reference Data's Spectral Profile {#sec-spectra-signature-visualization}
-
-This is a part of **User Journey 4.2: Analyzing separability index result and visualizing sample data**
-
-**Luma User Journey**
-
-1.  The user is shown a summary of the number and proportion of sample data for each LULC class from the output of @sec-sample-stats.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system displays a summary of the number and proportion of sample data for each LULC class in a tabular format.
-    :::
-
-2.  The user is shown a summary of the extracted sample features for each LULC class from the output of @sec-sample-pixel-stats.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system displays a summary of the extracted sample features for each LULC class in a tabular format.
-    :::
-
-3.  The user is presented with an overall summary of the separability analysis based on the output of @sec-caluclate-separability-index.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system displays a highlight of separability category (good, weak, or poor) for each class, and highlights which LULC classes require improvement. A dataframe containing details of the pairwise separability is also displayed.
-    :::
-
-4.  The user is provided with interactive visualizations to explore spectral distributions and clustering. Available visualization options include histograms, boxplots, and scatter plots.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system displays visualization options: histograms, boxplots, 3D scatter plot, and 2D scatter plots.
-    :::
-
-**Luma Geospatial Engine**
 
 1.  The system provides four different visualization options of the spectral distributions and clustering.
 
