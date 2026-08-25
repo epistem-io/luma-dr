@@ -219,7 +219,7 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.
     :::
 
-5.  If the user clicks on the "Change Input" button, "Edit" (pencil) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
+5.  If the user clicks on the "Change Input" button, "Edit" (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
 
 - "Change Input", continue to Process 6, or
 - "Discard Changes", continue to Process 7.
@@ -571,4 +571,96 @@ The user can choose a set of predictors that optimize the discrimination of LULC
 
 The user is prompted to select the predictors currently supported by Luma Geospatial Engine by using check boxes or upload their own predictor data in `.zip` file.
 
+### Step 4.2.1: Default Predictors
+
+**Overview**
+
+The user selects the predictors currently supported by Luma Geospatial Engine by using check boxes.
+
 **Process**
+
+1.  The user selects the predictors from the list.
+
+2.  The system retrieves the predictors based on the user's selection and runs the functions in @sec-selection-of-predictors.
+
+    ::: callout-note
+    ## Success Notification
+
+    - "Next" button leads to Summary of LULC List Parameters showing the predictors selected and Random Forest Variable in a purple box.
+    - Two buttons appear:
+      - "Change Input"; continue to Process 3
+      - "Next"; continue to Process 4
+    :::
+
+3.  The user clicks on "Change Input".
+
+    ::: callout-note
+    ## Success Notification
+
+    - "Change Input"; all inputs being reset and back to the beginning of @sec-map-generation-parameters
+    - "Discard Changes"; stay in Process 3 with "Cancel Change" button activated
+    :::
+
+4.  If the user clicks on "Next" button, the system generates map with all input from Step 1-4.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in purple boxes, with a "Generate Map" button. Continue to @sec-map-generation-final.
+    :::
+
+5.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-sample-data Sample Data Summary is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-parameters.
+
+### Step 4.2.2: Upload Predictors
+
+**Overview**
+
+This feature is coming soon.
+
+## Step 4.2: Classification Model Training {#sec-map-generation-model-training}
+
+**Overview**
+
+The user is given the option to adjust the classification model by adjusting the value of the Random Forest variable to classify the satellite images into land use and land cover classes using training data. The default value of the Random Forest parameters are 150 number of trees and 1 minimum leaf population. The user is also prompted to define the proportion to split the sample data into training and validation dataset. The default value of the dataset proportion is 70% for training data and 30% for validation data.
+
+**Process**
+
+1.  The user sets the Random Forest parameters and Training/Testing Split.
+
+2.  The system verifies the inputs and runs the process to create the classification model in @sec-create-classification-model and splits the sample data with functions in @sec-data-split.
+
+    ::: callout-note
+    ## Success Notification
+
+    "Set Variable" button leads to Summary of LULC List Parameters showing the predictors selected and Random Forest Variable in a purple box. Two buttons appear:
+
+    - "Change Input"; continue to Process 3
+    - "Next"; continue to Process 4
+    :::
+
+3.  The user clicks on "Change Input".
+
+    ::: callout-note
+    ## Success Notification
+
+    "Edit" (pencil icon) appears next to each parameter; if clicked, a pop up window appears asking if user wants to:
+
+    - "Change Input"; all inputs being reset and back to the beginning of @sec-map-generation-parameters
+    - "Discard Changes"; stay in Process 3 with "Cancel Change" button activated
+    :::
+
+4.  If the user clicks on "Next" button, the system generates map with all input from Step 1-4.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in purple boxes, with a "Generate Map" button. Continue to @sec-map-generation-final.
+    :::
+
+5.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-sample-data Sample Data Summary is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-parameters.
+
+# Step 5: Map Generation {#sec-map-generation-final}
+
+**Overview**
+
+The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing map accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
