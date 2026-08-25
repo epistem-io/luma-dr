@@ -663,4 +663,50 @@ The user is given the option to adjust the classification model by adjusting the
 
 **Overview**
 
-The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing map accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
+The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
+
+## Step 5.1: Model Accuracy Assessment
+
+**Overview**
+
+The user is shown how accurately the mapping process distinguished their land use and land cover classes.
+
+**Process**
+
+1.  The user clicks on "Show Detail".
+
+2.  The system retrieves the mapping accuracy assessment result.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pop up window shows:
+
+    - Overall Model Accuracy Result
+      - Overall accuracy
+      - Kappa coefficient
+      - Average F1-score
+      - G-mean score
+    - Class Level Accuracy
+      - Recall/Producer’s accuracy
+      - Precision/User’s accuracy
+    - Error Matrix Summary
+      - Class-level summary
+      - Most common misclassifications
+    - Confusion Matrix
+
+    Two buttons appear at the bottom:
+
+    - "Download Raw Data"; `.csv` file containing the raw data is downloaded to user’s local device
+    - "Download Chart"; `.png` file of the confusion matrix is downloaded to user’s local device
+    :::
+
+## Step 5.2: LULC Class Composition
+
+**Overview**
+
+The user can visualize the LULC classification result on the map canvas along with the training data layer and is shown the proportion of each LULC class.
+
+## Step 5.3: Thematic Accuracy Assessment
+
+**Overview**
