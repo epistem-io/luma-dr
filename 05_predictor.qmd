@@ -51,11 +51,11 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Terrain-based metrics
 
-        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
+        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m. Matching the spatial resolution of Landsat data primarily use in Luma
 
-        -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
+        -   **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
 
-        -   **Aspect**: Similar to slope, this data is derived from selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
+        -   **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
         ::: callout-tip
         ## Related Functions
@@ -69,7 +69,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Distance-based metrics
 
-        The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.
+        The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.
 
         ::: callout-tip
         ## Related Functions
@@ -87,7 +87,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Spectral transformation indices
 
-        The system retrieves various spectral indices from the [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI), a standardized ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0). The following indices have been adapted for Luma-GE:
+        The system retrieves various spectral indices from the [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI), a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0). The following indices have been adapted for Luma-GE:
 
         -   Vegetation-related indices:
 
