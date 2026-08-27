@@ -10,17 +10,23 @@ In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each s
 
 Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite source.
 
+![](images/luma-int-screenshot\Step-1-Basic-Information.png)
+
 ## Step 1.1: Geographic Area
 
 **Overview**
 
 This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map.
 
+![](images/luma-int-screenshot\Step-1.1-Geographic-Area.png)
+
 ### Step 1.1.1: Upload Area
 
 **Overview**
 
 The user uploads a polygon file to define the geographic boundary of the area they want to map.
+
+![](images/luma-int-screenshot\Step-1.1.1-Upload-Area.png)
 
 **Process**
 
@@ -98,6 +104,8 @@ The user uploads a polygon file to define the geographic boundary of the area th
 
 The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new corner to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.
 
+![](images/luma-int-screenshot\Step-1.1.2-Draw-Area.png)
+
 **Process**
 
 1.  The user creates a polygon by clicking on the map and selects a spatial resolution from the available options.
@@ -124,6 +132,8 @@ The user draws their area of interest directly on the map by creating borders of
 
 The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. The system provides a preview of the selected boundary.
 
+![](images/luma-int-screenshot\Step-1.1.3-Administrative-Boundaries.png)
+
 **Process**
 
 1.  The user selects an administrative boundary from the dropdown and a spatial resolution from the available options.
@@ -135,6 +145,8 @@ The user selects the area they want to map based on a drop down list of Indonesi
 **Overview**
 
 The user defines the time period for the land use and land cover map. User chooses the range of period of satellite imagery in a single year format or a custom date range format.
+
+![](images/luma-int-screenshot\Step-1.2-Time-Period.png)
 
 **Process**
 
@@ -175,6 +187,8 @@ The user defines the time period for the land use and land cover map. User choos
 **Overview**
 
 The user chooses a satellite imagery source and sets the maximum cloud coverage. The system retrieves all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
+
+![](images/luma-int-screenshot\Step-1.3-Satellite-Imagery.png)
 
 **Process**
 
@@ -221,8 +235,11 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 
 5.  If the user clicks on the "Change Input" button, "Edit" (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
 
-- "Change Input", continue to Process 6, or
-- "Discard Changes", continue to Process 7.
+    - "Change Input", continue to Process 6, or
+
+    - "Discard Changes", continue to Process 7.
+
+<!-- -->
 
 6.  If the user clicks on the "Change Input" button in the pop up window, all inputs are being reset, back to the beginning of @sec-map-generation-basic-information.
 
@@ -251,6 +268,8 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 
 The user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step. The Epistem-AI feature will also be available here.
 
+![](images/luma-int-screenshot\Step-2-Land-Use-and-Land-Cover-Classification.png)
+
 ## Step 2.1: Land Use & Land Cover Classification Scheme
 
 **Overview**
@@ -263,11 +282,15 @@ Luma supports user-defined classification schemes and default classification or 
 
 The user creates their own classification scheme manually or by uploading a file.
 
+![](images/luma-int-screenshot\Step-2.1.1-Own-Classification.png)
+
 #### Step 2.1.1.1: Manual Input {#sec-map-generation-manual-input}
 
 **Overview**
 
 The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.
+
+![](images/luma-int-screenshot\Step-2.1.1.1-Manual-Input.png)
 
 **Process**
 
@@ -284,7 +307,7 @@ The user inputs the land use and land cover classes they want to map. They need 
     - Upload Classes option still available; if clicked, continue to @sec-map-generation-upload-classes Process 1
     - Confirm LULC Class enabled; once clicked, all inputs are locked and a summary table is previewed, along with three options:
       - "Edit" (pencil icon); continue to Process 4
-      - "Download LULC classes (CSV)"; A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
+      - "Download LULC classes (CSV)"; a `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
       - "Next"; continue to Process 5
     :::
 
@@ -304,7 +327,7 @@ The user inputs the land use and land cover classes they want to map. They need 
     - If all classes are deleted, back to the beginning of @sec-map-generation-lulc-classification
     - "Done" button appears; if clicked:
       - "Next" button appears; continue to Process 5
-      - "Download LULC classes (CSV)" appears; A `.csv` file containing the inputted classification scheme is downloaded to user’s local device
+      - "Download LULC classes (CSV)" appears; a `.csv` file containing the inputted classification scheme is downloaded to user’s local device
     :::
 
     ::: callout-important
@@ -322,6 +345,8 @@ The user inputs the land use and land cover classes they want to map. They need 
 **Overview**
 
 The user downloads a classification template `.csv` file and uses it to list the land use and land cover classes they want to map. After filling the template, they need to upload the file to be used as the custom classification scheme.
+
+![](images/luma-int-screenshot\Step-2.1.1.2-Upload-Classes.png)
 
 **Process**
 
@@ -345,7 +370,7 @@ The user downloads a classification template `.csv` file and uses it to list the
     - Confirm LULC Class enabled, if clicked, a summary table is previewed, along with three options:
 
       - "Edit" (pencil icon); continue to Process 4
-      - "Download LUCL classes (CSV)"; A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
+      - "Download LUCL classes (CSV)"; a `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
       - "Next"; continue to Process 5
     :::
 
@@ -366,6 +391,8 @@ The user downloads a classification template `.csv` file and uses it to list the
 **Overview**
 
 The user activates class options from default Luma land use and land cover classification scheme. The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.
+
+![](images/luma-int-screenshot\Step-2.1.2-Default-Classification.png)
 
 **Process**
 
@@ -398,6 +425,8 @@ The user activates class options from default Luma land use and land cover class
 
 This feature is coming soon.
 
+![](images/luma-int-screenshot\Step-2.2-Try-Epistem-AI-Recommendations.png)
+
 # Step 3: Mapping Sample Data {#sec-map-generation-sample-data}
 
 **Overview**
@@ -409,6 +438,8 @@ The user prepares the sample data for land use and land cover classification in 
 **Overview**
 
 The user uploads their existing sample data in `.zip` file format.
+
+![](images/luma-int-screenshot\Step-3.1-Upload-Sample-Data.png)
 
 **Process**
 
@@ -459,6 +490,8 @@ The user uploads their existing sample data in `.zip` file format.
 
 The user adds points or draws polygons directly on the interactive displayed map for all land use and land cover classes in their mapping area.
 
+![](images/luma-int-screenshot\Step-3.2-On-Screen-Sampling.png)
+
 ### Step 3.2.1: Add Point
 
 **Overview**
@@ -470,6 +503,8 @@ The user adds points on the interactive displayed map and input their land use a
 **Overview**
 
 The user adds a point and assigns its corresponding land use and land cover class one by one from the drop down list.
+
+![](images/luma-int-screenshot\Step-3.2.1.1-Single-Point-Input.png)
 
 **Process**
 
@@ -514,6 +549,8 @@ The user adds a point and assigns its corresponding land use and land cover clas
 **Overview**
 
 The user adds multiple points (up to 10 points) at once and assigns the same land use and land cover class to all selected points.
+
+![](images/luma-int-screenshot\Step-3.2.1.2-Bulk-Point-Input.png)
 
 **Process**
 
@@ -565,6 +602,8 @@ This feature is coming soon.
 
 The user can choose a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information.
 
+![](images/luma-int-screenshot\Step-4-Customize-Mapping-Parameters.png)
+
 ## Step 4.1: Predictor Selection {#sec-map-generation-predictors}
 
 **Overview**
@@ -576,6 +615,8 @@ The user is prompted to select the predictors currently supported by Luma Geospa
 **Overview**
 
 The user selects the predictors currently supported by Luma Geospatial Engine by using check boxes.
+
+![](images/luma-int-screenshot\Step-4.2.1-Default-Predictors.png)
 
 **Process**
 
@@ -617,11 +658,15 @@ The user selects the predictors currently supported by Luma Geospatial Engine by
 
 This feature is coming soon.
 
+![](images/luma-int-screenshot\Step-4.2.2-Upload-Predictors.png)
+
 ## Step 4.2: Classification Model Training {#sec-map-generation-model-training}
 
 **Overview**
 
 The user is given the option to adjust the classification model by adjusting the value of the Random Forest variable to classify the satellite images into land use and land cover classes using training data. The default value of the Random Forest parameters are 150 number of trees and 1 minimum leaf population. The user is also prompted to define the proportion to split the sample data into training and validation dataset. The default value of the dataset proportion is 70% for training data and 30% for validation data.
+
+![](images/luma-int-screenshot\Step-4.2-Classification-Model-Training.png)
 
 **Process**
 
@@ -665,11 +710,15 @@ The user is given the option to adjust the classification model by adjusting the
 
 The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
 
+![](images/luma-int-screenshot\Step-5-Map-Generation.png)
+
 ## Step 5.1: Model Accuracy Assessment
 
 **Overview**
 
 The user is shown how accurately the mapping process distinguished their land use and land cover classes.
+
+![](images/luma-int-screenshot\Step-5.1-Model-Accuracy-Assessment.png)
 
 **Process**
 
@@ -706,6 +755,8 @@ The user is shown how accurately the mapping process distinguished their land us
 **Overview**
 
 The user can visualize the LULC classification result on the map canvas along with the training data layer and is shown the proportion of each LULC class.
+
+![](images/luma-int-screenshot\Step-5.2-LULC-Class-Composition.png)
 
 ## Step 5.3: Thematic Accuracy Assessment
 
