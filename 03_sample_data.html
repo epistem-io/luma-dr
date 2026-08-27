@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -41,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3f70bac5631458d474a321d4182f9338.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3d497cff885f6278d37568d0ef0763f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -85,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./03_sample_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./03_sample_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -169,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Luma Modules</span></a>
+ <span class="menu-text">Luma Geospatial Engine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -225,6 +228,35 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Interface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_map_generation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Map Generation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_change_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Change Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_collaborative_mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Mapping</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -251,10 +283,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sec-on-screen-sampling" id="toc-sec-on-screen-sampling" class="nav-link" data-scroll-target="#sec-on-screen-sampling"><span class="header-section-number">3.2.3</span> On-Screen Sampling</a></li>
   <li><a href="#sec-default-sample-data" id="toc-sec-default-sample-data" class="nav-link" data-scroll-target="#sec-default-sample-data"><span class="header-section-number">3.2.4</span> Using Default Sample Data</a></li>
   </ul></li>
-  <li><a href="#sec-sample-data-preview" id="toc-sec-sample-data-preview" class="nav-link" data-scroll-target="#sec-sample-data-preview"><span class="header-section-number">3.3</span> Sample Data Preview</a>
-  <ul class="collapse">
-  <li><a href="#sample-data-preview" id="toc-sample-data-preview" class="nav-link" data-scroll-target="#sample-data-preview"><span class="header-section-number">3.3.1</span> Sample Data Preview</a></li>
-  </ul></li>
+  <li><a href="#sec-sample-data-preview" id="toc-sec-sample-data-preview" class="nav-link" data-scroll-target="#sec-sample-data-preview"><span class="header-section-number">3.3</span> Sample Data Preview</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -262,7 +291,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./03_sample_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./03_sample_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-module-3" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></h1>
 </div>
@@ -331,9 +360,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="output" class="level1 unnumbered">
 <h1 class="unnumbered">Output</h1>
-<ol type="1">
-<li>Statistical analyses of the sample data.</li>
-</ol>
+<p>Statistical analyses of the sample data.</p>
 </section>
 <section id="process" class="level1 unnumbered">
 <h1 class="unnumbered">Process</h1>
@@ -341,26 +368,6 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="3.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules"><span class="header-section-number">3.1</span> Checking Prerequisites from Previous Modules</h2>
 <section id="checking-prerequisites-from-previous-modules-1" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules-1"><span class="header-section-number">3.1.1</span> Checking Prerequisites from Previous Modules</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>System Response 3.1: Checking prerequisites from previous modules</strong></p>
-<ol type="1">
-<li><p>If the user has not completed <a href="@sec-module-1">Module 1</a> and <a href="@sec-module-2">Module 2</a>, the system displays a warning message prompting them to finish those modules first.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.</p>
-</div>
-</div></li>
-<li><p>The user is prompted to choose how to add sample data, either by <a href="#sec-user-upload-their-own-training-data">uploading their own dataset</a>, using <a href="#sec-on-screen-sampling">on-screen sampling</a>, or using <a href="@sec-default-sample-data">default sample data</a> .</p></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <p>This sub-step does not involve any operations within the Luma Geospatial Engine.</p>
 </section>
 </section>
@@ -368,28 +375,8 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="3.2" class="anchored" data-anchor-id="sample-data-generation"><span class="header-section-number">3.2</span> Sample Data Generation</h2>
 <section id="sec-user-upload-their-own-training-data" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-user-upload-their-own-training-data"><span class="header-section-number">3.2.1</span> User Uploads Their Own Sample Data</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>User Journey 3.1: Identifying sample data availability</strong></p>
 <ol type="1">
-<li><p>The user is prompted to upload a <code>.zip</code> file containing their sample data.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system provides an error notification if the <code>.shp</code> file is not found inside the <code>.zip</code> file.</p>
-</div>
-</div></li>
-<li><p>The user is prompted to specify the column header that specify the LULC class. This is a part of <strong>User Journey 3.2a: Uploading sample data</strong></p></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
-<ol type="1">
-<li><p>The system verifies the format data input of the <code>.shp</code> inside the <code>.zip</code> . This is a part of <strong>System Response 3.2.a: Verifying the uploaded sample data format</strong></p></li>
+<li><p>The system verifies the format data input of the <code>.shp</code> inside the <code>.zip</code> .</p></li>
 <li><p>Once the input format data is validated, the system runs <a href="#sec-verify-sample-data" class="quarto-xref"><span>Section 3.2.2</span></a></p></li>
 <li><p>The system loads the sample data after verifying the upload</p>
 <ul>
@@ -428,76 +415,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sec-verify-sample-data" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-verify-sample-data"><span class="header-section-number">3.2.2</span> Verifying Sample Data from User’s Input</h3>
-<p><strong>Luma User Journey</strong></p>
-<ol type="1">
-<li><p>The user receives continuous feedback on the status of their sample data verification. Five steps are displayed in the status panel:</p>
-<ol type="1">
-<li>Checking the field containing class names</li>
-<li>Validating the class entries</li>
-<li>Checking whether class IDs are sufficient</li>
-<li>Verifying that sample points fall within the AOI</li>
-<li>Generating a summary of the sample data status</li>
-</ol></li>
-<li><p>The user is shown a preview of the uploaded sample data on a map canvas and a preview table of the uploaded sample data.</p></li>
-<li><p>The user is then prompted to process the sample data.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows a confirmation if the sample data is successfully verified.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system provides an error notification if the system fails to conduct the sample data verification, along with the specific message at which step the validation failed.</p>
-</div>
-</div></li>
-<li><p>The user is provided with the summary display of the sample data.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A notification shows a highlight of which class has insufficient sample data, the number of sample data that falls outside the AOI, and the total number of classes that has sample data outside the AOI.</p>
-</div>
-</div></li>
-<li><p>The system provides an option to move to <a href="#sec-on-screen-sampling">on-screen sampling</a> to add more sample data. This is a part of <strong>User Journey 3.2.b: Choosing to add new sample data for insufficient class</strong></p></li>
-<li><p>If the user is satisfied with the sample data, the user is prompted to finalize the sample data by clicking a button.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows a confirmation if the sample data is successfully saved into the system.</p>
-</div>
-</div></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
-<p>This is a part of <strong>System Response 3.2.b: Verifying the uploaded sample data’s content and adding new sample data</strong></p>
 <ol type="1">
 <li><p>The system checks which column in the sample dataset should be used as the class label.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -580,78 +497,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sec-on-screen-sampling" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="sec-on-screen-sampling"><span class="header-section-number">3.2.3</span> On-Screen Sampling</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>System Response 3.3.a: On screen sampling facility</strong></p>
-<ol type="1">
-<li><p>The system shows an interactive map where user can add a sample data. If the user already uploaded their own sample data, the verified sample data will be shown on the interactive map.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows a confirmation that the uploaded sample data has been loaded to the on-screen canvas, along with the number of sample data uploaded.</p>
-</div>
-</div></li>
-<li><p>The system lists all LULC classes defined in Module 2. The user assign new sample points accordingly to the correct class.</p></li>
-<li><p>The system offers an option to save the result from on-screen sampling process to their local device.</p></li>
-<li><p>The user is prompted to finalize the on-screen sampling process by clicking a button.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Once, finalized the system shows a summary of the number of the modified sample data after on-screen process.</p>
-</div>
-</div></li>
-<li><p>The system then moves to <a href="#sec-sample-data-preview" class="quarto-xref"><span>Section 3.3</span></a>.</p></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <p>This sub-step does not involve any operations within the Luma Geospatial Engine. The on-screen sampling feature was developed using <code>folium</code> for the Streamlit development.</p>
 </section>
 <section id="sec-default-sample-data" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="sec-default-sample-data"><span class="header-section-number">3.2.4</span> Using Default Sample Data</h3>
-<p><strong>Luma User Journey</strong></p>
-<ol type="1">
-<li><p>The user is automatically directed to use the default sample data if the user <a href="@sec-user-select-existing-lulc-template">chose to use an existing LULC scheme in Module 2</a></p></li>
-<li><p>The system displays the area of the AOI and the number of sample data loaded on a map canvas.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows an error notification if RESTORE+ data is failed to be loaded. This could be due to the AOI located outside the scope of RESTORE+ dataset, or the AOI is too big.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system displayed a summary of the number of sample data loaded from RESTORE+ data that matches with the AOI saved in the system, and the area of AOI in km2.</p>
-</div>
-</div></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <ol type="1">
 <li>The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset.</li>
 </ol>
@@ -659,62 +508,12 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sec-sample-data-preview" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-sample-data-preview"><span class="header-section-number">3.3</span> Sample Data Preview</h2>
-<section id="sample-data-preview" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="sample-data-preview"><span class="header-section-number">3.3.1</span> Sample Data Preview</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>System Response 3.4: Verified sample data preview</strong></p>
-<ol type="1">
-<li><p>The user is provided with the summary display of the <strong>updated</strong> sample data.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A notification shows a highlight of which class has insufficient sample data, the number of sample data that falls outside the AOI, and the total number of classes that has sample data outside the AOI.</p>
-</div>
-</div></li>
-<li><p>The user is prompted to confirm that they will use the sample dataset.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows a confirmation that the sample data has been saved into the system.</p>
-</div>
-</div></li>
-<li><p>The user is given the option to proceed to <a href="04_sample_data_quality.html" class="quarto-xref"><span>Chapter 4</span></a> .</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system disables the option to continue to the next module if the system does not detect any sample data stored in the system.</p>
-</div>
-</div></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <ol type="1">
 <li><p>The system runs <a href="#sec-verify-sample-data" class="quarto-xref"><span>Section 3.2.2</span></a> for the <strong>updated</strong> sample data.</p></li>
 <li><p>The system saved the sample data as an object to be loaded in the next modules.</p></li>
 </ol>
 
 
-</section>
 </section>
 </section>
 

@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Map Generation – Luma Development Reference</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./interface_change_analysis.html" rel="next">
+<link href="./placeholders/module08_placeholder.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3d497cff885f6278d37568d0ef0763f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_map_generation.html">Map Generation</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Luma Development Reference</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://epistem.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-globe"></i></a>
+    <a href="./files/visio_bootcamp.pdf" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/epistem-io/luma-stack" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About Luma</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./writing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Development Guideline</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testing_guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testing Guideline for Developers</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">General Development Settings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Environment Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ee_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Earth Engine Initialization and Authentication</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./helpers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Helpers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Geospatial Engine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Acquisition of Near-Cloud-Free Satellite Imagery</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_classification_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">LULC Classification Scheme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_sample_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sample Data Generation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_sample_data_quality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_predictor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./placeholders/module08_placeholder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Interface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_map_generation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Map Generation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_change_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Change Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_collaborative_mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Mapping</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#sec-map-generation-basic-information" id="toc-sec-map-generation-basic-information" class="nav-link" data-scroll-target="#sec-map-generation-basic-information">Step 1: Basic Information</a>
+  <ul class="collapse">
+  <li><a href="#step-1.1-geographic-area" id="toc-step-1.1-geographic-area" class="nav-link" data-scroll-target="#step-1.1-geographic-area">Step 1.1: Geographic Area</a>
+  <ul class="collapse">
+  <li><a href="#step-1.1.1-upload-area" id="toc-step-1.1.1-upload-area" class="nav-link" data-scroll-target="#step-1.1.1-upload-area">Step 1.1.1: Upload Area</a></li>
+  <li><a href="#step-1.1.2-draw-area" id="toc-step-1.1.2-draw-area" class="nav-link" data-scroll-target="#step-1.1.2-draw-area">Step 1.1.2: Draw Area</a></li>
+  <li><a href="#step-1.1.3-administrative-boundaries" id="toc-step-1.1.3-administrative-boundaries" class="nav-link" data-scroll-target="#step-1.1.3-administrative-boundaries">Step 1.1.3: Administrative Boundaries</a></li>
+  </ul></li>
+  <li><a href="#sec-map-generation-time-period" id="toc-sec-map-generation-time-period" class="nav-link" data-scroll-target="#sec-map-generation-time-period">Step 1.2: Time Period</a></li>
+  <li><a href="#sec-map-generation-satellite-imagery" id="toc-sec-map-generation-satellite-imagery" class="nav-link" data-scroll-target="#sec-map-generation-satellite-imagery">Step 1.3: Satellite Imagery</a></li>
+  </ul></li>
+  <li><a href="#sec-map-generation-lulc-classification" id="toc-sec-map-generation-lulc-classification" class="nav-link" data-scroll-target="#sec-map-generation-lulc-classification">Step 2: Land Use and Land Cover Classification</a>
+  <ul class="collapse">
+  <li><a href="#step-2.1-land-use-land-cover-classification-scheme" id="toc-step-2.1-land-use-land-cover-classification-scheme" class="nav-link" data-scroll-target="#step-2.1-land-use-land-cover-classification-scheme">Step 2.1: Land Use &amp; Land Cover Classification Scheme</a>
+  <ul class="collapse">
+  <li><a href="#step-2.1.1-own-classification" id="toc-step-2.1.1-own-classification" class="nav-link" data-scroll-target="#step-2.1.1-own-classification">Step 2.1.1: Own Classification</a></li>
+  <li><a href="#step-2.1.2-default-classification" id="toc-step-2.1.2-default-classification" class="nav-link" data-scroll-target="#step-2.1.2-default-classification">Step 2.1.2: Default Classification</a></li>
+  </ul></li>
+  <li><a href="#step-2.2-try-epistem-ai-recommendations" id="toc-step-2.2-try-epistem-ai-recommendations" class="nav-link" data-scroll-target="#step-2.2-try-epistem-ai-recommendations">Step 2.2: Try Epistem-AI Recommendations</a></li>
+  </ul></li>
+  <li><a href="#sec-map-generation-sample-data" id="toc-sec-map-generation-sample-data" class="nav-link" data-scroll-target="#sec-map-generation-sample-data">Step 3: Mapping Sample Data</a>
+  <ul class="collapse">
+  <li><a href="#sec-map-generation-upload-sample-data" id="toc-sec-map-generation-upload-sample-data" class="nav-link" data-scroll-target="#sec-map-generation-upload-sample-data">Step 3.1: Upload Sample Data</a></li>
+  <li><a href="#sec-map-generation-oss" id="toc-sec-map-generation-oss" class="nav-link" data-scroll-target="#sec-map-generation-oss">Step 3.2: On Screen Sampling</a>
+  <ul class="collapse">
+  <li><a href="#step-3.2.1-add-point" id="toc-step-3.2.1-add-point" class="nav-link" data-scroll-target="#step-3.2.1-add-point">Step 3.2.1: Add Point</a></li>
+  <li><a href="#step-3.2.2-draw-area" id="toc-step-3.2.2-draw-area" class="nav-link" data-scroll-target="#step-3.2.2-draw-area">Step 3.2.2: Draw Area</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sec-map-generation-parameters" id="toc-sec-map-generation-parameters" class="nav-link" data-scroll-target="#sec-map-generation-parameters">Step 4: Customize Mapping Parameters</a>
+  <ul class="collapse">
+  <li><a href="#sec-map-generation-predictors" id="toc-sec-map-generation-predictors" class="nav-link" data-scroll-target="#sec-map-generation-predictors">Step 4.1: Predictor Selection</a>
+  <ul class="collapse">
+  <li><a href="#step-4.2.1-default-predictors" id="toc-step-4.2.1-default-predictors" class="nav-link" data-scroll-target="#step-4.2.1-default-predictors">Step 4.2.1: Default Predictors</a></li>
+  <li><a href="#step-4.2.2-upload-predictors" id="toc-step-4.2.2-upload-predictors" class="nav-link" data-scroll-target="#step-4.2.2-upload-predictors">Step 4.2.2: Upload Predictors</a></li>
+  </ul></li>
+  <li><a href="#sec-map-generation-model-training" id="toc-sec-map-generation-model-training" class="nav-link" data-scroll-target="#sec-map-generation-model-training">Step 4.2: Classification Model Training</a></li>
+  </ul></li>
+  <li><a href="#sec-map-generation-final" id="toc-sec-map-generation-final" class="nav-link" data-scroll-target="#sec-map-generation-final">Step 5: Map Generation</a>
+  <ul class="collapse">
+  <li><a href="#step-5.1-model-accuracy-assessment" id="toc-step-5.1-model-accuracy-assessment" class="nav-link" data-scroll-target="#step-5.1-model-accuracy-assessment">Step 5.1: Model Accuracy Assessment</a></li>
+  <li><a href="#step-5.2-lulc-class-composition" id="toc-step-5.2-lulc-class-composition" class="nav-link" data-scroll-target="#step-5.2-lulc-class-composition">Step 5.2: LULC Class Composition</a></li>
+  <li><a href="#step-5.3-thematic-accuracy-assessment" id="toc-step-5.3-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#step-5.3-thematic-accuracy-assessment">Step 5.3: Thematic Accuracy Assessment</a></li>
+  </ul></li>
+  <li><a href="#additional-features" id="toc-additional-features" class="nav-link" data-scroll-target="#additional-features">Additional Features</a>
+  <ul class="collapse">
+  <li><a href="#feature-1-save-progress" id="toc-feature-1-save-progress" class="nav-link" data-scroll-target="#feature-1-save-progress">Feature 1: Save Progress</a></li>
+  <li><a href="#feature-2-download-map" id="toc-feature-2-download-map" class="nav-link" data-scroll-target="#feature-2-download-map">Feature 2: Download Map</a></li>
+  <li><a href="#feature-3-share-map" id="toc-feature-3-share-map" class="nav-link" data-scroll-target="#feature-3-share-map">Feature 3: Share Map</a></li>
+  <li><a href="#feature-4-improve-accuracy" id="toc-feature-4-improve-accuracy" class="nav-link" data-scroll-target="#feature-4-improve-accuracy">Feature 4: Improve Accuracy</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_map_generation.html">Map Generation</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-map-generation" class="quarto-section-identifier">Map Generation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level1 unnumbered">
+<h1 class="unnumbered">Overview</h1>
+<p>In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. The user cannot skip steps; each step unlocks the next only after the Geospatial Engine (GE) confirms the required output has been produced and saved.</p>
+</section>
+<section id="sec-map-generation-basic-information" class="level1">
+<h1>Step 1: Basic Information</h1>
+<p><strong>Overview</strong></p>
+<p>Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite source.</p>
+<p><img src="images/luma-int-screenshot\Step-1-Basic-Information.png" class="img-fluid"></p>
+<section id="step-1.1-geographic-area" class="level2">
+<h2 class="anchored" data-anchor-id="step-1.1-geographic-area">Step 1.1: Geographic Area</h2>
+<p><strong>Overview</strong></p>
+<p>This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map.</p>
+<p><img src="images/luma-int-screenshot\Step-1.1-Geographic-Area.png" class="img-fluid"></p>
+<section id="step-1.1.1-upload-area" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.1.1-upload-area">Step 1.1.1: Upload Area</h3>
+<p><strong>Overview</strong></p>
+<p>The user uploads a polygon file to define the geographic boundary of the area they want to map.</p>
+<p><img src="images/luma-int-screenshot\Step-1.1.1-Upload-Area.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user can upload their own AOI file in <code>.zip</code> format that includes all required shapefile components (<code>.shp</code>, <code>.shx</code>, <code>.dbf</code>, <code>.prj</code>).</p></li>
+<li><p>The system checks on all required shapefile components that needs to be put in the <code>.zip</code> file. The system also supports uploads of <code>.kml</code> or <code>.kmz</code> files.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If all shapefile components pass validation, continue to Process 3</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the shapefile components do not match, an error warning is displayed: ’No <code>.shp</code> file found in the <code>.zip</code> file.’</p>
+</div>
+</div></li>
+<li><p>The system retrieves AOI file information.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If all file information is correct, continue to Process 4</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the file information cannot be found, an error warning is displayed: ’AOI not found’</p>
+</div>
+</div></li>
+<li><p>The system retrieves AOI file area size information.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the area size information is within the maximum area allowed, continue to Process 5</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the area size information is too large, an error warning is displayed: ’Draw area exceeds maximum limit’</p>
+</div>
+</div></li>
+<li><p>The system validates the geometry of the AOI for both <code>.shp</code> and <code>.kml</code> using <a href="@sec-validation-of-shapefile-geometries">the <code>shapefile_validator</code> functions</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If validation is successful, continue to Process 6</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If validation failed, an error warning is displayed: ‘Geometry validation failed.’</p>
+</div>
+</div></li>
+<li><p>The system returns the validated and processed shapefile.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation when the AOI is loaded successfully by showing a purple box with ‘Approximate size of your mapping area: X [number] Ha’ displayed</p>
+</div>
+</div></li>
+<li><p>If the user clicks on “Reselect Area”, the uploaded file is deleted, and the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p></li>
+</ol>
+</section>
+<section id="step-1.1.2-draw-area" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.1.2-draw-area">Step 1.1.2: Draw Area</h3>
+<p><strong>Overview</strong></p>
+<p>The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new corner to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.</p>
+<p><img src="images/luma-int-screenshot\Step-1.1.2-Draw-Area.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user creates a polygon by clicking on the map and selects a spatial resolution from the available options.</p></li>
+<li><p>The system retrieves the AOI area size information.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation when the AOI is loaded successfully by showing a purple box with ‘Approximate size of your mapping area: X [number] Ha’ displayed</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the area size information is too large, an error warning is displayed: ’Draw area exceeds maximum limit’</p>
+</div>
+</div></li>
+<li><p>If the user clicks on “Reselect Area”, the polygon is deleted, and the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p></li>
+</ol>
+</section>
+<section id="step-1.1.3-administrative-boundaries" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.1.3-administrative-boundaries">Step 1.1.3: Administrative Boundaries</h3>
+<p><strong>Overview</strong></p>
+<p>The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. The system provides a preview of the selected boundary.</p>
+<p><img src="images/luma-int-screenshot\Step-1.1.3-Administrative-Boundaries.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user selects an administrative boundary from the dropdown and a spatial resolution from the available options.</p></li>
+<li><p>The system retrieves the AOI information from the selected administrative boundary selections. The system runs the related functions in <a href="01_data_acquisition.html#sec-aoi-from-administrative-boundary" class="quarto-xref"><span>AOI from Indonesia Administrative Boundaries</span></a> and provides a preview of the selected boundary.</p></li>
+</ol>
+</section>
+</section>
+<section id="sec-map-generation-time-period" class="level2">
+<h2 class="anchored" data-anchor-id="sec-map-generation-time-period">Step 1.2: Time Period</h2>
+<p><strong>Overview</strong></p>
+<p>The user defines the time period for the land use and land cover map. User chooses the range of period of satellite imagery in a single year format or a custom date range format.</p>
+<p><img src="images/luma-int-screenshot\Step-1.2-Time-Period.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user chooses a time interval selection “By year” and a year (1972–current year).</p></li>
+<li><p>The system retrieves the selected year and the options for the Satellite Imagery (<a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>) are limited to the available sensor images depending on the selected year.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If time interval nor year is not selected, the options on Satellite Imagery (<a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>) are not available</p>
+</div>
+</div></li>
+<li><p>The user chooses a time interval selection ”Custom date range” along with the start and end dates.</p></li>
+<li><p>The system provides a preview of calendar for user to choose the start and end dates.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If time interval nor date range is not selected, the options on Satellite Imagery (<a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>) are not available</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="sec-map-generation-satellite-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="sec-map-generation-satellite-imagery">Step 1.3: Satellite Imagery</h2>
+<p><strong>Overview</strong></p>
+<p>The user chooses a satellite imagery source and sets the maximum cloud coverage. The system retrieves all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.</p>
+<p><img src="images/luma-int-screenshot\Step-1.3-Satellite-Imagery.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The system checks the selected year in <a href="#sec-map-generation-time-period" class="quarto-xref"><span>Step 1.2: Time Period</span></a> and shows the available sensors based on the selected year.</p></li>
+<li><p>The user sets a preferred cloud cover threshold, if none chosen, the default value of 30% is used.</p></li>
+<li><p>The system performs pre-processing functions in <a href="01_data_acquisition.html#sec-input-spatial-image-parameters" class="quarto-xref"><span>Satellite Data Acquisition and Filtering</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When all information is collected, continue to Process 4</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.</p>
+</div>
+</div></li>
+<li><p>The system returns the collected satellite image information.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The user’s input summary is displayed in a purple box, showing:</p>
+<ul>
+<li>Mapping area: approximate size of your mapping area</li>
+<li>Time period selected: time interval, selected period, satellite input date range</li>
+<li>Satellite imagery: satellite imagery source, maximum cloudy area</li>
+</ul>
+<p>Two buttons appear:</p>
+<ul>
+<li>“Change Input”; continue to Process 5</li>
+<li>“View Satellite Imagery”; continue to Process 8</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.</p>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Change Input” button, “Edit” (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:</p>
+<ul>
+<li><p>“Change Input”, continue to Process 6, or</p></li>
+<li><p>“Discard Changes”, continue to Process 7.</p></li>
+</ul></li>
+</ol>
+<!-- -->
+<ol start="6" type="1">
+<li><p>If the user clicks on the “Change Input” button in the pop up window, all inputs are being reset, back to the beginning of <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p></li>
+<li><p>If the user clicks on the “Discard Changes” button in the pop up window, the panel still displays the user’s input summary. “Cancel Change” button appear, while “View Satellite Imagery” is disabled. Once the “Cancel Change” button is clicked, back to Process 4.</p></li>
+<li><p>If the user clicks on the “View Satellite Imagery” button, the system returns the collected satellite image information.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A table of Generated Composite of Imagery Obtained appeared under the User’s Input Summary along with Cloud Coverage Statistic.</li>
+<li>Composite of satellite imagery appears on the base map, with default setting of true colour (RGB).</li>
+<li>Layers option appears on the bottom right corner of the screen, includes:
+<ul>
+<li>Mapping area; with polygon toggle</li>
+<li>Composite of satellite imagery; with true colour (RGB), false colour infrared (NIR/Red/Green), land/water (NIR/SWIR1/RED) toggle options</li>
+<li>LULC class; still disabled in this step</li>
+</ul></li>
+<li>User can then download the composite, leading to Process 9.</li>
+<li>“Next” button appears, which leads to <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user downloads composite, a <code>.zip</code> file containing satellite image composite is downloaded to user’s local device.</p></li>
+</ol>
+</section>
+</section>
+<section id="sec-map-generation-lulc-classification" class="level1">
+<h1>Step 2: Land Use and Land Cover Classification</h1>
+<p><strong>Overview</strong></p>
+<p>The user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step. The Epistem-AI feature will also be available here.</p>
+<p><img src="images/luma-int-screenshot\Step-2-Land-Use-and-Land-Cover-Classification.png" class="img-fluid"></p>
+<section id="step-2.1-land-use-land-cover-classification-scheme" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.1-land-use-land-cover-classification-scheme">Step 2.1: Land Use &amp; Land Cover Classification Scheme</h2>
+<p><strong>Overview</strong></p>
+<p>Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.</p>
+<section id="step-2.1.1-own-classification" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.1.1-own-classification">Step 2.1.1: Own Classification</h3>
+<p><strong>Overview</strong></p>
+<p>The user creates their own classification scheme manually or by uploading a file.</p>
+<p><img src="images/luma-int-screenshot\Step-2.1.1-Own-Classification.png" class="img-fluid"></p>
+<section id="sec-map-generation-manual-input" class="level4">
+<h4 class="anchored" data-anchor-id="sec-map-generation-manual-input">Step 2.1.1.1: Manual Input</h4>
+<p><strong>Overview</strong></p>
+<p>The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.</p>
+<p><img src="images/luma-int-screenshot\Step-2.1.1.1-Manual-Input.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user enters LULC class name and pick a colour out of 28 colour options.</p></li>
+<li><p>The system stores each class entry individually as it is added.</p></li>
+<li><p>The system validates class ID, name, and checks for uniqueness with the functions in <a href="02_classification_scheme.html#sec-user-entering-the-classification-manually" class="quarto-xref"><span>User Entering the Classification Manually</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>All added classes are displayed in the class recorded table for preview</li>
+<li>Upload Classes option still available; if clicked, continue to <a href="#sec-map-generation-upload-classes" class="quarto-xref"><span>Step 2.1.1.2: Upload Classes</span></a> Process 1</li>
+<li>Confirm LULC Class enabled; once clicked, all inputs are locked and a summary table is previewed, along with three options:
+<ul>
+<li>“Edit” (pencil icon); continue to Process 4</li>
+<li>“Download LULC classes (CSV)”; a <code>.csv</code>&nbsp;file containing the inputted classification scheme is downloaded to user’s local device.</li>
+<li>“Next”; continue to Process 5</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system returns a validity flag with an error message if invalid</p>
+</div>
+</div></li>
+<li><p>If the user edits or deletes the classes in the summary table preview, the system stores each class entry individually as it is added and runs the functions in <a href="02_classification_scheme.html#sec-user-entering-the-classification-manually" class="quarto-xref"><span>User Entering the Classification Manually</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Each class row can be edited individually</li>
+<li>New classes can be added with Add Class button</li>
+<li>If all classes are deleted, back to the beginning of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a></li>
+<li>“Done” button appears; if clicked:
+<ul>
+<li>“Next” button appears; continue to Process 5</li>
+<li>“Download LULC classes (CSV)” appears; a <code>.csv</code>&nbsp;file containing the inputted classification scheme is downloaded to user’s local device</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system returns a validity flag with an error message if invalid</p>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Next” button, the user will be directed to <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a> Process 8 is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
+</ol>
+</section>
+<section id="sec-map-generation-upload-classes" class="level4">
+<h4 class="anchored" data-anchor-id="sec-map-generation-upload-classes">Step 2.1.1.2: Upload Classes</h4>
+<p><strong>Overview</strong></p>
+<p>The user downloads a classification template <code>.csv</code> file and uses it to list the land use and land cover classes they want to map. After filling the template, they need to upload the file to be used as the custom classification scheme.</p>
+<p><img src="images/luma-int-screenshot\Step-2.1.1.2-Upload-Classes.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user downloads the&nbsp;<code>.csv</code>&nbsp;file containing the classification scheme information template into the user’s local device.</p></li>
+<li><p>The user uploads the&nbsp;<code>.csv</code>&nbsp;file containing the classification scheme information.</p></li>
+<li><p>The system stores the file uploaded and runs the functions in <a href="02_classification_scheme.html#sec-user-uploading-their-own-classification" class="quarto-xref"><span>User Uploading Their Own Classification Scheme</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the classification scheme file successfully uploaded:</p>
+<ul>
+<li><p>A purple box indicating the uploaded file with its file size appears</p></li>
+<li><p>A summary table of recorded classes with its ID number and colour class appears</p></li>
+<li><p>Manual Input option still available; if clicked, continue to <a href="#sec-map-generation-manual-input" class="quarto-xref"><span>Step 2.1.1.1: Manual Input</span></a> Process 3</p></li>
+<li><p>Confirm LULC Class enabled, if clicked, a summary table is previewed, along with three options:</p>
+<ul>
+<li>“Edit” (pencil icon); continue to Process 4</li>
+<li>“Download LUCL classes (CSV)”; a <code>.csv</code>&nbsp;file containing the inputted classification scheme is downloaded to user’s local device.</li>
+<li>“Next”; continue to Process 5</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system returns a validity flag with an error message if invalid</p>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Edit” button, each class row can be edited individually. The uploaded file can be deleted, if clicked, all inputs are being reset, back to the beginning of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
+<li><p>If the user clicks on the “Next” button, the user will be directed to <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a> Process 8 is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="step-2.1.2-default-classification" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.1.2-default-classification">Step 2.1.2: Default Classification</h3>
+<p><strong>Overview</strong></p>
+<p>The user activates class options from default Luma land use and land cover classification scheme. The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.</p>
+<p><img src="images/luma-int-screenshot\Step-2.1.2-Default-Classification.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user selects subsets of the default classes.</p></li>
+<li><p>The classification table is being saved to the system.</p></li>
+<li><p>The system loads the selected classes from a dataset by running functions in <a href="02_classification_scheme.html#sec-user-select-existing-lulc-template" class="quarto-xref"><span>User Selecting a Default Classification Scheme</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A summary table of recorded classes with its ID number and colour class appears</li>
+<li>Two buttons appear:
+<ul>
+<li>“Reset classification”; continue to Process 4</li>
+<li>“Next”; continue to Process 5</li>
+</ul></li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on “Reset classification”, All inputs are being reset, back to the beginning of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
+<li><p>If the user clicks on the “Next” button, the user will be directed to <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
+<li><p>If the user clicks on the “Edit” button, all inputs are being reset, back to the beginning of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a> Process 8 is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="step-2.2-try-epistem-ai-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.2-try-epistem-ai-recommendations">Step 2.2: Try Epistem-AI Recommendations</h2>
+<p><strong>Overview</strong></p>
+<p>This feature is coming soon.</p>
+<p><img src="images/luma-int-screenshot\Step-2.2-Try-Epistem-AI-Recommendations.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="sec-map-generation-sample-data" class="level1">
+<h1>Step 3: Mapping Sample Data</h1>
+<p><strong>Overview</strong></p>
+<p>The user prepares the sample data for land use and land cover classification in their mapping area. The user can upload existing data or create samples directly in Luma through on-screen sampling. In this step the Sample Data Summary selected in the previous step is also shown. The spectral separability of LULC classes is also being assessed in this step using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p>
+<section id="sec-map-generation-upload-sample-data" class="level2">
+<h2 class="anchored" data-anchor-id="sec-map-generation-upload-sample-data">Step 3.1: Upload Sample Data</h2>
+<p><strong>Overview</strong></p>
+<p>The user uploads their existing sample data in <code>.zip</code> file format.</p>
+<p><img src="images/luma-int-screenshot\Step-3.1-Upload-Sample-Data.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user uploads the&nbsp;<code>.zip</code> file containing the sample data.</p></li>
+<li><p>The system checks if there are any <code>.shp</code> file inside the <code>.zip</code> file by running the functions in <a href="03_sample_data.html#sec-user-upload-their-own-training-data" class="quarto-xref"><span>User Uploads Their Own Sample Data</span></a>.</p></li>
+<li><p>The system returns the preview of the uploaded sample data on the map canvas and table of the uploaded sample data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A purple box indicating the uploaded file with its file size appears with a delete button, if clicked, continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
+<li>A summary table of Sample Data Summary with ID number, LULC class name, colour class, number of samples, and buttons to view each class appears</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system provides an error notification if the system fails to conduct the sample data verification, along with the specific message at which step the validation failed</p>
+</div>
+</div></li>
+<li><p>The user clicks on the “Check Score” button to know their sample data quality.</p></li>
+<li><p>The system provides a selection for Spatial Resolution (m) and Maximum Pixels Per Class. The default value is 100 m and 5000 pixels.</p></li>
+<li><p>The system conducts the separability analysis by running the functions in <a href="04_sample_data_quality.html" class="quarto-xref"><span>4&nbsp; Sample Data Quality Analysis</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Training Data Quality result appears, with its category (good, weak, or poor) for each class, and highlights which LULC classes require improvement. A data frame containing details of the pairwise separability is also displayed.</li>
+<li>The user can choose several paths:
+<ul>
+<li>Delete the uploaded file; all input in <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a> is deleted and continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
+<li>On Screen Sampling:
+<ul>
+<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.1.1: Single Point Input</span></a></li>
+<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.1.2: Bulk Point Input</span></a></li>
+</ul></li>
+<li>Next; continue to <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
+</ul></li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Recheck Score” button, continue to Process 5 and 6.</p></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a> summary table of recorded classes is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
+</ol>
+</section>
+<section id="sec-map-generation-oss" class="level2">
+<h2 class="anchored" data-anchor-id="sec-map-generation-oss">Step 3.2: On Screen Sampling</h2>
+<p><strong>Overview</strong></p>
+<p>The user adds points or draws polygons directly on the interactive displayed map for all land use and land cover classes in their mapping area.</p>
+<p><img src="images/luma-int-screenshot\Step-3.2-On-Screen-Sampling.png" class="img-fluid"></p>
+<section id="step-3.2.1-add-point" class="level3">
+<h3 class="anchored" data-anchor-id="step-3.2.1-add-point">Step 3.2.1: Add Point</h3>
+<p><strong>Overview</strong></p>
+<p>The user adds points on the interactive displayed map and input their land use and land cover class information.</p>
+<section id="sec-map-generation-single-point" class="level4">
+<h4 class="anchored" data-anchor-id="sec-map-generation-single-point">Step 3.2.1.1: Single Point Input</h4>
+<p><strong>Overview</strong></p>
+<p>The user adds a point and assigns its corresponding land use and land cover class one by one from the drop down list.</p>
+<p><img src="images/luma-int-screenshot\Step-3.2.1.1-Single-Point-Input.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user assigns a sample point on the map accordingly to the correct class from the drop down list.</p></li>
+<li><p>The system shows a confirmation that the pinned points have been loaded to the on-screen canvas, along with the number of sample data on the Summary Table.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The number of samples in the Summary Table increased based on the user’s inputs</li>
+<li>End Pointing button enabled; if clicked, continue to Process 3</li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on “End Pointing” button, the user is redirected to <a href="#sec-map-generation-oss" class="quarto-xref"><span>Step 3.2: On Screen Sampling</span></a> with Sample Data Summary table and “Training Data Score Check” button enabled.</p></li>
+<li><p>The user clicks on the “Check Score” button to know their sample data quality.</p></li>
+<li><p>The system provides a selection for Spatial Resolution (m) and Maximum Pixels Per Class. The default value is 100 m and 5000 pixels.</p></li>
+<li><p>The system conducts the separability analysis by running the functions in <a href="04_sample_data_quality.html" class="quarto-xref"><span>4&nbsp; Sample Data Quality Analysis</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Training Data Quality result appears, with its category (good, weak, or poor) for each class, and highlights which LULC classes require improvement. A data frame containing details of the pairwise separability is also displayed.</li>
+<li>The user can choose several paths:
+<ul>
+<li>Delete the uploaded file; all input in <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a> is deleted and continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
+<li>On Screen Sampling:
+<ul>
+<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.1.1: Single Point Input</span></a></li>
+<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.1.2: Bulk Point Input</span></a></li>
+</ul></li>
+<li>Upload Sample Data; continue to <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a></li>
+<li>Next; continue to <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
+</ul></li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Recheck Score” button, continue to Process 5 and 6.</p></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a> summary table of recorded classes is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
+</ol>
+</section>
+<section id="sec-map-generation-bulk-point" class="level4">
+<h4 class="anchored" data-anchor-id="sec-map-generation-bulk-point">Step 3.2.1.2: Bulk Point Input</h4>
+<p><strong>Overview</strong></p>
+<p>The user adds multiple points (up to 10 points) at once and assigns the same land use and land cover class to all selected points.</p>
+<p><img src="images/luma-int-screenshot\Step-3.2.1.2-Bulk-Point-Input.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user chooses a class from the drop down list and assigns sample points on the map accordingly to the correct class.</p></li>
+<li><p>The system shows a confirmation that the pinned points have been loaded to the on-screen canvas, along with the number of sample data on the Summary Table.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The number of samples in the Summary Table increased based on the user’s inputs</li>
+<li>End Pointing button enabled; if clicked, continue to Process 3</li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on “End Pointing” button, the user is redirected to <a href="#sec-map-generation-oss" class="quarto-xref"><span>Step 3.2: On Screen Sampling</span></a> with Sample Data Summary table and “Training Data Score Check” button enabled.</p></li>
+<li><p>The user clicks on the “Check Score” button to know their sample data quality.</p></li>
+<li><p>The system provides a selection for Spatial Resolution (m) and Maximum Pixels Per Class. The default value is 100 m and 5000 pixels.</p></li>
+<li><p>The system conducts the separability analysis by running the functions in <a href="04_sample_data_quality.html" class="quarto-xref"><span>4&nbsp; Sample Data Quality Analysis</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Training Data Quality result appears, with its category (good, weak, or poor) for each class, and highlights which LULC classes require improvement. A data frame containing details of the pairwise separability is also displayed.</li>
+<li>The user can choose several paths:
+<ul>
+<li>Delete the uploaded file; all input in <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a> is deleted and continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
+<li>On Screen Sampling:
+<ul>
+<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.1.1: Single Point Input</span></a></li>
+<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.1.2: Bulk Point Input</span></a></li>
+</ul></li>
+<li>Upload Sample Data; continue to <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a></li>
+<li>Next; continue to <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
+</ul></li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Recheck Score” button, continue to Process 5 and 6.</p></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a> summary table of recorded classes is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="step-3.2.2-draw-area" class="level3">
+<h3 class="anchored" data-anchor-id="step-3.2.2-draw-area">Step 3.2.2: Draw Area</h3>
+<p><strong>Overview</strong></p>
+<p>This feature is coming soon.</p>
+</section>
+</section>
+</section>
+<section id="sec-map-generation-parameters" class="level1">
+<h1>Step 4: Customize Mapping Parameters</h1>
+<p><strong>Overview</strong></p>
+<p>The user can choose a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information.</p>
+<p><img src="images/luma-int-screenshot\Step-4-Customize-Mapping-Parameters.png" class="img-fluid"></p>
+<section id="sec-map-generation-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="sec-map-generation-predictors">Step 4.1: Predictor Selection</h2>
+<p><strong>Overview</strong></p>
+<p>The user is prompted to select the predictors currently supported by Luma Geospatial Engine by using check boxes or upload their own predictor data in <code>.zip</code> file.</p>
+<section id="step-4.2.1-default-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="step-4.2.1-default-predictors">Step 4.2.1: Default Predictors</h3>
+<p><strong>Overview</strong></p>
+<p>The user selects the predictors currently supported by Luma Geospatial Engine by using check boxes.</p>
+<p><img src="images/luma-int-screenshot\Step-4.2.1-Default-Predictors.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user selects the predictors from the list.</p></li>
+<li><p>The system retrieves the predictors based on the user’s selection and runs the functions in <a href="05_predictor.html#sec-selection-of-predictors" class="quarto-xref"><span>Selection of Predictors</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>“Next” button leads to Summary of LULC List Parameters showing the predictors selected and Random Forest Variable in a purple box.</li>
+<li>Two buttons appear:
+<ul>
+<li>“Change Input”; continue to Process 3</li>
+<li>“Next”; continue to Process 4</li>
+</ul></li>
+</ul>
+</div>
+</div></li>
+<li><p>The user clicks on “Change Input”.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>“Change Input”; all inputs being reset and back to the beginning of <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
+<li>“Discard Changes”; stay in Process 3 with “Cancel Change” button activated</li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on “Next” button, the system generates map with all input from Step 1-4.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in purple boxes, with a “Generate Map” button. Continue to <a href="#sec-map-generation-final" class="quarto-xref"><span>Step 5: Map Generation</span></a>.</p>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a> Sample Data Summary is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>.</p></li>
+</ol>
+</section>
+<section id="step-4.2.2-upload-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="step-4.2.2-upload-predictors">Step 4.2.2: Upload Predictors</h3>
+<p><strong>Overview</strong></p>
+<p>This feature is coming soon.</p>
+<p><img src="images/luma-int-screenshot\Step-4.2.2-Upload-Predictors.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="sec-map-generation-model-training" class="level2">
+<h2 class="anchored" data-anchor-id="sec-map-generation-model-training">Step 4.2: Classification Model Training</h2>
+<p><strong>Overview</strong></p>
+<p>The user is given the option to adjust the classification model by adjusting the value of the Random Forest variable to classify the satellite images into land use and land cover classes using training data. The default value of the Random Forest parameters are 150 number of trees and 1 minimum leaf population. The user is also prompted to define the proportion to split the sample data into training and validation dataset. The default value of the dataset proportion is 70% for training data and 30% for validation data.</p>
+<p><img src="images/luma-int-screenshot\Step-4.2-Classification-Model-Training.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user sets the Random Forest parameters and Training/Testing Split.</p></li>
+<li><p>The system verifies the inputs and runs the process to create the classification model in <a href="06_classification.html#sec-create-classification-model" class="quarto-xref"><span>Creating classification model</span></a> and splits the sample data with functions in <a href="06_classification.html#sec-data-split" class="quarto-xref"><span>Splitting the sample data</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Set Variable” button leads to Summary of LULC List Parameters showing the predictors selected and Random Forest Variable in a purple box. Two buttons appear:</p>
+<ul>
+<li>“Change Input”; continue to Process 3</li>
+<li>“Next”; continue to Process 4</li>
+</ul>
+</div>
+</div></li>
+<li><p>The user clicks on “Change Input”.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Edit” (pencil icon) appears next to each parameter; if clicked, a pop up window appears asking if user wants to:</p>
+<ul>
+<li>“Change Input”; all inputs being reset and back to the beginning of <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
+<li>“Discard Changes”; stay in Process 3 with “Cancel Change” button activated</li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on “Next” button, the system generates map with all input from Step 1-4.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in purple boxes, with a “Generate Map” button. Continue to <a href="#sec-map-generation-final" class="quarto-xref"><span>Step 5: Map Generation</span></a>.</p>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a> Sample Data Summary is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="sec-map-generation-final" class="level1">
+<h1>Step 5: Map Generation</h1>
+<p><strong>Overview</strong></p>
+<p>The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.</p>
+<p><img src="images/luma-int-screenshot\Step-5-Map-Generation.png" class="img-fluid"></p>
+<section id="step-5.1-model-accuracy-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="step-5.1-model-accuracy-assessment">Step 5.1: Model Accuracy Assessment</h2>
+<p><strong>Overview</strong></p>
+<p>The user is shown how accurately the mapping process distinguished their land use and land cover classes.</p>
+<p><img src="images/luma-int-screenshot\Step-5.1-Model-Accuracy-Assessment.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user clicks on “Show Detail”.</p></li>
+<li><p>The system retrieves the mapping accuracy assessment result.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pop up window shows:</p>
+<ul>
+<li>Overall Model Accuracy Result
+<ul>
+<li>Overall accuracy</li>
+<li>Kappa coefficient</li>
+<li>Average F1-score</li>
+<li>G-mean score</li>
+</ul></li>
+<li>Class Level Accuracy
+<ul>
+<li>Recall/Producer’s accuracy</li>
+<li>Precision/User’s accuracy</li>
+</ul></li>
+<li>Error Matrix Summary
+<ul>
+<li>Class-level summary</li>
+<li>Most common misclassifications</li>
+</ul></li>
+<li>Confusion Matrix</li>
+</ul>
+<p>Two buttons appear at the bottom:</p>
+<ul>
+<li>“Download Raw Data”; <code>.csv</code> file containing the raw data is downloaded to user’s local device</li>
+<li>“Download Chart”; <code>.png</code> file of the confusion matrix is downloaded to user’s local device</li>
+</ul>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="step-5.2-lulc-class-composition" class="level2">
+<h2 class="anchored" data-anchor-id="step-5.2-lulc-class-composition">Step 5.2: LULC Class Composition</h2>
+<p><strong>Overview</strong></p>
+<p>The user can visualize the LULC classification result on the map canvas along with the training data layer and is shown the proportion of each LULC class.</p>
+<p><img src="images/luma-int-screenshot\Step-5.2-LULC-Class-Composition.png" class="img-fluid"></p>
+</section>
+<section id="step-5.3-thematic-accuracy-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="step-5.3-thematic-accuracy-assessment">Step 5.3: Thematic Accuracy Assessment</h2>
+<p><strong>Overview</strong></p>
+<p>The user uploads an independent ground reference data in <code>.zip</code> file to perform a comprehensive thematic accuracy assessment of the land cover map.</p>
+<p><img src="images/luma-int-screenshot\Step-5.3-Thematic-Accuracy-Assessment.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user uploads <code>.zip</code> file containing the ground reference data.</p></li>
+<li><p>The system verifies if the&nbsp;<code>.shp</code> of the validation map is the uploaded inside the&nbsp;<code>.zip</code> file and runs the functions in <a href="07_accuracy.html#sec-thematic-accuracy-assessment" class="quarto-xref"><span>Thematic Accuracy Assessment</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pink box showing the Thematic Accuracy Result appears with overall prediction, Kappa coefficient, number of points correct and wrong. Two actions can be chosen:</p>
+<ul>
+<li><p>“Reupload validation data”</p></li>
+<li><p>“Show detail”; continue to Process 4</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Error Handling Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The system shows an error message if the system fails to run the thematic accuracy assessment</p>
+</div>
+</div></li>
+<li><p>If the user clicks on “Reupload validation data”, continue to the beginning of <a href="#sec-map-generation-final" class="quarto-xref"><span>Step 5: Map Generation</span></a>.</p></li>
+<li><p>If the user clicks on “Show detail”, the system previews the comprehensive report of the map’s thematic quality.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pop up window shows:</p>
+<ul>
+<li><p>Overall Model Accuracy Result</p></li>
+<li><p>Overall accuracy</p></li>
+<li><p>Kappa coefficient</p></li>
+<li><p>Average F1-score</p></li>
+<li><p>G-mean score</p></li>
+<li><p>Class Level Accuracy</p></li>
+<li><p>Recall/Producer’s accuracy</p></li>
+<li><p>Precision/User’s accuracy</p></li>
+<li><p>Error Matrix Summary</p>
+<ul>
+<li><p>Class-level summary</p></li>
+<li><p>Most common misclassifications</p></li>
+</ul></li>
+<li><p>Confusion Matrix</p></li>
+</ul>
+<p>Two buttons appear at the bottom:</p>
+<ul>
+<li><p>“Download Raw Data”; <code>.csv</code> file containing the raw data is downloaded to user’s local device.</p></li>
+<li><p>“Download Chart”; <code>.png</code> file of the confusion matrix is downloaded to user’s local device.</p></li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on the “Next” button.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pop up window shows several options:</p>
+<ul>
+<li><p>“Download map”; user is prompted to log in/sign up, continue to Feature 2</p></li>
+<li><p>“Share map”; user is prompted to log in/sign up, continue to Feature 3</p></li>
+<li><p>“Save to my account” (currently disabled)</p></li>
+<li><p>“Improve accuracy”</p></li>
+</ul>
+</div>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="additional-features" class="level1">
+<h1>Additional Features</h1>
+<p><strong>Overview</strong></p>
+<p>The user can save their land use and land cover mapping progress and share their mapping results by logging in/signing up to an Epistem account. Once logged in, user account is activated on the upper right corner of the screen with the user’s initial or profile picture.</p>
+<p><img src="images/luma-int-screenshot\Additional-Features-Login.png" class="img-fluid"></p>
+<section id="feature-1-save-progress" class="level2">
+<h2 class="anchored" data-anchor-id="feature-1-save-progress">Feature 1: Save Progress</h2>
+<p><strong>Overview</strong></p>
+<p>Once logged in, the user can save their land use and land cover mapping progress and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.</p>
+<p><img src="images/luma-int-screenshot\Feature-1-Save-Progress.png" class="img-fluid"></p>
+</section>
+<section id="feature-2-download-map" class="level2">
+<h2 class="anchored" data-anchor-id="feature-2-download-map">Feature 2: Download Map</h2>
+<p><strong>Overview</strong></p>
+<p>Once logged in, the user can download their generated map.</p>
+<p><img src="images/luma-int-screenshot\Feature-2-Download-Map.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user downloads their map.</p></li>
+<li><p>The system sends an email containing the exported LULC map with a download link.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The user receives an email from <a href="mailto:webdev@epistem.io">webdev@epistem.io</a> containing a download link to the GeoTIFF of the exported map</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="feature-3-share-map" class="level2">
+<h2 class="anchored" data-anchor-id="feature-3-share-map">Feature 3: Share Map</h2>
+<p><strong>Overview</strong></p>
+<p>Once logged in, the user can share their generated map to another person with an email address.</p>
+<p><img src="images/luma-int-screenshot\Feature-3-Share-Map.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user input recipient’s name and email address.</p></li>
+<li><p>The system sends and email to the recipient containing the exported LULC map with a download link.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The recipient receives an email from <a href="mailto:webdev@epistem.io">webdev@epistem.io</a> containing a download link to the GeoTIFF of the exported map</p>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="feature-4-improve-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="feature-4-improve-accuracy">Feature 4: Improve Accuracy</h2>
+<p><strong>Overview</strong></p>
+<p>The user can improve the accuracy of their generated map in two ways: by resetting the parameters in <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>, or by adding or editing the sample data in <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p>
+<p><img src="images/luma-int-screenshot\Feature-4-Improve-Accuracy.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user clicks on “Improve Accuracy”.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A pop up window showing two methods of improving accuracy:</p>
+<ul>
+<li><p>”Reset Parameters”; continue to Process 2</p></li>
+<li><p>”Fix Training Data”; continue to Step 3 (coming soon)</p></li>
+</ul>
+</div>
+</div></li>
+<li><p>If the user clicks on ”Reset Parameters”, the system retrieves information from Step 4.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The panel returns to the beginning of <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>, with all selected predictors still checked, and displays a message explaining that the user is in Improvement Mode.</p>
+</div>
+</div></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./placeholders/module08_placeholder.html" class="pagination-link" aria-label="Post Classification Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Post Classification Analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./interface_change_analysis.html" class="pagination-link" aria-label="Change Analysis">
+        <span class="nav-page-text">Change Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

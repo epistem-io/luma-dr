@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; LULC Map Generation – Luma Development Reference</title>
+<title>Change Analysis – Luma Development Reference</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_accuracy.html" rel="next">
-<link href="./05_predictor.html" rel="prev">
+<link href="./interface_collaborative_mapping.html" rel="next">
+<link href="./interface_map_generation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -88,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./06_classification.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_change_analysis.html">Change Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -210,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_classification.html" class="sidebar-item-text sidebar-link active">
+  <a href="./06_classification.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></a>
   </div>
 </li>
@@ -245,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./interface_change_analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="./interface_change_analysis.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Change Analysis</span></a>
   </div>
 </li>
@@ -262,38 +262,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#module-overview" id="toc-module-overview" class="nav-link active" data-scroll-target="#module-overview">Module Overview</a></li>
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
-  <ul class="collapse">
-  <li><a href="#sec-checking-prerequisites" id="toc-sec-checking-prerequisites" class="nav-link" data-scroll-target="#sec-checking-prerequisites"><span class="header-section-number">6.1</span> Checking Prerequisites from Previous Modules</a></li>
-  <li><a href="#sample-data-feature-extraction" id="toc-sample-data-feature-extraction" class="nav-link" data-scroll-target="#sample-data-feature-extraction"><span class="header-section-number">6.2</span> Extracting spectral feature from sample data</a>
-  <ul class="collapse">
-  <li><a href="#sec-data-split" id="toc-sec-data-split" class="nav-link" data-scroll-target="#sec-data-split"><span class="header-section-number">6.2.1</span> Splitting the sample data</a></li>
-  </ul></li>
-  <li><a href="#sec-create-classification-model" id="toc-sec-create-classification-model" class="nav-link" data-scroll-target="#sec-create-classification-model"><span class="header-section-number">6.3</span> Creating classification model</a>
-  <ul class="collapse">
-  <li><a href="#creating-classification-model" id="toc-creating-classification-model" class="nav-link" data-scroll-target="#creating-classification-model"><span class="header-section-number">6.3.1</span> Creating classification model</a></li>
-  <li><a href="#sec-review-model-result" id="toc-sec-review-model-result" class="nav-link" data-scroll-target="#sec-review-model-result"><span class="header-section-number">6.3.2</span> Reviewing classification model’s quality</a></li>
-  <li><a href="#sec-view-classification-map" id="toc-sec-view-classification-map" class="nav-link" data-scroll-target="#sec-view-classification-map"><span class="header-section-number">6.3.3</span> Visualizing LULC classification map result</a></li>
-  <li><a href="#downloading-the-lulc-classification-map-result" id="toc-downloading-the-lulc-classification-map-result" class="nav-link" data-scroll-target="#downloading-the-lulc-classification-map-result"><span class="header-section-number">6.3.4</span> Downloading the LULC classification map result</a></li>
-  </ul></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./06_classification.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_change_analysis.html">Change Analysis</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-module-6" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LULC Map Generation</span></span></h1>
+<h1 class="title"><span id="sec-change-analysis" class="quarto-section-identifier">Change Analysis</span></h1>
 </div>
 
 
@@ -310,192 +287,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="module-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Module Overview</h1>
-<p>This module performs supervised Random Forest classification to generate a land cover map. It includes input review, hyperparameter definition, feature extraction, model training, hard/soft classification, feature importance, and accuracy evaluation using test data.</p>
-</section>
-<section id="input" class="level1 unnumbered">
-<h1 class="unnumbered">Input</h1>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name of input</th>
-<th>Input type</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Sample data split proportion</td>
-<td>User’s input</td>
-<td>Optional, if not set then use default value</td>
-</tr>
-<tr class="even">
-<td>Random Forest (RF) parameters</td>
-<td>User’s input</td>
-<td>Optional, if not set then use default value</td>
-</tr>
-<tr class="odd">
-<td>Satellite imagery within the AOI</td>
-<td>Input from other modules</td>
-<td>Module 1</td>
-</tr>
-<tr class="even">
-<td>LULC classes</td>
-<td>Input from other modules</td>
-<td>Module 2, including the selection of the classes of interest if the user uses the default classification scheme.</td>
-</tr>
-<tr class="odd">
-<td>Sample data</td>
-<td>Input from other modules</td>
-<td>Module 3</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="output" class="level1 unnumbered">
-<h1 class="unnumbered">Output</h1>
-<ol type="1">
-<li>Trained LULC classification model.</li>
-<li>Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the <a href="@sec-sec-data-split">splitted the sample data</a></li>
-<li>Classified LULC raster map.</li>
-</ol>
-</section>
-<section id="process" class="level1 unnumbered">
-<h1 class="unnumbered">Process</h1>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules</p>
-</div>
-</div>
-<section id="sec-checking-prerequisites" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="sec-checking-prerequisites"><span class="header-section-number">6.1</span> Checking Prerequisites from Previous Modules</h2>
-<ol type="1">
-<li>The system validates availability of the required inputs.</li>
-</ol>
-</section>
-<section id="sample-data-feature-extraction" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sample-data-feature-extraction"><span class="header-section-number">6.2</span> Extracting spectral feature from sample data</h2>
-<section id="sec-data-split" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="sec-data-split"><span class="header-section-number">6.2.1</span> Splitting the sample data</h3>
-<ol type="1">
-<li><p>The system conducts feature extraction for both training and validation data accordingly to the proportion set by the user.</p></li>
-<li><p>The system uses stratified random split method to conduct the data splitting. This method randomly selects samples within each class to proportionally create training and testing sets while preserving class distribution.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Functions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>classification.FeatureExtraction.stratified_split()</code> : performs stratified random split of sample data based on LULC class labels.</p>
-</div>
-</div></li>
-</ol>
-</section>
-</section>
-<section id="sec-create-classification-model" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-create-classification-model"><span class="header-section-number">6.3</span> Creating classification model</h2>
-<section id="creating-classification-model" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="creating-classification-model"><span class="header-section-number">6.3.1</span> Creating classification model</h3>
-<ol type="1">
-<li><p>The system create the classification model using hard classification method.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Functions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>classification.Generate_LULC.hard_classification()</code> : trains a RF classifier (<code>smileRandomForest</code>) using extracted training data and applies it to the input imagery to produce a hard (pixel-level) multiclass.</p>
-</div>
-</div></li>
-</ol>
-</section>
-<section id="sec-review-model-result" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="sec-review-model-result"><span class="header-section-number">6.3.2</span> Reviewing classification model’s quality</h3>
-<ol type="1">
-<li><p>The system extracts feature importance from the trained Random Forest model and presents a ranked table of bands (or a fallback equal-weight estimate if true importance is unavailable).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Functions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>classification.Generate_LULC.get_feature_importance()</code> : extracts and returns model feature importance as a dataframe; if the model explanation is not available, falls back to an equal-weight estimate.</p>
-</div>
-</div></li>
-<li><p>The system calculates model evaluation metrics on the validation dataset. This option only available if the user perform data split.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Functions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>classification.Generate_LULC.evaluate_model()</code> :classifies the validation data with the trained classifier, builds the confusion matrix, and returns a dictionary of accuracy metrics</p>
-</div>
-</div></li>
-<li><p>Confusion matrix and model accuracy summary are then rendered in the user-interface.</p></li>
-</ol>
-</section>
-<section id="sec-view-classification-map" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="sec-view-classification-map"><span class="header-section-number">6.3.3</span> Visualizing LULC classification map result</h3>
-<ol type="1">
-<li><p>The system loads the user’s class of interest stored from Module 2.</p></li>
-<li><p>The system reclassifies the default classification scheme’s map into a map that only shows the user’s class of interest and an additional class labeled as “Others”.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Functions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>classification.Generate_LULC.reclassify_map_by_classes()</code>: reclassifies the default classification scheme final map to only show the user’s class of interest and show the other classes as “Others”.</p>
-</div>
-</div></li>
-</ol>
-</section>
-<section id="downloading-the-lulc-classification-map-result" class="level3" data-number="6.3.4">
-<h3 data-number="6.3.4" class="anchored" data-anchor-id="downloading-the-lulc-classification-map-result"><span class="header-section-number">6.3.4</span> Downloading the LULC classification map result</h3>
-<ol type="1">
-<li><p>This sub-step does not involve any operations from Luma Geospatial Engine. Direct download settings are defined from Streamlit, using the same workflow as defined in <a href="01_data_acquisition.html#sec-visualization-and-saving-data" class="quarto-xref"><span>Section 1.5</span></a>.</p></li>
-<li><p>For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.</p></li>
-</ol>
 
 
-</section>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -900,13 +693,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05_predictor.html" class="pagination-link" aria-label="Predictor Generation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></span>
+      <a href="./interface_map_generation.html" class="pagination-link" aria-label="Map Generation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Map Generation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_accuracy.html" class="pagination-link" aria-label="Thematic Accuracy Assessment">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./interface_collaborative_mapping.html" class="pagination-link" aria-label="Collaborative Mapping">
+        <span class="nav-page-text">Collaborative Mapping</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -41,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3f70bac5631458d474a321d4182f9338.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3d497cff885f6278d37568d0ef0763f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -85,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./07_accuracy.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./07_accuracy.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -169,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Luma Modules</span></a>
+ <span class="menu-text">Luma Geospatial Engine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -225,6 +228,35 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Luma Interface</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_map_generation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Map Generation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_change_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Change Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./interface_collaborative_mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collaborative Mapping</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -240,10 +272,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
   <ul class="collapse">
-  <li><a href="#sec-checking-prerequisites" id="toc-sec-checking-prerequisites" class="nav-link" data-scroll-target="#sec-checking-prerequisites"><span class="header-section-number">7.1</span> Checking Prerequisites from Previous Modules</a>
-  <ul class="collapse">
-  <li><a href="#checking-prerequisites-from-previous-modules" id="toc-checking-prerequisites-from-previous-modules" class="nav-link" data-scroll-target="#checking-prerequisites-from-previous-modules"><span class="header-section-number">7.1.1</span> Checking Prerequisites from Previous Modules</a></li>
-  </ul></li>
+  <li><a href="#sec-checking-prerequisites" id="toc-sec-checking-prerequisites" class="nav-link" data-scroll-target="#sec-checking-prerequisites"><span class="header-section-number">7.1</span> Checking Prerequisites from Previous Modules</a></li>
   <li><a href="#sec-thematic-accuracy-assessment" id="toc-sec-thematic-accuracy-assessment" class="nav-link" data-scroll-target="#sec-thematic-accuracy-assessment"><span class="header-section-number">7.2</span> Thematic Accuracy Assessment</a>
   <ul class="collapse">
   <li><a href="#selecting-the-workflow" id="toc-selecting-the-workflow" class="nav-link" data-scroll-target="#selecting-the-workflow"><span class="header-section-number">7.2.1</span> Selecting The Workflow</a></li>
@@ -260,7 +289,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Modules</a></li><li class="breadcrumb-item"><a href="./07_accuracy.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./07_accuracy.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-module-7" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Thematic Accuracy Assessment</span></span></h1>
 </div>
@@ -325,54 +354,13 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="unnumbered">Process</h1>
 <section id="sec-checking-prerequisites" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="sec-checking-prerequisites"><span class="header-section-number">7.1</span> Checking Prerequisites from Previous Modules</h2>
-<p>This is a part of <strong>System Response 7.1: Verification data</strong></p>
-<section id="checking-prerequisites-from-previous-modules" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules"><span class="header-section-number">7.1.1</span> Checking Prerequisites from Previous Modules</h3>
-<p><strong>Luma User Journey</strong></p>
-<ol type="1">
-<li><p>The user is displayed a verification of the required inputs stored in the system.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.</p>
-</div>
-</div></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
-<ol type="1">
-<li>The system validates availability of the required inputs.</li>
-</ol>
-</section>
+<p>The system validates availability of the required inputs.</p>
 </section>
 <section id="sec-thematic-accuracy-assessment" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-thematic-accuracy-assessment"><span class="header-section-number">7.2</span> Thematic Accuracy Assessment</h2>
 <section id="selecting-the-workflow" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="selecting-the-workflow"><span class="header-section-number">7.2.1</span> Selecting The Workflow</h3>
 <p>Two workflow are available for Module 7. The first workflow is design for the user who did not have reference data. The second workflow is for the user who already have a reference data.</p>
-<p><strong>Luma User Journey</strong></p>
-<ol type="1">
-<li><p>If the user did not have reference samples, the user select the “<em>generate reference sample</em>” workflow.</p>
-<ol type="1">
-<li><p>The user specified desire standard error (margin of error) of the map. The range of valid value is 0.1% - 10%, with smaller value resulting in larger sample requirement</p></li>
-<li><p>The user determine the minimum expected accuracy for each class. This option is set to optional, with the default value of 85% for all class</p></li>
-<li><p>User are able to generate the sample and check the allocation as well as the spatial distribution in the map canvas.</p></li>
-<li><p>The user download the reference data and proceed to labeled the data using visual interpretation of higher resolution imagery, field survey, or combination of both. This process are conducted outside Luma-GE</p></li>
-</ol></li>
-<li><p>If the user already have reference sample, they choose the “compute accuracy workflow”</p>
-<ol type="1">
-<li><p>The user prompted to upload their reference samples. Currently, the Luma-GE only support shapefile data</p></li>
-<li><p>The user select column header that correspond to class ID and class name.</p></li>
-<li><p>The user perform the accuracy assessment and decide if their classification is meet their accuracy needs</p></li>
-</ol></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <p>For each workflow, the geospatial engine perform the following operation</p>
 </section>
 <section id="generate-reference-sample-workflow" class="level3" data-number="7.2.2">
@@ -429,39 +417,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="accuracy-computation-workflow" class="level3" data-number="7.2.3">
 <h3 data-number="7.2.3" class="anchored" data-anchor-id="accuracy-computation-workflow"><span class="header-section-number">7.2.3</span> Accuracy Computation Workflow</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>User Journey 7.2 Upload data</strong></p>
-<ol type="1">
-<li><p>The user is prompted to upload the validation map in a <code>.zip</code> file. The user is reminded that the validation map should have the same ID class as the one used for the classification.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows a confirmation that the validation data has been validated.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows an error message if the uploaded validation map fails the validation process.</p>
-</div>
-</div></li>
-<li><p>The system displays the uploaded validation map on a canvas map along with the tabular data.</p></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <ol type="1">
 <li><p>The system verifies if the <code>.shp</code> of the validation map is the uploaded inside the <code>.zip</code> file.</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -535,28 +490,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="starting-the-thematic-accuracy-assessment" class="level3" data-number="7.2.4">
 <h3 data-number="7.2.4" class="anchored" data-anchor-id="starting-the-thematic-accuracy-assessment"><span class="header-section-number">7.2.4</span> Starting the thematic accuracy assessment</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>User Journey 7.3: Thematic accuracy assessment</strong></p>
-<ol type="1">
-<li><p>The user is prompted to fill in the parameters for the thematic accuracy assessment, including specifying the column that refers to the LULC ID class and the pixel size of the classified LULC map.</p></li>
-<li><p>The user can optionally set the confidence interval for the thematic accuracy assessment.</p></li>
-<li><p>The user is prompted to start the thematic accuracy assessment process.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows an error message if the system fails to run the thematic accuracy assessment.</p>
-</div>
-</div></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
-<p>This is a part of <strong>System Response 7.3: Thematic accuracy assessment</strong></p>
 <ol type="1">
 <li><p>The system performs a thematic accuracy assessment by validating inputs, sampling the classified LULC map at reference points.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -603,8 +536,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="spatial-distribution-of-error" class="level3" data-number="7.2.5">
 <h3 data-number="7.2.5" class="anchored" data-anchor-id="spatial-distribution-of-error"><span class="header-section-number">7.2.5</span> Spatial Distribution of Error</h3>
-<p><strong>Luma Geospatial Engine</strong></p>
-<p>This is part of&nbsp;System Response 7.3: Thematic accuracy assessment</p>
 <p>This function provide reference data flagging for visualizing the spatial error distribution, improving the error analysis by tagging each point with whether the classifier got it right or wrong. Currently, this function only works if the reference data unit is point (single pixel). If the reference data consist of polygons, this function will not work.</p>
 <ol type="1">
 <li><p>The system conduct checks if reference data geodataframe is available.</p></li>
@@ -628,28 +559,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="reviewing-the-thematic-accuracy-result" class="level3" data-number="7.2.6">
 <h3 data-number="7.2.6" class="anchored" data-anchor-id="reviewing-the-thematic-accuracy-result"><span class="header-section-number">7.2.6</span> Reviewing the thematic accuracy result</h3>
-<p><strong>Luma User Journey</strong></p>
-<p>This is a part of <strong>User Journey 7.4: Preview thematic accuracy result</strong></p>
-<ol type="1">
-<li><p>The system displays the overall accuracy metrics result:</p>
-<ul>
-<li><strong>Overall Accuracy (OA)</strong>: Percentage of correctly classified validation samples</li>
-<li><strong>Kappa Coefficient</strong>: Agreement beyond chance, accounting for class distribution</li>
-<li><strong>Confidence interval at 95%</strong>: The lower and upper bounds that describe the uncertainty range of the overall accuracy estimate at the 95% confidence level</li>
-<li><strong>Reference Data</strong>: The total number of validation samples used in the thematic accuracy assessment</li>
-</ul></li>
-<li><p>The system displays the accuracy metrics result on class-level:</p>
-<ul>
-<li><strong>Producer’s Accuracy</strong>: Measure of classification completeness (1 - omission error)</li>
-<li><strong>User’s Accuracy</strong>: Measure of classification reliability (1 - commission error)</li>
-<li><strong>F1 score</strong>: Summarizes Producer’s and User’s Accuracy metrics</li>
-<li>The user can inspect where the misclassification happens using the spatial distribution of error map</li>
-</ul></li>
-<li><p>The system displays the confusion matrix using heatmap visualization</p></li>
-<li><p>The user is offered the option to download the overall accuracy metrics result summary or the class-level accuracy result in a <code>.csv</code> format.</p></li>
-<li><p>The user is provided with several option to improve the map quality or repeating the accuracy assessment. They can return to Module 6 to change classification parameters, return to Module 5 to add predictors, return to Module 3 to add more training data, and return to Module 2 to change their classification scheme. Each options is arrange according to easiest modification (module 6) to the hardest (module 2).</p></li>
-</ol>
-<p><strong>Luma Geospatial Engine</strong></p>
 <p>This sub-step does not involve any operations from Luma Geospatial Engine.</p>
 
 
