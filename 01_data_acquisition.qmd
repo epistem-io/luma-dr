@@ -235,8 +235,6 @@ The final image (single layer) which will be presented to the user is created us
 
 ### Visualization and Saving Processed Satellite Imagery
 
-This is a part of **System Response 1.3: Download Satellite Imagery and Continue to Next Module**
-
 1.  The system collects the statistics of the satellite images found.
 
     ::: callout-tip

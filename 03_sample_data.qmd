@@ -107,31 +107,9 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ### Using Default Sample Data {#sec-default-sample-data}
 
-**Luma User Journey**
-
-1.  The user is automatically directed to use the default sample data if the user [chose to use an existing LULC scheme in Module 2](@sec-user-select-existing-lulc-template)
-
-2.  The system displays the area of the AOI and the number of sample data loaded on a map canvas.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system shows an error notification if RESTORE+ data is failed to be loaded. This could be due to the AOI located outside the scope of RESTORE+ dataset, or the AOI is too big.
-    :::
-
-    ::: callout-note
-    ## Success Notification
-
-    The system displayed a summary of the number of sample data loaded from RESTORE+ data that matches with the AOI saved in the system, and the area of AOI in km2.
-    :::
-
-**Luma Geospatial Engine**
-
 1.  The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset.
 
 ## Sample Data Preview {#sec-sample-data-preview}
-
-### Sample Data Preview
 
 1.  The system runs @sec-verify-sample-data for the **updated** sample data.
 

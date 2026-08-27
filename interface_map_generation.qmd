@@ -761,3 +761,171 @@ The user can visualize the LULC classification result on the map canvas along wi
 ## Step 5.3: Thematic Accuracy Assessment
 
 **Overview**
+
+The user uploads an independent ground reference data in `.zip` file to perform a comprehensive thematic accuracy assessment of the land cover map.
+
+![](images/luma-int-screenshot\Step-5.3-Thematic-Accuracy-Assessment.png)
+
+**Process**
+
+1.  The user uploads `.zip` file containing the ground reference data.
+
+2.  The system verifies if the `.shp` of the validation map is the uploaded inside the `.zip` file and runs the functions in @sec-thematic-accuracy-assessment.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pink box showing the Thematic Accuracy Result appears with overall prediction, Kappa coefficient, number of points correct and wrong. Two actions can be chosen:
+
+    - "Reupload validation data"
+
+    - "Show detail"; continue to Process 4
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    The system shows an error message if the system fails to run the thematic accuracy assessment
+    :::
+
+3.  If the user clicks on "Reupload validation data", continue to the beginning of @sec-map-generation-final.
+
+4.  If the user clicks on "Show detail", the system previews the comprehensive report of the map's thematic quality.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pop up window shows:
+
+    - Overall Model Accuracy Result
+
+    - Overall accuracy
+
+    - Kappa coefficient
+
+    - Average F1-score
+
+    - G-mean score
+
+    - Class Level Accuracy
+
+    - Recall/Producer’s accuracy
+
+    - Precision/User’s accuracy
+
+    - Error Matrix Summary
+
+      - Class-level summary
+
+      - Most common misclassifications
+
+    - Confusion Matrix
+
+    Two buttons appear at the bottom:
+
+    - "Download Raw Data"; `.csv` file containing the raw data is downloaded to user’s local device.
+
+    - "Download Chart"; `.png` file of the confusion matrix is downloaded to user’s local device.
+    :::
+
+5.  If the user clicks on the "Next" button.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pop up window shows several options:
+
+    - "Download map"; user is prompted to log in/sign up, continue to Feature 2
+
+    - "Share map"; user is prompted to log in/sign up, continue to Feature 3
+
+    - "Save to my account" (currently disabled)
+
+    - "Improve accuracy"
+    :::
+
+# Additional Features
+
+**Overview**
+
+The user can save their land use and land cover mapping progress and share their mapping results by logging in/signing up to an Epistem account. Once logged in, user account is activated on the upper right corner of the screen with the user’s initial or profile picture.
+
+![](images/luma-int-screenshot\Additional-Features-Login.png)
+
+## Feature 1: Save Progress
+
+**Overview**
+
+Once logged in, the user can save their land use and land cover mapping progress and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.
+
+![](images/luma-int-screenshot\Feature-1-Save-Progress.png)
+
+## Feature 2: Download Map
+
+**Overview**
+
+Once logged in, the user can download their generated map.
+
+![](images/luma-int-screenshot\Feature-2-Download-Map.png)
+
+**Process**
+
+1.  The user downloads their map.
+
+2.  The system sends an email containing the exported LULC map with a download link.
+
+    ::: callout-note
+    ## Success Notification
+
+    The user receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map
+    :::
+
+## Feature 3: Share Map
+
+**Overview**
+
+Once logged in, the user can share their generated map to another person with an email address.
+
+![](images/luma-int-screenshot\Feature-3-Share-Map.png)
+
+**Process**
+
+1.  The user input recipient's name and email address.
+
+2.  The system sends and email to the recipient containing the exported LULC map with a download link.
+
+    ::: callout-note
+    ## Success Notification
+
+    The recipient receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map
+    :::
+
+## Feature 4: Improve Accuracy
+
+**Overview**
+
+The user can improve the accuracy of their generated map in two ways: by resetting the parameters in @sec-map-generation-parameters, or by adding or editing the sample data in @sec-map-generation-sample-data.
+
+![](images/luma-int-screenshot\Feature-4-Improve-Accuracy.png)
+
+**Process**
+
+1.  The user clicks on “Improve Accuracy”.
+
+    ::: callout-note
+    ## Success Notification
+
+    A pop up window showing two methods of improving accuracy:
+
+    - ”Reset Parameters”; continue to Process 2
+
+    - ”Fix Training Data”; continue to Step 3 (coming soon)
+    :::
+
+2.  If the user clicks on ”Reset Parameters”, the system retrieves information from Step 4.
+
+    ::: callout-note
+    ## Success Notification
+
+    The panel returns to the beginning of @sec-map-generation-parameters, with all selected predictors still checked, and displays a message explaining that the user is in Improvement Mode.
+    :::

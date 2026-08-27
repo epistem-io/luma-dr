@@ -22,7 +22,7 @@ This module performs a comprehensive thematic accuracy assessment of the land co
 
 ## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
 
-1.  The system validates availability of the required inputs.
+The system validates availability of the required inputs.
 
 ## Thematic Accuracy Assessment {#sec-thematic-accuracy-assessment}
 

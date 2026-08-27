@@ -37,8 +37,6 @@ This module cannot be accessed if the system is missing the required inputs from
 
 ## Specifying the Separability Analysis Parameter {#sec-specification-of-separability-analysis-parameters}
 
-### Specifying the Separability Analysis Parameter
-
 This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 ## Conducting the Separability Analysis
@@ -146,8 +144,6 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     :::
 
 ## Visualization of Reference Data's Spectral Profile {#sec-spectral-profile-visualization}
-
-### Visualization of Reference Data's Spectral Profile {#sec-spectra-signature-visualization}
 
 1.  The system provides four different visualization options of the spectral distributions and clustering.
 
