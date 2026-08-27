@@ -13,60 +13,22 @@ This module performs a comprehensive thematic accuracy assessment of the land co
 
 # Output {.unnumbered}
 
--   Confusion matrix.
--   Thematic accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
--   Reference data sites (optional, for users who do not have reference data, the system will generate reference data sites for them to label outside Luma-GE).
--   Spatial distribution of error
+- Confusion matrix.
+- Thematic accuracy metrics: Overall Accuracy (OA), Kappa Coefficient, Producer's Accuracy (PA), User's Accuracy (UA).
+- Reference data sites (optional, for users who do not have reference data, the system will generate reference data sites for them to label outside Luma-GE).
+- Spatial distribution of error
 
 # Process {.unnumbered}
 
 ## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
 
-This is a part of **System Response 7.1: Verification data**
-
-### Checking Prerequisites from Previous Modules
-
-**Luma User Journey**
-
-1.  The user is displayed a verification of the required inputs stored in the system.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
-    :::
-
-**Luma Geospatial Engine**
-
-1.  The system validates availability of the required inputs.
+The system validates availability of the required inputs.
 
 ## Thematic Accuracy Assessment {#sec-thematic-accuracy-assessment}
 
 ### Selecting The Workflow
 
 Two workflow are available for Module 7. The first workflow is design for the user who did not have reference data. The second workflow is for the user who already have a reference data.
-
-**Luma User Journey**
-
-1.  If the user did not have reference samples, the user select the "*generate reference sample*" workflow.
-
-    1.  The user specified desire standard error (margin of error) of the map. The range of valid value is 0.1% - 10%, with smaller value resulting in larger sample requirement
-
-    2.  The user determine the minimum expected accuracy for each class. This option is set to optional, with the default value of 85% for all class
-
-    3.  User are able to generate the sample and check the allocation as well as the spatial distribution in the map canvas.
-
-    4.  The user download the reference data and proceed to labeled the data using visual interpretation of higher resolution imagery, field survey, or combination of both. This process are conducted outside Luma-GE
-
-2.  If the user already have reference sample, they choose the "compute accuracy workflow"
-
-    1.  The user prompted to upload their reference samples. Currently, the Luma-GE only support shapefile data
-
-    2.  The user select column header that correspond to class ID and class name.
-
-    3.  The user perform the accuracy assessment and decide if their classification is meet their accuracy needs
-
-**Luma Geospatial Engine**
 
 For each workflow, the geospatial engine perform the following operation
 
@@ -128,28 +90,6 @@ The required sample for each class is allocated in the area of interest using `e
 
 ### Accuracy Computation Workflow
 
-**Luma User Journey**
-
-This is a part of **User Journey 7.2 Upload data**
-
-1.  The user is prompted to upload the validation map in a `.zip` file. The user is reminded that the validation map should have the same ID class as the one used for the classification.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation that the validation data has been validated.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system shows an error message if the uploaded validation map fails the validation process.
-    :::
-
-2.  The system displays the uploaded validation map on a canvas map along with the tabular data.
-
-**Luma Geospatial Engine**
-
 1.  The system verifies if the `.shp` of the validation map is the uploaded inside the `.zip` file.
 
     ::: callout-important
@@ -188,26 +128,6 @@ This is a part of **User Journey 7.2 Upload data**
 
 ### Starting the thematic accuracy assessment
 
-**Luma User Journey**
-
-This is a part of **User Journey 7.3: Thematic accuracy assessment**
-
-1.  The user is prompted to fill in the parameters for the thematic accuracy assessment, including specifying the column that refers to the LULC ID class and the pixel size of the classified LULC map.
-
-2.  The user can optionally set the confidence interval for the thematic accuracy assessment.
-
-3.  The user is prompted to start the thematic accuracy assessment process.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system shows an error message if the system fails to run the thematic accuracy assessment.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 7.3: Thematic accuracy assessment**
-
 1.  The system performs a thematic accuracy assessment by validating inputs, sampling the classified LULC map at reference points.
 
     ::: callout-tip
@@ -228,49 +148,45 @@ This is a part of **System Response 7.3: Thematic accuracy assessment**
 
     Several accuracy metrics is calculated to provide comprehensive report of the map's thematic quality.
 
-    -   **Overall Accuracy**
+    - **Overall Accuracy**
 
-        Overall Accuracy (OA): Sum of the major diagonal (correctly classified pixels) divided by the total pixels in the entire confusion matrix
+      Overall Accuracy (OA): Sum of the major diagonal (correctly classified pixels) divided by the total pixels in the entire confusion matrix
 
-        `OA = Σ(n_ii) / N`
+      `OA = Σ(n_ii) / N`
 
-    -   **Kappa Coefficient**
+    - **Kappa Coefficient**
 
-        Kappa coefficient is statistical test generated from the error matrix. Kappa coefficient show how well the classification performed as compared to just randomly assigning values. Kappa value range from -1 to 1, in which the value of 0 indicate that the classification is no better than a random classification. The negative value indicate that the classification is worse than random classification. The value closer to 1 indicate that the classification is better than random classification.
+      Kappa coefficient is statistical test generated from the error matrix. Kappa coefficient show how well the classification performed as compared to just randomly assigning values. Kappa value range from -1 to 1, in which the value of 0 indicate that the classification is no better than a random classification. The negative value indicate that the classification is worse than random classification. The value closer to 1 indicate that the classification is better than random classification.
 
-        `κ = (Po - Pe) / (1 - Pe) Po = Σ(n_ii) / N Pe = Σ(n_i+ × n_+i) / N²`
+      `κ = (Po - Pe) / (1 - Pe) Po = Σ(n_ii) / N Pe = Σ(n_i+ × n_+i) / N²`
 
-        Where:
+      Where:
 
-        Po = Observed Aggreement (OA)
+      Po = Observed Aggreement (OA)
 
-        Pe = Expected agreement by chance
+      Pe = Expected agreement by chance
 
-    -   **Producers's Accuracy (Recall/Sensitivity)**
+    - **Producers's Accuracy (Recall/Sensitivity)**
 
-        One of the class level accuracy metric, which answer the question, *"What fraction of actual class was correctly mapped?”*
+      One of the class level accuracy metric, which answer the question, *"What fraction of actual class was correctly mapped?”*
 
-        `PA_i = n_ii / n_i+`
+      `PA_i = n_ii / n_i+`
 
-        Where:
+      Where:
 
-        `n_ii` = correctly classified samples for class i `n_i+` = total reference samples for class i (row sum)
+      `n_ii` = correctly classified samples for class i `n_i+` = total reference samples for class i (row sum)
 
-    -   **User's Accuracy (Precision)**
+    - **User's Accuracy (Precision)**
 
-        One of the class level error metric, which answer the question *"What fraction of predicted class i is actually class i?”*
+      One of the class level error metric, which answer the question *"What fraction of predicted class i is actually class i?”*
 
-        `UA_i = n_ii / n_+i`
+      `UA_i = n_ii / n_+i`
 
-        Where:
+      Where:
 
-        `n_ii` = correctly classified samples for class i `n_+i` = total predicted samples for class i (column sum)
+      `n_ii` = correctly classified samples for class i `n_+i` = total predicted samples for class i (column sum)
 
 ### Spatial Distribution of Error
-
-**Luma Geospatial Engine**
-
-This is part of System Response 7.3: Thematic accuracy assessment
 
 This function provide reference data flagging for visualizing the spatial error distribution, improving the error analysis by tagging each point with whether the classifier got it right or wrong. Currently, this function only works if the reference data unit is point (single pixel). If the reference data consist of polygons, this function will not work.
 
@@ -289,31 +205,5 @@ This function provide reference data flagging for visualizing the spatial error 
 :::
 
 ### Reviewing the thematic accuracy result
-
-**Luma User Journey**
-
-This is a part of **User Journey 7.4: Preview thematic accuracy result**
-
-1.  The system displays the overall accuracy metrics result:
-
-    -   **Overall Accuracy (OA)**: Percentage of correctly classified validation samples
-    -   **Kappa Coefficient**: Agreement beyond chance, accounting for class distribution
-    -   **Confidence interval at 95%**: The lower and upper bounds that describe the uncertainty range of the overall accuracy estimate at the 95% confidence level
-    -   **Reference Data**: The total number of validation samples used in the thematic accuracy assessment
-
-2.  The system displays the accuracy metrics result on class-level:
-
-    -   **Producer's Accuracy**: Measure of classification completeness (1 - omission error)
-    -   **User's Accuracy**: Measure of classification reliability (1 - commission error)
-    -   **F1 score**: Summarizes Producer's and User's Accuracy metrics
-    -   The user can inspect where the misclassification happens using the spatial distribution of error map
-
-3.  The system displays the confusion matrix using heatmap visualization
-
-4.  The user is offered the option to download the overall accuracy metrics result summary or the class-level accuracy result in a `.csv` format.
-
-5.  The user is provided with several option to improve the map quality or repeating the accuracy assessment. They can return to Module 6 to change classification parameters, return to Module 5 to add predictors, return to Module 3 to add more training data, and return to Module 2 to change their classification scheme. Each options is arrange according to easiest modification (module 6) to the hardest (module 2).
-
-**Luma Geospatial Engine**
 
 This sub-step does not involve any operations from Luma Geospatial Engine.

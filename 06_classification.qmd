@@ -30,37 +30,11 @@ This module cannot be accessed if the system is missing the required inputs from
 
 ## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
 
-This is a part of **System Response 6.1: Reviewing input specifications for model training**
-
-### Checking Prerequisites from Previous Modules
-
-**Luma User Journey**
-
-1.  The user is displayed a verification of the required inputs stored in the system.
-
-**Luma Geospatial Engine**
-
 1.  The system validates availability of the required inputs.
 
 ## Extracting spectral feature from sample data {#sample-data-feature-extraction}
 
 ### Splitting the sample data {#sec-data-split}
-
-**Luma User Journey**
-
-1.  The user defines the proportion to split the sample data into training and validation dataset.
-
-2.  If the user does not split the sample data, the system shows a warning that all the sample data will be used as training data.
-
-3.  The user is required to set feature extraction parameter, including class label column and the pixel size.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation that feature extraction has been completed, and the summary of the number of training data and validation data split.
-    :::
-
-**Luma Geospatial Engine**
 
 1.  The system conducts feature extraction for both training and validation data accordingly to the proportion set by the user.
 
@@ -76,40 +50,6 @@ This is a part of **System Response 6.1: Reviewing input specifications for mode
 
 ### Creating classification model
 
-**Luma User Journey**
-
-This is a part of **User Journey 6.2: Determining classification's specification**
-
-1.  The user is given the option to use default value of the RF parameters. The default value are as the following:
-
-    -   Number of trees: 50, 100, or 150 are given as options
-    -   Variables per split: square root of total spectral band features used
-    -   Minimum leaf population: 1
-
-2.  The user is given the option to manually configure the classification parameter:
-
-    -   Number of trees
-    -   Variables per split: square root of total spectral band features used, or can adjust manually
-    -   Minimum leaf population
-
-3.  The user is prompted to verify the inputs and run the process to create the classification model.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The process to create a classification model is disabled if the user has not extracted the spectral feature
-    :::
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation that a classification model has been created.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 6.2: Classification process**
-
 1.  The system create the classification model using hard classification method.
 
     ::: callout-tip
@@ -119,30 +59,6 @@ This is a part of **System Response 6.2: Classification process**
     :::
 
 ### Reviewing classification model's quality {#sec-review-model-result}
-
-**Luma User Journey**
-
-This is a part of **User Journey 6.3: Review classification result**
-
-1.  The user is shown a feature-importance graph displaying each variable used to train the classification model. In this development phase, only spectral bands are used as classification variables.
-
-2.  The user is prompted to begin the process of calculating the model’s accuracy assessment.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation of the completion of model accuracy assessment.
-    :::
-
-3.  The user is shown the results of the model’s accuracy assessment, presented in the following structure:
-
-    -   Overall model accuracy (overall accuracy percentage, kappa coefficient, average F1-score, and G-Mean score)
-
-    -   Class-level accuracy (producer’s accuracy, user’s accuracy, F1-score, and G-Mean score), also visualized in a confusion matrix with an accompanying highlight summary of the LULC classes with the lowest accuracy.
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 6.3: Testing model's accuracy**
 
 1.  The system extracts feature importance from the trained Random Forest model and presents a ranked table of bands (or a fallback equal-weight estimate if true importance is unavailable).
 
@@ -164,16 +80,6 @@ This is a part of **System Response 6.3: Testing model's accuracy**
 
 ### Visualizing LULC classification map result {#sec-view-classification-map}
 
-**Luma User Journey**
-
-1.  The user can visualizes the LULC classification result on a canvas map along with the training data layer.
-
-2.  The user is given the option to adjust the class color visualization, or to reset it accordingly with the saved determined color saved in [Module 2](@sec-module-2).
-
-3.  If the user selected a subset of classes of the default classes in Module 2, the map will only show the classes of the user's interest. The rest of the default classes that are not selected will be shown as "Others".
-
-**Luma Geospatial Engine**
-
 1.  The system loads the user's class of interest stored from Module 2.
 
 2.  The system reclassifies the default classification scheme's map into a map that only shows the user's class of interest and an additional class labeled as "Others".
@@ -185,42 +91,6 @@ This is a part of **System Response 6.3: Testing model's accuracy**
     :::
 
 ### Downloading the LULC classification map result
-
-**Luma User Journey**
-
-1.  This step is optional for the user.
-
-2.  The user can download the classified LULC map through two options:
-
-    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the classification map result is less than 32 MB.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the URL for direct download of classified LULC map is successfully made.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if the system fails to create the URL for direct download and suggests the user to use Google Cloud Storage instead.
-    :::
-
-    b.  Export to Google Cloud Storage: Downloads the image to Google Cloud Storage.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the classified LULC map is successfully saved to Google Cloud Storage.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if the system fails to export the classified LULC map to Google Cloud Storage.
-    :::
-
-**Luma Geospatial Engine**
 
 1.  This sub-step does not involve any operations from Luma Geospatial Engine. Direct download settings are defined from Streamlit, using the same workflow as defined in @sec-visualization-and-saving-data.
 
