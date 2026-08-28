@@ -20,15 +20,7 @@ Statistical analyses of the sample data.
 
 # Process {.unnumbered}
 
-## Checking Prerequisites from Previous Modules
-
-### Checking Prerequisites from Previous Modules
-
-This sub-step does not involve any operations within the Luma Geospatial Engine.
-
-## Sample Data Generation
-
-### User Uploads Their Own Sample Data {#sec-user-upload-their-own-training-data}
+## User Uploads Their Own Class-Labelled Sample Data {#sec-user-upload-their-own-training-data}
 
 1.  The system verifies the format data input of the `.shp` inside the `.zip` .
 
@@ -36,10 +28,10 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 
 3.  The system loads the sample data after verifying the upload
 
-    - Check the initial sample count and conduct sample filtering based on its geometry, making sure all of the sample is located inside the area of interest
-    - Handle a large dataset by stratified sampling so that the sample does not exceed 5000 features, and maintain class distribution representation
-    - Convert the shapefile into a geodataframe
-    - Updates the class field identifier in the training data dictionary.
+    -   Check the initial sample count and conduct sample filtering based on its geometry, making sure all of the sample is located inside the area of interest
+    -   Handle a large dataset by stratified sampling so that the sample does not exceed 5000 features, and maintain class distribution representation
+    -   Convert the shapefile into a geodataframe
+    -   Updates the class field identifier in the training data dictionary.
 
     ::: callout-tip
     ## Related Function
@@ -89,11 +81,11 @@ The main issue is that the original stratified sampling algorithm made sequentia
 
 5.  The system generates a summary table of the user's uploaded sample data. The summary includes:
 
-    - LULC class ID
-    - LULC class name
-    - Number of sample data of the LULC class
-    - Percentage of the sample data count
-    - Sufficiency category of the LULC class' sample data
+    -   LULC class ID
+    -   LULC class name
+    -   Number of sample data of the LULC class
+    -   Percentage of the sample data count
+    -   Sufficiency category of the LULC class' sample data
 
     ::: callout-tip
     ## Related Functions
@@ -101,16 +93,30 @@ The main issue is that the original stratified sampling algorithm made sequentia
     `sample_data.SyncTrainData.TrainDataRaw():` Check if there are sufficient sample data per class.
     :::
 
-### On-Screen Sampling {#sec-on-screen-sampling}
+## User Use Default Classification Scheme
 
-This sub-step does not involve any operations within the Luma Geospatial Engine. The on-screen sampling feature was developed using `folium` for the Streamlit development.
+This workflow is activated only when the user selects the default classification scheme in Module 2. Its purpose is to enable users without their own training data to generate an LULC map. LULC map generation under the default classification scheme uses a modular mapping approach.
 
-### Using Default Sample Data {#sec-default-sample-data}
+### Probability map generation using modular mapping approach {#produce-prob-maps}
 
-1.  The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset.
+This section describes the process for generating the probability maps required as input for producing an LULC map when the user selects the default classification scheme. This process runs only once and is not repeated each time a user selects the default classification scheme workflow.
 
-## Sample Data Preview {#sec-sample-data-preview}
+1.  A default training dataset is generated using stratified random sampling across Indonesia's regions (Sumatra, Kalimantan, Nusa Tenggara, Jawa-Bali, Maluku, Sulawesi, and Papua). Rather than following the conventional approach of labeling training data directly with final LULC classes, each point in this dataset is instead labeled with information on a set of land cover elements, referred to hereafter as "primitives."
 
-1.  The system runs @sec-verify-sample-data for the **updated** sample data.
+2.  Each training data point is then assigned a class label using a decision tree ruleset manually constructed by experts. In this decision tree, primitives serve as nodes, and LULC classes serve as leaves.
 
-2.  The system saved the sample data as an object to be loaded in the next modules.
+    ::: callout-tip
+    ## Related Functions
+
+    A function to assign class label
+    :::
+
+3.  The class-labeled training data is used to train a Random Forest classification model. A one-versus-rest binary classification approach is applied to generate probability maps for each class in the Epistem classification scheme.
+
+    ::: callout-tip
+    ## Related Functions
+
+    A function to conduct OVR
+    :::
+
+4.  The resulting probability layers are saved as Earth Engine assets and will be process in @sec-module-6
