@@ -22,7 +22,7 @@ This module performs supervised Random Forest classification to generate a land 
 
 # Process {.unnumbered}
 
-## Extracting spectral feature from sample data {#sample-data-feature-extraction}
+## Extracting spectral feature from sample data {#sec-sample-data-feature-extraction}
 
 ### Splitting the sample data {#sec-data-split}
 
@@ -88,9 +88,9 @@ This module performs supervised Random Forest classification to generate a land 
 
 ## Default classification scheme classification from probability layers
 
-When the user [chose to use default classification scheme](@user-select-existing-lulc-template), @sample-data-feature-extraction and @sec-create-classification-model are skipped.
+When the user [chose to use default classification scheme](@sec-user-select-existing-lulc-template), @sec-sample-data-feature-extraction and @sec-create-classification-model are skipped.
 
-1.  The system loads the [pre-generated probability map](@produce-prob-maps) stack and clips it to the user's AOI.
+1.  The system loads the [pre-generated probability map](@sec-produce-prob-maps) stack and clips it to the user's AOI.
 
 2.  If the user selects only a subset of classes from the classification scheme, the system retrieves the selected classes and discards the probability maps for the unselected classes.
 

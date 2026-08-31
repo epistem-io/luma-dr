@@ -97,7 +97,7 @@ The main issue is that the original stratified sampling algorithm made sequentia
 
 This workflow is activated only when the user selects the default classification scheme in Module 2. Its purpose is to enable users without their own training data to generate an LULC map. LULC map generation under the default classification scheme uses a modular mapping approach.
 
-### Probability map generation using modular mapping approach {#produce-prob-maps}
+### Probability map generation using modular mapping approach {#sec-produce-prob-maps}
 
 This section describes the process for generating the probability maps required as input for producing an LULC map when the user selects the default classification scheme. This process runs only once and is not repeated each time a user selects the default classification scheme workflow.
 
