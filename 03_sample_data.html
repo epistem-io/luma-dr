@@ -272,18 +272,14 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
   <ul class="collapse">
-  <li><a href="#checking-prerequisites-from-previous-modules" id="toc-checking-prerequisites-from-previous-modules" class="nav-link" data-scroll-target="#checking-prerequisites-from-previous-modules"><span class="header-section-number">3.1</span> Checking Prerequisites from Previous Modules</a>
+  <li><a href="#sec-user-upload-their-own-training-data" id="toc-sec-user-upload-their-own-training-data" class="nav-link" data-scroll-target="#sec-user-upload-their-own-training-data"><span class="header-section-number">3.1</span> User Uploads Their Own Class-Labelled Sample Data</a>
   <ul class="collapse">
-  <li><a href="#checking-prerequisites-from-previous-modules-1" id="toc-checking-prerequisites-from-previous-modules-1" class="nav-link" data-scroll-target="#checking-prerequisites-from-previous-modules-1"><span class="header-section-number">3.1.1</span> Checking Prerequisites from Previous Modules</a></li>
+  <li><a href="#sec-verify-sample-data" id="toc-sec-verify-sample-data" class="nav-link" data-scroll-target="#sec-verify-sample-data"><span class="header-section-number">3.1.1</span> Verifying Sample Data from User’s Input</a></li>
   </ul></li>
-  <li><a href="#sample-data-generation" id="toc-sample-data-generation" class="nav-link" data-scroll-target="#sample-data-generation"><span class="header-section-number">3.2</span> Sample Data Generation</a>
+  <li><a href="#user-use-default-classification-scheme" id="toc-user-use-default-classification-scheme" class="nav-link" data-scroll-target="#user-use-default-classification-scheme"><span class="header-section-number">3.2</span> User Use Default Classification Scheme</a>
   <ul class="collapse">
-  <li><a href="#sec-user-upload-their-own-training-data" id="toc-sec-user-upload-their-own-training-data" class="nav-link" data-scroll-target="#sec-user-upload-their-own-training-data"><span class="header-section-number">3.2.1</span> User Uploads Their Own Sample Data</a></li>
-  <li><a href="#sec-verify-sample-data" id="toc-sec-verify-sample-data" class="nav-link" data-scroll-target="#sec-verify-sample-data"><span class="header-section-number">3.2.2</span> Verifying Sample Data from User’s Input</a></li>
-  <li><a href="#sec-on-screen-sampling" id="toc-sec-on-screen-sampling" class="nav-link" data-scroll-target="#sec-on-screen-sampling"><span class="header-section-number">3.2.3</span> On-Screen Sampling</a></li>
-  <li><a href="#sec-default-sample-data" id="toc-sec-default-sample-data" class="nav-link" data-scroll-target="#sec-default-sample-data"><span class="header-section-number">3.2.4</span> Using Default Sample Data</a></li>
+  <li><a href="#sec-produce-prob-maps" id="toc-sec-produce-prob-maps" class="nav-link" data-scroll-target="#sec-produce-prob-maps"><span class="header-section-number">3.2.1</span> Probability map generation using modular mapping approach</a></li>
   </ul></li>
-  <li><a href="#sec-sample-data-preview" id="toc-sec-sample-data-preview" class="nav-link" data-scroll-target="#sec-sample-data-preview"><span class="header-section-number">3.3</span> Sample Data Preview</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -364,20 +360,11 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="process" class="level1 unnumbered">
 <h1 class="unnumbered">Process</h1>
-<section id="checking-prerequisites-from-previous-modules" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules"><span class="header-section-number">3.1</span> Checking Prerequisites from Previous Modules</h2>
-<section id="checking-prerequisites-from-previous-modules-1" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="checking-prerequisites-from-previous-modules-1"><span class="header-section-number">3.1.1</span> Checking Prerequisites from Previous Modules</h3>
-<p>This sub-step does not involve any operations within the Luma Geospatial Engine.</p>
-</section>
-</section>
-<section id="sample-data-generation" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sample-data-generation"><span class="header-section-number">3.2</span> Sample Data Generation</h2>
-<section id="sec-user-upload-their-own-training-data" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-user-upload-their-own-training-data"><span class="header-section-number">3.2.1</span> User Uploads Their Own Sample Data</h3>
+<section id="sec-user-upload-their-own-training-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-user-upload-their-own-training-data"><span class="header-section-number">3.1</span> User Uploads Their Own Class-Labelled Sample Data</h2>
 <ol type="1">
 <li><p>The system verifies the format data input of the <code>.shp</code> inside the <code>.zip</code> .</p></li>
-<li><p>Once the input format data is validated, the system runs <a href="#sec-verify-sample-data" class="quarto-xref"><span>Section 3.2.2</span></a></p></li>
+<li><p>Once the input format data is validated, the system runs <a href="#sec-verify-sample-data" class="quarto-xref"><span>Section 3.1.1</span></a></p></li>
 <li><p>The system loads the sample data after verifying the upload</p>
 <ul>
 <li>Check the initial sample count and conduct sample filtering based on its geometry, making sure all of the sample is located inside the area of interest</li>
@@ -412,9 +399,8 @@ ul.task-list li input[type="checkbox"] {
 <p>The main issue is that the original stratified sampling algorithm made sequential&nbsp;<code>.getInfo()</code>&nbsp;calls for each class label when calculating class sizes and extracting features, which could cause browser crashes or exceed Earth Engine quotas when processing large datasets (5000+ features). The improved implementation consolidates all server-side computations into a single aggregated request, keeping all operations on the server side until the final&nbsp;<code>.getInfo()</code>&nbsp;call, thus avoiding excessive client-server communication and quota limitations.</p>
 </div>
 </div>
-</section>
-<section id="sec-verify-sample-data" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-verify-sample-data"><span class="header-section-number">3.2.2</span> Verifying Sample Data from User’s Input</h3>
+<section id="sec-verify-sample-data" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="sec-verify-sample-data"><span class="header-section-number">3.1.1</span> Verifying Sample Data from User’s Input</h3>
 <ol type="1">
 <li><p>The system checks which column in the sample dataset should be used as the class label.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -495,25 +481,48 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 </ol>
 </section>
-<section id="sec-on-screen-sampling" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="sec-on-screen-sampling"><span class="header-section-number">3.2.3</span> On-Screen Sampling</h3>
-<p>This sub-step does not involve any operations within the Luma Geospatial Engine. The on-screen sampling feature was developed using <code>folium</code> for the Streamlit development.</p>
 </section>
-<section id="sec-default-sample-data" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="sec-default-sample-data"><span class="header-section-number">3.2.4</span> Using Default Sample Data</h3>
+<section id="user-use-default-classification-scheme" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="user-use-default-classification-scheme"><span class="header-section-number">3.2</span> User Use Default Classification Scheme</h2>
+<p>This workflow is activated only when the user selects the default classification scheme in Module 2. Its purpose is to enable users without their own training data to generate an LULC map. LULC map generation under the default classification scheme uses a modular mapping approach.</p>
+<section id="sec-produce-prob-maps" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-produce-prob-maps"><span class="header-section-number">3.2.1</span> Probability map generation using modular mapping approach</h3>
+<p>This section describes the process for generating the probability maps required as input for producing an LULC map when the user selects the default classification scheme. This process runs only once and is not repeated each time a user selects the default classification scheme workflow.</p>
 <ol type="1">
-<li>The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset.</li>
-</ol>
-</section>
-</section>
-<section id="sec-sample-data-preview" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="sec-sample-data-preview"><span class="header-section-number">3.3</span> Sample Data Preview</h2>
-<ol type="1">
-<li><p>The system runs <a href="#sec-verify-sample-data" class="quarto-xref"><span>Section 3.2.2</span></a> for the <strong>updated</strong> sample data.</p></li>
-<li><p>The system saved the sample data as an object to be loaded in the next modules.</p></li>
+<li><p>A default training dataset is generated using stratified random sampling across Indonesia’s regions (Sumatra, Kalimantan, Nusa Tenggara, Jawa-Bali, Maluku, Sulawesi, and Papua). Rather than following the conventional approach of labeling training data directly with final LULC classes, each point in this dataset is instead labeled with information on a set of land cover elements, referred to hereafter as “primitives.”</p></li>
+<li><p>Each training data point is then assigned a class label using a decision tree ruleset manually constructed by experts. In this decision tree, primitives serve as nodes, and LULC classes serve as leaves.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A function to assign class label</p>
+</div>
+</div></li>
+<li><p>The class-labeled training data is used to train a Random Forest classification model. A one-versus-rest binary classification approach is applied to generate probability maps for each class in the Epistem classification scheme.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A function to conduct OVR</p>
+</div>
+</div></li>
+<li><p>The resulting probability layers are saved as Earth Engine assets and will be process in <a href="06_classification.html" class="quarto-xref"><span>Chapter 6</span></a></p></li>
 </ol>
 
 
+</section>
 </section>
 </section>
 

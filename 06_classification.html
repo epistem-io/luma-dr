@@ -272,18 +272,18 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
   <ul class="collapse">
-  <li><a href="#sec-checking-prerequisites" id="toc-sec-checking-prerequisites" class="nav-link" data-scroll-target="#sec-checking-prerequisites"><span class="header-section-number">6.1</span> Checking Prerequisites from Previous Modules</a></li>
-  <li><a href="#sample-data-feature-extraction" id="toc-sample-data-feature-extraction" class="nav-link" data-scroll-target="#sample-data-feature-extraction"><span class="header-section-number">6.2</span> Extracting spectral feature from sample data</a>
+  <li><a href="#sec-sample-data-feature-extraction" id="toc-sec-sample-data-feature-extraction" class="nav-link" data-scroll-target="#sec-sample-data-feature-extraction"><span class="header-section-number">6.1</span> Extracting spectral feature from sample data</a>
   <ul class="collapse">
-  <li><a href="#sec-data-split" id="toc-sec-data-split" class="nav-link" data-scroll-target="#sec-data-split"><span class="header-section-number">6.2.1</span> Splitting the sample data</a></li>
+  <li><a href="#sec-data-split" id="toc-sec-data-split" class="nav-link" data-scroll-target="#sec-data-split"><span class="header-section-number">6.1.1</span> Splitting the sample data</a></li>
   </ul></li>
-  <li><a href="#sec-create-classification-model" id="toc-sec-create-classification-model" class="nav-link" data-scroll-target="#sec-create-classification-model"><span class="header-section-number">6.3</span> Creating classification model</a>
+  <li><a href="#sec-create-classification-model" id="toc-sec-create-classification-model" class="nav-link" data-scroll-target="#sec-create-classification-model"><span class="header-section-number">6.2</span> Creating classification model</a>
   <ul class="collapse">
-  <li><a href="#creating-classification-model" id="toc-creating-classification-model" class="nav-link" data-scroll-target="#creating-classification-model"><span class="header-section-number">6.3.1</span> Creating classification model</a></li>
-  <li><a href="#sec-review-model-result" id="toc-sec-review-model-result" class="nav-link" data-scroll-target="#sec-review-model-result"><span class="header-section-number">6.3.2</span> Reviewing classification model’s quality</a></li>
-  <li><a href="#sec-view-classification-map" id="toc-sec-view-classification-map" class="nav-link" data-scroll-target="#sec-view-classification-map"><span class="header-section-number">6.3.3</span> Visualizing LULC classification map result</a></li>
-  <li><a href="#downloading-the-lulc-classification-map-result" id="toc-downloading-the-lulc-classification-map-result" class="nav-link" data-scroll-target="#downloading-the-lulc-classification-map-result"><span class="header-section-number">6.3.4</span> Downloading the LULC classification map result</a></li>
+  <li><a href="#creating-classification-model" id="toc-creating-classification-model" class="nav-link" data-scroll-target="#creating-classification-model"><span class="header-section-number">6.2.1</span> Creating classification model</a></li>
+  <li><a href="#sec-review-model-result" id="toc-sec-review-model-result" class="nav-link" data-scroll-target="#sec-review-model-result"><span class="header-section-number">6.2.2</span> Reviewing classification model’s quality</a></li>
+  <li><a href="#sec-view-classification-map" id="toc-sec-view-classification-map" class="nav-link" data-scroll-target="#sec-view-classification-map"><span class="header-section-number">6.2.3</span> Visualizing LULC classification map result</a></li>
+  <li><a href="#downloading-the-lulc-classification-map-result" id="toc-downloading-the-lulc-classification-map-result" class="nav-link" data-scroll-target="#downloading-the-lulc-classification-map-result"><span class="header-section-number">6.2.4</span> Downloading the LULC classification map result</a></li>
   </ul></li>
+  <li><a href="#default-classification-scheme-classification-from-probability-layers" id="toc-default-classification-scheme-classification-from-probability-layers" class="nav-link" data-scroll-target="#default-classification-scheme-classification-from-probability-layers"><span class="header-section-number">6.3</span> Default classification scheme classification from probability layers</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -362,35 +362,16 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="unnumbered">Output</h1>
 <ol type="1">
 <li>Trained LULC classification model.</li>
-<li>Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the <a href="@sec-sec-data-split">splitted the sample data</a></li>
+<li>Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the <a href="@sec-data-split">splitted the sample data</a></li>
 <li>Classified LULC raster map.</li>
 </ol>
 </section>
 <section id="process" class="level1 unnumbered">
 <h1 class="unnumbered">Process</h1>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules</p>
-</div>
-</div>
-<section id="sec-checking-prerequisites" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="sec-checking-prerequisites"><span class="header-section-number">6.1</span> Checking Prerequisites from Previous Modules</h2>
-<ol type="1">
-<li>The system validates availability of the required inputs.</li>
-</ol>
-</section>
-<section id="sample-data-feature-extraction" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sample-data-feature-extraction"><span class="header-section-number">6.2</span> Extracting spectral feature from sample data</h2>
-<section id="sec-data-split" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="sec-data-split"><span class="header-section-number">6.2.1</span> Splitting the sample data</h3>
+<section id="sec-sample-data-feature-extraction" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-sample-data-feature-extraction"><span class="header-section-number">6.1</span> Extracting spectral feature from sample data</h2>
+<section id="sec-data-split" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="sec-data-split"><span class="header-section-number">6.1.1</span> Splitting the sample data</h3>
 <ol type="1">
 <li><p>The system conducts feature extraction for both training and validation data accordingly to the proportion set by the user.</p></li>
 <li><p>The system uses stratified random split method to conduct the data splitting. This method randomly selects samples within each class to proportionally create training and testing sets while preserving class distribution.</p>
@@ -410,10 +391,10 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 </section>
-<section id="sec-create-classification-model" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-create-classification-model"><span class="header-section-number">6.3</span> Creating classification model</h2>
-<section id="creating-classification-model" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="creating-classification-model"><span class="header-section-number">6.3.1</span> Creating classification model</h3>
+<section id="sec-create-classification-model" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-create-classification-model"><span class="header-section-number">6.2</span> Creating classification model</h2>
+<section id="creating-classification-model" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="creating-classification-model"><span class="header-section-number">6.2.1</span> Creating classification model</h3>
 <ol type="1">
 <li><p>The system create the classification model using hard classification method.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -431,8 +412,8 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 </ol>
 </section>
-<section id="sec-review-model-result" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="sec-review-model-result"><span class="header-section-number">6.3.2</span> Reviewing classification model’s quality</h3>
+<section id="sec-review-model-result" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="sec-review-model-result"><span class="header-section-number">6.2.2</span> Reviewing classification model’s quality</h3>
 <ol type="1">
 <li><p>The system extracts feature importance from the trained Random Forest model and presents a ranked table of bands (or a fallback equal-weight estimate if true importance is unavailable).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -465,8 +446,8 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Confusion matrix and model accuracy summary are then rendered in the user-interface.</p></li>
 </ol>
 </section>
-<section id="sec-view-classification-map" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="sec-view-classification-map"><span class="header-section-number">6.3.3</span> Visualizing LULC classification map result</h3>
+<section id="sec-view-classification-map" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="sec-view-classification-map"><span class="header-section-number">6.2.3</span> Visualizing LULC classification map result</h3>
 <ol type="1">
 <li><p>The system loads the user’s class of interest stored from Module 2.</p></li>
 <li><p>The system reclassifies the default classification scheme’s map into a map that only shows the user’s class of interest and an additional class labeled as “Others”.</p>
@@ -485,15 +466,77 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 </ol>
 </section>
-<section id="downloading-the-lulc-classification-map-result" class="level3" data-number="6.3.4">
-<h3 data-number="6.3.4" class="anchored" data-anchor-id="downloading-the-lulc-classification-map-result"><span class="header-section-number">6.3.4</span> Downloading the LULC classification map result</h3>
+<section id="downloading-the-lulc-classification-map-result" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="downloading-the-lulc-classification-map-result"><span class="header-section-number">6.2.4</span> Downloading the LULC classification map result</h3>
 <ol type="1">
 <li><p>This sub-step does not involve any operations from Luma Geospatial Engine. Direct download settings are defined from Streamlit, using the same workflow as defined in <a href="01_data_acquisition.html#sec-visualization-and-saving-data" class="quarto-xref"><span>Section 1.5</span></a>.</p></li>
 <li><p>For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.</p></li>
 </ol>
-
-
 </section>
+</section>
+<section id="default-classification-scheme-classification-from-probability-layers" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="default-classification-scheme-classification-from-probability-layers"><span class="header-section-number">6.3</span> Default classification scheme classification from probability layers</h2>
+<p>When the user <a href="@sec-user-select-existing-lulc-template">chose to use default classification scheme</a>, <a href="#sec-sample-data-feature-extraction" class="quarto-xref"><span>Section 6.1</span></a> and <a href="#sec-create-classification-model" class="quarto-xref"><span>Section 6.2</span></a> are skipped.</p>
+<ol type="1">
+<li><p>The system loads the <a href="@sec-produce-prob-maps">pre-generated probability map</a> stack and clips it to the user’s AOI.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A function to load &amp; prepare the pre-generated probability map</p>
+</div>
+</div></li>
+<li><p>If the user selects only a subset of classes from the classification scheme, the system retrieves the selected classes and discards the probability maps for the unselected classes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A function to load the chosen classification scheme</p>
+</div>
+</div></li>
+<li><p>For each pixel, the system retrieves the probability value from each layer and assigns a class based on the highest probability value using the argmax function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A function to apply argmax</p>
+</div>
+</div></li>
+<li><p>Post-classification cleanup is performed by masking the classified map according to a predefined set of rule-based predictors.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A function to conduct post-classification</p>
+</div>
+</div></li>
+</ol>
+
+
 </section>
 </section>
 
