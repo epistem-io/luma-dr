@@ -24,7 +24,7 @@ book:
       - 05_predictor.qmd
       - 06_classification.qmd
       - 07_accuracy.qmd
-      - placeholders/module08_placeholder.qmd
+      - 08_report_and_post_classification.qmd
     # - summary.qmd
     # - references.qmd
     - part: "Luma Interface"
