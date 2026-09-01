@@ -4,7 +4,7 @@
 
 This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1.
 
-This module is required. [Module 8](@sec-module-8) uses the separability result in the Map Creation and Quality Report. The analysis runs on a capped pixel sample for each class pair (@sec-specification-of-separability-analysis-parameters), so it is cheap to compute. The result shows how well the sample data separates the classes, and which class pairs the map is likely to confuse.
+This module is required. [Module 8](@sec-module-8) uses the separability result in the Map Creation and Quality Report. The analysis runs on a capped pixel sample for each class pair (@sec-specification-of-separability-analysis-parameters), which ensures the computation is inexpensive, with the flexibility to readjust the pixel sample cap if the volume of data points is exceptionally large. The result shows how well the sample data separates the classes, and which class pairs the map is likely to confuse.
 
 # Input {.unnumbered}
 
@@ -130,6 +130,8 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
 2.  The system generates a pairwise separability matrix and converts the results into a structured dataframe.
 
 3.  The system categorizes the number of good, weak, and poor class pairs as a summary for user.
+
+4.  If a class pair holds too few pixels for pixel-level statistics, the system cannot compute a separability value for that pair. The system records which pairs failed, thus [Module 8](@sec-module-8) can report Sample Data Quality as errored (@sec-report-sample-data-quality).
 
     ::: callout-tip
     ## Related Function
