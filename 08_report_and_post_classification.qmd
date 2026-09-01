@@ -1,0 +1,432 @@
+# Module 8: Post Classification Analysis and Housekeeping {#sec-module-8}
+
+## Module Overview
+
+This module allows users to review all artifacts generated from previous modules, perform post-classification analysis of the LULC map results from [Module 6](@sec-module-6), and export the LULC map results with metadata and accuracy assessment. It activates once [Module 6](@sec-module-6) has produced a classified LULC map whereas [Module 7](@sec-module-7) is not mandatory. The system assembles the Map Creation and Quality Report, an At a Glance summary followed by a Comprehensive section-by-section breakdown covering Model Accuracy, and Thematic Accuracy alongside the map's creation history, rendered as an HTML document the user can read in the app and download, and handles export of the assets, as a direct download or to Google Drive, with progress monitoring and notifications.
+
+A report describes exactly one map identity: one area of interest, one time period, one sensor (@sec-report-identity). This module currently covers three items: (1) producing the Map Creation and Quality Report, specified in full below; (2) post-classification LULC change analysis (not yet implemented); and (3) exporting assets and publishing, specified separately below. Only item (1) is in scope for this specification.
+
+## Input {.unnumbered}
+
+**User’s Input**
+
+1.  Click to access Module 8.
+2.  Press download button to initiate export (yes/no).
+
+**Automatic System Input**
+
+1.  None.
+
+**Input from Other Modules**
+
+1.  Landsat image that has been cropped and has minimal cloud cover ([Module 1](@sec-module-1)).
+2.  Image search report (report_metadata [Module 1](@sec-module-1)).
+3.  LULC classification scheme table ([Module 2](@sec-module-2)).
+4.  Georeferenced training dataset ([Module 3](@sec-module-3)).
+5.  Class-level separability results (report_metadata [Module 4](@sec-module-4)).
+6.  Selected predictor list (report_metadata [Module 5](@sec-module-5)).
+7.  Model specification report (report_metadata [Module 6](@sec-module-6)).
+8.  Classified LULC map (Peta LULC [Module 6](@sec-module-6)).
+9.  Model decisiveness map, runner-up class layer, and lookup table (report_metadata [Module 6](@sec-module-6)).
+10. Confusion matrix and accuracy test table ([Module 7](@sec-module-7)), if available.
+
+## Output {.unnumbered}
+
+1.  Map Creation and Quality Report: an At a Glance summary and a Comprehensive section-by-section breakdown, rendered as an HTML document that the user reads in the app and can download (@sec-generate-report).
+2.  LULC Area Summary Table (digest table of area per land cover class).
+3.  Area Bar Chart.
+4.  Exported assets, delivered as a direct download or to Google Drive at the user's choice: LULC map + metadata/log-summary + accuracy test results (with warning if Module 7 not run).
+
+## Process
+
+White containers are the Luma User Journey, built as the full-stack user interface. Pink containers are the Luma Geospatial Engine (Luma-GE) system response.
+
+```{mermaid}
+flowchart TD
+
+START([Start])
+
+subgraph RS81[System Response 8.1: Module Prerequisite Checks]
+  P1{Classified LULC map from Module 6 available?}
+  P2[Module 8 stays inactive]
+  P3[<a href="#sec-data-collection-and-verification">Collect and verify data from Modules 1 to 7</a>]
+  P4[/List of data, variables and parameters/]
+end
+
+subgraph UJ82[User Journey 8.2: Map Creation and Quality Report]
+  U1[User opens Module 8]
+  U2[<a href="interface_map_generation.html#sec-map-generation-report">User reads At a Glance, then the Comprehensive report</a>]
+  UD{Download the report?}
+  UD2[<a href="interface_map_generation.html#sec-map-generation-report-download">User saves the report as an HTML file</a>]
+  U3{Download the exported assets?}
+end
+
+subgraph RS82[System Response 8.2: Report Generation]
+  R1[<a href="#sec-report-completeness">Check component availability and staleness</a>]
+  R2[<a href="#sec-report-at-a-glance">Assemble the At a Glance summary</a>]
+  R3[<a href="#sec-report-comprehensive">Assemble the Comprehensive report</a>]
+  R4[<a href="#sec-report-rendering">Render the report to HTML</a>]
+  R5[/Map Creation and Quality Report/]
+end
+
+subgraph UJ83[User Journey 8.3: Export and Publish]
+  X1[User presses download]
+  X2{Direct download or Google Drive?}
+  X3[<a href="#sec-publish-to-epistem-y">Publish to Rona?,</a>]
+end
+
+subgraph RS83[System Response 8.3: Export]
+  E1[<a href="#sec-export-data">Serve assets as a direct download</a>]
+  E2[<a href="#sec-export-data">Export assets to Google Drive</a>]
+  E3[/Notification of completed export/]
+end
+
+DONE([End])
+
+START --> U1
+U1 --> P1
+P1 -->|No| P2
+P2 --> DONE
+P1 -->|Yes| P3
+P3 --> P4
+P4 --> R1
+R1 --> R2
+R2 --> R3
+R3 --> R4
+R4 --> R5
+R5 --> U2
+U2 --> UD
+UD -->|Yes| UD2
+UD -->|No| U3
+UD2 --> U3
+U3 -->|No| DONE
+U3 -->|Yes| X1
+X1 --> X2
+X2 -->|Direct download| E1
+X2 -->|Google Drive| E2
+E1 --> E3
+E2 --> E3
+E3 --> X3
+X3 --> DONE
+
+classDef sysProcess fill:#6DCFF6,stroke:#1B7FA8,color:#000000
+classDef sysData fill:#FFC72C,stroke:#A87F00,color:#000000
+classDef userProcess fill:#FFFFFF,stroke:#555555,color:#000000
+classDef startEnd fill:#ED1C24,stroke:#8A0F14,color:#FFFFFF
+
+class P1,P2,P3,R1,R2,R3,R4,E1,E2 sysProcess
+class P4,R5,E3 sysData
+class U1,U2,UD,UD2,U3,X1,X2,X3 userProcess
+class START,DONE startEnd
+
+style RS81 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+style RS82 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+style RS83 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+style UJ82 fill:#FFFFFF,stroke:#AAAAAA,color:#000000
+style UJ83 fill:#FFFFFF,stroke:#AAAAAA,color:#000000
+```
+
+## Checking Prerequisites from Previous Modules {#sec-module-8-prerequisites}
+
+::: callout-important
+## Error Handling Notification
+
+Module 8 cannot be accessed if the system has no classified LULC map from [Module 6](@sec-module-6).
+:::
+
+1.  The system activates Module 8 only if [Module 6](@sec-module-6) has produced a classified LULC map, together with the [Module 1](@sec-module-1) inputs that map was built from. This is the only prerequisite.
+
+2.  [Module 7](@sec-module-7) is **not** a prerequisite. A user who has a map but no ground reference data, or who is waiting to label reference samples outside Luma, still gets a report. Thematic Accuracy is then reported as unavailable (@sec-report-completeness), and the report states that the map has not been independently validated.
+
+## Post-Classification Analysis and Export
+
+### Data Collection and Verification {#sec-data-collection-and-verification}
+
+Runs automatically once Module 8 is active.
+
+1.  Collect and verify data and variables: AOI, time period, image type, cloud percentage, land cover classes, training data digest, class-level separability results from [Module 4](@sec-module-4), selected predictor list from [Module 5](@sec-module-5), model specifications and model decisiveness output from [Module 6](@sec-module-6), minimum-cloud mosaic and metadata from [Module 1](@sec-module-1), classified LULC map and metadata, accuracy test table from [Module 7](@sec-module-7) if it exists.
+
+2.  Calculate the LULC area summary table and the area bar chart used in @sec-report-classification.
+
+    ::: callout-tip
+    ## Related Function
+
+    `dataviz.LULCStats.compute_area_stats()`: computes area and proportion per LULC class from the classified map.
+    :::
+
+## Generating the Map Creation and Quality Report {#sec-generate-report}
+
+This is a part of **System Response 8.2: Report Generation**
+
+The report has two reading depths in one document, preceded by an identity block naming the map. At a Glance is a plain-language summary for a non-technical reader (e.g. a dinas stakeholder): a headline trust statement, the single biggest caveat, and a statement of what the report does not include. Comprehensive is the full section-by-section breakdown for a remote-sensing practitioner: the metrics, confusion matrices, and lookup tables produced by Modules 1 through 7. Both depths are generated from the same collected data and rendered together.
+
+::: callout-important
+## Report Scope
+
+The report collects, formats, and displays outputs that Modules 1 through 7 already produce.
+:::
+
+### Determining Report Completeness and Staleness {#sec-report-completeness}
+
+Runs automatically as part of report generation, using the data collected in @sec-data-collection-and-verification.
+
+Every component is in exactly one of four states: **available**, **unavailable**, **stale**, or **errored**. Unavailable and errored are different and must not share wording: unavailable means the step was never run, errored means it was run but its output could not be read.
+
+Three components can vary. Every other section of the report derives from [Module 6](@sec-module-6)'s map or from modules that always run, so they are always available unless they error.
+
+1.  For each of the report's three varying components, the system checks whether the underlying module produced the required output:
+
+    - Model Accuracy requires that the user split the sample data in [Module 6](@sec-module-6#sec-data-split). This part is unavailable if no split was performed.
+    - Thematic Accuracy requires that [Module 7](@sec-module-7) has been run at least once. If it has not, Thematic Accuracy is unavailable.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.check_component_availability()`: checks each varying component's prerequisite module output and records its state with a plain-language reason for any component that is not available.
+    :::
+
+2.  The system compares the model identity recorded in the current classified map's Report Metadata ([Module 6](@sec-module-6)) against the model identity recorded in the stored Thematic Accuracy result's Report Metadata ([Module 7](@sec-module-7)). If they do not match, the current map was retrained after the stored Thematic Accuracy assessment was produced.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.check_staleness()`: compares model identity between the current classified map and each stored downstream result, and flags a mismatch as stale.
+    :::
+
+    ::: callout-important
+    ## Reporting Rule
+
+    A stale component is reported as stale, not as available. The Thematic Accuracy and Model Decisiveness sections of the report must not present numbers from a stale result as though they describe the current map. This extends the warning [Module 6](@sec-module-6#sec-decisiveness-actions) already gives at retrain time into the report itself, since a report is read by users who were not present when that warning fired.
+    :::
+
+3.  The system builds the completeness statement used in @sec-report-at-a-glance. The statement names the components that are not available and why.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.summarize_completeness()`: builds the completeness statement as a named list of components that are not available.
+    :::
+
+### Assembling the Report Identity Block {#sec-report-identity}
+
+The report describes exactly one map identit**y**. The identity block states which map, at the very top of the document, above @sec-report-at-a-glance.
+
+1.  The system reads map identity from [Module 1](@sec-module-1)'s Report Metadata and renders:
+
+    - The area of interest: its administrative boundary name when the AOI came from [Module 1](@sec-module-1)'s boundary picker, or its bounding coordinates and area when the AOI was uploaded as a shapefile, since no boundary name is available for that path.
+    - The time period: the single year or the custom date range chosen in [Module 1](@sec-module-1).
+    - The sensor.
+    - The timestamp at which the report was generated.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_identity_block()`: formats map identity and the generation timestamp into the identity block.
+    :::
+
+### Assembling the At a Glance Summary {#sec-report-at-a-glance}
+
+At a Glance is the plain-language summary. It carries a headline and the completeness statement from @sec-report-completeness.
+
+1.  The system sets the headline accuracy number from Thematic Accuracy's overall accuracy.
+
+    ::: callout-important
+    ## Headline accuracy number
+
+    When Thematic Accuracy is not available or is stale, At a Glance shows no accuracy number. Model Accuracy stays in @sec-report-classification, where it is read in context. In that case the headline position carries this statement instead:
+
+    *"This map has not been independently validated. No thematic accuracy assessment has been done, so this report cannot state how accurate the map is."*
+    :::
+
+2.  The system places the completeness statement from @sec-report-completeness. Where a component is not available, the same plain-language reason appears both here and in the corresponding Comprehensive section.
+
+    ::: callout-important
+    ## Completeness and Staleness Notice
+
+    *"This report does not include \[component name\]."*
+    :::
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_at_a_glance()`: assembles the headline accuracy number and the completeness statement into the At a Glance summary content.
+    :::
+
+### Assembling the Comprehensive Report {#sec-report-comprehensive}
+
+The Comprehensive section follows this order: Data Acquisition, Classification Scheme, Sample Data, Sample Data Quality, Predictors, Classification, Thematic Accuracy. Each sub-step below states the content the system places in that section, drawn from the module named. Where a sub-step's content is unavailable, the system shows the plain-language information from @sec-report-completeness in its place rather than omitting the section silently.
+
+#### Data Acquisition {#sec-report-data-acquisition}
+
+The section states what raw data underlies the map, drawn from [Module 1](@sec-module-1):
+
+1.  The area of interest and the imagery's date range, restated from the identity block in @sec-report-identity.
+
+2.  The satellite imagery used: sensor type, spatial resolution, and its coverage over the AOI.
+
+3.  A snapshot of the satellite composite as a true-colour composite.
+
+4.  The system reads the AOI, sensor, resolution, date range, and coverage from [Module 1](@sec-module-1)'s Report Metadata, and renders the stored true-colour composite thumbnail.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_data_acquisition_section()`: formats [Module 1](@sec-module-1)'s Report Metadata into the Data Acquisition section content.
+    :::
+
+#### Classification Scheme {#sec-report-classification-scheme}
+
+The section lists the LULC classes used in the map, drawn from [Module 2](@sec-module-2), so a reader can check the scheme against their own domain.
+
+1.  The system reads the LULC class list from [Module 2](@sec-module-2)'s output.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_classification_scheme_section()`: formats the [Module 2](@sec-module-2) class list into the Classification Scheme section content.
+    :::
+
+#### Sample Data {#sec-report-sample-data}
+
+The section states whether the training sample was adequate and balanced, drawn from [Module 3](@sec-module-3): class-level counts and proportions, and the training data's spatial distribution.
+
+1.  The system reads the training data statistics and spatial distribution from [Module 3](@sec-module-3)'s output.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_sample_data_section()`: formats [Module 3](@sec-module-3)'s training data statistics and distribution into the Sample Data section content.
+    :::
+
+#### Sample Data Quality {#sec-report-sample-data-quality}
+
+The section states which classes are likely to be confused, drawn from [Module 4](@sec-module-4): the class-level separability result, with the class pairs categorised as weak or poor highlighted.
+
+This section is always present. [Module 4](@sec-module-4) runs automatically once the sample data is complete, so separability is never simply absent. It can still be **errored** if the analysis could not be computed, in which case the reason appears here in place of the result.
+
+1.  The system reads the pairwise separability result from [Module 4](@sec-module-4#sec-caluclate-separability-index) and selects the class pairs categorised as weak or poor.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_separability_section()`: formats [Module 4](@sec-module-4)'s separability result into the Sample Data Quality section content, selecting the weak and poor class pairs for highlighting.
+    :::
+
+#### Predictors {#sec-report-predictors}
+
+The section states what the model actually learned from. It is one table, and it is always present.
+
+1.  The system lists the base sensor bands taken from the [Module 1](@sec-module-1) imagery. The platform extends beyond its current sensors, so the section must not be specified in the terms of any one of them.
+
+2.  If [Module 5](@sec-module-5) was used, the system lists the additional predictors after the sensor bands, grouped by [Module 5](@sec-module-5)'s three categories: spectral transformation, terrain-based, distance-based.
+
+3.  If [Module 5](@sec-module-5) was not used, the system states that no additional predictors were used, and the table carries the sensor bands alone.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_predictor_section()`: formats the base sensor bands and any [Module 5](@sec-module-5) additions into one table, grouped by category.
+    :::
+
+#### Classification {#sec-report-classification}
+
+The section documents the model, its quality, and what the map shows, in this order:
+
+1.  Model parameters: number of trees, variables per split, drawn from [Module 6](@sec-module-6#sec-create-classification-model), together with the model identity from Report Metadata: the model identifier and the seed.
+
+    ::: callout-important
+    ## The Seed Must Be Recorded
+
+    [Module 6](@sec-module-6#sec-create-classification-model) states that the system records the seed with the model and writes it into every exported file, because Earth Engine applies the classifier again for each request and two requests with different seeds give two different maps where two classes are almost equal.
+    :::
+
+2.  Model Accuracy: proportion of training and validation split, overall model accuracy (overall accuracy, F1-score, G-mean), class-level model accuracy (producer's accuracy, user's accuracy, F1-score, G-mean), and the Model confusion matrix as a heatmap, drawn from [Module 6](@sec-module-6#sec-review-model-result).
+
+3.  Classification map layout: the classified LULC map, drawn from [Module 6](@sec-module-6#sec-view-classification-map).
+
+4.  LULC class composition: the area summary table and the area bar chart computed in @sec-data-collection-and-verification. This is Outputs 2 and 3 of this module.
+
+    ::: callout-important
+    ## Area Caveat
+
+    This sentence accompanies the area summary table and the area bar chart wherever they appear in this report:
+
+    *"These areas are raw pixel counts. They are not bias-adjusted estimates. Do not use them as definitive area figures."*
+
+    [Module 7](@sec-module-7)'s framework [@olofsson_good_2014] gives a method for adjusting mapped area using the confusion matrix, and reporting it with confidence intervals. Luma-GE does not implement that estimator, so the areas here are pixel counts and must be labelled as such.
+    :::
+
+5.  The system reads the model parameters, model identity, Model Accuracy metrics, Model confusion matrix, and classified map from [Module 6](@sec-module-6)'s Report Metadata, and the class composition from @sec-data-collection-and-verification.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_classification_section()`: formats [Module 6](@sec-module-6)'s model parameters and identity, Model Accuracy, map layout, and the LULC class composition into the Classification section content. @sec-report-completeness tracks for any component that is not available.
+    :::
+
+#### Thematic Accuracy {#sec-report-thematic-accuracy}
+
+The section carries the accuracy claim that can be defended about the map as delivered, drawn from [Module 7](@sec-module-7), when that component is available and current:
+
+1.  Ground reference data: distribution and basic statistics (count, proportion).
+2.  Thematic accuracy: map-level accuracy (overall accuracy, F1-score, confidence interval), class-level accuracy (producer's accuracy, user's accuracy), and the Map confusion matrix as a heatmap.
+
+If Thematic Accuracy is unavailable because [Module 7](@sec-module-7) was never run, or stale because the model was retrained after [Module 7](@sec-module-7) was last run (@sec-report-completeness), the reason is stated here in its place. The same absence drives the headline statement in @sec-report-at-a-glance.
+
+1.  The system reads the ground reference data statistics, thematic accuracy metrics, and Map confusion matrix from [Module 7](@sec-module-7)'s output, only when @sec-report-completeness marked this component as available and current.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.build_thematic_accuracy_section()`: formats [Module 7](@sec-module-7)'s ground reference statistics, accuracy metrics, and confusion matrix into the Thematic Accuracy section content, or substitutes the completeness or staleness.
+    :::
+
+### Rendering the Report {#sec-report-rendering}
+
+Runs automatically once @sec-report-identity, @sec-report-at-a-glance and @sec-report-comprehensive are assembled.
+
+1.  The system renders the assembled report content to a single self-contained HTML document. The same document serves both the in-app display and the download, so what the user reads and what the user keeps cannot diverge.
+
+    ::: callout-tip
+    ## Related Function
+
+    `report_builder.ReportBuilder.to_html()`: renders the assembled report content to a self-contained HTML document, used for both in-app display and download.
+    :::
+
+2.  If a section could not be assembled, the system renders the document anyway and places that section's error reason where its content would be.
+
+    ::: callout-important
+    ## Partial Render Rule
+
+    Report generation fails as a whole only if the classified map or its Report Metadata cannot be read at all. Any narrower failure, such as an expired image asset or one unreadable module output, degrades to an errored section inside a document that still renders. An errored section also appears in the completeness statement in @sec-report-at-a-glance.
+    :::
+
+The user-facing steps for reading and downloading the report are specified in the Luma Interface documentation.
+
+### Export Data {#sec-export-data}
+
+**Front-end**
+
+1.  The user chooses where the exported assets go: a direct download to their own device, or an export to their Google Drive.
+2.  Download buttons show file size and estimated time.
+3.  Progress indicators and completion notifications appear.
+
+**Back-end**
+
+1.  Identify classified map and metadata from [Module 6](@sec-module-6).
+2.  Include accuracy results from [Module 7](@sec-module-7) if available; log warning if not.
+3.  Prepare export filenames and size estimates.
+4.  Serve the assets as a direct download, or trigger the Google Drive export action, according to the destination the user chose.
+5.  Monitor the export job and notify user on completion.
+
+::: callout-important
+## Choice of Destination
+
+Both destinations are offered. A direct download does not depend on the user having a Google account, and suits assets small enough to move through the browser. A Google Drive export suits assets too large for that, and depends on the user's Drive quota.
+:::
+
+::: callout-important
+## For Further Development: Publish to Rona?
+
+This is a placeholder.
+:::
