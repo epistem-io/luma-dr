@@ -13,7 +13,7 @@ This module prompt the user to define the list of land cover or land use class w
 
 # Output {.unnumbered}
 
-1.  LULC list of classes to be applied in the final classification result
+LULC list of classes to be applied in the final classification result
 
 # Process {.unnumbered}
 
@@ -25,53 +25,13 @@ This module cannot be accessed if the system does not detect any saved satellite
 
 ## Selection of Classification Scheme {#sec-selection-of-classification-schema}
 
-**Luma User Journey**
-
-This is a part of **User Journey 2.1: Choosing a classification scheme**
-
-1.  The user is given the options of creating the classification scheme:
-    a.  Upload the classification scheme
-    b.  Manually define the scheme on the UI
-    c.  Use an existing classification scheme
-
-**Luma Geospatial Engine**
-
 This sub-step does not involve any operations within the Luma Geospatial Engine.
 
--   If the user chooses to upload their own schema, the system proceeds to @sec-user-uploading-their-own-classification
--   If the user chooses to define the classification manually on the UI, the system proceeds to @sec-user-entering-the-classification-manually
--   If the user chooses a default classification scheme, the system proceeds to @sec-user-select-existing-lulc-template
+- If the user chooses to upload their own schema, the system proceeds to @sec-user-uploading-their-own-classification
+- If the user chooses to define the classification manually on the UI, the system proceeds to @sec-user-entering-the-classification-manually
+- If the user chooses a default classification scheme, the system proceeds to @sec-user-select-existing-lulc-template
 
 ### User Uploading Their Own Classification Scheme {#sec-user-uploading-their-own-classification}
-
-**Luma User Journey**
-
-1.  The user is prompted to upload the `.csv` file containing the classification scheme information.
-
-2.  The system displays a guidance notification indicating that the uploaded `.csv` file must contain at least three columns: a class ID (numeric identifier), a class name, and an optional hex color code specifying the display color for each class.
-
-3.  The system automatically detects column headers based on common naming conventions. If the expected headers are not found, the user must manually assign the correct column names.
-
-4.  The user is prompted to finalize the scheme by clicking a button.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the classification table is successfully saved to the system.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system shows an error message if:
-
-    -   The class ID is not a valid number
-    -   There is a duplicate class ID
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 2.1.a: Uploading classification scheme**
 
 1.  The system automatically detects column headers based on common naming conventions for ID, class name, and color code. If the expected headers are not found, the user must manually assign the correct column names.
 
@@ -80,9 +40,9 @@ This is a part of **System Response 2.1.a: Uploading classification scheme**
 
     `classification_scheme.LULC_scheme_Manager.auto_detect_csv_columns()`: this function automatically detects the column headers. The set for the common naming conventions are currently hardcoded as the following:
 
-    -   For ID: "id", "classid", "kode", "code"
-    -   For class name: "classname", "class", "kelas", "name", "nama"
-    -   For color code: "color", "colorcode", "warna", "colour", "hex", "palette"
+    - For ID: "id", "classid", "kode", "code"
+    - For class name: "classname", "class", "kelas", "name", "nama"
+    - For color code: "color", "colorcode", "warna", "colour", "hex", "palette"
     :::
 
 2.  The system validates the uploaded `.csv` to ensure IDs are numeric and unique, applies a set of distinct colors if no color code was provided by the user. The user can change the color code manually.
@@ -100,28 +60,6 @@ This is a part of **System Response 2.1.a: Uploading classification scheme**
     :::
 
 ### User Entering the Classification Manually {#sec-user-entering-the-classification-manually}
-
-**Luma User Journey**
-
-1.  The user is prompted to fill out a form for each class ID, class name, and hex color code.
-
-2.  The system stores each class entry individually as it is added.
-
-3.  All added classes are displayed in a summary table for preview.
-
-4.  The user can edit or delete the classes in the summary table preview.
-
-5.  The user is prompted to finalize the scheme by clicking a button.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the classification table is successfully saved to the system.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 2.1.b: Manually define classification scheme**
 
 1.  The system validates user-provided class input for numeric ID, non-empty class name, and uniqueness (if adding new classes).
 
@@ -149,24 +87,6 @@ This is a part of **System Response 2.1.b: Manually define classification scheme
 
 ### User Selecting a Default Classification Scheme {#sec-user-select-existing-lulc-template}
 
-**Luma User Journey**
-
-1.  The user is prompted to select a default classification scheme. In the current development, only classification scheme from RESTORE+ is available.
-
-2.  The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.
-
-3.  The user is prompted to finalize the scheme by clicking a button.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the classification table is successfully saved to the system.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **Response System 2.1.c: Using default classification scheme**
-
 1.  The system loads the chosen classification scheme classes.
 
     ::: callout-tip
@@ -188,26 +108,6 @@ This is a part of **Response System 2.1.c: Using default classification scheme**
 ## Saving and Downloading the LULC Classification Table {#sec-saving-the-lulc-classification-table}
 
 ### Saving and Downloading the LULC Classification Table
-
-**Luma User Journey**
-
-This is a part of **User Journey 2.2: Saving and Downloading the LULC Classification Table**
-
-1.  The user can optionally download the table in `.csv` file format and save it in their local device.
-
-2.  The system gets a confirmation of the number of classes saved in the system.
-
-3.  The user is given the option to proceed to [Module 3](@sec-module-3).
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system disables the option to continue to the next module if the system does not detect a satellite imagery saved inside the system.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 2.2: Save LULC Classification Table and Continue to Next Module**
 
 1.  The system generates a `.csv` file containing the final LULC classification scheme table.
 
