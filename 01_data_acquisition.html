@@ -284,6 +284,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#selection-and-preparation-of-satellite-imagery" id="toc-selection-and-preparation-of-satellite-imagery" class="nav-link" data-scroll-target="#selection-and-preparation-of-satellite-imagery"><span class="header-section-number">1.3</span> Selection and Preparation of Satellite Imagery</a>
   <ul class="collapse">
   <li><a href="#sec-input-spatial-image-parameters" id="toc-sec-input-spatial-image-parameters" class="nav-link" data-scroll-target="#sec-input-spatial-image-parameters"><span class="header-section-number">1.3.1</span> Satellite Data Acquisition and Filtering</a></li>
+  <li><a href="#topographic-correction" id="toc-topographic-correction" class="nav-link" data-scroll-target="#topographic-correction"><span class="header-section-number">1.3.2</span> Topographic Correction</a></li>
   </ul></li>
   <li><a href="#mosaic-and-composite-for-satellite-imagery" id="toc-mosaic-and-composite-for-satellite-imagery" class="nav-link" data-scroll-target="#mosaic-and-composite-for-satellite-imagery"><span class="header-section-number">1.4</span> Mosaic and Composite for Satellite Imagery</a></li>
   <li><a href="#sec-visualization-and-saving-data" id="toc-sec-visualization-and-saving-data" class="nav-link" data-scroll-target="#sec-visualization-and-saving-data"><span class="header-section-number">1.5</span> Visualization and Saving of Processed Satellite Imagery</a>
@@ -657,6 +658,27 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 <li><p>The system evaluates whether the retrieved imagery meets the required spatial resolution, input year, and cloud cover thresholds. If suitable images are found, the system generates a composite by calculating the median value across the selected imagery, as implemented using the <code>median()</code> function from Earth Engine. The system also then clips and mosaics the satellite imagery.</p></li>
 </ol>
+</section>
+<section id="topographic-correction" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="topographic-correction"><span class="header-section-number">1.3.2</span> Topographic Correction</h3>
+<p>Topographic correction are additional pre-processing for satellite imagery to mitigate the influence of rugged terrain on surface reflectance data. This pre-processing approach is crucial if there’s variation in surface reflectance values between pixels with similar land cover and biophysical-structural properties.</p>
+<p>Since Sentinel-2 is already topographically corrected, this option is available for Landsat collections only. Luma-GE applied the a pixel-wise Sun-Canopy-Sensor with a c-correction (SCSc) proposed by <a href="https://doi.org/10.1109/TGRS.2005.852480">Soenen et. al.&nbsp;(2005)</a>. This approach use the sun-canopy-sensor (SCS) with a semi-empirical moderator (C) to account for diffuse radiation (<a href="https://doi.org/10.3390/rs11070831">Poortinga et. al.&nbsp;2019</a>). The ALOS 30m Global Surface Model version 4 is used for topographical base.</p>
+<p>The SCS method consist of two primary steps, namely illumination condition and illumination correction. The illumination condition (IC) determine the pixel brightness given its slope and orientation. The illumination correction is applied for each spectral band with empirically derived c-value by running a linear regression between reflectance value and IC. However, this correction is applied selectively, according to a mask to only work on pixels in which corrections is meaningful (<a href="https://doi.org/10.3390/rs11070831">Poortinga et. al.&nbsp;2019</a>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>data_acquisition.additional_correction.illumination_condition():</code> Compute the illumination condition (IC) for a single image and append it as an additional band along with cosZ, cosS, and slope.</p>
+<p><code>data_acquisition.additional_correction.illumination_correction():</code> Perform illumination correction by fitting a linear model between IC and the given band over masked pixels, derive the empirical c-value, and apply the SCSc correction formula.</p>
+<p><code>data_acquisition.additional_correction.apply_topo_corr():</code> Single function wrapper that executes both IC and illumination correction.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="mosaic-and-composite-for-satellite-imagery" class="level2" data-number="1.4">
