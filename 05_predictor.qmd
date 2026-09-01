@@ -25,119 +25,107 @@ Covariate stack used in the classification model (Module 6)
 
 ## Selection of Predictors {#sec-selection-of-predictors}
 
-**Luma User Journey**
-
-This is part of User Journey 5.1: User Predictors Selection
-
-1.  The system provide the list of predictors currently supported by Luma Geospatial Engine
-
-2.  The user manually select the predictors by using check boxes
-
-**Luma Geospatial Engine**
-
 1.  The system presents a list of available predictor categories, which include:
 
-    -   Spectral transformation (indices)
+    - Spectral transformation (indices)
 
-    -   Terrain-based metrics
+    - Terrain-based metrics
 
-    -   Distance-based metrics
+    - Distance-based metrics
 
 ## Calculation of Predictors
 
-**Luma Geospatial Engine**
-
 1.  The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:
 
-    -   Terrain-based metrics
+    - Terrain-based metrics
 
-        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
+      - **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
 
-        -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree (0-90)
+      - **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree (0-90)
 
-        -   **Aspect**: Similar to slope, this data is derived from selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
+      - **Aspect**: Similar to slope, this data is derived from selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
-        ::: callout-tip
-        ## Related Functions
+      ::: callout-tip
+      ## Related Functions
 
-        `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
+      `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
 
-        `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
+      `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
 
-        `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
-        :::
+      `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
+      :::
 
-    -   Distance-based metrics
+    - Distance-based metrics
 
-        The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.
+      The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.
 
-        ::: callout-tip
-        ## Related Functions
+      ::: callout-tip
+      ## Related Functions
 
-        `predictor.distance_calculator.calculate_distance_metrics`: Core function to intialize the distance calculation logic for coastline, road, and settlement
-        :::
+      `predictor.distance_calculator.calculate_distance_metrics`: Core function to intialize the distance calculation logic for coastline, road, and settlement
+      :::
 
-        Currently, the system support distance calculation from the following source:
+      Currently, the system support distance calculation from the following source:
 
-        -   Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
+      - Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
 
-        -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
+      - Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
 
-        -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap data
+      - Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap data
 
-    -   Spectral transformation indices
+    - Spectral transformation indices
 
-        The system retrieves various spectral indices from the `spyndex` library. The following indices have been adapted for Luma-GE from the library:
+      The system retrieves various spectral indices from the `spyndex` library. The following indices have been adapted for Luma-GE from the library:
 
-        -   Vegetation-related indices:
+      - Vegetation-related indices:
 
-            -   NDVI (Normalized Difference Vegetation Index)
+        - NDVI (Normalized Difference Vegetation Index)
 
-            -   EVI (Enhanced Vegetation Index)
+        - EVI (Enhanced Vegetation Index)
 
-            -   SAVI (Soil Adjusted Vegetation Index)
+        - SAVI (Soil Adjusted Vegetation Index)
 
-            -   MSAVI (Modified Soil Adjusted Vegetation Index)
+        - MSAVI (Modified Soil Adjusted Vegetation Index)
 
-            -   OSAVI (Optimized Soil Adjusted Vegetation Index)
+        - OSAVI (Optimized Soil Adjusted Vegetation Index)
 
-            -   ARVI (Atmospherically Resistant Vegetation Index)
+        - ARVI (Atmospherically Resistant Vegetation Index)
 
-            -   GBNDVI (Green-Blue Normalized Difference Vegetation Index)
+        - GBNDVI (Green-Blue Normalized Difference Vegetation Index)
 
-            -   GNDVI (Green Normalized Difference Vegetation Index)
+        - GNDVI (Green Normalized Difference Vegetation Index)
 
-        -   Water-related indices:
+      - Water-related indices:
 
-            -   MNDWI (Modified Normalized Difference Water Index)
+        - MNDWI (Modified Normalized Difference Water Index)
 
-            -   NDMI (Normalized Difference Moisture Index)
+        - NDMI (Normalized Difference Moisture Index)
 
-            -   AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
+        - AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
 
-        -   Soil / built-up-related indices:
+      - Soil / built-up-related indices:
 
-            -   NDBI (Normalized Difference Build-Up Index)
+        - NDBI (Normalized Difference Build-Up Index)
 
-            -   DBSI (Dry Bareness Soil Index)
+        - DBSI (Dry Bareness Soil Index)
 
-            -   MBI (Modified Build-up Index)
+        - MBI (Modified Build-up Index)
 
-        ::: callout-tip
-        ## Related Functions
+      ::: callout-tip
+      ## Related Functions
 
-        `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
+      `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
 
-        `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
+      `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
 
-        `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
+      `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
 
-        `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
+      `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
 
-        `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
+      `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
 
-        `predictor.SpectralCalculator.get_calculation_summary`
-        :::
+      `predictor.SpectralCalculator.get_calculation_summary`
+      :::
 
 2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
@@ -153,21 +141,11 @@ This is part of User Journey 5.1: User Predictors Selection
 
 ## Predictors Result Visualization and Analysis
 
-**Luma User Journey**
-
-1.  The users can visualize the selected predictors, applying the custom color color palette
-
-2.  The system provides functionality to conduct correlation analysis between predictors.
-
-3.  The user inspect the correlation coefficient that have been visualize using heatmap and table
-
-**Luma Geospatial Engine**
-
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
-    -   Creates a random sampling across the AOI (default value is 5000 points)
+    - Creates a random sampling across the AOI (default value is 5000 points)
 
-    -   Computes correlation analysis using GEE's core function
+    - Computes correlation analysis using GEE's core function
 
 2.  The correlation analysis is conducted across all predictors, including the original multispectral band
 
