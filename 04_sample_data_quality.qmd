@@ -4,7 +4,7 @@
 
 This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1.
 
-This module is diagnostic only and does not produce inputs for subsequent modules. Its outputs support interpretation of class confusion and provide justification for feature enhancement in later stages of the workflow.
+This module is required. [Module 8](@sec-module-8) uses the separability result in the Map Creation and Quality Report. The analysis runs on a capped pixel sample for each class pair (@sec-specification-of-separability-analysis-parameters), so it is cheap to compute. The result shows how well the sample data separates the classes, and which class pairs the map is likely to confuse.
 
 # Input {.unnumbered}
 
