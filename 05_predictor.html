@@ -274,7 +274,8 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#sec-selection-of-predictors" id="toc-sec-selection-of-predictors" class="nav-link" data-scroll-target="#sec-selection-of-predictors"><span class="header-section-number">5.1</span> Selection of Predictors</a></li>
   <li><a href="#calculation-of-predictors" id="toc-calculation-of-predictors" class="nav-link" data-scroll-target="#calculation-of-predictors"><span class="header-section-number">5.2</span> Calculation of Predictors</a></li>
-  <li><a href="#predictors-result-visualization-and-analysis" id="toc-predictors-result-visualization-and-analysis" class="nav-link" data-scroll-target="#predictors-result-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Result Visualization and Analysis</a></li>
+  <li><a href="#predictors-visualization-and-analysis" id="toc-predictors-visualization-and-analysis" class="nav-link" data-scroll-target="#predictors-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Visualization and Analysis</a></li>
+  <li><a href="#semi-automatic-predictor-selection-optimization" id="toc-semi-automatic-predictor-selection-optimization" class="nav-link" data-scroll-target="#semi-automatic-predictor-selection-optimization"><span class="header-section-number">5.4</span> Semi Automatic Predictor Selection Optimization</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -323,9 +324,9 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Spectral transformations indices</td>
+<td>supported spectral transformations</td>
 <td>System’s input</td>
-<td>Retrieve the data from the <code>spyndex</code> library</td>
+<td>Retrieve the pre-define function from existing library</td>
 </tr>
 <tr class="even">
 <td>Terrain-based metrics</td>
@@ -379,9 +380,9 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p>Terrain-based metrics</p>
 <ul>
-<li><p><strong>Elevation</strong>: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely <a href="https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id">NASADEM</a>, <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands">Copernicus GLO-30</a>, and <a href="https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1">ALOS DSM V4</a>. The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m</p></li>
-<li><p><strong>Slope</strong>: The calculation of slope is derived from the selected DEM using <code>ee.Terrain.slope</code> function. Slope unit is presented in degree (0-90)</p></li>
-<li><p><strong>Aspect</strong>: Similar to slope, this data is derived from selected DEM, using <code>ee.Terrain.aspect</code>. The units are degree where 0=N, 90=E, 180=S, 270 =W</p></li>
+<li><p><strong>Elevation</strong>: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely <a href="https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id">NASADEM</a>, <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands">Copernicus GLO-30</a>, and <a href="https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1">ALOS DSM V4</a>. The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m. Matching the spatial resolution of Landsat data primarily use in Luma</p></li>
+<li><p><strong>Slope</strong>: Calculated from selected DEM using <code>ee.Terrain.slope</code> function. Slope unit is presented in degree units (0-90)</p></li>
+<li><p><strong>Aspect</strong>: Similar to slope, this data is calculated from the selected DEM, using <code>ee.Terrain.aspect</code>. The units are degree where 0=N, 90=E, 180=S, 270 =W</p></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -399,7 +400,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div></li>
 <li><p>Distance-based metrics</p>
-<p>The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.</p>
+<p>The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -420,7 +421,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Road: Indonesian Topographic Map (<em>Rupa Bumi Indonesia</em>) and OpenStreetMap data</p></li>
 </ul></li>
 <li><p>Spectral transformation indices</p>
-<p>The system retrieves various spectral indices from the <code>spyndex</code> library. The following indices have been adapted for Luma-GE from the library:</p>
+<p>The system retrieves various spectral indices from the <a href="https://github.com/awesome-spectral-indices/spyndex">Awesome Spectral Indices</a> (ASI), a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to <a href="https://doi.org/10.1038/s41597-023-02096-0">Montero (2023)</a>. The following indices have been adapted for Luma-GE:</p>
 <ul>
 <li><p>Vegetation-related indices:</p>
 <ul>
@@ -461,7 +462,7 @@ ul.task-list li input[type="checkbox"] {
 <p><code>predictor.SpectralCalculator.validate_coefficients</code>: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.</p>
 <p><code>predictor.SpectralCalculator.validate_index_requirements</code> : Validate that required bands are available for index computation.</p>
 <p><code>predictor.SpectralCalculator.calculate_indices_with_collection</code>: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.</p>
-<p><code>predictor.SpectralCalculator.get_calculation_summary</code></p>
+<p><code>predictor.SpectralCalculator.get_calculation_summary</code> : provide summary of the calculation process of predictors :::</p>
 </div>
 </div></li>
 </ul></li>
@@ -477,18 +478,20 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-body-container callout-body">
 <p><code>predictor.PredictorCalculation.validate_prerequisites:</code> Validate that required inputs are available for predictor computation. Required input are composite (<code>ee.Image</code>), AOI (<code>ee.FeatureCollection</code>) , and raw image collection (<code>ee.Image.Collection</code>)</p>
-<p><code>predictor.PredictorCalculation.compute_predictors</code> : Orchestrates predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.</p>
+<p><code>predictor.PredictorCalculation.compute_predictors</code> : Initialize predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.</p>
 <p><code>predictor.PredictorCalculation.prepare_module6_summary:</code> Prepare summary metadata for module 6</p>
 </div>
 </div></li>
 </ol>
 </section>
-<section id="predictors-result-visualization-and-analysis" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="predictors-result-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Result Visualization and Analysis</h2>
+<section id="predictors-visualization-and-analysis" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="predictors-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Visualization and Analysis</h2>
+<p>This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data.</p>
 <ol type="1">
 <li><p>If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach</p>
 <ul>
 <li><p>Creates a random sampling across the AOI (default value is 5000 points)</p></li>
+<li><p>Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors</p></li>
 <li><p>Computes correlation analysis using GEE’s core function</p></li>
 </ul></li>
 <li><p>The correlation analysis is conducted across all predictors, including the original multispectral band</p>
@@ -507,6 +510,83 @@ ul.task-list li input[type="checkbox"] {
 <p><code>predictor.EECorrelationAnalysis.visualize</code>: Visualize the correlation analysis result using heatmap</p>
 </div>
 </div></li>
+</ol>
+</section>
+<section id="semi-automatic-predictor-selection-optimization" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="semi-automatic-predictor-selection-optimization"><span class="header-section-number">5.4</span> Semi Automatic Predictor Selection Optimization</h2>
+<p>Evaluating the user’s predictor selection is crucial step in determining the best combination of predictors that resulted in the optimal model performance. This approach is more commonly known as feature engineering in machine learning terminology. One of the commonly use feature engineering approach is Recursive Feature Elimination (RFE). RFE applied a backward step-wise selection process to find optimal combination of predictors based on its contribution to the model. The RFE starts with training the model with all input predictors and discards the weakest predictor one iteration at a time, while re-evaluating their importance after each removal. The workflow for RFE is shown in the figure below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="710"></p>
+</figure>
+</div>
+<ol type="1">
+<li><p>The system perform input validation prior to RFE</p>
+<ul>
+<li><p>If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors</p></li>
+<li><p>If the input is valid, proceed with RFE calculation</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.RfeGee.validate_inputs():</code>validate all input require for RFE calculations, namely: training data (<code>FeatureCollection</code>), test data (<code>FeatureCollection</code>), number of feature selected (&gt;1), and predictors (<code>ee.Image</code>)</p>
+</div>
+</div></li>
+</ul></li>
+<li><p>The system perform RFE with default configuration and report the optimal predictors to the user.</p>
+<ul>
+<li><p>the default configuration are as follow:</p>
+<ul>
+<li>Minimum feature to select: 10</li>
+<li>Minimum random forest tree: 100</li>
+<li>Training data (for RFE): 70% of user input</li>
+<li>Test data (for RFE): 30% of user input</li>
+</ul></li>
+<li><p>Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by <a href="https://github.com/DanGeospatial/GEE_Wetland_Classification">this github repository</a></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.RfeGee._train_classifier()</code> : core function to perform random forest classification with default configuration.</p>
+<p><code>predictor.RfeGee._get_importance_and_accuracy()</code> :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.</p>
+<p><code>predictor.RfeGee._adaptive_step()</code> : fallback mechanism to reduce API calls in case computational loads become larger.</p>
+<p><code>predictor.RfeGee.fit()</code>: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.</p>
+</div>
+</div></li>
+<li><p>To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.</p></li>
+<li><p>The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.RfeGee.get_selected_features</code> Function to retrieve optimal predictors list based on RFE result</p>
+<p><code>predictor.RfeGee.get_ranking</code> Function to rank importance of each predictors</p>
+<p><code>predictor.RfeGee.plot_accuracy_curve</code> Plot the accuracy curve as each features is remove from original input features</p>
+<p><code>predictor.RfeGee.plot_feature_rankings</code> Plot the feature/predictor importance from RFE calculations</p>
+<p><code>predictor.RfeGee.plot_rfe_summary</code> Create summary plot of accuracy curve and feature rankings</p>
+<p><code>predictor.RfeGee.get_results_dataframe</code> Generate a dataframe of the corresponding accuracy and importance data</p>
+</div>
+</div></li>
+<li><p>Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features</p></li>
+</ul></li>
 </ol>
 
 
