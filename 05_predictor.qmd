@@ -10,7 +10,7 @@ The module outputs a comprehensive predictor stack that serves as input for LULC
 
 | Name of Input | Input Type | Details |
 |------------------------|------------------------|------------------------|
-| Spectral transformations indices | System’s input | Retrieve the data from the `spyndex` library |
+| supported spectral transformations | System’s input | Retrieve the pre-define function from existing library |
 | Terrain-based metrics | System’s input |  |
 | Distance-based metrics | System’s input |  |
 | AOI | Input from Other Modules | Output from @sec-module-1 |
@@ -25,16 +25,6 @@ Covariate stack used in the classification model (Module 6)
 
 ## Selection of Predictors {#sec-selection-of-predictors}
 
-**Luma User Journey**
-
-This is part of User Journey 5.1: User Predictors Selection
-
-1.  The system provide the list of predictors currently supported by Luma Geospatial Engine
-
-2.  The user manually select the predictors by using check boxes
-
-**Luma Geospatial Engine**
-
 1.  The system presents a list of available predictor categories, which include:
 
     -   Spectral transformation (indices)
@@ -45,17 +35,15 @@ This is part of User Journey 5.1: User Predictors Selection
 
 ## Calculation of Predictors
 
-**Luma Geospatial Engine**
-
 1.  The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:
 
     -   Terrain-based metrics
 
-        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial accuracy of 30 m
+        -   **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m. Matching the spatial resolution of Landsat data primarily use in Luma
 
-        -   **Slope**: The calculation of slope is derived from the selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree (0-90)
+        -   **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
 
-        -   **Aspect**: Similar to slope, this data is derived from selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
+        -   **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
         ::: callout-tip
         ## Related Functions
@@ -69,7 +57,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Distance-based metrics
 
-        The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project covariates. Distances can be measured from various infrastructures, including roads, coastlines, and settlements.
+        The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.
 
         ::: callout-tip
         ## Related Functions
@@ -87,7 +75,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
     -   Spectral transformation indices
 
-        The system retrieves various spectral indices from the `spyndex` library. The following indices have been adapted for Luma-GE from the library:
+        The system retrieves various spectral indices from the [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI), a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0). The following indices have been adapted for Luma-GE:
 
         -   Vegetation-related indices:
 
@@ -136,7 +124,7 @@ This is part of User Journey 5.1: User Predictors Selection
 
         `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
 
-        `predictor.SpectralCalculator.get_calculation_summary`
+        `predictor.SpectralCalculator.get_calculation_summary` : provide summary of the calculation process of predictors :::
         :::
 
 2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
@@ -146,26 +134,20 @@ This is part of User Journey 5.1: User Predictors Selection
 
     `predictor.PredictorCalculation.validate_prerequisites:` Validate that required inputs are available for predictor computation. Required input are composite (`ee.Image`), AOI (`ee.FeatureCollection`) , and raw image collection (`ee.Image.Collection`)
 
-    `predictor.PredictorCalculation.compute_predictors` : Orchestrates predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
+    `predictor.PredictorCalculation.compute_predictors` : Initialize predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
 
     `predictor.PredictorCalculation.prepare_module6_summary:` Prepare summary metadata for module 6
     :::
 
-## Predictors Result Visualization and Analysis
+## Predictors Visualization and Analysis
 
-**Luma User Journey**
-
-1.  The users can visualize the selected predictors, applying the custom color color palette
-
-2.  The system provides functionality to conduct correlation analysis between predictors.
-
-3.  The user inspect the correlation coefficient that have been visualize using heatmap and table
-
-**Luma Geospatial Engine**
+This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data.
 
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
     -   Creates a random sampling across the AOI (default value is 5000 points)
+
+    -   Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors
 
     -   Computes correlation analysis using GEE's core function
 
@@ -180,3 +162,66 @@ This is part of User Journey 5.1: User Predictors Selection
 
     `predictor.EECorrelationAnalysis.visualize`: Visualize the correlation analysis result using heatmap
     :::
+
+## Semi Automatic Predictor Selection Optimization
+
+Evaluating the user's predictor selection is crucial step in determining the best combination of predictors that resulted in the optimal model performance. This approach is more commonly known as feature engineering in machine learning terminology. One of the commonly use feature engineering approach is Recursive Feature Elimination (RFE). RFE applied a backward step-wise selection process to find optimal combination of predictors based on its contribution to the model. The RFE starts with training the model with all input predictors and discards the weakest predictor one iteration at a time, while re-evaluating their importance after each removal. The workflow for RFE is shown in the figure below:
+
+![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low.png){fig-align="center" width="710"}
+
+1.  The system perform input validation prior to RFE
+
+    -   If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
+
+    -   If the input is valid, proceed with RFE calculation
+
+        ::: callout-tip
+        ## Related Function
+
+        `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+        :::
+
+2.  The system perform RFE with default configuration and report the optimal predictors to the user.
+
+    -   the default configuration are as follow:
+
+        -   Minimum feature to select: 10
+        -   Minimum random forest tree: 100
+        -   Training data (for RFE): 70% of user input
+        -   Test data (for RFE): 30% of user input
+
+    -   Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
+
+        ::: callout-tip
+        ## Related Function
+
+        `predictor.RfeGee._train_classifier()` : core function to perform random forest classification with default configuration.
+
+        `predictor.RfeGee._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
+
+        `predictor.RfeGee._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
+
+        `predictor.RfeGee.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.
+        :::
+
+    -   To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.
+
+    -   The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve
+
+        ::: callout-tip
+        ## Related Function
+
+        `predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+
+        `predictor.RfeGee.get_ranking` Function to rank importance of each predictors
+
+        `predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
+
+        `predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
+
+        `predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
+
+        `predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+        :::
+
+    -   Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features

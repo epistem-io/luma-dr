@@ -1,4 +1,4 @@
-# Helpers {#sec-helpers}
+# Helpers {#sec-helpers .unnumbered}
 
 # Overview
 
@@ -33,7 +33,7 @@ Prior to export any earth engine image, the user must define several parameters 
 
     2.  Spatial resolution (default to 30 m, since Landsat mission is the only one supported)
 
-    3.   Coordinate Reference System (CRS). Use WGS 1984 (EPSG:4326) as the default value. If the user wish to use different CRS, they must specified the EPSG code (i.e *'EPSG:4326', 'ESRI:54009'*, or *'SR-ORG:6864’*)
+    3.  Coordinate Reference System (CRS). Use WGS 1984 (EPSG:4326) as the default value. If the user wish to use different CRS, they must specified the EPSG code (i.e *'EPSG:4326', 'ESRI:54009'*, or *'SR-ORG:6864’*)
 
     4.  For module 5, the user select which predictors to be exported. The predictor can be selected one by one, stacked of predictors, or by category
 
@@ -45,9 +45,9 @@ Prior to export any earth engine image, the user must define several parameters 
 
 **Luma Geospatial Engine**
 
-1.   The system creates a predefined default names according to the module and dataset exported.
+1.  The system creates a predefined default names according to the module and dataset exported.
 
-2.   Extract the geometry from the selected AOI, as prerequisites for export
+2.  Extract the geometry from the selected AOI, as prerequisites for export
 
 3.  Validate scale and CRS and raise a helpful error if invalid scale or CRS is detected
 
@@ -97,11 +97,11 @@ Luma Geospatial Engine
 
 **Luma User Journey**
 
-1.   The user can monitor the status of their export directly in Luma
+1.  The user can monitor the status of their export directly in Luma
 
-2.   If there’s no update within 1 minute, they can refresh the task monitor to acquired the latest update of current task status
+2.  If there’s no update within 1 minute, they can refresh the task monitor to acquired the latest update of current task status
 
-3.   The user receive feedback regarding the status of the export task (in progress, complete, failed, etc)
+3.  The user receive feedback regarding the status of the export task (in progress, complete, failed, etc)
 
 **Luma Geospatial Engine**
 

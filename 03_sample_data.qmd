@@ -16,53 +16,13 @@ To be developed.
 
 # Output {.unnumbered}
 
-1.  Statistical analyses of the sample data.
+Statistical analyses of the sample data.
 
 # Process {.unnumbered}
 
-## Checking Prerequisites from Previous Modules
+## User Uploads Their Own Class-Labelled Sample Data {#sec-user-upload-their-own-training-data}
 
-### Checking Prerequisites from Previous Modules
-
-**Luma User Journey**
-
-This is a part of **System Response 3.1: Checking prerequisites from previous modules**
-
-1.  If the user has not completed [Module 1](@sec-module-1) and [Module 2](@sec-module-2), the system displays a warning message prompting them to finish those modules first.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules.
-    :::
-
-2.  The user is prompted to choose how to add sample data, either by [uploading their own dataset](#sec-user-upload-their-own-training-data), using [on-screen sampling](#sec-on-screen-sampling), or using [default sample data](@sec-default-sample-data) .
-
-**Luma Geospatial Engine**
-
-This sub-step does not involve any operations within the Luma Geospatial Engine.
-
-## Sample Data Generation
-
-### User Uploads Their Own Sample Data {#sec-user-upload-their-own-training-data}
-
-**Luma User Journey**
-
-This is a part of **User Journey 3.1: Identifying sample data availability**
-
-1.  The user is prompted to upload a `.zip` file containing their sample data.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
-    :::
-
-2.  The user is prompted to specify the column header that specify the LULC class. This is a part of **User Journey 3.2a: Uploading sample data**
-
-**Luma Geospatial Engine**
-
-1.  The system verifies the format data input of the `.shp` inside the `.zip` . This is a part of **System Response 3.2.a: Verifying the uploaded sample data format**
+1.  The system verifies the format data input of the `.shp` inside the `.zip` .
 
 2.  Once the input format data is validated, the system runs @sec-verify-sample-data
 
@@ -86,54 +46,6 @@ The main issue is that the original stratified sampling algorithm made sequentia
 :::
 
 ### Verifying Sample Data from User's Input {#sec-verify-sample-data}
-
-**Luma User Journey**
-
-1.  The user receives continuous feedback on the status of their sample data verification. Five steps are displayed in the status panel:
-
-    1.  Checking the field containing class names
-    2.  Validating the class entries
-    3.  Checking whether class IDs are sufficient
-    4.  Verifying that sample points fall within the AOI
-    5.  Generating a summary of the sample data status
-
-2.  The user is shown a preview of the uploaded sample data on a map canvas and a preview table of the uploaded sample data.
-
-3.  The user is then prompted to process the sample data.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the sample data is successfully verified.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if the system fails to conduct the sample data verification, along with the specific message at which step the validation failed.
-    :::
-
-4.  The user is provided with the summary display of the sample data.
-
-    ::: callout-note
-    ## Success Notification
-
-    A notification shows a highlight of which class has insufficient sample data, the number of sample data that falls outside the AOI, and the total number of classes that has sample data outside the AOI.
-    :::
-
-5.  The system provides an option to move to [on-screen sampling](#sec-on-screen-sampling) to add more sample data. This is a part of **User Journey 3.2.b: Choosing to add new sample data for insufficient class**
-
-6.  If the user is satisfied with the sample data, the user is prompted to finalize the sample data by clicking a button.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the sample data is successfully saved into the system.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 3.2.b: Verifying the uploaded sample data's content and adding new sample data**
 
 1.  The system checks which column in the sample dataset should be used as the class label.
 
@@ -181,96 +93,30 @@ This is a part of **System Response 3.2.b: Verifying the uploaded sample data's 
     `sample_data.SyncTrainData.TrainDataRaw():` Check if there are sufficient sample data per class.
     :::
 
-### On-Screen Sampling {#sec-on-screen-sampling}
+## User Use Default Classification Scheme
 
-**Luma User Journey**
+This workflow is activated only when the user selects the default classification scheme in Module 2. Its purpose is to enable users without their own training data to generate an LULC map. LULC map generation under the default classification scheme uses a modular mapping approach.
 
-This is a part of **System Response 3.3.a: On screen sampling facility**
+### Probability map generation using modular mapping approach {#sec-produce-prob-maps}
 
-1.  The system shows an interactive map where user can add a sample data. If the user already uploaded their own sample data, the verified sample data will be shown on the interactive map.
+This section describes the process for generating the probability maps required as input for producing an LULC map when the user selects the default classification scheme. This process runs only once and is not repeated each time a user selects the default classification scheme workflow.
 
-    ::: callout-note
-    ## Success Notification
+1.  A default training dataset is generated using stratified random sampling across Indonesia's regions (Sumatra, Kalimantan, Nusa Tenggara, Jawa-Bali, Maluku, Sulawesi, and Papua). Rather than following the conventional approach of labeling training data directly with final LULC classes, each point in this dataset is instead labeled with information on a set of land cover elements, referred to hereafter as "primitives."
 
-    The system shows a confirmation that the uploaded sample data has been loaded to the on-screen canvas, along with the number of sample data uploaded.
+2.  Each training data point is then assigned a class label using a decision tree ruleset manually constructed by experts. In this decision tree, primitives serve as nodes, and LULC classes serve as leaves.
+
+    ::: callout-tip
+    ## Related Functions
+
+    A function to assign class label
     :::
 
-2.  The system lists all LULC classes defined in Module 2. The user assign new sample points accordingly to the correct class.
+3.  The class-labeled training data is used to train a Random Forest classification model. A one-versus-rest binary classification approach is applied to generate probability maps for each class in the Epistem classification scheme.
 
-3.  The system offers an option to save the result from on-screen sampling process to their local device.
+    ::: callout-tip
+    ## Related Functions
 
-4.  The user is prompted to finalize the on-screen sampling process by clicking a button.
-
-    ::: callout-note
-    ## Success Notification
-
-    Once, finalized the system shows a summary of the number of the modified sample data after on-screen process.
+    A function to conduct OVR
     :::
 
-5.  The system then moves to @sec-sample-data-preview.
-
-**Luma Geospatial Engine**
-
-This sub-step does not involve any operations within the Luma Geospatial Engine. The on-screen sampling feature was developed using `folium` for the Streamlit development.
-
-### Using Default Sample Data {#sec-default-sample-data}
-
-**Luma User Journey**
-
-1.  The user is automatically directed to use the default sample data if the user [chose to use an existing LULC scheme in Module 2](@sec-user-select-existing-lulc-template)
-
-2.  The system displays the area of the AOI and the number of sample data loaded on a map canvas.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system shows an error notification if RESTORE+ data is failed to be loaded. This could be due to the AOI located outside the scope of RESTORE+ dataset, or the AOI is too big.
-    :::
-
-    ::: callout-note
-    ## Success Notification
-
-    The system displayed a summary of the number of sample data loaded from RESTORE+ data that matches with the AOI saved in the system, and the area of AOI in km2.
-    :::
-
-**Luma Geospatial Engine**
-
-1.  The system retrieves an existing sample data accordingly with the chosen LULC scheme. In this development phase, the RESTORE+ sample data is retrieved from Google Earth Engine asset.
-
-## Sample Data Preview {#sec-sample-data-preview}
-
-### Sample Data Preview
-
-**Luma User Journey**
-
-This is a part of **System Response 3.4: Verified sample data preview**
-
-1.  The user is provided with the summary display of the **updated** sample data.
-
-    ::: callout-note
-    ## Success Notification
-
-    A notification shows a highlight of which class has insufficient sample data, the number of sample data that falls outside the AOI, and the total number of classes that has sample data outside the AOI.
-    :::
-
-2.  The user is prompted to confirm that they will use the sample dataset.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation that the sample data has been saved into the system.
-    :::
-
-3.  The user is given the option to proceed to @sec-module-4 .
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system disables the option to continue to the next module if the system does not detect any sample data stored in the system.
-    :::
-
-**Luma Geospatial Engine**
-
-1.  The system runs @sec-verify-sample-data for the **updated** sample data.
-
-2.  The system saved the sample data as an object to be loaded in the next modules.
+4.  The resulting probability layers are saved as Earth Engine assets and will be process in @sec-module-6

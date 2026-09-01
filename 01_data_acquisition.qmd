@@ -26,39 +26,13 @@ The output of this module is near–cloud-free satellite imagery that correspond
 
 ### AOI from Shapefile {#sec-aoi-from-shapefile}
 
-**Luma User Journey**
-
-This is a part of **User Journey 1.1: Prerequisite Check**
-
-1.  The user can upload their own AOI file in `.zip` format that includes all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system emphasizes on all required shapefile components that needs to be put in the `.zip` file. The system also supports uploads of `.kml` or `.kmz` files.
-
-2.  The system validates whether the `.zip` file includes all the required shapefile components.
-
-::: callout-important
-## Error Handling Notification
-
-The system provides an error notification if the `.shp` file is not found inside the `.zip` file.
-:::
-
-3.  The AOI file is saved in a temporary directory, allowing users to go back-and-forth in between modules without having to re-uploading the AOI file.
-
-**Luma Geospatial Engine**
-
 This sub-step does not involve any operations within the Luma Geospatial Engine.
 
-### AOI from Indonesia Administrative Boundaries
+### AOI from Indonesia Administrative Boundaries {#sec-aoi-from-administrative-boundary}
 
 In addition to user define upload the system supports the selection of AOI from Indonesia administrative boundaries at regency level.
 
-**Luma User Journey**
-
-1.  The user selects an AOI based on a drop down list of Indonesian regency administrative boundaries
-
-2.  The system provides a preview of the selected boundary
-
-**Luma Geospatial Engine**
-
-1.  Load `ee.FeatureCollection` asset containing Indonesian administrative boundaries from Indonesian Geospatial Agency (*Badan Informasi Geospasial*/BIG).
+1.  Load `ee.FeatureCollection` containing Indonesian administrative boundaries from Badan Informasi Geospasial. The data should be uploaded as GEE asset and the link for it must be provided and shared publicly
 2.  The system extracts the regency name and provide complete list of the available regencies for the user
 3.  Extract the geometry of the selected regency boundaries and use them as criteria in the imagery filtering
 4.  Convert the `ee.FeatureCollection` to `geodataframe` and visualize in the map canvas
@@ -78,30 +52,6 @@ In addition to user define upload the system supports the selection of AOI from 
 ## Correction of Shapefile Geometries {#sec-validation-of-shapefile-geometries}
 
 ### Correction of Shapefile Geometries
-
-**Luma User Journey**
-
-This is a part of **User Journey 1.1: Prerequisite Check**
-
-1.  After the user uploads the AOI, they receive a continuous feedback on each the validation process.
-
-::: callout-note
-## Success Notification
-
-The system shows a confirmation when the AOI is loaded successfully.
-:::
-
-::: callout-important
-## Error Handling Notification
-
-The system provides an error notification if shapefile validation fails.
-:::
-
-2.  Once the system succeeded to validate the shapefile input, the system displays the AOI on a map canvas.
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 1.1: Area of Interest Definition**
 
 1.  The system performs a multi-step geometry sanitization process before converting any shapefile or GeoDataFrame into Earth Engine objects. **These input validation processes for shapefiles are designed mainly for Streamlit compatibility**. Each correction is handled by exactly one dedicated function:
 
@@ -179,45 +129,7 @@ This is a part of **System Response 1.1: Area of Interest Definition**
 
 ### Satellite Data Acquisition and Filtering {#sec-input-spatial-image-parameters}
 
-**Luma User Journey**
-
-This is a part of **User Journey 1.2: Determining Satellite Imageries Parameters**
-
-1.  The user is prompted to fill in these parameters for the satellite imagery:
-
-    -   Target map date: Choose the range of period of satellite imagery in a single year format (YYYY) or full-date format (YYYY-MM-DD). If YYYY is used as the input format, the year option starts from 1972 until present year. The year 2020 is shown as the default option.
-
-    -   Spatial resolution: Specify the desired spatial resolution of the final map. Three spatial resolution is supported, namely 10x10m, 30x30m, and 100x100 m. If the user select the 10x10, the user only able to select Sentinel-2 imagery only. The temporal coverage is limited from 2017-present. If the user select 30x30, the user is able to select Landsat imagery collection with the temporal coverage from 1972 - present. If the user select 100x100m the user select Landsat image collection, however the thematic details correspond to 100x100 m since this option is only available for selecting the RESTORE+ dataset
-
-    -   Sensor type: a list of sensors available based on the selected target map date input parameter. Landsat 8 OLI is shown to be the default option. A warning message will show about the limited availability of Landsat 1-3 data if the user uses temporal scope input between 1972-1984.
-
-        ::: callout-important
-        ## Error Handling Notification
-
-        An error/warning notification is shown to the user if there's no satellite data for the selected time range
-        :::
-
-    -   Maximum cloud cover per-scene : Maximum scene level cloud cover for imagery filtering. Set a preferred cloud cover threshold, or use the default value of 30%.
-
-2.  The system provides information on satellite image availability shows the number of total satellite images found based on the user parameter input. The information includes total images found, date range of images, MGRS/WRS tiles, scene IDs, image acquisition dates, average scene cloud cover, and cloud cover range.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows the total number of satellite images found.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if no satellite images were found based on the user's parameter. The user is prompted to change the cloud cover threshold, or sensor type, or change the target map date.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 1.2: Search and Filter Imagery**
-
-1.  The system fetch the predefined imagery collections for processing
+1.  The system specifies Landsat data collections for optical processing.
 
     ::: callout-tip
     ## Related Functions
@@ -327,11 +239,25 @@ The approach as well as the procedure used to perform spatial harmonization is n
 The HPF operations required significant computation time and resource for large area. Sharpening for large area (primary regency level) might hit Earth Engine's user memory limit. If this happen, set the sharpening to false `data_acquisition.final_Image.get_temporal_composite(Sharpen=False):`
 :::
 
+### Topographic Correction
+
+Topographic correction are additional pre-processing for satellite imagery to mitigate the influence of rugged terrain on surface reflectance data. This pre-processing approach is crucial if there's variation in surface reflectance values between pixels with similar land cover and biophysical-structural properties.
+
+Since Sentinel-2 is already topographically corrected, this option is available for Landsat collections only. Luma-GE applied the a pixel-wise Sun-Canopy-Sensor with a c-correction (SCSc) proposed by [Soenen et. al. (2005)](https://doi.org/10.1109/TGRS.2005.852480). This approach use the sun-canopy-sensor (SCS) with a semi-empirical moderator (C) to account for diffuse radiation ([Poortinga et. al. 2019](https://doi.org/10.3390/rs11070831)). The ALOS 30m Global Surface Model version 4 is used for topographical base.
+
+The SCS method consist of two primary steps, namely illumination condition and illumination correction. The illumination condition (IC) determine the pixel brightness given its slope and orientation. The illumination correction is applied for each spectral band with empirically derived c-value by running a linear regression between reflectance value and IC. However, this correction is applied selectively, according to a mask to only work on pixels in which corrections is meaningful ([Poortinga et. al. 2019](https://doi.org/10.3390/rs11070831)).
+
+::: callout-tip
+## Related Function
+
+`data_acquisition.additional_correction.illumination_condition():` Compute the illumination condition (IC) for a single image and append it as an additional band along with cosZ, cosS, and slope.
+
+`data_acquisition.additional_correction.illumination_correction():` Perform illumination correction by fitting a linear model between IC and the given band over masked pixels, derive the empirical c-value, and apply the SCSc correction formula.
+
+`data_acquisition.additional_correction.apply_topo_corr():` Single function wrapper that executes both IC and illumination correction.
+:::
+
 ## Mosaic and Composite for Satellite Imagery
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 1.2: Search and Filter Imagery**
 
 The final image (single layer) which will be presented to the user is created using `final_image` methods, which resulted in mosaic imagery or temporal aggregation composite imagery.
 
@@ -370,58 +296,6 @@ The final image (single layer) which will be presented to the user is created us
 ## Visualization and Saving of Processed Satellite Imagery {#sec-visualization-and-saving-data}
 
 ### Visualization and Saving Processed Satellite Imagery
-
-**Luma User Journey**
-
-This is a part of **User Journey 1.3: Download Satellite Imagery**
-
-1.  The system visualize the satellite imagery on a canvas map using true color composite (RED, GREEN, BLUE bands) as default visualization. The map is centralized on the AOI.
-
-2.  The user is able to change the imagery composite using several commonly used composites or manually define their own band composite
-
-3.  The user can also change visualization parameters to adjust the imagery brightness and contrast
-
-4.  The user can download the satellite imagery through two options:
-
-    a.  Direct download: Downloads the image locally in the user's device. This option is only available if the satellite image is less than 32 MB.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the URL for direct download of satellite imagery is successfully made.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if the system fails to create the URL for direct download and suggests the user to use Google Cloud Storage instead or use smaller AOI area.
-    :::
-
-    b.  Export to Google Cloud Storage: Downloads the image to Google Cloud Storage.
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation if the satellite image is successfully saved to Google Cloud Storage.
-    :::
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if the system fails to export the image to Google Cloud Storage.
-    :::
-
-5.  The user is given the option to continue to [Module 2](@sec-module-2)
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system disables the option to continue to the next module if the system does not detect a satellite imagery saved inside the system.
-    :::
-
-**Luma Geospatial Engine**
-
-This is a part of **System Response 1.3: Download Satellite Imagery and Continue to Next Module**
 
 1.  The system collects the statistics of the satellite images found.
 
