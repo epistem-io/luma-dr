@@ -17,22 +17,12 @@ This module performs supervised Random Forest classification to generate a land 
 # Output {.unnumbered}
 
 1.  Trained LULC classification model.
-2.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the [splitted the sample data](@sec-sec-data-split)
+2.  Model accuracy report if validation data available (including overall accuracy, precision, recall, F1-score, Kappa, model error matrix). This output is only available if the user has a validation data from the [splitted the sample data](@sec-data-split)
 3.  Classified LULC raster map.
 
 # Process {.unnumbered}
 
-::: callout-important
-## Error Handling Notification
-
-This module cannot be accessed if the system is missing the required inputs from the Input from Other Modules
-:::
-
-## Checking Prerequisites from Previous Modules {#sec-checking-prerequisites}
-
-1.  The system validates availability of the required inputs.
-
-## Extracting spectral feature from sample data {#sample-data-feature-extraction}
+## Extracting spectral feature from sample data {#sec-sample-data-feature-extraction}
 
 ### Splitting the sample data {#sec-data-split}
 
@@ -95,3 +85,39 @@ This module cannot be accessed if the system is missing the required inputs from
 1.  This sub-step does not involve any operations from Luma Geospatial Engine. Direct download settings are defined from Streamlit, using the same workflow as defined in @sec-visualization-and-saving-data.
 
 2.  For details on exporting to Google Cloud Storage, refer to Earth Engine Initialization and Authentication page.
+
+## Default classification scheme classification from probability layers
+
+When the user [chose to use default classification scheme](@sec-user-select-existing-lulc-template), @sec-sample-data-feature-extraction and @sec-create-classification-model are skipped.
+
+1.  The system loads the [pre-generated probability map](@sec-produce-prob-maps) stack and clips it to the user's AOI.
+
+    ::: callout-tip
+    ## Related Functions
+
+    A function to load & prepare the pre-generated probability map
+    :::
+
+2.  If the user selects only a subset of classes from the classification scheme, the system retrieves the selected classes and discards the probability maps for the unselected classes.
+
+    ::: callout-tip
+    ## Related Functions
+
+    A function to load the chosen classification scheme
+    :::
+
+3.  For each pixel, the system retrieves the probability value from each layer and assigns a class based on the highest probability value using the argmax function.
+
+    ::: callout-tip
+    ## Related Functions
+
+    A function to apply argmax
+    :::
+
+4.  Post-classification cleanup is performed by masking the classified map according to a predefined set of rule-based predictors.
+
+    ::: callout-tip
+    ## Related Functions
+
+    A function to conduct post-classification
+    :::
