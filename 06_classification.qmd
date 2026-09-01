@@ -92,6 +92,12 @@ When the user [chose to use default classification scheme](@sec-user-select-exis
 
 1.  The system loads the [pre-generated probability map](@sec-produce-prob-maps) stack and clips it to the user's AOI.
 
+    ::: callout-tip
+    ## Related Functions
+
+    A function to load & prepare the pre-generated probability map
+    :::
+
 2.  If the user selects only a subset of classes from the classification scheme, the system retrieves the selected classes and discards the probability maps for the unselected classes.
 
     ::: callout-tip
