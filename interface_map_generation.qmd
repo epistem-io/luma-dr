@@ -1,14 +1,14 @@
-# Map Generation {#sec-map-generation .unnumbered}
+# 1 Map Generation {#sec-map-generation .unnumbered}
 
 # Overview {.unnumbered}
 
-In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. The user cannot skip steps; each step unlocks the next only after the Geospatial Engine (GE) confirms the required output has been produced and saved.
+In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. To ensure usability regardless of technical know-how, user cannot skip steps; each step unlocks the next only after the required input has been provided by the user and the Geospatial Engine (GE) confirms the corresponding output has been produced and saved.
 
 # Step 1: Basic Information {#sec-map-generation-basic-information}
 
 **Overview**
 
-Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite source.
+Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite imagery source.
 
 ![](images/luma-int-screenshot/Step-1-Basic-Information.png)
 
@@ -16,7 +16,7 @@ Provides the inputs needed before any geospatial computation: where to map, when
 
 **Overview**
 
-This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map.
+This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map by choosing one of three methods available: upload, draw area, or select an administrative boundary.
 
 ![](images/luma-int-screenshot/Step-1-1-Geographic-Area.png)
 
@@ -27,6 +27,11 @@ This is the first required input in the Map Generation workflow where the user s
 The user uploads a polygon file to define the geographic boundary of the area they want to map.
 
 ![](images/luma-int-screenshot/Step-1-1-1-Upload-Area.png)
+
+**User Input to Interface**
+
+1.  The user uploads their own AOI file in `.zip` format that should include all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system also supports uploads of `.kml` or `.kmz` files.
+2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
 
@@ -79,7 +84,7 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    If validation is successful, continue to Process 6
+    If GIS file completeness is validated, continue to Process 6
     :::
 
     ::: callout-important
@@ -96,19 +101,42 @@ The user uploads a polygon file to define the geographic boundary of the area th
     The system shows a confirmation when the AOI is loaded successfully by showing a purple box with 'Approximate size of your mapping area: X \[number\] Ha' displayed
     :::
 
-7.  If the user clicks on "Reselect Area", the uploaded file is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+7.  The system activates the next step.
+
+8.  The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
+9.  The system returns the validated and processed shapefile.
+
+    ::: callout-note
+    ## Success Notification
+
+    The "Confirm" button is activated
+    :::
+
+10. If the user clicks "Reselect Area", the uploaded file is deleted.
+
+    ::: callout-note
+    ## Success Notification
+
+    All inputs are being reset, the user will be redirected to @sec-map-generation-basic-information
+    :::
 
 ### Step 1.1.2: Draw Area
 
 **Overview**
 
-The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new corner to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.
+The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new side/edge (vertex) to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.
 
 ![](images/luma-int-screenshot/Step-1-1-2-Draw-Area.png)
 
+**User Input to Interface**
+
+1.  The user creates a series of clicks on the map to create a polygon.
+2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
 **Process**
 
-1.  The user creates a polygon by clicking on the map and selects a spatial resolution from the available options.
+1.  The user creates a polygon by clicking on the map.
 
 2.  The system retrieves the AOI area size information.
 
@@ -124,75 +152,122 @@ The user draws their area of interest directly on the map by creating borders of
     If the area size information is too large, an error warning is displayed: 'Draw area exceeds maximum limit’
     :::
 
-3.  If the user clicks on "Reselect Area", the polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+3.  The system activates the next step.
+
+4.  The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
+5.  The system returns the validated and processed shapefile.
+
+    ::: callout-note
+    ## Success Notification
+
+    The "Confirm" button is activated
+    :::
+
+6.  If the user clicks "Reselect Area", the drawn polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+
+    ::: callout-note
+    ## Success Notification
+
+    All inputs are being reset, the user will be redirected to @sec-map-generation-basic-information
+    :::
 
 ### Step 1.1.3: Administrative Boundaries
 
 **Overview**
 
-The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. The system provides a preview of the selected boundary.
+The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. Disclaimer about the data source (Badan Informasi Geospasial) is included with the data uploaded as GEE asset and the link provided and shared publicly. The system provides a preview of the selected boundary.
 
 ![](images/luma-int-screenshot/Step-1-1-3-Administrative-Boundaries.png)
 
+**User Input to Interface**
+
+1.  The user selects an AOI based on a drop down list of Indonesian regency administrative boundaries.
+2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
 **Process**
 
-1.  The user selects an administrative boundary from the dropdown and a spatial resolution from the available options.
+1.  The user selects an administrative boundary from the drop down list.
 
-2.  The system retrieves the AOI information from the selected administrative boundary selections. The system runs the related functions in @sec-aoi-from-administrative-boundary and provides a preview of the selected boundary.
+2.  The system retrieves the AOI information from the selected administrative boundary selections.
+
+3.  The system provides the name of selected administrative boundary.
+
+4.  The system activates the next step.
+
+5.  The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
+6.  The system runs the related functions in @sec-aoi-from-administrative-boundary and provides a polygon of the selected boundary on the map canvas.
+
+    ::: callout-note
+    ## Success Notification
+
+    The "Confirm" button is activated
+    :::
+
+7.  If the user clicks "Reselect Area", the selected administrative polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+
+    ::: callout-note
+    ## Success Notification
+
+    All inputs are being reset, the user will be redirected to @sec-map-generation-basic-information
+    :::
 
 ## Step 1.2: Time Period {#sec-map-generation-time-period}
 
 **Overview**
 
-The user defines the time period for the land use and land cover map. User chooses the range of period of satellite imagery in a single year format or a custom date range format.
+The user defines the time period for the land use and land cover map. Currently available options for time interval of the satellite imagery period are limited to yearly (a single year) or custom date range.
 
 ![](images/luma-int-screenshot/Step-1-2-Time-Period.png)
 
+**User Input to Interface**
+
+1.  The user selects the time interval they want to use (yearly or custom date range).
+2.  The user further specifies the period by selecting the year (if yearly) or entering the start and end dates (if custom date range) that they want to map.
+
 **Process**
 
-1.  The user chooses a time interval selection "By year" and a year (1972–current year).
+1.  The user chooses a time interval selection "By year" or ”Custom date range”.
 
-2.  The system retrieves the selected year and the options for the Satellite Imagery (@sec-map-generation-satellite-imagery) are limited to the available sensor images depending on the selected year.
+2.  The system provides input fields to specify time period based on selected time interval.
 
-    ::: callout-note
-    ## Success Notification
+3.  If "By year": The system shows the year selections from 1972 until current year in a form of a drop down list.
 
-    The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected
-    :::
+4.  If "Custom date range": The system provides calendar display to allow user choose specific start and end dates.
 
-    ::: callout-important
-    ## Error Handling Notification
+5.  The user selects a year selection (1972–current year) or specific start and end dates.
 
-    If time interval nor year is not selected, the options on Satellite Imagery (@sec-map-generation-satellite-imagery) are not available
-    :::
+6.  The system activates "Set time period" button.
 
-3.  The user chooses a time interval selection ”Custom date range” along with the start and end dates.
-
-4.  The system provides a preview of calendar for user to choose the start and end dates.
+7.  If the user clicks "Set time period" button, the system confirms the time period input.
 
     ::: callout-note
     ## Success Notification
 
-    The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected
+    - The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected
+    - A clickable "Change input" text also appears
     :::
 
-    ::: callout-important
-    ## Error Handling Notification
-
-    If time interval nor date range is not selected, the options on Satellite Imagery (@sec-map-generation-satellite-imagery) are not available
-    :::
+8.  If the user clicks "Change input" button, the system resets all input from @sec-map-generation-time-period and is brought back to the beginning of @sec-map-generation-time-period.
 
 ## Step 1.3: Satellite Imagery {#sec-map-generation-satellite-imagery}
 
 **Overview**
 
-The user chooses a satellite imagery source and sets the maximum cloud coverage. The system retrieves all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
+The user confirms default selection for satellite imagery source and the maximum cloud coverage percentage or click change input to customize final input to the basic information.
 
 ![](images/luma-int-screenshot/Step-1-3-Satellite-Imagery.png)
 
+**User Input to Interface**
+
+1.  Most recent available satellite imagery source and 30% maximum cloudy area are chosen as default input. User is provided with the option to "Change input". If chosen, user can input 2 and 3 below.
+2.  The user selects the satellite imagery source from a drop down list.
+3.  The user selects the maximum cloudy area by dragging the slider to the desired number.
+
 **Process**
 
-1.  The system checks the selected year in @sec-map-generation-time-period and shows the available sensors based on the selected year.
+1.  The system adjusts default satellite imagery source and other options according to time period input in @sec-map-generation-time-period.
 
 2.  The user sets a preferred cloud cover threshold, if none chosen, the default value of 30% is used.
 
@@ -210,7 +285,22 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.
     :::
 
-4.  The system returns the collected satellite image information.
+## Step 1.4: Confirm and Preview
+
+**Overview**
+
+After all input to basic information have been finalized, user is presented with summary of input for final confirmation. User confirms through clicking "View satellite imagery" which will trigger the system to retrieve  all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
+
+![](images/luma-int-screenshot/Step-1-4-Confirm-and-Preview.png)
+
+**User Input to Interface**
+
+1. The user clicks Next to confirm summary of all inputs.
+2. The user clicks View satellite imagery to initiate processing of satellite imagery.
+
+**Process**
+
+1.  The system summarizes the basic information from previous steps.
 
     ::: callout-note
     ## Success Notification
@@ -223,8 +313,8 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 
     Two buttons appear:
 
-    - "Change Input"; continue to Process 5
-    - "View Satellite Imagery"; continue to Process 8
+    - "Change Input"; continue to Process 2
+    - "View Satellite Imagery"; continue to Process 5
     :::
 
     ::: callout-important
@@ -233,19 +323,17 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.
     :::
 
-5.  If the user clicks on the "Change Input" button, "Edit" (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
+2.  If the user clicks on the "Change Input" button, "Edit" (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
 
-    - "Change Input", continue to Process 6, or
+    - "Change Input", continue to Process 3, or
 
-    - "Discard Changes", continue to Process 7.
+    - "Discard Changes", continue to Process 4.
 
-<!-- -->
+3.  If the user clicks on the "Change Input" button in the pop up window, all inputs are being reset, back to the beginning of @sec-map-generation-basic-information.
 
-6.  If the user clicks on the "Change Input" button in the pop up window, all inputs are being reset, back to the beginning of @sec-map-generation-basic-information.
+4.  If the user clicks on the "Discard Changes" button in the pop up window, the panel still displays the user’s input summary. "Cancel Change" button appear, while "View Satellite Imagery" is disabled. Once the "Cancel Change" button is clicked, back to Process 1.
 
-7.  If the user clicks on the "Discard Changes" button in the pop up window, the panel still displays the user’s input summary. "Cancel Change" button appear, while "View Satellite Imagery" is disabled. Once the "Cancel Change" button is clicked, back to Process 4.
-
-8.  If the user clicks on the "View Satellite Imagery" button, the system returns the collected satellite image information.
+5.  If the user clicks on the "View Satellite Imagery" button, the system processes the satellite image request.
 
     ::: callout-note
     ## Success Notification
@@ -256,13 +344,11 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
       - Mapping area; with polygon toggle
       - Composite of satellite imagery; with true colour (RGB), false colour infrared (NIR/Red/Green), land/water (NIR/SWIR1/RED) toggle options
       - LULC class; still disabled in this step
-    - User can then download the composite, leading to Process 9.
+    - User can then download the composite, leading to Process 6.
     - "Next" button appears, which leads to @sec-map-generation-lulc-classification.
     :::
 
-9.  If the user downloads composite, a `.zip` file containing satellite image composite is downloaded to user’s local device.
-
-![](images/luma-int-screenshot/Summary-step-1.png)
+6.  If the user downloads composite, a `.zip` file containing satellite image composite is downloaded to user’s local device.
 
 # Step 2: Land Use and Land Cover Classification {#sec-map-generation-lulc-classification}
 
@@ -293,6 +379,10 @@ The user creates their own classification scheme manually or by uploading a file
 The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.
 
 ![](images/luma-int-screenshot/Step-2-1-1-1-Manual-Input.png)
+
+**User Input to Interface**
+
+1. The user fills out a form for each class ID, class name, and colour.
 
 **Process**
 
