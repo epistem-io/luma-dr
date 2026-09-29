@@ -31,6 +31,7 @@ The user uploads a polygon file to define the geographic boundary of the area th
 **User Input to Interface**
 
 1.  The user uploads their own AOI file in `.zip` format that should include all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system also supports uploads of `.kml` or `.kmz` files.
+
 2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
@@ -132,6 +133,7 @@ The user draws their area of interest directly on the map by creating borders of
 **User Input to Interface**
 
 1.  The user creates a series of clicks on the map to create a polygon.
+
 2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
@@ -183,6 +185,7 @@ The user selects the area they want to map based on a drop down list of Indonesi
 **User Input to Interface**
 
 1.  The user selects an AOI based on a drop down list of Indonesian regency administrative boundaries.
+
 2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
@@ -224,6 +227,7 @@ The user defines the time period for the land use and land cover map. Currently 
 **User Input to Interface**
 
 1.  The user selects the time interval they want to use (yearly or custom date range).
+
 2.  The user further specifies the period by selecting the year (if yearly) or entering the start and end dates (if custom date range) that they want to map.
 
 **Process**
@@ -262,7 +266,9 @@ The user confirms default selection for satellite imagery source and the maximum
 **User Input to Interface**
 
 1.  Most recent available satellite imagery source and 30% maximum cloudy area are chosen as default input. User is provided with the option to "Change input". If chosen, user can input 2 and 3 below.
+
 2.  The user selects the satellite imagery source from a drop down list.
+
 3.  The user selects the maximum cloudy area by dragging the slider to the desired number.
 
 **Process**
@@ -296,6 +302,7 @@ After all input to basic information have been finalized, user is presented with
 **User Input to Interface**
 
 1. The user clicks Next to confirm summary of all inputs after @sec-map-generation-satellite-imagery.
+
 2. The user clicks View satellite imagery to initiate processing of satellite imagery.
 
 **Process**
@@ -1048,6 +1055,16 @@ Once logged in, the user can save their land use and land cover mapping progress
 
 ![](images/luma-int-screenshot/Feat-1-save.png)
 
+**Process**
+
+1. The user clicks "Save" button.
+
+2. The user is prompted to log in or sign up for an Epistem account if they have not already registered.
+
+3. Once logged in, the user can name the map they are working on in order to save it.
+
+4. Progress is saved automatically; completed steps and the user's current position are visible in the top-right corner of the map canvas.
+
 ![](images/luma-int-screenshot/Feat-1-name.png)
 
 ![](images/luma-int-screenshot/Feature-1-Save-Progress.png)
@@ -1080,8 +1097,6 @@ Once logged in, the user can share their generated map to another person with an
 
 ![](images/luma-int-screenshot/Feature-3-Share-Map.png)
 
-![](images/luma-int-screenshot/Feat-3-share.png)
-
 **Process**
 
 1.  The user input recipient's name and email address.
@@ -1093,6 +1108,8 @@ Once logged in, the user can share their generated map to another person with an
 
     The recipient receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map
     :::
+
+![](images/luma-int-screenshot/Feat-3-share.png)
 
 ## Feature 4: Improve Accuracy
 
