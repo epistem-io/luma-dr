@@ -954,7 +954,11 @@ The user can save their land use and land cover mapping progress and share their
 
 **Overview**
 
-Once logged in, the user can save their land use and land cover mapping progress and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.
+Once logged in, the user can save their land use and land cover mapping progress, name the map they are working on, and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.
+
+![](images/luma-int-screenshot/Feat-1-save.png)
+
+![](images/luma-int-screenshot/Feat-1-name.png)
 
 ![](images/luma-int-screenshot/Feature-1-Save-Progress.png)
 
@@ -985,6 +989,8 @@ Once logged in, the user can download their generated map.
 Once logged in, the user can share their generated map to another person with an email address.
 
 ![](images/luma-int-screenshot/Feature-3-Share-Map.png)
+
+![](images/luma-int-screenshot/Feat-3-share.png)
 
 **Process**
 
