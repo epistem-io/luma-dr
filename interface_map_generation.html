@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Map Generation – Luma Development Reference</title>
+<title>1 Map Generation – Luma Development Reference</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3d497cff885f6278d37568d0ef0763f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fd0503e23dce65854c81c5baaade3bdf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -88,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_map_generation.html">Map Generation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_map_generation.html">1 Map Generation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -240,19 +240,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interface_map_generation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Map Generation</span></a>
+ <span class="menu-text">1 Map Generation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interface_change_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Change Analysis</span></a>
+ <span class="menu-text">2 Change Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interface_collaborative_mapping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Collaborative Mapping</span></a>
+ <span class="menu-text">3 Collaborative Mapping</span></a>
   </div>
 </li>
       </ul>
@@ -272,19 +272,20 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#step-1.1-geographic-area" id="toc-step-1.1-geographic-area" class="nav-link" data-scroll-target="#step-1.1-geographic-area">Step 1.1: Geographic Area</a>
   <ul class="collapse">
-  <li><a href="#step-1.1.1-upload-area" id="toc-step-1.1.1-upload-area" class="nav-link" data-scroll-target="#step-1.1.1-upload-area">Step 1.1.1: Upload Area</a></li>
-  <li><a href="#step-1.1.2-draw-area" id="toc-step-1.1.2-draw-area" class="nav-link" data-scroll-target="#step-1.1.2-draw-area">Step 1.1.2: Draw Area</a></li>
-  <li><a href="#step-1.1.3-administrative-boundaries" id="toc-step-1.1.3-administrative-boundaries" class="nav-link" data-scroll-target="#step-1.1.3-administrative-boundaries">Step 1.1.3: Administrative Boundaries</a></li>
+  <li><a href="#step-1.1.a-upload-area" id="toc-step-1.1.a-upload-area" class="nav-link" data-scroll-target="#step-1.1.a-upload-area">Step 1.1.a: Upload Area</a></li>
+  <li><a href="#step-1.1.b-draw-area" id="toc-step-1.1.b-draw-area" class="nav-link" data-scroll-target="#step-1.1.b-draw-area">Step 1.1.b: Draw Area</a></li>
+  <li><a href="#step-1.1.c-administrative-boundaries" id="toc-step-1.1.c-administrative-boundaries" class="nav-link" data-scroll-target="#step-1.1.c-administrative-boundaries">Step 1.1.c: Administrative Boundaries</a></li>
   </ul></li>
   <li><a href="#sec-map-generation-time-period" id="toc-sec-map-generation-time-period" class="nav-link" data-scroll-target="#sec-map-generation-time-period">Step 1.2: Time Period</a></li>
   <li><a href="#sec-map-generation-satellite-imagery" id="toc-sec-map-generation-satellite-imagery" class="nav-link" data-scroll-target="#sec-map-generation-satellite-imagery">Step 1.3: Satellite Imagery</a></li>
+  <li><a href="#step-1.4-confirm-and-preview" id="toc-step-1.4-confirm-and-preview" class="nav-link" data-scroll-target="#step-1.4-confirm-and-preview">Step 1.4: Confirm and Preview</a></li>
   </ul></li>
   <li><a href="#sec-map-generation-lulc-classification" id="toc-sec-map-generation-lulc-classification" class="nav-link" data-scroll-target="#sec-map-generation-lulc-classification">Step 2: Land Use and Land Cover Classification</a>
   <ul class="collapse">
   <li><a href="#step-2.1-land-use-land-cover-classification-scheme" id="toc-step-2.1-land-use-land-cover-classification-scheme" class="nav-link" data-scroll-target="#step-2.1-land-use-land-cover-classification-scheme">Step 2.1: Land Use &amp; Land Cover Classification Scheme</a>
   <ul class="collapse">
-  <li><a href="#step-2.1.1-own-classification" id="toc-step-2.1.1-own-classification" class="nav-link" data-scroll-target="#step-2.1.1-own-classification">Step 2.1.1: Own Classification</a></li>
-  <li><a href="#step-2.1.2-default-classification" id="toc-step-2.1.2-default-classification" class="nav-link" data-scroll-target="#step-2.1.2-default-classification">Step 2.1.2: Default Classification</a></li>
+  <li><a href="#step-2.1.a-own-classification" id="toc-step-2.1.a-own-classification" class="nav-link" data-scroll-target="#step-2.1.a-own-classification">Step 2.1.a: Own Classification</a></li>
+  <li><a href="#sec-map-generation-default-classes" id="toc-sec-map-generation-default-classes" class="nav-link" data-scroll-target="#sec-map-generation-default-classes">Step 2.1.b: Default Classification</a></li>
   </ul></li>
   <li><a href="#step-2.2-try-epistem-ai-recommendations" id="toc-step-2.2-try-epistem-ai-recommendations" class="nav-link" data-scroll-target="#step-2.2-try-epistem-ai-recommendations">Step 2.2: Try Epistem-AI Recommendations</a></li>
   </ul></li>
@@ -293,18 +294,20 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sec-map-generation-upload-sample-data" id="toc-sec-map-generation-upload-sample-data" class="nav-link" data-scroll-target="#sec-map-generation-upload-sample-data">Step 3.1: Upload Sample Data</a></li>
   <li><a href="#sec-map-generation-oss" id="toc-sec-map-generation-oss" class="nav-link" data-scroll-target="#sec-map-generation-oss">Step 3.2: On Screen Sampling</a>
   <ul class="collapse">
-  <li><a href="#step-3.2.1-add-point" id="toc-step-3.2.1-add-point" class="nav-link" data-scroll-target="#step-3.2.1-add-point">Step 3.2.1: Add Point</a></li>
-  <li><a href="#step-3.2.2-draw-area" id="toc-step-3.2.2-draw-area" class="nav-link" data-scroll-target="#step-3.2.2-draw-area">Step 3.2.2: Draw Area</a></li>
+  <li><a href="#step-3.2.a-add-point" id="toc-step-3.2.a-add-point" class="nav-link" data-scroll-target="#step-3.2.a-add-point">Step 3.2.a: Add Point</a></li>
+  <li><a href="#step-3.2.b-draw-area" id="toc-step-3.2.b-draw-area" class="nav-link" data-scroll-target="#step-3.2.b-draw-area">Step 3.2.b: Draw Area</a></li>
   </ul></li>
+  <li><a href="#step-3.3-when-user-used-default-classification-in-step-2" id="toc-step-3.3-when-user-used-default-classification-in-step-2" class="nav-link" data-scroll-target="#step-3.3-when-user-used-default-classification-in-step-2">Step 3.3: When user used Default Classification in Step 2</a></li>
   </ul></li>
   <li><a href="#sec-map-generation-parameters" id="toc-sec-map-generation-parameters" class="nav-link" data-scroll-target="#sec-map-generation-parameters">Step 4: Customize Mapping Parameters</a>
   <ul class="collapse">
   <li><a href="#sec-map-generation-predictors" id="toc-sec-map-generation-predictors" class="nav-link" data-scroll-target="#sec-map-generation-predictors">Step 4.1: Predictor Selection</a>
   <ul class="collapse">
-  <li><a href="#step-4.2.1-default-predictors" id="toc-step-4.2.1-default-predictors" class="nav-link" data-scroll-target="#step-4.2.1-default-predictors">Step 4.2.1: Default Predictors</a></li>
-  <li><a href="#step-4.2.2-upload-predictors" id="toc-step-4.2.2-upload-predictors" class="nav-link" data-scroll-target="#step-4.2.2-upload-predictors">Step 4.2.2: Upload Predictors</a></li>
+  <li><a href="#step-4.2.a-default-predictors" id="toc-step-4.2.a-default-predictors" class="nav-link" data-scroll-target="#step-4.2.a-default-predictors">Step 4.2.a: Default Predictors</a></li>
+  <li><a href="#step-4.2.b-upload-predictors" id="toc-step-4.2.b-upload-predictors" class="nav-link" data-scroll-target="#step-4.2.b-upload-predictors">Step 4.2.b: Upload Predictors</a></li>
   </ul></li>
   <li><a href="#sec-map-generation-model-training" id="toc-sec-map-generation-model-training" class="nav-link" data-scroll-target="#sec-map-generation-model-training">Step 4.2: Classification Model Training</a></li>
+  <li><a href="#step-4.3-when-user-used-default-classification-in-step-2" id="toc-step-4.3-when-user-used-default-classification-in-step-2" class="nav-link" data-scroll-target="#step-4.3-when-user-used-default-classification-in-step-2">Step 4.3: When user used Default Classification in Step 2</a></li>
   </ul></li>
   <li><a href="#sec-map-generation-final" id="toc-sec-map-generation-final" class="nav-link" data-scroll-target="#sec-map-generation-final">Step 5: Map Generation</a>
   <ul class="collapse">
@@ -325,9 +328,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_map_generation.html">Map Generation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./interface_map_generation.html">Luma Interface</a></li><li class="breadcrumb-item"><a href="./interface_map_generation.html">1 Map Generation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-map-generation" class="quarto-section-identifier">Map Generation</span></h1>
+<h1 class="title"><span id="sec-map-generation" class="quarto-section-identifier">1 Map Generation</span></h1>
 </div>
 
 
@@ -346,23 +349,28 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level1 unnumbered">
 <h1 class="unnumbered">Overview</h1>
-<p>In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. The user cannot skip steps; each step unlocks the next only after the Geospatial Engine (GE) confirms the required output has been produced and saved.</p>
+<p>In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. To ensure usability regardless of technical know-how, user cannot skip steps; each step unlocks the next only after the required input has been provided by the user and the Geospatial Engine (GE) confirms the corresponding output has been produced and saved.</p>
 </section>
 <section id="sec-map-generation-basic-information" class="level1">
 <h1>Step 1: Basic Information</h1>
 <p><strong>Overview</strong></p>
-<p>Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite source.</p>
-<p><img src="images/luma-int-screenshot\Step-1-Basic-Information.png" class="img-fluid"></p>
+<p>Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite imagery source.</p>
+<p><img src="images/luma-int-screenshot/Step-1-Basic-Information.png" class="img-fluid"></p>
 <section id="step-1.1-geographic-area" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.1-geographic-area">Step 1.1: Geographic Area</h2>
 <p><strong>Overview</strong></p>
-<p>This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map.</p>
-<p><img src="images/luma-int-screenshot\Step-1.1-Geographic-Area.png" class="img-fluid"></p>
-<section id="step-1.1.1-upload-area" class="level3">
-<h3 class="anchored" data-anchor-id="step-1.1.1-upload-area">Step 1.1.1: Upload Area</h3>
+<p>This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map by choosing one of three methods available: upload, draw area, or select an administrative boundary.</p>
+<p><img src="images/luma-int-screenshot/Step-1-1-Geographic-Area.png" class="img-fluid"></p>
+<section id="step-1.1.a-upload-area" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.1.a-upload-area">Step 1.1.a: Upload Area</h3>
 <p><strong>Overview</strong></p>
 <p>The user uploads a polygon file to define the geographic boundary of the area they want to map.</p>
-<p><img src="images/luma-int-screenshot\Step-1.1.1-Upload-Area.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-1-1-1-Upload-Area.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user uploads their own AOI file in&nbsp;<code>.zip</code>&nbsp;format that should include all required shapefile components (<code>.shp</code>,&nbsp;<code>.shx</code>,&nbsp;<code>.dbf</code>,&nbsp;<code>.prj</code>). The system also supports uploads of&nbsp;<code>.kml</code>&nbsp;or&nbsp;<code>.kmz</code>&nbsp;files.</p></li>
+<li><p>The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user can upload their own AOI file in <code>.zip</code> format that includes all required shapefile components (<code>.shp</code>, <code>.shx</code>, <code>.dbf</code>, <code>.prj</code>).</p></li>
@@ -458,7 +466,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If validation is successful, continue to Process 6</p>
+<p>If GIS file completeness is validated, continue to Process 6</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -488,17 +496,51 @@ ul.task-list li input[type="checkbox"] {
 <p>The system shows a confirmation when the AOI is loaded successfully by showing a purple box with ‘Approximate size of your mapping area: X [number] Ha’ displayed</p>
 </div>
 </div></li>
-<li><p>If the user clicks on “Reselect Area”, the uploaded file is deleted, and the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p></li>
+<li><p>The system activates the next step.</p></li>
+<li><p>The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).</p></li>
+<li><p>The system returns the validated and processed shapefile.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The “Confirm” button is activated</p>
+</div>
+</div></li>
+<li><p>If the user clicks “Reselect Area”, the uploaded file is deleted.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All inputs are being reset, the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a></p>
+</div>
+</div></li>
 </ol>
 </section>
-<section id="step-1.1.2-draw-area" class="level3">
-<h3 class="anchored" data-anchor-id="step-1.1.2-draw-area">Step 1.1.2: Draw Area</h3>
+<section id="step-1.1.b-draw-area" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.1.b-draw-area">Step 1.1.b: Draw Area</h3>
 <p><strong>Overview</strong></p>
-<p>The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new corner to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.</p>
-<p><img src="images/luma-int-screenshot\Step-1.1.2-Draw-Area.png" class="img-fluid"></p>
+<p>The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new side/edge (vertex) to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.</p>
+<p><img src="images/luma-int-screenshot/Step-1-1-2-Draw-Area.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user creates a series of clicks on the map to create a polygon.</p></li>
+<li><p>The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
-<li><p>The user creates a polygon by clicking on the map and selects a spatial resolution from the available options.</p></li>
+<li><p>The user creates a polygon by clicking on the map.</p></li>
 <li><p>The system retrieves the AOI area size information.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -526,30 +568,105 @@ ul.task-list li input[type="checkbox"] {
 <p>If the area size information is too large, an error warning is displayed: ’Draw area exceeds maximum limit’</p>
 </div>
 </div></li>
-<li><p>If the user clicks on “Reselect Area”, the polygon is deleted, and the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p></li>
+<li><p>The system activates the next step.</p></li>
+<li><p>The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).</p></li>
+<li><p>The system returns the validated and processed shapefile.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The “Confirm” button is activated</p>
+</div>
+</div></li>
+<li><p>If the user clicks “Reselect Area”, the drawn polygon is deleted, and the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All inputs are being reset, the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a></p>
+</div>
+</div></li>
 </ol>
 </section>
-<section id="step-1.1.3-administrative-boundaries" class="level3">
-<h3 class="anchored" data-anchor-id="step-1.1.3-administrative-boundaries">Step 1.1.3: Administrative Boundaries</h3>
+<section id="step-1.1.c-administrative-boundaries" class="level3">
+<h3 class="anchored" data-anchor-id="step-1.1.c-administrative-boundaries">Step 1.1.c: Administrative Boundaries</h3>
 <p><strong>Overview</strong></p>
-<p>The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. The system provides a preview of the selected boundary.</p>
-<p><img src="images/luma-int-screenshot\Step-1.1.3-Administrative-Boundaries.png" class="img-fluid"></p>
+<p>The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. Disclaimer about the data source (Badan Informasi Geospasial) is included with the data uploaded as GEE asset and the link provided and shared publicly. The system provides a preview of the selected boundary.</p>
+<p><img src="images/luma-int-screenshot/Step-1-1-3-Administrative-Boundaries.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user selects an AOI based on a drop down list of Indonesian regency administrative boundaries.</p></li>
+<li><p>The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
-<li><p>The user selects an administrative boundary from the dropdown and a spatial resolution from the available options.</p></li>
-<li><p>The system retrieves the AOI information from the selected administrative boundary selections. The system runs the related functions in <a href="01_data_acquisition.html#sec-aoi-from-administrative-boundary" class="quarto-xref"><span>AOI from Indonesia Administrative Boundaries</span></a> and provides a preview of the selected boundary.</p></li>
+<li><p>The user selects an administrative boundary from the drop down list.</p></li>
+<li><p>The system retrieves the AOI information from the selected administrative boundary selections.</p></li>
+<li><p>The system provides the name of selected administrative boundary.</p></li>
+<li><p>The system activates the next step.</p></li>
+<li><p>The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).</p></li>
+<li><p>The system runs the related functions in <a href="01_data_acquisition.html#sec-aoi-from-administrative-boundary" class="quarto-xref"><span>AOI from Indonesia Administrative Boundaries</span></a> and provides a polygon of the selected boundary on the map canvas.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The “Confirm” button is activated</p>
+</div>
+</div></li>
+<li><p>If the user clicks “Reselect Area”, the selected administrative polygon is deleted, and the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Success Notification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All inputs are being reset, the user will be redirected to <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a></p>
+</div>
+</div></li>
 </ol>
 </section>
 </section>
 <section id="sec-map-generation-time-period" class="level2">
 <h2 class="anchored" data-anchor-id="sec-map-generation-time-period">Step 1.2: Time Period</h2>
 <p><strong>Overview</strong></p>
-<p>The user defines the time period for the land use and land cover map. User chooses the range of period of satellite imagery in a single year format or a custom date range format.</p>
-<p><img src="images/luma-int-screenshot\Step-1.2-Time-Period.png" class="img-fluid"></p>
+<p>The user defines the time period for the land use and land cover map. Currently available options for time interval of the satellite imagery period are limited to yearly (a single year) or custom date range.</p>
+<p><img src="images/luma-int-screenshot/Step-1-2-Time-Period.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user selects the time interval they want to use (yearly or custom date range).</p></li>
+<li><p>The user further specifies the period by selecting the year (if yearly) or entering the start and end dates (if custom date range) that they want to map.</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
-<li><p>The user chooses a time interval selection “By year” and a year (1972–current year).</p></li>
-<li><p>The system retrieves the selected year and the options for the Satellite Imagery (<a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>) are limited to the available sensor images depending on the selected year.</p>
+<li><p>The user chooses a time interval selection “By year” or ”Custom date range”.</p></li>
+<li><p>The system provides input fields to specify time period based on selected time interval.</p></li>
+<li><p>If “By year”: The system shows the year selections from 1972 until current year in a form of a drop down list.</p></li>
+<li><p>If “Custom date range”: The system provides calendar display to allow user choose specific start and end dates.</p></li>
+<li><p>The user selects a year selection (1972–current year) or specific start and end dates.</p></li>
+<li><p>The system activates “Set time period” button.</p></li>
+<li><p>If the user clicks “Set time period” button, the system confirms the time period input.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -560,60 +677,29 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If time interval nor year is not selected, the options on Satellite Imagery (<a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>) are not available</p>
+<ul>
+<li>The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected</li>
+<li>A clickable “Change input” text also appears</li>
+</ul>
 </div>
 </div></li>
-<li><p>The user chooses a time interval selection ”Custom date range” along with the start and end dates.</p></li>
-<li><p>The system provides a preview of calendar for user to choose the start and end dates.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Success Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Error Handling Notification
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If time interval nor date range is not selected, the options on Satellite Imagery (<a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>) are not available</p>
-</div>
-</div></li>
+<li><p>If the user clicks “Change input” button, the system resets all input from <a href="#sec-map-generation-time-period" class="quarto-xref"><span>Step 1.2: Time Period</span></a> and is brought back to the beginning of <a href="#sec-map-generation-time-period" class="quarto-xref"><span>Step 1.2: Time Period</span></a>.</p></li>
 </ol>
 </section>
 <section id="sec-map-generation-satellite-imagery" class="level2">
 <h2 class="anchored" data-anchor-id="sec-map-generation-satellite-imagery">Step 1.3: Satellite Imagery</h2>
 <p><strong>Overview</strong></p>
-<p>The user chooses a satellite imagery source and sets the maximum cloud coverage. The system retrieves all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.</p>
-<p><img src="images/luma-int-screenshot\Step-1.3-Satellite-Imagery.png" class="img-fluid"></p>
+<p>The user confirms default selection for satellite imagery source and the maximum cloud coverage percentage or click change input to customize final input to the basic information.</p>
+<p><img src="images/luma-int-screenshot/Step-1-3-Satellite-Imagery.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>Most recent available satellite imagery source and 30% maximum cloudy area are chosen as default input. User is provided with the option to “Change input”. If chosen, user can input 2 and 3 below.</p></li>
+<li><p>The user selects the satellite imagery source from a drop down list.</p></li>
+<li><p>The user selects the maximum cloudy area by dragging the slider to the desired number.</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
-<li><p>The system checks the selected year in <a href="#sec-map-generation-time-period" class="quarto-xref"><span>Step 1.2: Time Period</span></a> and shows the available sensors based on the selected year.</p></li>
+<li><p>The system adjusts default satellite imagery source and other options according to time period input in <a href="#sec-map-generation-time-period" class="quarto-xref"><span>Step 1.2: Time Period</span></a>.</p></li>
 <li><p>The user sets a preferred cloud cover threshold, if none chosen, the default value of 30% is used.</p></li>
 <li><p>The system performs pre-processing functions in <a href="01_data_acquisition.html#sec-input-spatial-image-parameters" class="quarto-xref"><span>Satellite Data Acquisition and Filtering</span></a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -642,7 +728,21 @@ ul.task-list li input[type="checkbox"] {
 <p>The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.</p>
 </div>
 </div></li>
-<li><p>The system returns the collected satellite image information.</p>
+</ol>
+</section>
+<section id="step-1.4-confirm-and-preview" class="level2">
+<h2 class="anchored" data-anchor-id="step-1.4-confirm-and-preview">Step 1.4: Confirm and Preview</h2>
+<p><strong>Overview</strong></p>
+<p>After all input to basic information have been finalized, user is presented with summary of input for final confirmation. User confirms through clicking “View satellite imagery” which will trigger the system to retrieve all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.</p>
+<p><img src="images/luma-int-screenshot/Step-1-4-Confirm-and-Preview.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user clicks Next to confirm summary of all inputs after <a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a>.</p></li>
+<li><p>The user clicks View satellite imagery to initiate processing of satellite imagery.</p></li>
+</ol>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The system summarizes the basic information from previous steps.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -661,8 +761,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Two buttons appear:</p>
 <ul>
-<li>“Change Input”; continue to Process 5</li>
-<li>“View Satellite Imagery”; continue to Process 8</li>
+<li>“Change Input”; continue to Process 2</li>
+<li>“View Satellite Imagery”; continue to Process 5</li>
 </ul>
 </div>
 </div>
@@ -681,15 +781,12 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 <li><p>If the user clicks on the “Change Input” button, “Edit” (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:</p>
 <ul>
-<li><p>“Change Input”, continue to Process 6, or</p></li>
-<li><p>“Discard Changes”, continue to Process 7.</p></li>
+<li><p>“Change Input”, continue to Process 3, or</p></li>
+<li><p>“Discard Changes”, continue to Process 4.</p></li>
 </ul></li>
-</ol>
-<!-- -->
-<ol start="6" type="1">
 <li><p>If the user clicks on the “Change Input” button in the pop up window, all inputs are being reset, back to the beginning of <a href="#sec-map-generation-basic-information" class="quarto-xref"><span>Step 1: Basic Information</span></a>.</p></li>
-<li><p>If the user clicks on the “Discard Changes” button in the pop up window, the panel still displays the user’s input summary. “Cancel Change” button appear, while “View Satellite Imagery” is disabled. Once the “Cancel Change” button is clicked, back to Process 4.</p></li>
-<li><p>If the user clicks on the “View Satellite Imagery” button, the system returns the collected satellite image information.</p>
+<li><p>If the user clicks on the “Discard Changes” button in the pop up window, the panel still displays the user’s input summary. “Cancel Change” button appear, while “View Satellite Imagery” is disabled. Once the “Cancel Change” button is clicked, back to Process 1.</p></li>
+<li><p>If the user clicks on the “View Satellite Imagery” button, the system processes the satellite image request.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -709,7 +806,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Composite of satellite imagery; with true colour (RGB), false colour infrared (NIR/Red/Green), land/water (NIR/SWIR1/RED) toggle options</li>
 <li>LULC class; still disabled in this step</li>
 </ul></li>
-<li>User can then download the composite, leading to Process 9.</li>
+<li>User can then download the composite, leading to Process 6.</li>
 <li>“Next” button appears, which leads to <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</li>
 </ul>
 </div>
@@ -722,21 +819,36 @@ ul.task-list li input[type="checkbox"] {
 <h1>Step 2: Land Use and Land Cover Classification</h1>
 <p><strong>Overview</strong></p>
 <p>The user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step. The Epistem-AI feature will also be available here.</p>
-<p><img src="images/luma-int-screenshot\Step-2-Land-Use-and-Land-Cover-Classification.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-2-Land-Use-and-Land-Cover-Classification.png" class="img-fluid"></p>
 <section id="step-2.1-land-use-land-cover-classification-scheme" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.1-land-use-land-cover-classification-scheme">Step 2.1: Land Use &amp; Land Cover Classification Scheme</h2>
 <p><strong>Overview</strong></p>
 <p>Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.</p>
-<section id="step-2.1.1-own-classification" class="level3">
-<h3 class="anchored" data-anchor-id="step-2.1.1-own-classification">Step 2.1.1: Own Classification</h3>
+<section id="step-2.1.a-own-classification" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.1.a-own-classification">Step 2.1.a: Own Classification</h3>
 <p><strong>Overview</strong></p>
 <p>The user creates their own classification scheme manually or by uploading a file.</p>
-<p><img src="images/luma-int-screenshot\Step-2.1.1-Own-Classification.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-2-1-1-Own-Classification.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user clicks Own Classification to create their own classification scheme.</li>
+</ol>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user clicks “Own Classification”.</p></li>
+<li><p>The system shows two options within the Own Classification window: Manual Input and Upload Classes.</p></li>
+<li><p>“Manual Input” and “Upload Classes” panels activated.</p></li>
+</ol>
 <section id="sec-map-generation-manual-input" class="level4">
-<h4 class="anchored" data-anchor-id="sec-map-generation-manual-input">Step 2.1.1.1: Manual Input</h4>
+<h4 class="anchored" data-anchor-id="sec-map-generation-manual-input">Step 2.1.a.1: Manual Input</h4>
 <p><strong>Overview</strong></p>
 <p>The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.</p>
-<p><img src="images/luma-int-screenshot\Step-2.1.1.1-Manual-Input.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-2-1-1-1-Manual-Input.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user clicks “Add Class” button.</p></li>
+<li><p>The user fills out LULC class name and selects class color.</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user enters LULC class name and pick a colour out of 28 colour options.</p></li>
@@ -754,7 +866,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="callout-body-container callout-body">
 <ul>
 <li>All added classes are displayed in the class recorded table for preview</li>
-<li>Upload Classes option still available; if clicked, continue to <a href="#sec-map-generation-upload-classes" class="quarto-xref"><span>Step 2.1.1.2: Upload Classes</span></a> Process 1</li>
+<li>Upload Classes option still available; if clicked, continue to <a href="#sec-map-generation-upload-classes" class="quarto-xref"><span>Step 2.1.a.2: Upload Classes</span></a> Process 1</li>
 <li>Confirm LULC Class enabled; once clicked, all inputs are locked and a summary table is previewed, along with three options:
 <ul>
 <li>“Edit” (pencil icon); continue to Process 4</li>
@@ -818,10 +930,15 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 <section id="sec-map-generation-upload-classes" class="level4">
-<h4 class="anchored" data-anchor-id="sec-map-generation-upload-classes">Step 2.1.1.2: Upload Classes</h4>
+<h4 class="anchored" data-anchor-id="sec-map-generation-upload-classes">Step 2.1.a.2: Upload Classes</h4>
 <p><strong>Overview</strong></p>
 <p>The user downloads a classification template <code>.csv</code> file and uses it to list the land use and land cover classes they want to map. After filling the template, they need to upload the file to be used as the custom classification scheme.</p>
-<p><img src="images/luma-int-screenshot\Step-2.1.1.2-Upload-Classes.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-2-1-1-2-Upload-Classes.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user clicks “Upload Classes” button.</p></li>
+<li><p>The user uploads the&nbsp;<code>.csv</code>&nbsp;file containing the classification scheme information containing at least three columns: a class ID (numeric identifier), a class name, and an optional hex colour code specifying the display colour for each class.</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user downloads the&nbsp;<code>.csv</code>&nbsp;file containing the classification scheme information template into the user’s local device.</p></li>
@@ -841,7 +958,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p>A purple box indicating the uploaded file with its file size appears</p></li>
 <li><p>A summary table of recorded classes with its ID number and colour class appears</p></li>
-<li><p>Manual Input option still available; if clicked, continue to <a href="#sec-map-generation-manual-input" class="quarto-xref"><span>Step 2.1.1.1: Manual Input</span></a> Process 3</p></li>
+<li><p>Manual Input option still available; if clicked, continue to <a href="#sec-map-generation-manual-input" class="quarto-xref"><span>Step 2.1.a.1: Manual Input</span></a> Process 3</p></li>
 <li><p>Confirm LULC Class enabled, if clicked, a summary table is previewed, along with three options:</p>
 <ul>
 <li>“Edit” (pencil icon); continue to Process 4</li>
@@ -870,11 +987,16 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 </section>
-<section id="step-2.1.2-default-classification" class="level3">
-<h3 class="anchored" data-anchor-id="step-2.1.2-default-classification">Step 2.1.2: Default Classification</h3>
+<section id="sec-map-generation-default-classes" class="level3">
+<h3 class="anchored" data-anchor-id="sec-map-generation-default-classes">Step 2.1.b: Default Classification</h3>
 <p><strong>Overview</strong></p>
 <p>The user activates class options from default Luma land use and land cover classification scheme. The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.</p>
-<p><img src="images/luma-int-screenshot\Step-2.1.2-Default-Classification.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-2-1-2-Default-Classification.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user clicks Default Classification to use Epistem classification scheme.</p></li>
+<li><p>The user selects LULC classes from the existing classification scheme.</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user selects subsets of the default classes.</p></li>
@@ -905,13 +1027,14 @@ ul.task-list li input[type="checkbox"] {
 <li><p>If the user clicks on the “Edit” button, all inputs are being reset, back to the beginning of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
 <li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-satellite-imagery" class="quarto-xref"><span>Step 1.3: Satellite Imagery</span></a> Process 8 is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a>.</p></li>
 </ol>
+<p><img src="images/luma-int-screenshot/Summary-step-2.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="step-2.2-try-epistem-ai-recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.2-try-epistem-ai-recommendations">Step 2.2: Try Epistem-AI Recommendations</h2>
 <p><strong>Overview</strong></p>
 <p>This feature is coming soon.</p>
-<p><img src="images/luma-int-screenshot\Step-2.2-Try-Epistem-AI-Recommendations.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-2-2-Try-Epistem-AI-Recommendations.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="sec-map-generation-sample-data" class="level1">
@@ -922,7 +1045,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="sec-map-generation-upload-sample-data">Step 3.1: Upload Sample Data</h2>
 <p><strong>Overview</strong></p>
 <p>The user uploads their existing sample data in <code>.zip</code> file format.</p>
-<p><img src="images/luma-int-screenshot\Step-3.1-Upload-Sample-Data.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-3-1-Upload-Sample-Data.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user uploads a&nbsp;<code>.zip</code>&nbsp;file containing their sample data.</li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user uploads the&nbsp;<code>.zip</code> file containing the sample data.</p></li>
@@ -977,8 +1104,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Delete the uploaded file; all input in <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a> is deleted and continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
 <li>On Screen Sampling:
 <ul>
-<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.1.1: Single Point Input</span></a></li>
-<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.1.2: Bulk Point Input</span></a></li>
+<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.a.1: Single Point Input</span></a></li>
+<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.a.2: Bulk Point Input</span></a></li>
 </ul></li>
 <li>Next; continue to <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
 </ul></li>
@@ -993,16 +1120,20 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="sec-map-generation-oss">Step 3.2: On Screen Sampling</h2>
 <p><strong>Overview</strong></p>
 <p>The user adds points or draws polygons directly on the interactive displayed map for all land use and land cover classes in their mapping area.</p>
-<p><img src="images/luma-int-screenshot\Step-3.2-On-Screen-Sampling.png" class="img-fluid"></p>
-<section id="step-3.2.1-add-point" class="level3">
-<h3 class="anchored" data-anchor-id="step-3.2.1-add-point">Step 3.2.1: Add Point</h3>
+<p><img src="images/luma-int-screenshot/Step-3-2-On-Screen-Sampling.png" class="img-fluid"></p>
+<section id="step-3.2.a-add-point" class="level3">
+<h3 class="anchored" data-anchor-id="step-3.2.a-add-point">Step 3.2.a: Add Point</h3>
 <p><strong>Overview</strong></p>
 <p>The user adds points on the interactive displayed map and input their land use and land cover class information.</p>
 <section id="sec-map-generation-single-point" class="level4">
-<h4 class="anchored" data-anchor-id="sec-map-generation-single-point">Step 3.2.1.1: Single Point Input</h4>
+<h4 class="anchored" data-anchor-id="sec-map-generation-single-point">Step 3.2.a.1: Single Point Input</h4>
 <p><strong>Overview</strong></p>
 <p>The user adds a point and assigns its corresponding land use and land cover class one by one from the drop down list.</p>
-<p><img src="images/luma-int-screenshot\Step-3.2.1.1-Single-Point-Input.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-3-2-1-1-Single-Point-Input.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user assigns new sample points one by one accordingly to the correct class.</li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user assigns a sample point on the map accordingly to the correct class from the drop down list.</p></li>
@@ -1044,8 +1175,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Delete the uploaded file; all input in <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a> is deleted and continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
 <li>On Screen Sampling:
 <ul>
-<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.1.1: Single Point Input</span></a></li>
-<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.1.2: Bulk Point Input</span></a></li>
+<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.a.1: Single Point Input</span></a></li>
+<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.a.2: Bulk Point Input</span></a></li>
 </ul></li>
 <li>Upload Sample Data; continue to <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a></li>
 <li>Next; continue to <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
@@ -1058,10 +1189,14 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 <section id="sec-map-generation-bulk-point" class="level4">
-<h4 class="anchored" data-anchor-id="sec-map-generation-bulk-point">Step 3.2.1.2: Bulk Point Input</h4>
+<h4 class="anchored" data-anchor-id="sec-map-generation-bulk-point">Step 3.2.a.2: Bulk Point Input</h4>
 <p><strong>Overview</strong></p>
 <p>The user adds multiple points (up to 10 points) at once and assigns the same land use and land cover class to all selected points.</p>
-<p><img src="images/luma-int-screenshot\Step-3.2.1.2-Bulk-Point-Input.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-3-2-1-2-Bulk-Point-Input.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user assign new sample points accordingly to the one class at a time.</li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user chooses a class from the drop down list and assigns sample points on the map accordingly to the correct class.</p></li>
@@ -1103,8 +1238,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Delete the uploaded file; all input in <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a> is deleted and continue to the beginning of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a></li>
 <li>On Screen Sampling:
 <ul>
-<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.1.1: Single Point Input</span></a></li>
-<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.1.2: Bulk Point Input</span></a></li>
+<li>Single Point Input; continue to <a href="#sec-map-generation-single-point" class="quarto-xref"><span>Step 3.2.a.1: Single Point Input</span></a></li>
+<li>Bulk Point Input; continue to <a href="#sec-map-generation-bulk-point" class="quarto-xref"><span>Step 3.2.a.2: Bulk Point Input</span></a></li>
 </ul></li>
 <li>Upload Sample Data; continue to <a href="#sec-map-generation-upload-sample-data" class="quarto-xref"><span>Step 3.1: Upload Sample Data</span></a></li>
 <li>Next; continue to <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a></li>
@@ -1115,29 +1250,46 @@ ul.task-list li input[type="checkbox"] {
 <li><p>If the user clicks on the “Recheck Score” button, continue to Process 5 and 6.</p></li>
 <li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-lulc-classification" class="quarto-xref"><span>Step 2: Land Use and Land Cover Classification</span></a> summary table of recorded classes is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p></li>
 </ol>
+<p><img src="images/luma-int-screenshot/Summary-step-3.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="step-3.2.2-draw-area" class="level3">
-<h3 class="anchored" data-anchor-id="step-3.2.2-draw-area">Step 3.2.2: Draw Area</h3>
+<section id="step-3.2.b-draw-area" class="level3">
+<h3 class="anchored" data-anchor-id="step-3.2.b-draw-area">Step 3.2.b: Draw Area</h3>
 <p><strong>Overview</strong></p>
 <p>This feature is coming soon.</p>
 </section>
+</section>
+<section id="step-3.3-when-user-used-default-classification-in-step-2" class="level2">
+<h2 class="anchored" data-anchor-id="step-3.3-when-user-used-default-classification-in-step-2">Step 3.3: When user used Default Classification in Step 2</h2>
+<p><strong>Overview</strong></p>
+<p>The user who chose the subsets of default classification from <a href="#sec-map-generation-default-classes" class="quarto-xref"><span>Step 2.1.b: Default Classification</span></a> does not need to add sample data.</p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The system shows the Sample Data Summary table with number of samples available from default training data and shows pins of the related class on the map canvas.</p></li>
+<li><p>The “Next” button is activated.</p></li>
+<li><p>If the user clicks “Next”.</p></li>
+<li><p>The system loads the next step.</p></li>
+</ol>
 </section>
 </section>
 <section id="sec-map-generation-parameters" class="level1">
 <h1>Step 4: Customize Mapping Parameters</h1>
 <p><strong>Overview</strong></p>
 <p>The user can choose a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information.</p>
-<p><img src="images/luma-int-screenshot\Step-4-Customize-Mapping-Parameters.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-4-Customize-Mapping-Parameters.png" class="img-fluid"></p>
 <section id="sec-map-generation-predictors" class="level2">
 <h2 class="anchored" data-anchor-id="sec-map-generation-predictors">Step 4.1: Predictor Selection</h2>
 <p><strong>Overview</strong></p>
 <p>The user is prompted to select the predictors currently supported by Luma Geospatial Engine by using check boxes or upload their own predictor data in <code>.zip</code> file.</p>
-<section id="step-4.2.1-default-predictors" class="level3">
-<h3 class="anchored" data-anchor-id="step-4.2.1-default-predictors">Step 4.2.1: Default Predictors</h3>
+<section id="step-4.2.a-default-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="step-4.2.a-default-predictors">Step 4.2.a: Default Predictors</h3>
 <p><strong>Overview</strong></p>
 <p>The user selects the predictors currently supported by Luma Geospatial Engine by using check boxes.</p>
-<p><img src="images/luma-int-screenshot\Step-4.2.1-Default-Predictors.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-4-2-1-Default-Predictors.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user selects the predictors by using check boxes.</li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user selects the predictors from the list.</p></li>
@@ -1196,18 +1348,23 @@ ul.task-list li input[type="checkbox"] {
 <li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a> Sample Data Summary is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>.</p></li>
 </ol>
 </section>
-<section id="step-4.2.2-upload-predictors" class="level3">
-<h3 class="anchored" data-anchor-id="step-4.2.2-upload-predictors">Step 4.2.2: Upload Predictors</h3>
+<section id="step-4.2.b-upload-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="step-4.2.b-upload-predictors">Step 4.2.b: Upload Predictors</h3>
 <p><strong>Overview</strong></p>
 <p>This feature is coming soon.</p>
-<p><img src="images/luma-int-screenshot\Step-4.2.2-Upload-Predictors.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-4-2-2-Upload-Predictors.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="sec-map-generation-model-training" class="level2">
 <h2 class="anchored" data-anchor-id="sec-map-generation-model-training">Step 4.2: Classification Model Training</h2>
 <p><strong>Overview</strong></p>
 <p>The user is given the option to adjust the classification model by adjusting the value of the Random Forest variable to classify the satellite images into land use and land cover classes using training data. The default value of the Random Forest parameters are 150 number of trees and 1 minimum leaf population. The user is also prompted to define the proportion to split the sample data into training and validation dataset. The default value of the dataset proportion is 70% for training data and 30% for validation data.</p>
-<p><img src="images/luma-int-screenshot\Step-4.2-Classification-Model-Training.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-4-2-Classification-Model-Training.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li><p>The user configures the classification parameters for number of trees and minimum leaf population.</p></li>
+<li><p>The user defines the proportion to split the sample data into training and validation dataset.</p></li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user sets the Random Forest parameters and Training/Testing Split.</p></li>
@@ -1263,18 +1420,36 @@ ul.task-list li input[type="checkbox"] {
 </div></li>
 <li><p>If the user clicks on the “Back” (chevron) button, the panel of <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a> Sample Data Summary is being shown. The user has to click the “Next” button to go back to the last edited panel in <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>.</p></li>
 </ol>
+<p><img src="images/luma-int-screenshot/Summary-step-4.png" class="img-fluid"></p>
+</section>
+<section id="step-4.3-when-user-used-default-classification-in-step-2" class="level2">
+<h2 class="anchored" data-anchor-id="step-4.3-when-user-used-default-classification-in-step-2">Step 4.3: When user used Default Classification in Step 2</h2>
+<p><strong>Overview</strong></p>
+<p>The user who chose the subsets of default classification from <a href="#sec-map-generation-default-classes" class="quarto-xref"><span>Step 2.1.b: Default Classification</span></a> does not need to customize the mapping parameters.</p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The system shows disabled mapping parameters.</p></li>
+<li><p>The “Next” button is activated.</p></li>
+<li><p>If the user clicks “Next”.</p></li>
+<li><p>The system loads the next step.</p></li>
+<li><p>Continue to <a href="#sec-map-generation-final" class="quarto-xref"><span>Step 5: Map Generation</span></a>.</p></li>
+</ol>
 </section>
 </section>
 <section id="sec-map-generation-final" class="level1">
 <h1>Step 5: Map Generation</h1>
 <p><strong>Overview</strong></p>
 <p>The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.</p>
-<p><img src="images/luma-int-screenshot\Step-5-Map-Generation.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-5-Map-Generation.png" class="img-fluid"></p>
 <section id="step-5.1-model-accuracy-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="step-5.1-model-accuracy-assessment">Step 5.1: Model Accuracy Assessment</h2>
 <p><strong>Overview</strong></p>
 <p>The user is shown how accurately the mapping process distinguished their land use and land cover classes.</p>
-<p><img src="images/luma-int-screenshot\Step-5.1-Model-Accuracy-Assessment.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-5-1-Model-Accuracy-Assessment.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user clicks on “Show Detail”.</li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user clicks on “Show Detail”.</p></li>
@@ -1323,13 +1498,17 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="step-5.2-lulc-class-composition">Step 5.2: LULC Class Composition</h2>
 <p><strong>Overview</strong></p>
 <p>The user can visualize the LULC classification result on the map canvas along with the training data layer and is shown the proportion of each LULC class.</p>
-<p><img src="images/luma-int-screenshot\Step-5.2-LULC-Class-Composition.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-5-2-LULC-Class-Composition.png" class="img-fluid"></p>
 </section>
 <section id="step-5.3-thematic-accuracy-assessment" class="level2">
 <h2 class="anchored" data-anchor-id="step-5.3-thematic-accuracy-assessment">Step 5.3: Thematic Accuracy Assessment</h2>
 <p><strong>Overview</strong></p>
 <p>The user uploads an independent ground reference data in <code>.zip</code> file to perform a comprehensive thematic accuracy assessment of the land cover map.</p>
-<p><img src="images/luma-int-screenshot\Step-5.3-Thematic-Accuracy-Assessment.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Step-5-3-Thematic-Accuracy-Assessment.png" class="img-fluid"></p>
+<p><strong>User Input to Interface</strong></p>
+<ol type="1">
+<li>The user uploads validation data in a <code>.zip</code> file.</li>
+</ol>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user uploads <code>.zip</code> file containing the ground reference data.</p></li>
@@ -1427,18 +1606,27 @@ ul.task-list li input[type="checkbox"] {
 <h1>Additional Features</h1>
 <p><strong>Overview</strong></p>
 <p>The user can save their land use and land cover mapping progress and share their mapping results by logging in/signing up to an Epistem account. Once logged in, user account is activated on the upper right corner of the screen with the user’s initial or profile picture.</p>
-<p><img src="images/luma-int-screenshot\Additional-Features-Login.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Additional-Features-Login.png" class="img-fluid"></p>
 <section id="feature-1-save-progress" class="level2">
 <h2 class="anchored" data-anchor-id="feature-1-save-progress">Feature 1: Save Progress</h2>
 <p><strong>Overview</strong></p>
-<p>Once logged in, the user can save their land use and land cover mapping progress and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.</p>
-<p><img src="images/luma-int-screenshot\Feature-1-Save-Progress.png" class="img-fluid"></p>
+<p>Once logged in, the user can save their land use and land cover mapping progress, name the map they are working on, and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.</p>
+<p><img src="images/luma-int-screenshot/Feat-1-save.png" class="img-fluid"></p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li><p>The user clicks “Save” button.</p></li>
+<li><p>The user is prompted to log in or sign up for an Epistem account if they have not already registered.</p></li>
+<li><p>Once logged in, the user can name the map they are working on in order to save it.</p></li>
+<li><p>Progress is saved automatically; completed steps and the user’s current position are visible in the top-right corner of the map canvas.</p></li>
+</ol>
+<p><img src="images/luma-int-screenshot/Feat-1-name.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Feature-1-Save-Progress.png" class="img-fluid"></p>
 </section>
 <section id="feature-2-download-map" class="level2">
 <h2 class="anchored" data-anchor-id="feature-2-download-map">Feature 2: Download Map</h2>
 <p><strong>Overview</strong></p>
 <p>Once logged in, the user can download their generated map.</p>
-<p><img src="images/luma-int-screenshot\Feature-2-Download-Map.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Feature-2-Download-Map.png" class="img-fluid"></p>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user downloads their map.</p></li>
@@ -1462,7 +1650,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="feature-3-share-map">Feature 3: Share Map</h2>
 <p><strong>Overview</strong></p>
 <p>Once logged in, the user can share their generated map to another person with an email address.</p>
-<p><img src="images/luma-int-screenshot\Feature-3-Share-Map.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Feature-3-Share-Map.png" class="img-fluid"></p>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user input recipient’s name and email address.</p></li>
@@ -1481,12 +1669,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div></li>
 </ol>
+<p><img src="images/luma-int-screenshot/Feat-3-share.png" class="img-fluid"></p>
 </section>
 <section id="feature-4-improve-accuracy" class="level2">
 <h2 class="anchored" data-anchor-id="feature-4-improve-accuracy">Feature 4: Improve Accuracy</h2>
 <p><strong>Overview</strong></p>
 <p>The user can improve the accuracy of their generated map in two ways: by resetting the parameters in <a href="#sec-map-generation-parameters" class="quarto-xref"><span>Step 4: Customize Mapping Parameters</span></a>, or by adding or editing the sample data in <a href="#sec-map-generation-sample-data" class="quarto-xref"><span>Step 3: Mapping Sample Data</span></a>.</p>
-<p><img src="images/luma-int-screenshot\Feature-4-Improve-Accuracy.png" class="img-fluid"></p>
+<p><img src="images/luma-int-screenshot/Feature-4-Improve-Accuracy.png" class="img-fluid"></p>
 <p><strong>Process</strong></p>
 <ol type="1">
 <li><p>The user clicks on “Improve Accuracy”.</p>
@@ -1935,8 +2124,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./interface_change_analysis.html" class="pagination-link" aria-label="Change Analysis">
-        <span class="nav-page-text">Change Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./interface_change_analysis.html" class="pagination-link" aria-label="2 Change Analysis">
+        <span class="nav-page-text">2 Change Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
