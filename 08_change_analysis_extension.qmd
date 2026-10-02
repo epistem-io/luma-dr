@@ -1,0 +1,579 @@
+# Module 8: Post Classification Analysis: Change Detection {#sec-module-8-change}
+
+## Module Overview
+
+This module extends the post-classification and synthesis framework of
+the Luma platform to support multitemporal land use and land cover
+(LULC) dynamics across two or more observation periods
+($T_1, T_2, \dots, T_N$). In standard single-map operations, Module 8
+produces the Map Creation and Quality Report for an individual map
+identity. This change analysis extension activates when a project
+contains two or more classified LULC maps generated under a shared,
+harmonized classification scheme from [Module 6](@sec-module-6).
+
+This experimental implementation compares classified maps across
+observation periods, summarises mapped transitions and class-level
+dynamics, presents straightforward charts, and generates a land use and
+land cover map change analysis report. Change analysis runs without a
+trajectory table. Trajectory interpretation may be added as a possible
+further extension.
+
+## Delivery sequence {.unnumbered}
+
+The change-analysis approach builds on the [LUMENS Pre-QuES
+module](https://github.com/icraf-indonesia/lumens-shiny/). This
+reference adapts the primary functionalities to the Luma workflow.
+
+- **LULC change analysis:** compare a selected map pair; calculate
+  mapped transition areas, the full transition matrix, per-class
+  dynamics, and the largest off-diagonal transitions; show a horizontal
+  bar chart and a multi-epoch stacked composition chart; export a report
+  and tables.
+
+- **Possible further extension:** optional trajectory mapping, analysis
+  by planning unit, and additional visualisations. Trajectory mapping
+  would allow users to group transitions under meaningful names. These
+  additions require separate design decisions and are not prerequisites
+  for change analysis.
+
+## Input {.unnumbered}
+
+**User Input**
+
+1.  Selection of the comparison pair: baseline epoch ($T_a$) and
+    comparison epoch ($T_b$). Other available epochs may be displayed in
+    the composition chart.
+2.  Specification of change direction: chronological ($T_a \to T_b$) or
+    retrospective ($T_b \to T_a$).
+3.  Export destination and asset format: browser direct download where
+    Earth Engine limits permit, cloud delivery to Google Drive, or
+    materialization as a permanent Google Earth Engine asset.
+4.  **Possible further extension:** an optional user-defined trajectory
+    mapping, entered directly or supplied from a reusable file. An
+    absent mapping does not block change analysis.
+
+**Automatic System Input**
+
+1.  Project Map Registry: catalogue of all classified LULC maps
+    generated within the project, including acquisition timestamps,
+    sensor identifiers, spatial bounding boundaries, and model
+    parameters.
+2.  Geometric boundary of the Area of Interest (AOI) from [Module
+    1](@sec-module-1).
+3.  Harmonized LULC classification scheme with $K$ classes from [Module
+    2](@sec-module-2).
+
+**Input from Other Modules**
+
+1.  Classified raster map for epoch $T_a$ with model metadata from
+    [Module 6](@sec-module-6) and accuracy assessment from [Module
+    7](@sec-module-7) (if evaluated).
+2.  Classified raster map for epoch $T_b$ with model metadata from
+    [Module 6](@sec-module-6).
+3.  Minimum-cloud composite parameters, sensor metadata, and date
+    parsing records from [Module 1](@sec-module-1).
+
+## Process
+
+White containers represent the Luma User Journey built in the user
+interface. Pink containers represent the Luma Geospatial Engine
+(Luma-GE) system response. Blue steps are Luma-GE processes; yellow
+steps are results returned by Luma-GE.
+
+```{mermaid}
+flowchart TD
+  START([Start])
+
+  subgraph UJ82[User Journey 8.2: Select Maps]
+    U1[Open change analysis]
+    U2[Select map pair and direction]
+    U3[Start comparison]
+  end
+
+  subgraph RS81[System Response 8.1: Check Inputs]
+    P1{Two maps available?}
+    P2[Check map comparability and shared valid area]
+    P3{Maps can be compared?}
+    P4[Show map requirement]
+    P5[Show comparability issue]
+    P6[/Validated map pair/]
+  end
+
+  subgraph RS82[System Response 8.2: Calculate Change]
+    R1[Calculate mapped transition areas]
+    R2[Build matrix and class summaries]
+    R3[Prepare charts]
+    R4[/Tables, charts, and change layer/]
+  end
+
+  subgraph UJ83[User Journey 8.3]
+    V1[Inspect mapped results]
+    V2[Request report]
+    V3[Read report and caveats]
+    V4{Export requested?}
+  end
+
+  subgraph RS83[System Response 8.3: Generate Report]
+    H1[Assemble results, provenance, and caveats]
+    H2[/Change analysis report/]
+  end
+
+  subgraph UJ84[User Journey 8.4]
+    X1[Select outputs and destination]
+  end
+
+  subgraph RS84[System Response 8.4: Deliver Export]
+    E1[Dispatch export]
+    E2[/Export status and outputs/]
+  end
+
+  DONE([End])
+
+  START --> U1 --> P1
+  P1 -->|No| P4 --> DONE
+  P1 -->|Yes| U2 --> P2 --> P3
+  P3 -->|No| P5 --> U2
+  P3 -->|Yes| P6 --> U3 --> R1 --> R2 --> R3 --> R4
+  R4 --> V1 --> V2 --> H1 --> H2 --> V3 --> V4
+  V4 -->|No| DONE
+  V4 -->|Yes| X1 --> E1 --> E2 --> DONE
+
+  classDef sysProcess fill:#6DCFF6,stroke:#1B7FA8,color:#000000
+  classDef sysData fill:#FFC72C,stroke:#A87F00,color:#000000
+  classDef userProcess fill:#FFFFFF,stroke:#555555,color:#000000
+  classDef startEnd fill:#ED1C24,stroke:#8A0F14,color:#FFFFFF
+
+  class P1,P2,P3,P4,P5,R1,R2,R3,H1,E1 sysProcess
+  class P6,R4,H2,E2 sysData
+  class U1,U2,U3,V1,V2,V3,V4,X1 userProcess
+  class START,DONE startEnd
+
+  style UJ82 fill:#FFFFFF,stroke:#AAAAAA,color:#000000
+  style UJ83 fill:#FFFFFF,stroke:#AAAAAA,color:#000000
+  style UJ84 fill:#FFFFFF,stroke:#AAAAAA,color:#000000
+  style RS81 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+  style RS82 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+  style RS83 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+  style RS84 fill:#FBDDE9,stroke:#E39BBB,color:#000000
+```
+
+## Output {.unnumbered}
+
+1.  **Mapped LULC Change Layer**: the classified map pair and its mapped
+    transitions. A trajectory layer would be produced only if the
+    optional extension is used.
+2.  **LULC Transition Matrix**: a square $K \times K$ cross-tabulation
+    matrix reporting transition area in both absolute hectares ($ha$)
+    and proportional landscape percentage ($\%$).
+3.  **Landscape Dynamics Summary Table**: per-class metrics capturing
+    initial area ($A_1$), final area ($A_2$), persistence ($P_k$), gross
+    loss ($L_k$), gross gain ($G_k$), net change ($N_k$), and annualized
+    rate of change ($r$).
+4.  **Top 10 Dominant Transitions Table and Chart**: isolates and ranks
+    the ten largest class-to-class transitions ($T_a \to T_b$) by area
+    in hectares ($ha$) and proportional share ($\%$) of total change,
+    drawing on the LUMENS Pre-QuES approach.
+5.  **Landscape Composition Chart**: stacked bars comparing class areas
+    across available epochs ($T_1, T_2, \dots, T_N$); a stacked area
+    view may be offered when three or more comparable epochs are
+    available.
+6.  **Land Use and Land Cover Map Change Analysis Report**: a report
+    with the analysis identity, mapped results, limitations, and charts.
+    A trajectory section would appear only if the optional extension has
+    been run.
+7.  **Multitemporal Export Bundle**: change tables, the report, and
+    requested map outputs. Trajectory outputs would be included only if
+    the optional extension has been run.
+
+------------------------------------------------------------------------
+
+## Checking Multitemporal Prerequisites {#sec-module-8-change-prerequisites}
+
+This is part of **System Response 8.1: Check Multitemporal Inputs**.
+Luma-GE checks the Project Map Registry when the user opens Tab 2.
+
+::: callout-important
+## Error Handling Notification: Minimum Map Requirement
+
+Module 8's Tab 2 (LULC Change Analysis) cannot be accessed if fewer than
+two classified LULC maps have been produced by [Module
+6](@sec-module-6). If only a single map exists, Tab 2 remains disabled
+and displays this notification:
+
+*"Change analysis requires at least two classified LULC maps. Classify
+an additional observation period in Module 6 to unlock multitemporal
+analysis."*
+:::
+
+If at least two classified maps are available, Tab 2 enables pair
+selection. Otherwise, the interface remains in single-map review mode
+(Tab 1).
+
+------------------------------------------------------------------------
+
+## Selecting the Comparison Pair {#sec-select-comparison-pair}
+
+This is part of **User Journey 8.2: Select Maps and Comparison**. The
+user selects the two classified maps and the direction of comparison,
+then starts the analysis. Other available maps may contribute to the
+composition chart. If Luma-GE identifies an incompatibility, the
+interface shows the issue so the user can correct the selection or the
+source maps.
+
+------------------------------------------------------------------------
+
+## Multitemporal Data Collection and Verification {#sec-change-data-collection}
+
+This is part of **System Response 8.1: Check Multitemporal Inputs**.
+Luma-GE verifies the selected pair before calculating mapped change.
+
+1.  **Map comparability**: Check that the selected maps use consistent
+    class definitions, compatible spatial grids, and comparable
+    observation periods. Record relevant differences in sensor,
+    acquisition conditions, and processing inherited from upstream
+    modules. Differences that would change the meaning of a transition
+    require correction or a clear warning before analysis.
+2.  **Common analysis area**: Compare only locations with valid class
+    values in both maps within the selected AOI. Record the area
+    included and excluded by this rule. Any spatial alignment or
+    resampling applied during comparison must be documented.
+
+::: callout-tip
+## Related Function
+
+`change_detection.LULCChangeDetector.validate_multitemporal_inputs()`:
+checks CRS, pixel grid alignment, bounding geometry intersection, and
+legend consistency across the input map pair.
+:::
+
+------------------------------------------------------------------------
+
+## Upstream Integration across Modules 1 to 7 {#sec-upstream-alignment}
+
+Multitemporal change detection relies on upstream modules operating
+under an integrated contract:
+
+### Module 1: Multitemporal Image Acquisition & Seasonal Alignment
+
+1.  **Mapping Mode**: In multitemporal mode, Module 1 accepts an array
+    of target dates: `[T_1, T_2, ..., T_N]`.
+2.  **Date Range Interpretation**:
+    - When the user specifies a 4-digit year (e.g. `2020` and `2023`),
+      `data_acquisition.parse_date_input()` interprets the range as
+      January 1 to December 31 for each year. Both composites encompass
+      a full 12-month annual cycle, where statistical median aggregation
+      naturally dampens seasonal phenological fluctuations.
+    - When the user specifies a custom sub-annual date range (e.g.
+      `2020-06-01` to `2020-09-30`, representing a dry season), the
+      system enforces the same calendar month and day boundaries for
+      comparison years (`2023-06-01` to `2023-09-30`) to reduce
+      differences caused by seasonal vegetation conditions.
+3.  **Sensor Comparability**:
+    - **Related sensors**: Calibrated products from closely related
+      sensors, such as Landsat 8 and Landsat 9, improve consistency but
+      do not remove the need to check product versions, observation
+      conditions, and map quality across periods. [USGS Landsat 8–9
+      Surface Reflectance quality
+      assessment](https://www.usgs.gov/landsat-missions/landsat-8-9-surface-reflectance-quality-assessment).
+    - **Different sensors**: Differences in spectral response,
+      resolution, processing, and acquisition conditions can affect the
+      classified maps. Document how the inputs were made comparable and
+      flag remaining uncertainty. Harmonised products may help where
+      appropriate. [NASA Harmonized Landsat Sentinel-2
+      product](https://developers.google.com/earth-engine/datasets/catalog/NASA_HLS_HLSL30_v002).
+
+### Module 2: Classification Scheme
+
+Establishes a single project-wide classification scheme with $K$ classes
+applied across all observation periods.
+
+### Module 3: Sample Data Preparation with Image Composite Attribution
+
+1.  The user uploads or digitizes ground reference samples.
+2.  **Temporal Association**: The user explicitly assigns the sample
+    dataset to its corresponding image composite: *"Select the composite
+    that matches this training dataset: \[Composite T1 \| Composite T2
+    \| ... \| Composite Tn\]"*. This anchors the reference ground truth
+    to its authentic observation date ($C_{selected}$).
+
+### Module 4: Sample Data Quality Analysis
+
+Executes Transformed Divergence (TD) spectral separability testing
+specifically between the training sample data and its designated
+matching composite ($C_{selected}$).
+
+### Module 5: Predictor Variables
+
+Applies an identical, symmetric predictor pipeline (spectral bands,
+indices such as NDVI, NDWI, NDBI, and terrain variables) across all
+composites ($C_1, C_2, \dots, C_N$), ensuring uniform feature space
+dimensionality.
+
+### Module 6: Model Training & Multitemporal Inference
+
+1.  **Model Calibration**: The Random Forest classifier is trained on
+    the specified pair: `(Training Data, Composite C_selected)`. Model
+    accuracy (stratified split confusion matrix) is evaluated on the
+    validation split for that epoch.
+2.  **Direct Spectral Transfer**: The trained classifier is applied
+    directly to infer LULC maps across all composites in the project
+    ($T_1, T_2, \dots, T_N$), populating the Project Map Registry.
+    - **Assumptions**: Surface reflectance processing and comparable
+      seasonal windows reduce some differences between observations but
+      do not guarantee that class signatures remain stable across dates.
+    - **Advantages**: Requires zero additional field data collection for
+      comparison years; rapid execution; consistent classification
+      logic.
+    - **Limitations**: Inter-annual precipitation differences, sensor
+      degradation, and vegetation phenology can induce spectral drift,
+      resulting in false-positive class transitions.
+    - **Future Improvement Roadmap**: Planned implementation of
+      *Pseudo-invariant Sample Extraction (PISE)* to automatically
+      identify statistically stable pixels between $C_1$ and $C_2$,
+      generating retrained temporal classifiers without new field
+      campaigns.
+
+### Module 7: Map Accuracy Assessment
+
+The user selects which predicted map ($T_1$ or $T_2$) to independently
+validate using available ground reference validation samples.
+
+------------------------------------------------------------------------
+
+## Server-Side Spatial Transition Computation {#sec-compute-transitions}
+
+This is part of **System Response 8.2: Calculate Mapped Change**.
+
+To prevent client memory overloads, all spatial cross-tabulations
+execute server-side in Google Earth Engine.
+
+1.  **Pixel Combination Formulation**: For non-negative integer class
+    codes $i$ and $j$, select and record a multiplier $M$ greater than
+    the largest class code in the harmonised scheme. Then
+    $$\text{Transition\_Code} = T_a \times M + T_b$$ gives each ordered
+    class pair a unique code. Validate the class-code range before
+    computation; the value 100 is suitable only when every class code is
+    below 100. In Earth Engine:
+
+    ``` python
+    transition_image = image_ta.multiply(multiplier).add(image_tb).rename("transition_code")
+    ```
+
+2.  **Server-Side Transition Area Reduction**: Apply a shared
+    valid-pixel mask to both classified maps and aggregate
+    `ee.Image.pixelArea()` by transition code over the AOI, using an
+    explicit analysis projection and scale. This returns mapped area in
+    square metres for each observed transition. Record the selected
+    grid, scale, mask rule, and covered area.
+
+3.  **Tabular Matrix Compilation**: Convert each summed transition area
+    from square metres to hectares:
+    $p_{ij} = \text{Area}_{ij,m^2}/10{,}000$. Pixel frequency may be
+    retained as a diagnostic, but a fixed count multiplied by nominal
+    scale squared is not the area estimator.
+
+4.  **Landscape Dynamics Formulation**:
+
+    - **Initial Area (**$A_1$): $A_{1i} = \sum_{j=1}^K p_{ij}$
+    - **Final Area (**$A_2$): $A_{2j} = \sum_{i=1}^K p_{ij}$
+    - **Persistence (**$P_k$): $p_{kk}$ (diagonal entries)
+    - **Gross Loss (**$L_k$): $A_{1k} - p_{kk} = \sum_{j \ne k} p_{kj}$
+    - **Gross Gain (**$G_k$): $A_{2k} - p_{kk} = \sum_{i \ne k} p_{ik}$
+    - **Net Change (**$N_k$): $G_k - L_k = A_{2k} - A_{1k}$
+    - **Annualized Rate of Change (**$r$): When both class areas are
+      positive and $t_2>t_1$, compute the compound rate
+      [@puyravaud_standardizing_2003]:
+      $$r = \frac{1}{t_2 - t_1} \ln\left(\frac{A_{2k}}{A_{1k}}\right) \times 100\%$$
+      Otherwise, report the rate as undefined.
+
+5.  **Top 10 Dominant Transitions Formulation**: To isolate the primary
+    landscape change drivers, off-diagonal transitions ($i \ne j$) are
+    extracted and sorted descending by area:
+    $$\Delta_{total} = \sum_{i \ne j} p_{ij}, \quad \text{Share}_{ij} = \frac{p_{ij}}{\Delta_{total}} \times 100\%$$
+    The top 10 transitions are tabulated and exported to show the
+    dominant mapped conversion pathways, drawing on the LUMENS Pre-QuES
+    approach.
+
+6.  **Spatial Aggregation Scope**: this implementation aggregates the
+    mapped transitions over the selected AOI. Planning-unit or
+    administrative cross-tabulation is a later extension and requires a
+    separate design for zones, overlaps, and area accounting.
+
+::: callout-tip
+## Related Function
+
+`change_detection.LULCChangeDetector.compute_spatial_transitions()`:
+combines the classified maps, sums pixel area by transition code on the
+selected analysis grid, and returns the transition matrix and dynamics
+statistics.
+:::
+
+------------------------------------------------------------------------
+
+## Possible Further Extension: Trajectory Mapping {#sec-manual-trajectory}
+
+Trajectory mapping would let users group observed land-cover transitions
+into named categories relevant to their analysis. Users could define the
+groups directly or provide a reusable mapping. The system would show the
+proposed assignments for review before generating any trajectory
+results. The data format, category identifiers, colours, and import
+workflow are implementation decisions.
+
+Trajectory mapping remains optional. Without a confirmed mapping, the
+change analysis, charts, report, and exports still run. Trajectory maps,
+summaries, and report sections are omitted. The system must not infer
+policy meanings from class names alone.
+
+------------------------------------------------------------------------
+
+## Multi-Epoch Visualization and Analytical Charts {#sec-multitemporal-viz}
+
+Luma-GE prepares the charts in **System Response 8.2: Calculate Mapped
+Change**. The user inspects them in **User Journey 8.3: Review Change
+and Report**.
+
+This implementation uses simple, readable charts:
+
+1.  **Multi-Epoch Composition:** Stacked bars show each class's mapped
+    area or percentage at each available epoch using [Module
+    2](@sec-module-2) colours. A stacked area view may be offered for
+    three or more comparable epochs; the report must label observation
+    dates and must not imply measured change between them.
+2.  **Top 10 Transitions:** A horizontal bar chart ranks the ten largest
+    off-diagonal class pairs by mapped area in hectares. The
+    accompanying table states each pair's share of all mapped change.
+3.  **Per-Class Dynamics:** Horizontal bars show gross loss and gross
+    gain by class for the selected comparison pair.
+
+Trajectory and interactive flow views are possible further extensions.
+
+::: callout-tip
+## Related Function
+
+`dataviz.MultitemporalViz.plot_stacked_composition()`: generates the
+stacked composition chart across available project dates.\
+`dataviz.MultitemporalViz.plot_top_transitions()`: generates the
+horizontal bar chart for the top 10 mapped transitions.
+:::
+
+------------------------------------------------------------------------
+
+## Generating the Land Use and Land Cover Map Change Analysis Report {#sec-generate-change-report}
+
+This is part of **System Response 8.3: Assemble the Report**. The user
+requests and reads the report in **User Journey 8.3: Review Change and
+Report**.
+
+The report presents the mapped results, their provenance, and their
+limitations in a form users can read and share. Its format and rendering
+technology are implementation decisions.
+
+### Tab 1: Single Map Creation and Quality Report Export
+
+Produces the standard single-map quality report for any selected map
+identity ($T_i$), adhering to the specifications in [Module
+8](@sec-module-8#sec-generate-report): - Report identity block (AOI,
+date, sensor). - At a Glance plain-language accuracy summary. -
+Comprehensive section-by-section breakdown (Data Acquisition, Scheme,
+Sample Data, Separability, Predictors, Model Accuracy, Thematic
+Accuracy).
+
+### Tab 2: Land Use and Land Cover Map Change Analysis Report
+
+The report identifies the selected maps, comparison periods, and area of
+interest; summarises mapped change with tables and simple charts; and
+prominently states the experimental status and limitations described in
+@sec-scientific-rigor-change. It shows the relevant source-map
+provenance, comparability checks, and validation status supplied by
+Modules 1–7 without repeating their detailed methods.
+
+For traceability, each generated report has a visible reference
+identifier and a generation date and time with time zone. It identifies
+the project, source maps, and analysis version sufficiently to locate
+the corresponding run record. The system can retain the associated user
+and session context in an access-controlled audit record. These details
+help a user find and review an analysis; the visible identifier is not
+proof that a shared report has not been altered.
+
+The report is complete without trajectory mapping. A trajectory section
+is included only if the optional extension has been run.
+
+::: callout-tip
+## Related Function
+
+`report_builder.MultitemporalReportBuilder`: assembles the change
+analysis report from the selected maps, results, provenance record, and
+limitations.
+:::
+
+------------------------------------------------------------------------
+
+## Asset Export and Housekeeping {#sec-export-change-assets}
+
+The user selects and requests outputs in **User Journey 8.4: Request
+Exports**. Luma-GE dispatches the export and returns its status in
+**System Response 8.4: Deliver Exports**.
+
+The user can export the change analysis report, summary tables, and
+selected map outputs. The system offers an appropriate delivery route
+for the size and type of each output and indicates whether an export is
+pending, complete, or unsuccessful. Reusable map assets may be saved
+when requested. The report and tables remain available even when a
+raster requires a separate export task.
+
+Trajectory outputs are included only if the possible further extension
+has been run. The specific file formats, service limits, and export
+methods are decided during implementation.
+
+------------------------------------------------------------------------
+
+## Scope, Caveats, and Possible Further Extension {#sec-scientific-rigor-change}
+
+### Scope of This Implementation
+
+This implementation compares classified maps for selected observation
+periods and describes their mapped transitions over a common valid area.
+It reports mapped transition areas, class-level dynamics, and simple
+visual summaries for exploratory LULC change analysis. A correctly
+calculated transition describes a difference between map labels; it does
+not by itself verify that land cover changed on the ground. Two selected
+periods also cannot establish the precise timing or cause of change, and
+this implementation does not determine compliance with any policy or
+regulation.
+
+### Experimental Status and Caveats
+
+::: callout-important
+This implementation is at a preliminary stage. The trustworthiness of
+its mapped transitions depends chiefly on the quality and comparability
+of the two input maps. Missing or misclassified pixels, inconsistent
+class meanings, differing observation conditions, and spatial
+misalignment can appear as change; correct transition arithmetic cannot
+remove those problems. The comparison therefore checks and records map
+compatibility and the common valid area. Detailed requirements for
+imagery, training data, classification, and single-map validation remain
+with Modules 1–7.
+
+Reported areas describe mapped categories, not independently verified
+change on the ground or error-adjusted estimates of its true area.
+Accuracy results for individual maps, when available, must be shown
+separately and must not be presented as the accuracy of the change map
+[@olofsson_good_2014].
+
+These results should not be used alone for formal quantitative claims or
+regulatory decisions. Users are responsible for checking whether the
+inputs and methods suit their purpose and for independently verifying
+consequential findings. Epistem does not assume responsibility for
+decisions or claims made from unverified use of these experimental
+outputs.
+:::
+
+### Possible Further Extension
+
+- Review selected apparent changes against independent imagery or
+  reference information, and report what was checked.
+- Use additional observation periods where available to distinguish
+  persistent change from short-term variation.
+- If a use case requires defensible change accuracy or estimates of
+  actual changed area, design an independent reference assessment and
+  report uncertainty [@olofsson_good_2014].
