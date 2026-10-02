@@ -1,32 +1,38 @@
-# Map Generation {#sec-map-generation .unnumbered}
+# 1 Map Generation {#sec-map-generation .unnumbered}
 
 # Overview {.unnumbered}
 
-In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. The user cannot skip steps; each step unlocks the next only after the Geospatial Engine (GE) confirms the required output has been produced and saved.
+In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. To ensure usability regardless of technical know-how, user cannot skip steps; each step unlocks the next only after the required input has been provided by the user and the Geospatial Engine (GE) confirms the corresponding output has been produced and saved.
 
 # Step 1: Basic Information {#sec-map-generation-basic-information}
 
 **Overview**
 
-Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite source.
+Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite imagery source.
 
-![](images/luma-int-screenshot\Step-1-Basic-Information.png)
+![](images/luma-int-screenshot/Step-1-Basic-Information.png)
 
 ## Step 1.1: Geographic Area
 
 **Overview**
 
-This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map.
+This is the first required input in the Map Generation workflow where the user specify the geographic area they want to map by choosing one of three methods available: upload, draw area, or select an administrative boundary.
 
-![](images/luma-int-screenshot\Step-1.1-Geographic-Area.png)
+![](images/luma-int-screenshot/Step-1-1-Geographic-Area.png)
 
-### Step 1.1.1: Upload Area
+### Step 1.1.a: Upload Area
 
 **Overview**
 
 The user uploads a polygon file to define the geographic boundary of the area they want to map.
 
-![](images/luma-int-screenshot\Step-1.1.1-Upload-Area.png)
+![](images/luma-int-screenshot/Step-1-1-1-Upload-Area.png)
+
+**User Input to Interface**
+
+1.  The user uploads their own AOI file in `.zip` format that should include all required shapefile components (`.shp`, `.shx`, `.dbf`, `.prj`). The system also supports uploads of `.kml` or `.kmz` files.
+
+2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
 
@@ -79,7 +85,7 @@ The user uploads a polygon file to define the geographic boundary of the area th
     ::: callout-note
     ## Success Notification
 
-    If validation is successful, continue to Process 6
+    If GIS file completeness is validated, continue to Process 6
     :::
 
     ::: callout-important
@@ -96,19 +102,43 @@ The user uploads a polygon file to define the geographic boundary of the area th
     The system shows a confirmation when the AOI is loaded successfully by showing a purple box with 'Approximate size of your mapping area: X \[number\] Ha' displayed
     :::
 
-7.  If the user clicks on "Reselect Area", the uploaded file is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+7.  The system activates the next step.
 
-### Step 1.1.2: Draw Area
+8.  The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
+9.  The system returns the validated and processed shapefile.
+
+    ::: callout-note
+    ## Success Notification
+
+    The "Confirm" button is activated
+    :::
+
+10. If the user clicks "Reselect Area", the uploaded file is deleted.
+
+    ::: callout-note
+    ## Success Notification
+
+    All inputs are being reset, the user will be redirected to @sec-map-generation-basic-information
+    :::
+
+### Step 1.1.b: Draw Area
 
 **Overview**
 
-The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new corner to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.
+The user draws their area of interest directly on the map by creating borders of area they want to map. Each click adds a new side/edge (vertex) to the polygon, with a double-click to finish drawing and close the polygon. This is useful when the user does not have a prepared polygon file or wants to quickly define a simple area.
 
-![](images/luma-int-screenshot\Step-1.1.2-Draw-Area.png)
+![](images/luma-int-screenshot/Step-1-1-2-Draw-Area.png)
+
+**User Input to Interface**
+
+1.  The user creates a series of clicks on the map to create a polygon.
+
+2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
 
-1.  The user creates a polygon by clicking on the map and selects a spatial resolution from the available options.
+1.  The user creates a polygon by clicking on the map.
 
 2.  The system retrieves the AOI area size information.
 
@@ -124,75 +154,126 @@ The user draws their area of interest directly on the map by creating borders of
     If the area size information is too large, an error warning is displayed: 'Draw area exceeds maximum limit’
     :::
 
-3.  If the user clicks on "Reselect Area", the polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+3.  The system activates the next step.
 
-### Step 1.1.3: Administrative Boundaries
+4.  The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
+5.  The system returns the validated and processed shapefile.
+
+    ::: callout-note
+    ## Success Notification
+
+    The "Confirm" button is activated
+    :::
+
+6.  If the user clicks "Reselect Area", the drawn polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+
+    ::: callout-note
+    ## Success Notification
+
+    All inputs are being reset, the user will be redirected to @sec-map-generation-basic-information
+    :::
+
+### Step 1.1.c: Administrative Boundaries
 
 **Overview**
 
-The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. The system provides a preview of the selected boundary.
+The user selects the area they want to map based on a drop down list of Indonesian regency administrative boundaries. Disclaimer about the data source (Badan Informasi Geospasial) is included with the data uploaded as GEE asset and the link provided and shared publicly. The system provides a preview of the selected boundary.
 
-![](images/luma-int-screenshot\Step-1.1.3-Administrative-Boundaries.png)
+![](images/luma-int-screenshot/Step-1-1-3-Administrative-Boundaries.png)
+
+**User Input to Interface**
+
+1.  The user selects an AOI based on a drop down list of Indonesian regency administrative boundaries.
+
+2.  The user chooses a spatial resolution from the selections (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
 
 **Process**
 
-1.  The user selects an administrative boundary from the dropdown and a spatial resolution from the available options.
+1.  The user selects an administrative boundary from the drop down list.
 
-2.  The system retrieves the AOI information from the selected administrative boundary selections. The system runs the related functions in @sec-aoi-from-administrative-boundary and provides a preview of the selected boundary.
+2.  The system retrieves the AOI information from the selected administrative boundary selections.
+
+3.  The system provides the name of selected administrative boundary.
+
+4.  The system activates the next step.
+
+5.  The user chooses a spatial resolution selection (10 m x 10 m, 30 m x 30 m, 100 m x 100 m, 500 m x 500 m, or 1 km x 1 km).
+
+6.  The system runs the related functions in @sec-aoi-from-administrative-boundary and provides a polygon of the selected boundary on the map canvas.
+
+    ::: callout-note
+    ## Success Notification
+
+    The "Confirm" button is activated
+    :::
+
+7.  If the user clicks "Reselect Area", the selected administrative polygon is deleted, and the user will be redirected to @sec-map-generation-basic-information.
+
+    ::: callout-note
+    ## Success Notification
+
+    All inputs are being reset, the user will be redirected to @sec-map-generation-basic-information
+    :::
 
 ## Step 1.2: Time Period {#sec-map-generation-time-period}
 
 **Overview**
 
-The user defines the time period for the land use and land cover map. User chooses the range of period of satellite imagery in a single year format or a custom date range format.
+The user defines the time period for the land use and land cover map. Currently available options for time interval of the satellite imagery period are limited to yearly (a single year) or custom date range.
 
-![](images/luma-int-screenshot\Step-1.2-Time-Period.png)
+![](images/luma-int-screenshot/Step-1-2-Time-Period.png)
+
+**User Input to Interface**
+
+1.  The user selects the time interval they want to use (yearly or custom date range).
+
+2.  The user further specifies the period by selecting the year (if yearly) or entering the start and end dates (if custom date range) that they want to map.
 
 **Process**
 
-1.  The user chooses a time interval selection "By year" and a year (1972–current year).
+1.  The user chooses a time interval selection "By year" or ”Custom date range”.
 
-2.  The system retrieves the selected year and the options for the Satellite Imagery (@sec-map-generation-satellite-imagery) are limited to the available sensor images depending on the selected year.
+2.  The system provides input fields to specify time period based on selected time interval.
 
-    ::: callout-note
-    ## Success Notification
+3.  If "By year": The system shows the year selections from 1972 until current year in a form of a drop down list.
 
-    The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected
-    :::
+4.  If "Custom date range": The system provides calendar display to allow user choose specific start and end dates.
 
-    ::: callout-important
-    ## Error Handling Notification
+5.  The user selects a year selection (1972–current year) or specific start and end dates.
 
-    If time interval nor year is not selected, the options on Satellite Imagery (@sec-map-generation-satellite-imagery) are not available
-    :::
+6.  The system activates "Set time period" button.
 
-3.  The user chooses a time interval selection ”Custom date range” along with the start and end dates.
-
-4.  The system provides a preview of calendar for user to choose the start and end dates.
+7.  If the user clicks "Set time period" button, the system confirms the time period input.
 
     ::: callout-note
     ## Success Notification
 
-    The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected
+    - The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected
+    - A clickable "Change input" text also appears
     :::
 
-    ::: callout-important
-    ## Error Handling Notification
-
-    If time interval nor date range is not selected, the options on Satellite Imagery (@sec-map-generation-satellite-imagery) are not available
-    :::
+8.  If the user clicks "Change input" button, the system resets all input from @sec-map-generation-time-period and is brought back to the beginning of @sec-map-generation-time-period.
 
 ## Step 1.3: Satellite Imagery {#sec-map-generation-satellite-imagery}
 
 **Overview**
 
-The user chooses a satellite imagery source and sets the maximum cloud coverage. The system retrieves all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
+The user confirms default selection for satellite imagery source and the maximum cloud coverage percentage or click change input to customize final input to the basic information.
 
-![](images/luma-int-screenshot\Step-1.3-Satellite-Imagery.png)
+![](images/luma-int-screenshot/Step-1-3-Satellite-Imagery.png)
+
+**User Input to Interface**
+
+1.  Most recent available satellite imagery source and 30% maximum cloudy area are chosen as default input. User is provided with the option to "Change input". If chosen, user can input 2 and 3 below.
+
+2.  The user selects the satellite imagery source from a drop down list.
+
+3.  The user selects the maximum cloudy area by dragging the slider to the desired number.
 
 **Process**
 
-1.  The system checks the selected year in @sec-map-generation-time-period and shows the available sensors based on the selected year.
+1.  The system adjusts default satellite imagery source and other options according to time period input in @sec-map-generation-time-period.
 
 2.  The user sets a preferred cloud cover threshold, if none chosen, the default value of 30% is used.
 
@@ -210,7 +291,23 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.
     :::
 
-4.  The system returns the collected satellite image information.
+## Step 1.4: Confirm and Preview
+
+**Overview**
+
+After all input to basic information have been finalized, user is presented with summary of input for final confirmation. User confirms through clicking "View satellite imagery" which will trigger the system to retrieve  all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
+
+![](images/luma-int-screenshot/Step-1-4-Confirm-and-Preview.png)
+
+**User Input to Interface**
+
+1. The user clicks Next to confirm summary of all inputs after @sec-map-generation-satellite-imagery.
+
+2. The user clicks View satellite imagery to initiate processing of satellite imagery.
+
+**Process**
+
+1.  The system summarizes the basic information from previous steps.
 
     ::: callout-note
     ## Success Notification
@@ -223,8 +320,8 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 
     Two buttons appear:
 
-    - "Change Input"; continue to Process 5
-    - "View Satellite Imagery"; continue to Process 8
+    - "Change Input"; continue to Process 2
+    - "View Satellite Imagery"; continue to Process 5
     :::
 
     ::: callout-important
@@ -233,19 +330,17 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
     The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the time period.
     :::
 
-5.  If the user clicks on the "Change Input" button, "Edit" (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
+2.  If the user clicks on the "Change Input" button, "Edit" (pencil icon) buttons appear next to each of the input summary’s heading. Once clicked, a pop up window appeared for user to choose:
 
-    - "Change Input", continue to Process 6, or
+    - "Change Input", continue to Process 3, or
 
-    - "Discard Changes", continue to Process 7.
+    - "Discard Changes", continue to Process 4.
 
-<!-- -->
+3.  If the user clicks on the "Change Input" button in the pop up window, all inputs are being reset, back to the beginning of @sec-map-generation-basic-information.
 
-6.  If the user clicks on the "Change Input" button in the pop up window, all inputs are being reset, back to the beginning of @sec-map-generation-basic-information.
+4.  If the user clicks on the "Discard Changes" button in the pop up window, the panel still displays the user’s input summary. "Cancel Change" button appear, while "View Satellite Imagery" is disabled. Once the "Cancel Change" button is clicked, back to Process 1.
 
-7.  If the user clicks on the "Discard Changes" button in the pop up window, the panel still displays the user’s input summary. "Cancel Change" button appear, while "View Satellite Imagery" is disabled. Once the "Cancel Change" button is clicked, back to Process 4.
-
-8.  If the user clicks on the "View Satellite Imagery" button, the system returns the collected satellite image information.
+5.  If the user clicks on the "View Satellite Imagery" button, the system processes the satellite image request.
 
     ::: callout-note
     ## Success Notification
@@ -256,11 +351,11 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
       - Mapping area; with polygon toggle
       - Composite of satellite imagery; with true colour (RGB), false colour infrared (NIR/Red/Green), land/water (NIR/SWIR1/RED) toggle options
       - LULC class; still disabled in this step
-    - User can then download the composite, leading to Process 9.
+    - User can then download the composite, leading to Process 6.
     - "Next" button appears, which leads to @sec-map-generation-lulc-classification.
     :::
 
-9.  If the user downloads composite, a `.zip` file containing satellite image composite is downloaded to user’s local device.
+6.  If the user downloads composite, a `.zip` file containing satellite image composite is downloaded to user’s local device.
 
 # Step 2: Land Use and Land Cover Classification {#sec-map-generation-lulc-classification}
 
@@ -268,7 +363,7 @@ The user chooses a satellite imagery source and sets the maximum cloud coverage.
 
 The user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step. The Epistem-AI feature will also be available here.
 
-![](images/luma-int-screenshot\Step-2-Land-Use-and-Land-Cover-Classification.png)
+![](images/luma-int-screenshot/Step-2-Land-Use-and-Land-Cover-Classification.png)
 
 ## Step 2.1: Land Use & Land Cover Classification Scheme
 
@@ -276,21 +371,39 @@ The user defines the land use and land cover classes that will be mapped. There 
 
 Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.
 
-### Step 2.1.1: Own Classification
+### Step 2.1.a: Own Classification
 
 **Overview**
 
 The user creates their own classification scheme manually or by uploading a file.
 
-![](images/luma-int-screenshot\Step-2.1.1-Own-Classification.png)
+![](images/luma-int-screenshot/Step-2-1-1-Own-Classification.png)
 
-#### Step 2.1.1.1: Manual Input {#sec-map-generation-manual-input}
+**User Input to Interface**
+
+1. The user clicks Own Classification to create their own classification scheme.
+
+**Process**
+
+1. The user clicks "Own Classification".
+
+2. The system shows two options within the Own Classification window: Manual Input and Upload Classes.
+
+3. "Manual Input" and "Upload Classes" panels activated.
+
+#### Step 2.1.a.1: Manual Input {#sec-map-generation-manual-input}
 
 **Overview**
 
 The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.
 
-![](images/luma-int-screenshot\Step-2.1.1.1-Manual-Input.png)
+![](images/luma-int-screenshot/Step-2-1-1-1-Manual-Input.png)
+
+**User Input to Interface**
+
+1. The user clicks "Add Class" button.
+
+2. The user fills out LULC class name and selects class color.
 
 **Process**
 
@@ -340,13 +453,19 @@ The user inputs the land use and land cover classes they want to map. They need 
 
 6.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-satellite-imagery Process 8 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
 
-#### Step 2.1.1.2: Upload Classes {#sec-map-generation-upload-classes}
+#### Step 2.1.a.2: Upload Classes {#sec-map-generation-upload-classes}
 
 **Overview**
 
 The user downloads a classification template `.csv` file and uses it to list the land use and land cover classes they want to map. After filling the template, they need to upload the file to be used as the custom classification scheme.
 
-![](images/luma-int-screenshot\Step-2.1.1.2-Upload-Classes.png)
+![](images/luma-int-screenshot/Step-2-1-1-2-Upload-Classes.png)
+
+**User Input to Interface**
+
+1. The user clicks "Upload Classes" button.
+
+2. The user uploads the `.csv` file containing the classification scheme information containing at least three columns: a class ID (numeric identifier), a class name, and an optional hex colour code specifying the display colour for each class.
 
 **Process**
 
@@ -386,13 +505,19 @@ The user downloads a classification template `.csv` file and uses it to list the
 
 6.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-satellite-imagery Process 8 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
 
-### Step 2.1.2: Default Classification
+### Step 2.1.b: Default Classification {#sec-map-generation-default-classes}
 
 **Overview**
 
 The user activates class options from default Luma land use and land cover classification scheme. The user is given the option to choose only a specific subset of the default classes, rather than being required to utilize the entire set.
 
-![](images/luma-int-screenshot\Step-2.1.2-Default-Classification.png)
+![](images/luma-int-screenshot/Step-2-1-2-Default-Classification.png)
+
+**User Input to Interface**
+
+1. The user clicks Default Classification to use Epistem classification scheme.
+
+2. The user selects LULC classes from the existing classification scheme.
 
 **Process**
 
@@ -419,13 +544,15 @@ The user activates class options from default Luma land use and land cover class
 
 7.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-satellite-imagery Process 8 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
 
+![](images/luma-int-screenshot/Summary-step-2.png)
+
 ## Step 2.2: Try Epistem-AI Recommendations
 
 **Overview**
 
 This feature is coming soon.
 
-![](images/luma-int-screenshot\Step-2.2-Try-Epistem-AI-Recommendations.png)
+![](images/luma-int-screenshot/Step-2-2-Try-Epistem-AI-Recommendations.png)
 
 # Step 3: Mapping Sample Data {#sec-map-generation-sample-data}
 
@@ -439,7 +566,11 @@ The user prepares the sample data for land use and land cover classification in 
 
 The user uploads their existing sample data in `.zip` file format.
 
-![](images/luma-int-screenshot\Step-3.1-Upload-Sample-Data.png)
+![](images/luma-int-screenshot/Step-3-1-Upload-Sample-Data.png)
+
+**User Input to Interface**
+
+1. The user uploads a `.zip` file containing their sample data.
 
 **Process**
 
@@ -490,21 +621,25 @@ The user uploads their existing sample data in `.zip` file format.
 
 The user adds points or draws polygons directly on the interactive displayed map for all land use and land cover classes in their mapping area.
 
-![](images/luma-int-screenshot\Step-3.2-On-Screen-Sampling.png)
+![](images/luma-int-screenshot/Step-3-2-On-Screen-Sampling.png)
 
-### Step 3.2.1: Add Point
+### Step 3.2.a: Add Point
 
 **Overview**
 
 The user adds points on the interactive displayed map and input their land use and land cover class information.
 
-#### Step 3.2.1.1: Single Point Input {#sec-map-generation-single-point}
+#### Step 3.2.a.1: Single Point Input {#sec-map-generation-single-point}
 
 **Overview**
 
 The user adds a point and assigns its corresponding land use and land cover class one by one from the drop down list.
 
-![](images/luma-int-screenshot\Step-3.2.1.1-Single-Point-Input.png)
+![](images/luma-int-screenshot/Step-3-2-1-1-Single-Point-Input.png)
+
+**User Input to Interface**
+
+1. The user assigns new sample points one by one accordingly to the correct class.
 
 **Process**
 
@@ -544,13 +679,17 @@ The user adds a point and assigns its corresponding land use and land cover clas
 
 8.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-lulc-classification summary table of recorded classes is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-sample-data.
 
-#### Step 3.2.1.2: Bulk Point Input {#sec-map-generation-bulk-point}
+#### Step 3.2.a.2: Bulk Point Input {#sec-map-generation-bulk-point}
 
 **Overview**
 
 The user adds multiple points (up to 10 points) at once and assigns the same land use and land cover class to all selected points.
 
-![](images/luma-int-screenshot\Step-3.2.1.2-Bulk-Point-Input.png)
+![](images/luma-int-screenshot/Step-3-2-1-2-Bulk-Point-Input.png)
+
+**User Input to Interface**
+
+1. The user assign new sample points accordingly to the one class at a time.
 
 **Process**
 
@@ -590,11 +729,29 @@ The user adds multiple points (up to 10 points) at once and assigns the same lan
 
 8.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-lulc-classification summary table of recorded classes is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-sample-data.
 
-### Step 3.2.2: Draw Area
+![](images/luma-int-screenshot/Summary-step-3.png)
+
+### Step 3.2.b: Draw Area
 
 **Overview**
 
 This feature is coming soon.
+
+## Step 3.3: When user used Default Classification in Step 2
+
+**Overview**
+
+The user who chose the subsets of default classification from @sec-map-generation-default-classes does not need to add sample data.
+
+**Process**
+
+1. The system shows the Sample Data Summary table with number of samples available from default training data and shows pins of the related class on the map canvas.
+
+2. The "Next" button is activated.
+
+3. If the user clicks "Next".
+
+4. The system loads the next step.
 
 # Step 4: Customize Mapping Parameters {#sec-map-generation-parameters}
 
@@ -602,7 +759,7 @@ This feature is coming soon.
 
 The user can choose a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information.
 
-![](images/luma-int-screenshot\Step-4-Customize-Mapping-Parameters.png)
+![](images/luma-int-screenshot/Step-4-Customize-Mapping-Parameters.png)
 
 ## Step 4.1: Predictor Selection {#sec-map-generation-predictors}
 
@@ -610,13 +767,17 @@ The user can choose a set of predictors that optimize the discrimination of LULC
 
 The user is prompted to select the predictors currently supported by Luma Geospatial Engine by using check boxes or upload their own predictor data in `.zip` file.
 
-### Step 4.2.1: Default Predictors
+### Step 4.2.a: Default Predictors
 
 **Overview**
 
 The user selects the predictors currently supported by Luma Geospatial Engine by using check boxes.
 
-![](images/luma-int-screenshot\Step-4.2.1-Default-Predictors.png)
+![](images/luma-int-screenshot/Step-4-2-1-Default-Predictors.png)
+
+**User Input to Interface**
+
+1. The user selects the predictors by using check boxes.
 
 **Process**
 
@@ -652,13 +813,13 @@ The user selects the predictors currently supported by Luma Geospatial Engine by
 
 5.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-sample-data Sample Data Summary is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-parameters.
 
-### Step 4.2.2: Upload Predictors
+### Step 4.2.b: Upload Predictors
 
 **Overview**
 
 This feature is coming soon.
 
-![](images/luma-int-screenshot\Step-4.2.2-Upload-Predictors.png)
+![](images/luma-int-screenshot/Step-4-2-2-Upload-Predictors.png)
 
 ## Step 4.2: Classification Model Training {#sec-map-generation-model-training}
 
@@ -666,7 +827,13 @@ This feature is coming soon.
 
 The user is given the option to adjust the classification model by adjusting the value of the Random Forest variable to classify the satellite images into land use and land cover classes using training data. The default value of the Random Forest parameters are 150 number of trees and 1 minimum leaf population. The user is also prompted to define the proportion to split the sample data into training and validation dataset. The default value of the dataset proportion is 70% for training data and 30% for validation data.
 
-![](images/luma-int-screenshot\Step-4.2-Classification-Model-Training.png)
+![](images/luma-int-screenshot/Step-4-2-Classification-Model-Training.png)
+
+**User Input to Interface**
+
+1. The user configures the classification parameters for number of trees and minimum leaf population.
+
+2. The user defines the proportion to split the sample data into training and validation dataset.
 
 **Process**
 
@@ -704,13 +871,33 @@ The user is given the option to adjust the classification model by adjusting the
 
 5.  If the user clicks on the "Back" (chevron) button, the panel of @sec-map-generation-sample-data Sample Data Summary is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-parameters.
 
+![](images/luma-int-screenshot/Summary-step-4.png)
+
+## Step 4.3: When user used Default Classification in Step 2
+
+**Overview**
+
+The user who chose the subsets of default classification from @sec-map-generation-default-classes does not need to customize the mapping parameters.
+
+**Process**
+
+1. The system shows disabled mapping parameters.
+
+2. The "Next" button is activated.
+
+3. If the user clicks "Next".
+
+4. The system loads the next step.
+
+5. Continue to @sec-map-generation-final.
+
 # Step 5: Map Generation {#sec-map-generation-final}
 
 **Overview**
 
 The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
 
-![](images/luma-int-screenshot\Step-5-Map-Generation.png)
+![](images/luma-int-screenshot/Step-5-Map-Generation.png)
 
 ## Step 5.1: Model Accuracy Assessment
 
@@ -718,7 +905,11 @@ The user is shown the map generated on the map canvas with the classes in differ
 
 The user is shown how accurately the mapping process distinguished their land use and land cover classes.
 
-![](images/luma-int-screenshot\Step-5.1-Model-Accuracy-Assessment.png)
+![](images/luma-int-screenshot/Step-5-1-Model-Accuracy-Assessment.png)
+
+**User Input to Interface**
+
+1. The user clicks on "Show Detail".
 
 **Process**
 
@@ -756,7 +947,7 @@ The user is shown how accurately the mapping process distinguished their land us
 
 The user can visualize the LULC classification result on the map canvas along with the training data layer and is shown the proportion of each LULC class.
 
-![](images/luma-int-screenshot\Step-5.2-LULC-Class-Composition.png)
+![](images/luma-int-screenshot/Step-5-2-LULC-Class-Composition.png)
 
 ## Step 5.3: Thematic Accuracy Assessment
 
@@ -764,7 +955,11 @@ The user can visualize the LULC classification result on the map canvas along wi
 
 The user uploads an independent ground reference data in `.zip` file to perform a comprehensive thematic accuracy assessment of the land cover map.
 
-![](images/luma-int-screenshot\Step-5.3-Thematic-Accuracy-Assessment.png)
+![](images/luma-int-screenshot/Step-5-3-Thematic-Accuracy-Assessment.png)
+
+**User Input to Interface**
+
+1. The user uploads validation data in a `.zip` file.
 
 **Process**
 
@@ -850,15 +1045,29 @@ The user uploads an independent ground reference data in `.zip` file to perform 
 
 The user can save their land use and land cover mapping progress and share their mapping results by logging in/signing up to an Epistem account. Once logged in, user account is activated on the upper right corner of the screen with the user’s initial or profile picture.
 
-![](images/luma-int-screenshot\Additional-Features-Login.png)
+![](images/luma-int-screenshot/Additional-Features-Login.png)
 
 ## Feature 1: Save Progress
 
 **Overview**
 
-Once logged in, the user can save their land use and land cover mapping progress and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.
+Once logged in, the user can save their land use and land cover mapping progress, name the map they are working on, and view which steps they have done and where they are currently in. This can be viewed on the upper right corner of the map canvas. The session is stored for up to 24 hours within the database.
 
-![](images/luma-int-screenshot\Feature-1-Save-Progress.png)
+![](images/luma-int-screenshot/Feat-1-save.png)
+
+**Process**
+
+1. The user clicks "Save" button.
+
+2. The user is prompted to log in or sign up for an Epistem account if they have not already registered.
+
+3. Once logged in, the user can name the map they are working on in order to save it.
+
+4. Progress is saved automatically; completed steps and the user's current position are visible in the top-right corner of the map canvas.
+
+![](images/luma-int-screenshot/Feat-1-name.png)
+
+![](images/luma-int-screenshot/Feature-1-Save-Progress.png)
 
 ## Feature 2: Download Map
 
@@ -866,7 +1075,7 @@ Once logged in, the user can save their land use and land cover mapping progress
 
 Once logged in, the user can download their generated map.
 
-![](images/luma-int-screenshot\Feature-2-Download-Map.png)
+![](images/luma-int-screenshot/Feature-2-Download-Map.png)
 
 **Process**
 
@@ -886,7 +1095,7 @@ Once logged in, the user can download their generated map.
 
 Once logged in, the user can share their generated map to another person with an email address.
 
-![](images/luma-int-screenshot\Feature-3-Share-Map.png)
+![](images/luma-int-screenshot/Feature-3-Share-Map.png)
 
 **Process**
 
@@ -900,13 +1109,15 @@ Once logged in, the user can share their generated map to another person with an
     The recipient receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map
     :::
 
+![](images/luma-int-screenshot/Feat-3-share.png)
+
 ## Feature 4: Improve Accuracy
 
 **Overview**
 
 The user can improve the accuracy of their generated map in two ways: by resetting the parameters in @sec-map-generation-parameters, or by adding or editing the sample data in @sec-map-generation-sample-data.
 
-![](images/luma-int-screenshot\Feature-4-Improve-Accuracy.png)
+![](images/luma-int-screenshot/Feature-4-Improve-Accuracy.png)
 
 **Process**
 
