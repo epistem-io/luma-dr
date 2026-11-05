@@ -45,7 +45,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
     `predictor.confirm_predictor_exist()` :
     :::
 
-##  Predictor Computation
+## Predictor Computation
 
 1.  Topographical data
 
@@ -73,11 +73,13 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
     ## Related Functions
 
     `predictor.distance_calculator.calculate_distance_metrics`: Core function to initialize the distance calculation logic for coastline, road, and settlement
+
+    predictor.get_predefine_distance
     :::
 
     Currently, the system support distance calculation from the following source:
 
-    -   Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
+    -   Coastline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
 
     -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
 
@@ -141,13 +143,39 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
 4.  Radar Backscatter
 
-    Luma-GE support in integration of Synthetic Aperture Radar (SAR) as predictor for classification. Since SAR did not affected by cloud cover, SAR can provide valuable insight into cloud prone region, beneficial to the classification framework itself. The supported SAR data are as follow:
+    Luma-GE supports Synthetic Aperture Radar (SAR) data as predictors for classification. Because radar observations are not affected by cloud cover, they can provide useful information in cloud-prone regions and complement optical imagery. The supported datasets are:
 
     -   Sentinel-1 C-Band Dual Polarization
 
-    -   ALOS PALSAR L-Band
+        Sentinel-1 carries a dual-polarization C-band SAR instrument. In Google Earth Engine, the available data are Ground Range Detected (GRD) products processed with the Sentinel-1 Toolbox to produce calibrated, orthorectified imagery. Luma-GE converts the log-scaled digital number (DN) values to normalized backscatter values. The dataset is available from 2014, has a six-day revisit interval at the equator, and provides 10 m spatial resolution.
 
-5.  .The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
+    -   ALOS PALSAR/PALSAR-2
+
+        The Advanced Land Observing Satellite ([ALOS](https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/alos "ALOS")) carries the Phased Array type L-band Synthetic Aperture Radar ([PALSAR](https://www.earthdata.nasa.gov/data/instruments/palsar "PALSAR")). The PALSAR record begins in 2007 and has 25 m spatial resolution. A gap in coverage between ALOS and ALOS-2 means that data are unavailable from 2011 to 2014. Luma-GE currently supports yearly PALSAR mosaics, with the latest coverage available from January 2024. PALSAR ScanSAR data are not supported because they require extensive preprocessing.
+
+    Luma-GE does not currently apply the extensive preprocessing workflow described by [Mullissa et al. (2021)](https://github.com/adugnag/gee_s1_ard). The list of radar backscatter band for each sensor are as follow:
+
+    1.  Sentinel-1
+
+        -   VV: single co-polarization, vertical transmit/vertical receive
+
+        -   VH: single co-polarization, vertical transmit/horizontal receive
+
+        -   VV-VH Ratio: Ration between VV and VH polarization
+
+    2.  ALOS PALSAR
+
+        -   HH: single polarization, horizontal transmit/horizontal receive
+
+        -   HV: single polarization, horizontal transmit/vertical receive
+
+    ::: callout-note
+    ## Related Function
+
+    `predictor.get_radar_backscatter:`
+    :::
+
+    The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
     ::: callout-tip
     ## Related Functions
