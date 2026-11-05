@@ -19,115 +19,135 @@ The module outputs a comprehensive predictor stack that serves as input for LULC
 
 # Output {.unnumbered}
 
-Covariate stack used in the classification model (Module 6)
+Predictor/covariate/feature stack used in the classification model (Module 6)
 
 # Process {.unnumbered}
 
-## Selection of Predictors {#sec-selection-of-predictors}
+## Predictor Availability Check and Selection {#sec-selection-of-predictors}
 
-1.  The system presents a list of available predictor categories, which include:
+1.  The Luma GE supports various predictors that can be compute on the only, or manually uploaded by the user. The supported predictor categories are as follow:
 
-    - Spectral transformation (indices)
+    -   Spectral transformation
 
-    - Terrain-based metrics
+    -   Topographical data
 
-    - Distance-based metrics
+    -   Distance from feature
 
-## Calculation of Predictors
+    -   Radar Backscatter
 
-1.  The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:
+2.  The user, manually select the predictor by using check boxes
 
-    - Terrain-based metrics
+3.  The system perform confirmation availability of user selected predictors by confirming sensor selection and temporal coverage
 
-      - **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m. Matching the spatial resolution of Landsat data primarily use in Luma
+    ::: callout-tip
+    ## Related Function
 
-      - **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
+    `predictor.confirm_predictor_exist()` :
+    :::
 
-      - **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
+##  Predictor Computation
 
-      ::: callout-tip
-      ## Related Functions
+1.  Topographical data
 
-      `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
+    -   **Elevation**: Refers to Digital Elevation Model (DEM) products, widely used in land cover classification framework. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default optio is NASADEM since it provide improve vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m
 
-      `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
+    -   **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
 
-      `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
-      :::
+    -   **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
-    - Distance-based metrics
+    ::: callout-tip
+    ## Related Functions
 
-      The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.
+    `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
 
-      ::: callout-tip
-      ## Related Functions
+    `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
 
-      `predictor.distance_calculator.calculate_distance_metrics`: Core function to intialize the distance calculation logic for coastline, road, and settlement
-      :::
+    `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
+    :::
 
-      Currently, the system support distance calculation from the following source:
+2.  Distance-based metrics
 
-      - Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
+    The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.
 
-      - Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
+    ::: callout-tip
+    ## Related Functions
 
-      - Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap data
+    `predictor.distance_calculator.calculate_distance_metrics`: Core function to initialize the distance calculation logic for coastline, road, and settlement
+    :::
 
-    - Spectral transformation indices
+    Currently, the system support distance calculation from the following source:
 
-      The system retrieves various spectral indices from the [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI), a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0). The following indices have been adapted for Luma-GE:
+    -   Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
 
-      - Vegetation-related indices:
+    -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
 
-        - NDVI (Normalized Difference Vegetation Index)
+    -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap
 
-        - EVI (Enhanced Vegetation Index)
+3.  Spectral transformation indices
 
-        - SAVI (Soil Adjusted Vegetation Index)
+    Luma utilize open-source [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI) library, a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Therefore, manually defining the expression is not required. However, when adding a new index, it should be cross-reference with the availability of the index in the library. [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0) provide further reading regarding the formulation of the library as well as supported index. Currently, the supported index in Luma are as follows:
 
-        - MSAVI (Modified Soil Adjusted Vegetation Index)
+    -   Vegetation-related indices:
 
-        - OSAVI (Optimized Soil Adjusted Vegetation Index)
+        -   NDVI (Normalized Difference Vegetation Index)
 
-        - ARVI (Atmospherically Resistant Vegetation Index)
+        -   EVI (Enhanced Vegetation Index)
 
-        - GBNDVI (Green-Blue Normalized Difference Vegetation Index)
+        -   SAVI (Soil Adjusted Vegetation Index)
 
-        - GNDVI (Green Normalized Difference Vegetation Index)
+        -   MSAVI (Modified Soil Adjusted Vegetation Index)
 
-      - Water-related indices:
+        -   GNDVI (Green Normalized Difference Vegetation Index)
 
-        - MNDWI (Modified Normalized Difference Water Index)
+        -   MCARI1 (Modified Chlorophyll Absorption in Reflectance Index 1)
 
-        - NDMI (Normalized Difference Moisture Index)
+    -   Water-related indices:
 
-        - AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
+        -   MNDWI (Modified Normalized Difference Water Index)
 
-      - Soil / built-up-related indices:
+        -   ANDWI (Augmented Normalized Difference Water Index)
 
-        - NDBI (Normalized Difference Build-Up Index)
+        -   NDMI (Normalized Difference Moisture Index)
 
-        - DBSI (Dry Bareness Soil Index)
+        -   AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
 
-        - MBI (Modified Build-up Index)
+        -   NDTI (Normalized Difference Turbidity Index)
 
-      ::: callout-tip
-      ## Related Functions
+    -   Soil / built-up-related indices:
 
-      `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
+        -   NDBI (Normalized Difference Build-Up Index)
 
-      `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
+        -   DBSI (Dry Bareness Soil Index)
 
-      `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
+        -   MBI (Modified Build-up Index)
 
-      `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
+        -   BLFEI (Built-Up Land Feature Extraction Index)
 
-      `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
+    ::: callout-tip
+    ## Related Functions
 
-      `predictor.SpectralCalculator.get_calculation_summary` : provide summary of the calculation process of predictors \:::
-      :::
+    `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
 
-2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
+    `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
+
+    `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
+
+    `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
+
+    `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
+
+    `predictor.SpectralCalculator.get_calculation_summary` : provide summary of the calculation process of predictors
+    :::
+
+4.  Radar Backscatter
+
+    Luma-GE support in integration of Synthetic Aperture Radar (SAR) as predictor for classification. Since SAR did not affected by cloud cover, SAR can provide valuable insight into cloud prone region, beneficial to the classification framework itself. The supported SAR data are as follow:
+
+    -   Sentinel-1 C-Band Dual Polarization
+
+    -   ALOS PALSAR L-Band
+
+5.  .The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
     ::: callout-tip
     ## Related Functions
@@ -145,11 +165,11 @@ This section allow the user to visualize the resulted predictors to visually ins
 
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
-    - Creates a random sampling across the AOI (default value is 5000 points)
+    -   Creates a random sampling across the AOI (default value is 5000 points)
 
-    - Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors
+    -   Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors
 
-    - Computes correlation analysis using GEE's core function
+    -   Computes correlation analysis using GEE's core function
 
 2.  The correlation analysis is conducted across all predictors, including the original multispectral band
 
@@ -171,57 +191,57 @@ Evaluating the user's predictor selection is crucial step in determining the bes
 
 1.  The system perform input validation prior to RFE
 
-    - If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
+    -   If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
 
-    - If the input is valid, proceed with RFE calculation
+    -   If the input is valid, proceed with RFE calculation
 
-      ::: callout-tip
-      ## Related Function
+        ::: callout-tip
+        ## Related Function
 
-      `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
-      :::
+        `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+        :::
 
 2.  The system perform RFE with default configuration and report the optimal predictors to the user.
 
-    - the default configuration are as follow:
+    -   the default configuration are as follow:
 
-      - Minimum feature to select: 10
-      - Minimum random forest tree: 100
-      - Training data (for RFE): 70% of user input
-      - Test data (for RFE): 30% of user input
+        -   Minimum feature to select: 10
+        -   Minimum random forest tree: 100
+        -   Training data (for RFE): 70% of user input
+        -   Test data (for RFE): 30% of user input
 
-    - Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
+    -   Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
 
-      ::: callout-tip
-      ## Related Function
+        ::: callout-tip
+        ## Related Function
 
-      `predictor.RfeGee._train_classifier()` : core function to perform random forest classification with default configuration.
+        `predictor.RfeGee._train_classifier()` : core function to perform random forest classification with default configuration.
 
-      `predictor.RfeGee._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
+        `predictor.RfeGee._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
 
-      `predictor.RfeGee._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
+        `predictor.RfeGee._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
 
-      `predictor.RfeGee.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.
-      :::
+        `predictor.RfeGee.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.
+        :::
 
-    - To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.
+    -   To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.
 
-    - The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve
+    -   The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve
 
-      ::: callout-tip
-      ## Related Function
+        ::: callout-tip
+        ## Related Function
 
-      `predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+        `predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
 
-      `predictor.RfeGee.get_ranking` Function to rank importance of each predictors
+        `predictor.RfeGee.get_ranking` Function to rank importance of each predictors
 
-      `predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
+        `predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
 
-      `predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
+        `predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
 
-      `predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
+        `predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
 
-      `predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
-      :::
+        `predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+        :::
 
-    - Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
+    -   Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
