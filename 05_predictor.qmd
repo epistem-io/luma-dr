@@ -49,11 +49,13 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
 1.  Topographical data
 
-    -   **Elevation**: Refers to Digital Elevation Model (DEM) products, widely used in land cover classification framework. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default optio is NASADEM since it provide improve vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m
+    -   **Elevation**: Refers to Digital Elevation Model (DEM) products, widely used in land cover classification framework. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id) (default), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). All of the aforementioned DEM product have the spatial resolution of 30 m
 
     -   **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
 
     -   **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
+
+    -   Landform: Refers to physical terrain attributes and classifications calculated from grid-based surface elevation values. Luma use global ALOS Landform dataset created by combining the Continuous Heat-Insolation Load Index (CHILI) and the multi-scale Topographic Position Index (mTPI) data
 
     ::: callout-tip
     ## Related Functions
@@ -63,6 +65,8 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
     `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
 
     `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
+
+    `predictor.terrain_calculator.get_landform` : Core function to retrieve global landform data and clip based on AOI
     :::
 
 2.  Distance-based metrics
@@ -84,6 +88,8 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
     -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
 
     -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap
+
+    Since distance calculation required heavy computation, pre calculated euclidean distance will be stored in the asset for three province in Indonesia, namely South Sumatera, South Sulawesi, and East Nusa Tenggara
 
 3.  Spectral transformation indices
 
@@ -153,7 +159,29 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
         The Advanced Land Observing Satellite ([ALOS](https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/alos "ALOS")) carries the Phased Array type L-band Synthetic Aperture Radar ([PALSAR](https://www.earthdata.nasa.gov/data/instruments/palsar "PALSAR")). The PALSAR record begins in 2007 and has 25 m spatial resolution. A gap in coverage between ALOS and ALOS-2 means that data are unavailable from 2011 to 2014. Luma-GE currently supports yearly PALSAR mosaics, with the latest coverage available from January 2024. PALSAR ScanSAR data are not supported because they require extensive preprocessing.
 
-    Luma-GE does not currently apply the extensive preprocessing workflow described by [Mullissa et al. (2021)](https://github.com/adugnag/gee_s1_ard). The list of radar backscatter band for each sensor are as follow:
+    The Sentinel-1 preprocessing workflow refers to [Mullissa et al. (2021)](#0), in the following repository: [S1_ard](https://github.com/adugnag/gee_s1_ard/tree/main). Pre-processing for Sentinel-1 include IW mode filtering, incidence-angle masking, low-backscatter swath-edge masking and speckle filtering (optional). Since PALSAR dataset already a yearly mosaic product, pre-processing only include radiometric calibration (conversion from DN to Db).
+
+    ::: callout-note
+    ## Related Function
+
+    `sar.get_sar_data:` Retrieve and preprocess SAR backscatter polarizations and polarization ratios as predictors for LULC mapping.
+
+    `sar.get_sar_data.apply_speckle_filter():` function to perform speckle filtering for calibrated gamma-naught (dB) SAR image
+
+    `sar.get_sar_data.mask_s1_border_and_angle():` Mask Sentinel-1 pixels with incidence angle outside \[min_angle, max_angle\] and low-backscatter swath-edge noise (VV or VH \<= edge_db_floor).
+
+    `sar.get_sar_data.get_sentinel1():` Build sentinel-1 backscatter predictor image
+
+    `sar.get_sar_data.mask_and_calibrate_palsar():` Mask invalid PALSAR pixels using the 'qa' band and calibrate 16-bit DN to gamma-naught (dB).
+
+    `sar.get_sar_data._resolve_palsar_year():` resolve the available PALSAR mosaic years intersection
+
+    `sar.get_sar_data.get_palsar():` Build PALSAR backscatter predictor image. The function handle the following PALSAR collection:
+
+    `JAXA/ALOS/PALSAR/YEARLY/SAR` (2007 - 2010) and `JAXA/ALOS/PALSAR/YEARLY/SAR_EPOCH` (2015 - 2024)
+    :::
+
+    The list of radar backscatter band for each sensor are as follow:
 
     1.  Sentinel-1
 
@@ -169,13 +197,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
         -   HV: single polarization, horizontal transmit/vertical receive
 
-    ::: callout-note
-    ## Related Function
-
-    `predictor.get_radar_backscatter:`
-    :::
-
-    The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
+    The main orchestration of predictor calculation is conduced after the system validate the required input. The entry point for SAR predictor is define through this source code The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
     ::: callout-tip
     ## Related Functions
