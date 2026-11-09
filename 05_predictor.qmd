@@ -2,20 +2,21 @@
 
 # Module Overview {.unnumbered}
 
-The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.
+The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Currently, Luma Geospatial Engine supports predictors derived from several categories, namely spectral transformations, topographical data, distance-based metrics, and radar backscatter. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.
 
 The module outputs a comprehensive predictor stack that serves as input for LULC map generation in Module 6.
 
 # Input {.unnumbered}
 
-| Name of Input | Input Type | Details |
-|------------------------|------------------------|------------------------|
-| supported spectral transformations | System’s input | Retrieve the pre-define function from existing library |
-| Terrain-based metrics | System’s input |  |
-| Distance-based metrics | System’s input |  |
-| AOI | Input from Other Modules | Output from @sec-module-1 |
-| Near-cloud free satellite imagery | Input from Other Modules | Output from @sec-module-1 |
-| Sample data | Input from Other Modules | Output from @sec-module-3 |
+| Name of Input | Input Type | Details |   |   |
+|---------------|---------------|---------------|---------------|---------------|
+| spectral transformations | System’s input | Retrieve the pre-define function from existing library |  |  |
+| Topographical Data | System’s input |  |  |  |
+| Distance-based metrics | System’s input |  |  |  |
+| Radar Backscatter | System's Input |  | System’s input |  |
+| AOI | Input from Other Modules | Output from @sec-module-1 |  |  |
+| Near-cloud free satellite imagery | Input from Other Modules | Output from @sec-module-1 |  |  |
+| Sample data | Input from Other Modules | Output from @sec-module-3 |  |  |
 
 # Output {.unnumbered}
 
@@ -60,25 +61,25 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
     ::: callout-tip
     ## Related Functions
 
-    `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
+    `predictor.terrain_calculator.calculate_elevation` : Function to retrieve supported DEM data from GEE catalog.
 
     `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
 
     `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
 
-    `predictor.terrain_calculator.get_landform` : Core function to retrieve global landform data and clip based on AOI
+    `predictor.terrain_calculator.get_landform` : Core function to retrieve global landform data and clip it based on AOI
     :::
 
 2.  Distance-based metrics
 
-    The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.
+    The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements. Since distance calculation required heavy computation, pre calculated euclidean distance will be stored in the asset for three province in Indonesia, namely South Sumatera, South Sulawesi, and East Nusa Tenggara. For other regions, distance computation will be calculated on the fly currently supporting distance from primary roads. The road feature collection use as the basis for distance calculation, utilize Global Road Inventory Projects [@meijer_global_2018].
 
     ::: callout-tip
     ## Related Functions
 
     `predictor.distance_calculator.calculate_distance_metrics`: Core function to initialize the distance calculation logic for coastline, road, and settlement
 
-    predictor.get_predefine_distance
+    `predictor.get_predefine_distance` : function to retrive pre-calculated distance from main road raster from earth engine asset.
     :::
 
     Currently, the system support distance calculation from the following source:
@@ -89,11 +90,9 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
     -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap
 
-    Since distance calculation required heavy computation, pre calculated euclidean distance will be stored in the asset for three province in Indonesia, namely South Sumatera, South Sulawesi, and East Nusa Tenggara
-
 3.  Spectral transformation indices
 
-    Luma utilize open-source [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI) library, a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Therefore, manually defining the expression is not required. However, when adding a new index, it should be cross-reference with the availability of the index in the library. [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0) provide further reading regarding the formulation of the library as well as supported index. Currently, the supported index in Luma are as follows:
+    Luma utilize open-source [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI) library, a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Therefore, manually defining the expression is not required. However, when adding a new index, it should be cross-reference with the availability of the index in the library. For further reading on the formulation of the library and its supported indices, see [@montero_standardized_2023]. Currently, the supported index in Luma are as follows:
 
     -   Vegetation-related indices:
 
@@ -159,7 +158,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
         The Advanced Land Observing Satellite ([ALOS](https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/alos "ALOS")) carries the Phased Array type L-band Synthetic Aperture Radar ([PALSAR](https://www.earthdata.nasa.gov/data/instruments/palsar "PALSAR")). The PALSAR record begins in 2007 and has 25 m spatial resolution. A gap in coverage between ALOS and ALOS-2 means that data are unavailable from 2011 to 2014. Luma-GE currently supports yearly PALSAR mosaics, with the latest coverage available from January 2024. PALSAR ScanSAR data are not supported because they require extensive preprocessing.
 
-    The Sentinel-1 preprocessing workflow refers to [Mullissa et al. (2021)](#0), in the following repository: [S1_ard](https://github.com/adugnag/gee_s1_ard/tree/main). Pre-processing for Sentinel-1 include IW mode filtering, incidence-angle masking, low-backscatter swath-edge masking and speckle filtering (optional). Since PALSAR dataset already a yearly mosaic product, pre-processing only include radiometric calibration (conversion from DN to Db).
+    The Sentinel-1 preprocessing workflow refers to [@mullissa_sentinel_2021] in the following repository: [S1_ard](https://github.com/adugnag/gee_s1_ard/tree/main). Pre-processing for Sentinel-1 include IW mode filtering, incidence-angle masking, low-backscatter swath-edge masking and speckle filtering (optional). Since PALSAR dataset already a yearly mosaic product, pre-processing only include radiometric calibration (conversion from DN to Db).
 
     ::: callout-note
     ## Related Function
@@ -239,59 +238,51 @@ Evaluating the user's predictor selection is crucial step in determining the bes
 
 ![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low.png){fig-align="center" width="710"}
 
-1.  The system perform input validation prior to RFE
+1.  Input validation
 
-    -   If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
+    Prior to running the RFE, Luma-GE is design to perform input validation checks just in case a mssing parameter is detected. If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors. If the input is valid, proceed with RFE calculation
 
-    -   If the input is valid, proceed with RFE calculation
+    ::: callout-tip
+    ## Related Function
 
-        ::: callout-tip
-        ## Related Function
+    `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+    :::
 
-        `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
-        :::
+2.  Default RFE configuration
 
-2.  The system perform RFE with default configuration and report the optimal predictors to the user.
+    -   Minimum feature to select: 10
+    -   Minimum random forest tree: 100
+    -   Training data (for RFE): 70% of user input
+    -   Test data (for RFE): 30% of user input
 
-    -   the default configuration are as follow:
+    Since Earth Engine did not have default feature selection algorithm, the Luma GE create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
 
-        -   Minimum feature to select: 10
-        -   Minimum random forest tree: 100
-        -   Training data (for RFE): 70% of user input
-        -   Test data (for RFE): 30% of user input
+::: callout-tip
+## Related Function
 
-    -   Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
+`predictor.RFEGEE._train_classifier()` : core function to perform random forest classification with default configuration.
 
-        ::: callout-tip
-        ## Related Function
+`predictor.RFEGEE._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
 
-        `predictor.RfeGee._train_classifier()` : core function to perform random forest classification with default configuration.
+`predictor.RRGEE._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
 
-        `predictor.RfeGee._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
+`predictor.RFGEE.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling model importance and its accuracy.
+:::
 
-        `predictor.RfeGee._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
+To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete. The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve. Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
 
-        `predictor.RfeGee.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.
-        :::
+::: callout-tip
+## Related Function
 
-    -   To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.
+`predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
 
-    -   The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve
+`predictor.RfeGee.get_ranking` Function to rank importance of each predictors
 
-        ::: callout-tip
-        ## Related Function
+`predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
 
-        `predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+`predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
 
-        `predictor.RfeGee.get_ranking` Function to rank importance of each predictors
+`predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
 
-        `predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
-
-        `predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
-
-        `predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
-
-        `predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
-        :::
-
-    -   Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
+`predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+:::
