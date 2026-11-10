@@ -8,15 +8,15 @@ The module outputs a comprehensive predictor stack that serves as input for LULC
 
 # Input {.unnumbered}
 
-| Name of Input | Input Type | Details |   |   |
-|---------------|---------------|---------------|---------------|---------------|
-| spectral transformations | System’s input | Retrieve the pre-define function from existing library |  |  |
-| Topographical Data | System’s input |  |  |  |
-| Distance-based metrics | System’s input |  |  |  |
-| Radar Backscatter | System's Input |  | System’s input |  |
-| AOI | Input from Other Modules | Output from @sec-module-1 |  |  |
-| Near-cloud free satellite imagery | Input from Other Modules | Output from @sec-module-1 |  |  |
-| Sample data | Input from Other Modules | Output from @sec-module-3 |  |  |
+| Name of Input | Input Type | Details |
+|------------------------|------------------------|------------------------|
+| spectral transformations | System’s input | Retrieve the pre-define function from existing library |
+| Topographical Data | System’s input |  |
+| Distance-based metrics | System’s input |  |
+| Radar Backscatter | System's Input |  |
+| AOI | Input from Other Modules | Output from @sec-module-1 |
+| Near-cloud free satellite imagery | Input from Other Modules | Output from @sec-module-1 |
+| Sample data | Input from Other Modules | Output from @sec-module-3 |
 
 # Output {.unnumbered}
 
@@ -26,7 +26,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
 ## Predictor Availability Check and Selection {#sec-selection-of-predictors}
 
-1.  The Luma GE supports various predictors that can be compute on the only, or manually uploaded by the user. The supported predictor categories are as follow:
+1.  The Luma GE supports various predictors that can be compute on the fly or manually uploaded by the user. The supported predictor categories are as follow:
 
     -   Spectral transformation
 
@@ -36,14 +36,24 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
     -   Radar Backscatter
 
-2.  The user, manually select the predictor by using check boxes
-
-3.  The system perform confirmation availability of user selected predictors by confirming sensor selection and temporal coverage
+2.  The system perform confirmation availability of user selected predictors by confirming sensor selection and temporal coverage
 
     ::: callout-tip
     ## Related Function
 
-    `predictor.confirm_predictor_exist()` :
+    `predictor.predictor_catalog()` : central registry for supported predictor in Luma GE
+
+    `predictor.predictor_catalog.get_all_catalog()` : Return a copy of the entire predictor catalog dictionary.
+
+    `predictor.predictor_catalog.check_availability()` : Evaluate availability for all registered predictors based on sensor and temporal range.
+
+    `predictor.sensorDetector()` : Utility for detecting satellite sensor category and resolving sensor-specific band mappings.
+
+    `predictor.sensorDetector.normalize_sensor_name()`: Normalize a sensor string hint into a canonical sensor family.
+
+    `predictor.sensorDetector.detect_sensor_from_bands()`: Detect sensor category from a list of band names. Sentinel-2 contains "Red-edge" bands, while Landsat contains "thermal" band, which can serves as sensor identifier
+
+    `predictor.sensorDetector.detect_sensor()`: wrapper function to automatically detect sensor selection either using sensor name or band names
     :::
 
 ## Predictor Computation
@@ -56,7 +66,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
     -   **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
-    -   Landform: Refers to physical terrain attributes and classifications calculated from grid-based surface elevation values. Luma use global ALOS Landform dataset created by combining the Continuous Heat-Insolation Load Index (CHILI) and the multi-scale Topographic Position Index (mTPI) data
+    -   **Landform**: Refers to physical terrain attributes and classifications calculated from grid-based surface elevation values. Luma use global ALOS Landform dataset created by combining the Continuous Heat-Insolation Load Index (CHILI) and the multi-scale Topographic Position Index (mTPI) data
 
     ::: callout-tip
     ## Related Functions
@@ -175,9 +185,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
     `sar.get_sar_data._resolve_palsar_year():` resolve the available PALSAR mosaic years intersection
 
-    `sar.get_sar_data.get_palsar():` Build PALSAR backscatter predictor image. The function handle the following PALSAR collection:
-
-    `JAXA/ALOS/PALSAR/YEARLY/SAR` (2007 - 2010) and `JAXA/ALOS/PALSAR/YEARLY/SAR_EPOCH` (2015 - 2024)
+    `sar.get_sar_data.get_palsar():` Build PALSAR backscatter predictor image. The function handle the following PALSAR collection: `JAXA/ALOS/PALSAR/YEARLY/SAR` (2007 - 2010) and `JAXA/ALOS/PALSAR/YEARLY/SAR_EPOCH` (2015 - 2024)
     :::
 
     The list of radar backscatter band for each sensor are as follow:
@@ -188,13 +196,15 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
         -   VH: single co-polarization, vertical transmit/horizontal receive
 
-        -   VV-VH Ratio: Ration between VV and VH polarization
+        -   VV-VH Ratio: Ratio between VV and VH polarization
 
     2.  ALOS PALSAR
 
         -   HH: single polarization, horizontal transmit/horizontal receive
 
         -   HV: single polarization, horizontal transmit/vertical receive
+
+        -   HH-HV Ratio: Ratio between HH and HV polarization
 
     The main orchestration of predictor calculation is conduced after the system validate the required input. The entry point for SAR predictor is define through this source code The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
@@ -206,6 +216,10 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
     `predictor.PredictorCalculation.compute_predictors` : Initialize predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
 
     `predictor.PredictorCalculation.prepare_module6_summary:` Prepare summary metadata for module 6
+
+    `predictor.PredictorCalculation.resolve_date_range()`: resolve date range selection between optical imagery date selection with radar date selection. Therefore, radar date range will always follow optical date selection
+
+    `predictor.PredictorCalculation.resolve_sar_selection()`: determine which radar sensor is selected based on user optical sensor selection
     :::
 
 ## Predictors Visualization and Analysis
@@ -240,12 +254,12 @@ Evaluating the user's predictor selection is crucial step in determining the bes
 
 1.  Input validation
 
-    Prior to running the RFE, Luma-GE is design to perform input validation checks just in case a mssing parameter is detected. If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors. If the input is valid, proceed with RFE calculation
+    Prior to running the RFE, Luma-GE is design to perform input validation checks just in case a missing parameter is detected. If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors. If the input is valid, proceed with RFE calculation
 
     ::: callout-tip
     ## Related Function
 
-    `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+    `predictor.RFEGEE.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
     :::
 
 2.  Default RFE configuration
@@ -274,15 +288,15 @@ To optimize API calls in Earth Engine servers, the calculations is conducted usi
 ::: callout-tip
 ## Related Function
 
-`predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+`predictor.RFEGEE.get_selected_features` Function to retrieve optimal predictors list based on RFE result
 
-`predictor.RfeGee.get_ranking` Function to rank importance of each predictors
+`predictor.RFEGEE.get_ranking` Function to rank importance of each predictors
 
-`predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
+`predictor.RFEGEE.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
 
-`predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
+`predictor.RFEGEE.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
 
-`predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
+`predictor.RFGEE.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
 
-`predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+`predictor.RFEGEE.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
 :::
