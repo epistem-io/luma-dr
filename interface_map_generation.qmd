@@ -719,14 +719,6 @@ The user activates class options from default Luma land use and land cover class
 
 ![](images/luma-int-screenshot/Summary-step-2.png)
 
-## Step 2.b: Try Epistem-AI Recommendations
-
-**Overview**
-
-This feature is coming soon.
-
-![](images/luma-int-screenshot/Step-2-2-Try-Epistem-AI-Recommendations.png)
-
 # Step 3: Mapping Sample Data {#sec-map-generation-sample-data}
 
 **Overview**
