@@ -2,7 +2,7 @@
 
 # Module Overview {.unnumbered}
 
-The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.
+The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Currently, Luma Geospatial Engine supports predictors derived from several categories, namely spectral transformations, topographical data, distance-based metrics, and radar backscatter. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.
 
 The module outputs a comprehensive predictor stack that serves as input for LULC map generation in Module 6.
 
@@ -10,124 +10,203 @@ The module outputs a comprehensive predictor stack that serves as input for LULC
 
 | Name of Input | Input Type | Details |
 |------------------------|------------------------|------------------------|
-| supported spectral transformations | System’s input | Retrieve the pre-define function from existing library |
-| Terrain-based metrics | System’s input |  |
+| spectral transformations | System’s input | Retrieve the pre-define function from existing library |
+| Topographical Data | System’s input |  |
 | Distance-based metrics | System’s input |  |
+| Radar Backscatter | System's Input |  |
 | AOI | Input from Other Modules | Output from @sec-module-1 |
 | Near-cloud free satellite imagery | Input from Other Modules | Output from @sec-module-1 |
 | Sample data | Input from Other Modules | Output from @sec-module-3 |
 
 # Output {.unnumbered}
 
-Covariate stack used in the classification model (Module 6)
+Predictor/covariate/feature stack used in the classification model (Module 6)
 
 # Process {.unnumbered}
 
-## Selection of Predictors {#sec-selection-of-predictors}
+## Predictor Availability Check and Selection {#sec-selection-of-predictors}
 
-1.  The system presents a list of available predictor categories, which include:
+1.  The Luma GE supports various predictors that can be compute on the fly or manually uploaded by the user. The supported predictor categories are as follow:
 
-    - Spectral transformation (indices)
+    -   Spectral transformation
 
-    - Terrain-based metrics
+    -   Topographical data
 
-    - Distance-based metrics
+    -   Distance from feature
 
-## Calculation of Predictors
+    -   Radar Backscatter
 
-1.  The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:
+2.  The system perform confirmation availability of user selected predictors by confirming sensor selection and temporal coverage
 
-    - Terrain-based metrics
+    ::: callout-tip
+    ## Related Function
 
-      - **Elevation**: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m. Matching the spatial resolution of Landsat data primarily use in Luma
+    `predictor.predictor_catalog()` : central registry for supported predictor in Luma GE
 
-      - **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
+    `predictor.predictor_catalog.get_all_catalog()` : Return a copy of the entire predictor catalog dictionary.
 
-      - **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
+    `predictor.predictor_catalog.check_availability()` : Evaluate availability for all registered predictors based on sensor and temporal range.
 
-      ::: callout-tip
-      ## Related Functions
+    `predictor.sensorDetector()` : Utility for detecting satellite sensor category and resolving sensor-specific band mappings.
 
-      `predictor.terrain_calculator.calculate_elevation` : Core function to fetch DEM data from GEE catalog.
+    `predictor.sensorDetector.normalize_sensor_name()`: Normalize a sensor string hint into a canonical sensor family.
 
-      `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
+    `predictor.sensorDetector.detect_sensor_from_bands()`: Detect sensor category from a list of band names. Sentinel-2 contains "Red-edge" bands, while Landsat contains "thermal" band, which can serves as sensor identifier
 
-      `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
-      :::
+    `predictor.sensorDetector.detect_sensor()`: wrapper function to automatically detect sensor selection either using sensor name or band names
+    :::
 
-    - Distance-based metrics
+## Predictor Computation
 
-      The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.
+1.  Topographical data
 
-      ::: callout-tip
-      ## Related Functions
+    -   **Elevation**: Refers to Digital Elevation Model (DEM) products, widely used in land cover classification framework. Several DEM is supported by Luma-GE, namely [NASADEM](https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id) (default), [Copernicus GLO-30](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands), and [ALOS DSM V4](https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1). All of the aforementioned DEM product have the spatial resolution of 30 m
 
-      `predictor.distance_calculator.calculate_distance_metrics`: Core function to intialize the distance calculation logic for coastline, road, and settlement
-      :::
+    -   **Slope**: Calculated from selected DEM using `ee.Terrain.slope` function. Slope unit is presented in degree units (0-90)
 
-      Currently, the system support distance calculation from the following source:
+    -   **Aspect**: Similar to slope, this data is calculated from the selected DEM, using `ee.Terrain.aspect`. The units are degree where 0=N, 90=E, 180=S, 270 =W
 
-      - Coastiline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
+    -   **Landform**: Refers to physical terrain attributes and classifications calculated from grid-based surface elevation values. Luma use global ALOS Landform dataset created by combining the Continuous Heat-Insolation Load Index (CHILI) and the multi-scale Topographic Position Index (mTPI) data
 
-      - Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
+    ::: callout-tip
+    ## Related Functions
 
-      - Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap data
+    `predictor.terrain_calculator.calculate_elevation` : Function to retrieve supported DEM data from GEE catalog.
 
-    - Spectral transformation indices
+    `predictor.terrain_calculator.calculate_slope` : Core function to calculate slope from selected DEM data
 
-      The system retrieves various spectral indices from the [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI), a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to [Montero (2023)](https://doi.org/10.1038/s41597-023-02096-0). The following indices have been adapted for Luma-GE:
+    `predictor.terrain_calculator.calculate_aspect` : Core function to calculate aspect data from selected DEM data
 
-      - Vegetation-related indices:
+    `predictor.terrain_calculator.get_landform` : Core function to retrieve global landform data and clip it based on AOI
+    :::
 
-        - NDVI (Normalized Difference Vegetation Index)
+2.  Distance-based metrics
 
-        - EVI (Enhanced Vegetation Index)
+    The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements. Since distance calculation required heavy computation, pre calculated euclidean distance will be stored in the asset for three province in Indonesia, namely South Sumatera, South Sulawesi, and East Nusa Tenggara. For other regions, distance computation will be calculated on the fly currently supporting distance from primary roads. The road feature collection use as the basis for distance calculation, utilize Global Road Inventory Projects [@meijer_global_2018].
 
-        - SAVI (Soil Adjusted Vegetation Index)
+    ::: callout-tip
+    ## Related Functions
 
-        - MSAVI (Modified Soil Adjusted Vegetation Index)
+    `predictor.distance_calculator.calculate_distance_metrics`: Core function to initialize the distance calculation logic for coastline, road, and settlement
 
-        - OSAVI (Optimized Soil Adjusted Vegetation Index)
+    `predictor.get_predefine_distance` : function to retrive pre-calculated distance from main road raster from earth engine asset.
+    :::
 
-        - ARVI (Atmospherically Resistant Vegetation Index)
+    Currently, the system support distance calculation from the following source:
 
-        - GBNDVI (Green-Blue Normalized Difference Vegetation Index)
+    -   Coastline: [Natural Earth 10m coastline data](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/),
 
-        - GNDVI (Green Normalized Difference Vegetation Index)
+    -   Settlement: [Facebook High Resolution Settlement Layer (HRSL)](https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps)
 
-      - Water-related indices:
+    -   Road: Indonesian Topographic Map (*Rupa Bumi Indonesia*) and OpenStreetMap
 
-        - MNDWI (Modified Normalized Difference Water Index)
+3.  Spectral transformation indices
 
-        - NDMI (Normalized Difference Moisture Index)
+    Luma utilize open-source [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/spyndex) (ASI) library, a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Therefore, manually defining the expression is not required. However, when adding a new index, it should be cross-reference with the availability of the index in the library. For further reading on the formulation of the library and its supported indices, see [@montero_standardized_2023]. Currently, the supported index in Luma are as follows:
 
-        - AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
+    -   Vegetation-related indices:
 
-      - Soil / built-up-related indices:
+        -   NDVI (Normalized Difference Vegetation Index)
 
-        - NDBI (Normalized Difference Build-Up Index)
+        -   EVI (Enhanced Vegetation Index)
 
-        - DBSI (Dry Bareness Soil Index)
+        -   SAVI (Soil Adjusted Vegetation Index)
 
-        - MBI (Modified Build-up Index)
+        -   MSAVI (Modified Soil Adjusted Vegetation Index)
 
-      ::: callout-tip
-      ## Related Functions
+        -   GNDVI (Green Normalized Difference Vegetation Index)
 
-      `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
+        -   MCARI1 (Modified Chlorophyll Absorption in Reflectance Index 1)
 
-      `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
+    -   Water-related indices:
 
-      `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
+        -   MNDWI (Modified Normalized Difference Water Index)
 
-      `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
+        -   ANDWI (Augmented Normalized Difference Water Index)
 
-      `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
+        -   NDMI (Normalized Difference Moisture Index)
 
-      `predictor.SpectralCalculator.get_calculation_summary` : provide summary of the calculation process of predictors \:::
-      :::
+        -   AWEInsh (Automatic Water Extraction Index with Shadow Elimination)
 
-2.  The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
+        -   NDTI (Normalized Difference Turbidity Index)
+
+    -   Soil / built-up-related indices:
+
+        -   NDBI (Normalized Difference Build-Up Index)
+
+        -   DBSI (Dry Bareness Soil Index)
+
+        -   MBI (Modified Build-up Index)
+
+        -   BLFEI (Built-Up Land Feature Extraction Index)
+
+    ::: callout-tip
+    ## Related Functions
+
+    `predictor.SpectralCalculator.get_avaliable_indices`: Return the list of supported indices. This list contain information regarding the Index name, long-name, formula, and references
+
+    `predictor.SpectralCalculator.get_index_coefficients`: Get default coefficient values for a spectral index that needs user-define coefficients and parameters
+
+    `predictor.SpectralCalculator.validate_coefficients`: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.
+
+    `predictor.SpectralCalculator.validate_index_requirements` : Validate that required bands are available for index computation.
+
+    `predictor.SpectralCalculator.calculate_indices_with_collection`: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.
+
+    `predictor.SpectralCalculator.get_calculation_summary` : provide summary of the calculation process of predictors
+    :::
+
+4.  Radar Backscatter
+
+    Luma-GE supports Synthetic Aperture Radar (SAR) data as predictors for classification. Because radar observations are not affected by cloud cover, they can provide useful information in cloud-prone regions and complement optical imagery. The supported datasets are:
+
+    -   Sentinel-1 C-Band Dual Polarization
+
+        Sentinel-1 carries a dual-polarization C-band SAR instrument. In Google Earth Engine, the available data are Ground Range Detected (GRD) products processed with the Sentinel-1 Toolbox to produce calibrated, orthorectified imagery. Luma-GE converts the log-scaled digital number (DN) values to normalized backscatter values. The dataset is available from 2014, has a six-day revisit interval at the equator, and provides 10 m spatial resolution.
+
+    -   ALOS PALSAR/PALSAR-2
+
+        The Advanced Land Observing Satellite ([ALOS](https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/alos "ALOS")) carries the Phased Array type L-band Synthetic Aperture Radar ([PALSAR](https://www.earthdata.nasa.gov/data/instruments/palsar "PALSAR")). The PALSAR record begins in 2007 and has 25 m spatial resolution. A gap in coverage between ALOS and ALOS-2 means that data are unavailable from 2011 to 2014. Luma-GE currently supports yearly PALSAR mosaics, with the latest coverage available from January 2024. PALSAR ScanSAR data are not supported because they require extensive preprocessing.
+
+    The Sentinel-1 preprocessing workflow refers to [@mullissa_sentinel_2021] in the following repository: [S1_ard](https://github.com/adugnag/gee_s1_ard/tree/main). Pre-processing for Sentinel-1 include IW mode filtering, incidence-angle masking, low-backscatter swath-edge masking and speckle filtering (optional). Since PALSAR dataset already a yearly mosaic product, pre-processing only include radiometric calibration (conversion from DN to Db).
+
+    ::: callout-note
+    ## Related Function
+
+    `sar.get_sar_data:` Retrieve and preprocess SAR backscatter polarizations and polarization ratios as predictors for LULC mapping.
+
+    `sar.get_sar_data.apply_speckle_filter():` function to perform speckle filtering for calibrated gamma-naught (dB) SAR image
+
+    `sar.get_sar_data.mask_s1_border_and_angle():` Mask Sentinel-1 pixels with incidence angle outside \[min_angle, max_angle\] and low-backscatter swath-edge noise (VV or VH \<= edge_db_floor).
+
+    `sar.get_sar_data.get_sentinel1():` Build sentinel-1 backscatter predictor image
+
+    `sar.get_sar_data.mask_and_calibrate_palsar():` Mask invalid PALSAR pixels using the 'qa' band and calibrate 16-bit DN to gamma-naught (dB).
+
+    `sar.get_sar_data._resolve_palsar_year():` resolve the available PALSAR mosaic years intersection
+
+    `sar.get_sar_data.get_palsar():` Build PALSAR backscatter predictor image. The function handle the following PALSAR collection: `JAXA/ALOS/PALSAR/YEARLY/SAR` (2007 - 2010) and `JAXA/ALOS/PALSAR/YEARLY/SAR_EPOCH` (2015 - 2024)
+    :::
+
+    The list of radar backscatter band for each sensor are as follow:
+
+    1.  Sentinel-1
+
+        -   VV: single co-polarization, vertical transmit/vertical receive
+
+        -   VH: single co-polarization, vertical transmit/horizontal receive
+
+        -   VV-VH Ratio: Ratio between VV and VH polarization
+
+    2.  ALOS PALSAR
+
+        -   HH: single polarization, horizontal transmit/horizontal receive
+
+        -   HV: single polarization, horizontal transmit/vertical receive
+
+        -   HH-HV Ratio: Ratio between HH and HV polarization
+
+    The main orchestration of predictor calculation is conduced after the system validate the required input. The entry point for SAR predictor is define through this source code The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.
 
     ::: callout-tip
     ## Related Functions
@@ -137,19 +216,23 @@ Covariate stack used in the classification model (Module 6)
     `predictor.PredictorCalculation.compute_predictors` : Initialize predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.
 
     `predictor.PredictorCalculation.prepare_module6_summary:` Prepare summary metadata for module 6
+
+    `predictor.PredictorCalculation.resolve_date_range()`: resolve date range selection between optical imagery date selection with radar date selection. Therefore, radar date range will always follow optical date selection
+
+    `predictor.PredictorCalculation.resolve_sar_selection()`: determine which radar sensor is selected based on user optical sensor selection
     :::
 
 ## Predictors Visualization and Analysis
 
-This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data.
+This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data. Predictor quality analysis is heavily related with sample quality analysis modules.
 
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
-    - Creates a random sampling across the AOI (default value is 5000 points)
+    -   Creates a random sampling across the AOI (default value is 5000 points)
 
-    - Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors
+    -   Extract the pixel value of the computed predictors. The spectral band predictors are not extracted, since the analysis is design to analyze the correlation between ancillary predictors
 
-    - Computes correlation analysis using GEE's core function
+    -   Computes correlation analysis using GEE's core function
 
 2.  The correlation analysis is conducted across all predictors, including the original multispectral band
 
@@ -169,59 +252,51 @@ Evaluating the user's predictor selection is crucial step in determining the bes
 
 ![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low.png){fig-align="center" width="710"}
 
-1.  The system perform input validation prior to RFE
+1.  Input validation
 
-    - If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors
+    Prior to running the RFE, Luma-GE is design to perform input validation checks just in case a missing parameter is detected. If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors. If the input is valid, proceed with RFE calculation
 
-    - If the input is valid, proceed with RFE calculation
+    ::: callout-tip
+    ## Related Function
 
-      ::: callout-tip
-      ## Related Function
+    `predictor.RFEGEE.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+    :::
 
-      `predictor.RfeGee.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
-      :::
+2.  Default RFE configuration
 
-2.  The system perform RFE with default configuration and report the optimal predictors to the user.
+    -   Minimum feature to select: 10
+    -   Minimum random forest tree: 100
+    -   Training data (for RFE): 70% of user input
+    -   Test data (for RFE): 30% of user input
 
-    - the default configuration are as follow:
+    Since Earth Engine did not have default feature selection algorithm, the Luma GE create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
 
-      - Minimum feature to select: 10
-      - Minimum random forest tree: 100
-      - Training data (for RFE): 70% of user input
-      - Test data (for RFE): 30% of user input
+::: callout-tip
+## Related Function
 
-    - Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
+`predictor.RFEGEE._train_classifier()` : core function to perform random forest classification with default configuration.
 
-      ::: callout-tip
-      ## Related Function
+`predictor.RFEGEE._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
 
-      `predictor.RfeGee._train_classifier()` : core function to perform random forest classification with default configuration.
+`predictor.RRGEE._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
 
-      `predictor.RfeGee._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
+`predictor.RFGEE.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling model importance and its accuracy.
+:::
 
-      `predictor.RfeGee._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
+To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete. The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve. Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
 
-      `predictor.RfeGee.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.
-      :::
+::: callout-tip
+## Related Function
 
-    - To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.
+`predictor.RFEGEE.get_selected_features` Function to retrieve optimal predictors list based on RFE result
 
-    - The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve
+`predictor.RFEGEE.get_ranking` Function to rank importance of each predictors
 
-      ::: callout-tip
-      ## Related Function
+`predictor.RFEGEE.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
 
-      `predictor.RfeGee.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+`predictor.RFEGEE.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
 
-      `predictor.RfeGee.get_ranking` Function to rank importance of each predictors
+`predictor.RFGEE.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
 
-      `predictor.RfeGee.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
-
-      `predictor.RfeGee.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
-
-      `predictor.RfeGee.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
-
-      `predictor.RfeGee.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
-      :::
-
-    - Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
+`predictor.RFEGEE.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+:::
