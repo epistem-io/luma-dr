@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -26,7 +26,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -40,14 +59,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="./04_sample_data_quality.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fd0503e23dce65854c81c5baaade3bdf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6a629bff3a0aec5539adec26986c1e98.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -79,17 +99,17 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./05_predictor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./05_predictor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -100,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./images/epistem_logo_color.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
@@ -142,13 +162,10 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">General Development Settings</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">General Development Settings</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./python_setup.html" class="sidebar-item-text sidebar-link">
@@ -171,13 +188,10 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Luma Geospatial Engine</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-controls="quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-2-label">Luma Geospatial Engine</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" aria-labelledby="quarto-sidebar-section-2-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_data_acquisition.html" class="sidebar-item-text sidebar-link">
@@ -230,13 +244,10 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Luma Interface</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-controls="quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-3-label">Luma Interface</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" aria-labelledby="quarto-sidebar-section-3-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./interface_map_generation.html" class="sidebar-item-text sidebar-link">
@@ -263,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -272,8 +283,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
   <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a>
   <ul class="collapse">
-  <li><a href="#sec-selection-of-predictors" id="toc-sec-selection-of-predictors" class="nav-link" data-scroll-target="#sec-selection-of-predictors"><span class="header-section-number">5.1</span> Selection of Predictors</a></li>
-  <li><a href="#calculation-of-predictors" id="toc-calculation-of-predictors" class="nav-link" data-scroll-target="#calculation-of-predictors"><span class="header-section-number">5.2</span> Calculation of Predictors</a></li>
+  <li><a href="#sec-selection-of-predictors" id="toc-sec-selection-of-predictors" class="nav-link" data-scroll-target="#sec-selection-of-predictors"><span class="header-section-number">5.1</span> Predictor Availability Check and Selection</a></li>
+  <li><a href="#predictor-computation" id="toc-predictor-computation" class="nav-link" data-scroll-target="#predictor-computation"><span class="header-section-number">5.2</span> Predictor Computation</a></li>
   <li><a href="#predictors-visualization-and-analysis" id="toc-predictors-visualization-and-analysis" class="nav-link" data-scroll-target="#predictors-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Visualization and Analysis</a></li>
   <li><a href="#semi-automatic-predictor-selection-optimization" id="toc-semi-automatic-predictor-selection-optimization" class="nav-link" data-scroll-target="#semi-automatic-predictor-selection-optimization"><span class="header-section-number">5.4</span> Semi Automatic Predictor Selection Optimization</a></li>
   </ul></li>
@@ -281,9 +292,9 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./05_predictor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_data_acquisition.html">Luma Geospatial Engine</a></li><li class="breadcrumb-item"><a href="./05_predictor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-module-5" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictor Generation</span></span></h1>
 </div>
@@ -304,7 +315,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="module-overview" class="level1 unnumbered">
 <h1 class="unnumbered">Module Overview</h1>
-<p>The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.</p>
+<p>The aim of Module 5 is to derive a set of predictors that optimize the discrimination of LULC classes in the classification model. Currently, Luma Geospatial Engine supports predictors derived from several categories, namely spectral transformations, topographical data, distance-based metrics, and radar backscatter. These features are critical because raw spectral data alone often fail to adequately separate spectral or spatially similar classes, and their inclusion enhances model accuracy and robustness.</p>
 <p>The module outputs a comprehensive predictor stack that serves as input for LULC map generation in Module 6.</p>
 </section>
 <section id="input" class="level1 unnumbered">
@@ -324,12 +335,12 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>supported spectral transformations</td>
+<td>spectral transformations</td>
 <td>System’s input</td>
 <td>Retrieve the pre-define function from existing library</td>
 </tr>
 <tr class="even">
-<td>Terrain-based metrics</td>
+<td>Topographical Data</td>
 <td>System’s input</td>
 <td></td>
 </tr>
@@ -339,16 +350,21 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="even">
+<td>Radar Backscatter</td>
+<td>System’s Input</td>
+<td></td>
+</tr>
+<tr class="odd">
 <td>AOI</td>
 <td>Input from Other Modules</td>
 <td>Output from <a href="01_data_acquisition.html" class="quarto-xref"><span>Chapter 1</span></a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Near-cloud free satellite imagery</td>
 <td>Input from Other Modules</td>
 <td>Output from <a href="01_data_acquisition.html" class="quarto-xref"><span>Chapter 1</span></a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Sample data</td>
 <td>Input from Other Modules</td>
 <td>Output from <a href="03_sample_data.html" class="quarto-xref"><span>Chapter 3</span></a></td>
@@ -358,31 +374,51 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="output" class="level1 unnumbered">
 <h1 class="unnumbered">Output</h1>
-<p>Covariate stack used in the classification model (Module 6)</p>
+<p>Predictor/covariate/feature stack used in the classification model (Module 6)</p>
 </section>
 <section id="process" class="level1 unnumbered">
 <h1 class="unnumbered">Process</h1>
 <section id="sec-selection-of-predictors" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec-selection-of-predictors"><span class="header-section-number">5.1</span> Selection of Predictors</h2>
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-selection-of-predictors"><span class="header-section-number">5.1</span> Predictor Availability Check and Selection</h2>
 <ol type="1">
-<li><p>The system presents a list of available predictor categories, which include:</p>
+<li><p>The Luma GE supports various predictors that can be compute on the fly or manually uploaded by the user. The supported predictor categories are as follow:</p>
 <ul>
-<li><p>Spectral transformation (indices)</p></li>
-<li><p>Terrain-based metrics</p></li>
-<li><p>Distance-based metrics</p></li>
+<li><p>Spectral transformation</p></li>
+<li><p>Topographical data</p></li>
+<li><p>Distance from feature</p></li>
+<li><p>Radar Backscatter</p></li>
 </ul></li>
+<li><p>The system perform confirmation availability of user selected predictors by confirming sensor selection and temporal coverage</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.predictor_catalog()</code> : central registry for supported predictor in Luma GE</p>
+<p><code>predictor.predictor_catalog.get_all_catalog()</code> : Return a copy of the entire predictor catalog dictionary.</p>
+<p><code>predictor.predictor_catalog.check_availability()</code> : Evaluate availability for all registered predictors based on sensor and temporal range.</p>
+<p><code>predictor.sensorDetector()</code> : Utility for detecting satellite sensor category and resolving sensor-specific band mappings.</p>
+<p><code>predictor.sensorDetector.normalize_sensor_name()</code>: Normalize a sensor string hint into a canonical sensor family.</p>
+<p><code>predictor.sensorDetector.detect_sensor_from_bands()</code>: Detect sensor category from a list of band names. Sentinel-2 contains “Red-edge” bands, while Landsat contains “thermal” band, which can serves as sensor identifier</p>
+<p><code>predictor.sensorDetector.detect_sensor()</code>: wrapper function to automatically detect sensor selection either using sensor name or band names</p>
+</div>
+</div></li>
 </ol>
 </section>
-<section id="calculation-of-predictors" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="calculation-of-predictors"><span class="header-section-number">5.2</span> Calculation of Predictors</h2>
+<section id="predictor-computation" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="predictor-computation"><span class="header-section-number">5.2</span> Predictor Computation</h2>
 <ol type="1">
-<li><p>The system retrieves the predictors based on user’s selection. The source of the predictors are as the following:</p>
+<li><p>Topographical data</p>
 <ul>
-<li><p>Terrain-based metrics</p>
-<ul>
-<li><p><strong>Elevation</strong>: The system fetch Digital Elevation Model (DEM) from GEE data catalog. Several DEM is supported by Luma-GE, namely <a href="https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id">NASADEM</a>, <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands">Copernicus GLO-30</a>, and <a href="https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1">ALOS DSM V4</a>. The default choice for the DEM is NASADEM since it provide higher vertical accuracy compared to other DEM product. All of the aforementioned DEM product have the spatial resolution of 30 m. Matching the spatial resolution of Landsat data primarily use in Luma</p></li>
+<li><p><strong>Elevation</strong>: Refers to Digital Elevation Model (DEM) products, widely used in land cover classification framework. Several DEM is supported by Luma-GE, namely <a href="https://developers.google.com/earth-engine/datasets/catalog/NASA_NASADEM_HGT_001?hl=id">NASADEM</a> (default), <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30?hl=id#bands">Copernicus GLO-30</a>, and <a href="https://developers.google.com/earth-engine/datasets/catalog/JAXA_ALOS_AW3D30_V4_1">ALOS DSM V4</a>. All of the aforementioned DEM product have the spatial resolution of 30 m</p></li>
 <li><p><strong>Slope</strong>: Calculated from selected DEM using <code>ee.Terrain.slope</code> function. Slope unit is presented in degree units (0-90)</p></li>
 <li><p><strong>Aspect</strong>: Similar to slope, this data is calculated from the selected DEM, using <code>ee.Terrain.aspect</code>. The units are degree where 0=N, 90=E, 180=S, 270 =W</p></li>
+<li><p><strong>Landform</strong>: Refers to physical terrain attributes and classifications calculated from grid-based surface elevation values. Luma use global ALOS Landform dataset created by combining the Continuous Heat-Insolation Load Index (CHILI) and the multi-scale Topographic Position Index (mTPI) data</p></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -394,13 +430,14 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>predictor.terrain_calculator.calculate_elevation</code> : Core function to fetch DEM data from GEE catalog.</p>
+<p><code>predictor.terrain_calculator.calculate_elevation</code> : Function to retrieve supported DEM data from GEE catalog.</p>
 <p><code>predictor.terrain_calculator.calculate_slope</code> : Core function to calculate slope from selected DEM data</p>
 <p><code>predictor.terrain_calculator.calculate_aspect</code> : Core function to calculate aspect data from selected DEM data</p>
+<p><code>predictor.terrain_calculator.get_landform</code> : Core function to retrieve global landform data and clip it based on AOI</p>
 </div>
 </div></li>
 <li><p>Distance-based metrics</p>
-<p>The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements.</p>
+<p>The system calculates distance from several features that might affect the presence of certain land cover class. The selection and distance calculation of these features are inspired by RESTORE+ project. Distances can be measured from various infrastructures, primarily roads, coastlines, and settlements. Since distance calculation required heavy computation, pre calculated euclidean distance will be stored in the asset for three province in Indonesia, namely South Sumatera, South Sulawesi, and East Nusa Tenggara. For other regions, distance computation will be calculated on the fly currently supporting distance from primary roads. The road feature collection use as the basis for distance calculation, utilize Global Road Inventory Projects <span class="citation" data-cites="meijer_global_2018">(<a href="#ref-meijer_global_2018" role="doc-biblioref">Meijer et al. 2018</a>)</span>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -411,17 +448,18 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>predictor.distance_calculator.calculate_distance_metrics</code>: Core function to intialize the distance calculation logic for coastline, road, and settlement</p>
+<p><code>predictor.distance_calculator.calculate_distance_metrics</code>: Core function to initialize the distance calculation logic for coastline, road, and settlement</p>
+<p><code>predictor.get_predefine_distance</code> : function to retrive pre-calculated distance from main road raster from earth engine asset.</p>
 </div>
 </div>
 <p>Currently, the system support distance calculation from the following source:</p>
 <ul>
-<li><p>Coastiline: <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/">Natural Earth 10m coastline data</a>,</p></li>
+<li><p>Coastline: <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/">Natural Earth 10m coastline data</a>,</p></li>
 <li><p>Settlement: <a href="https://dataforgood.facebook.com/dfg/tools/high-resolution-population-density-maps">Facebook High Resolution Settlement Layer (HRSL)</a></p></li>
-<li><p>Road: Indonesian Topographic Map (<em>Rupa Bumi Indonesia</em>) and OpenStreetMap data</p></li>
+<li><p>Road: Indonesian Topographic Map (<em>Rupa Bumi Indonesia</em>) and OpenStreetMap</p></li>
 </ul></li>
 <li><p>Spectral transformation indices</p>
-<p>The system retrieves various spectral indices from the <a href="https://github.com/awesome-spectral-indices/spyndex">Awesome Spectral Indices</a> (ASI), a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Further reading regarding this library refers to <a href="https://doi.org/10.1038/s41597-023-02096-0">Montero (2023)</a>. The following indices have been adapted for Luma-GE:</p>
+<p>Luma utilize open-source <a href="https://github.com/awesome-spectral-indices/spyndex">Awesome Spectral Indices</a> (ASI) library, a standardized, ready-to-use curated list of spectral indices that can be used as expressions for computing spectral indices in remote sensing applications. Therefore, manually defining the expression is not required. However, when adding a new index, it should be cross-reference with the availability of the index in the library. For further reading on the formulation of the library and its supported indices, see <span class="citation" data-cites="montero_standardized_2023">(<a href="#ref-montero_standardized_2023" role="doc-biblioref">Montero et al. 2023</a>)</span>. Currently, the supported index in Luma are as follows:</p>
 <ul>
 <li><p>Vegetation-related indices:</p>
 <ul>
@@ -429,22 +467,23 @@ ul.task-list li input[type="checkbox"] {
 <li><p>EVI (Enhanced Vegetation Index)</p></li>
 <li><p>SAVI (Soil Adjusted Vegetation Index)</p></li>
 <li><p>MSAVI (Modified Soil Adjusted Vegetation Index)</p></li>
-<li><p>OSAVI (Optimized Soil Adjusted Vegetation Index)</p></li>
-<li><p>ARVI (Atmospherically Resistant Vegetation Index)</p></li>
-<li><p>GBNDVI (Green-Blue Normalized Difference Vegetation Index)</p></li>
 <li><p>GNDVI (Green Normalized Difference Vegetation Index)</p></li>
+<li><p>MCARI1 (Modified Chlorophyll Absorption in Reflectance Index 1)</p></li>
 </ul></li>
 <li><p>Water-related indices:</p>
 <ul>
 <li><p>MNDWI (Modified Normalized Difference Water Index)</p></li>
+<li><p>ANDWI (Augmented Normalized Difference Water Index)</p></li>
 <li><p>NDMI (Normalized Difference Moisture Index)</p></li>
 <li><p>AWEInsh (Automatic Water Extraction Index with Shadow Elimination)</p></li>
+<li><p>NDTI (Normalized Difference Turbidity Index)</p></li>
 </ul></li>
 <li><p>Soil / built-up-related indices:</p>
 <ul>
 <li><p>NDBI (Normalized Difference Build-Up Index)</p></li>
 <li><p>DBSI (Dry Bareness Soil Index)</p></li>
 <li><p>MBI (Modified Build-up Index)</p></li>
+<li><p>BLFEI (Built-Up Land Feature Extraction Index)</p></li>
 </ul></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -462,11 +501,53 @@ ul.task-list li input[type="checkbox"] {
 <p><code>predictor.SpectralCalculator.validate_coefficients</code>: Conducts checks the provided coefficients are within reasonable ranges and provides warnings for unusual values that might indicate errors.</p>
 <p><code>predictor.SpectralCalculator.validate_index_requirements</code> : Validate that required bands are available for index computation.</p>
 <p><code>predictor.SpectralCalculator.calculate_indices_with_collection</code>: Conducts calculation for each scene (image collection) and then aggregate the result using mean reducers. This logic is used to preserve phenological pattern of vegetation and other land features which ultimately loss during if the final image composite is used.</p>
-<p><code>predictor.SpectralCalculator.get_calculation_summary</code> : provide summary of the calculation process of predictors :::</p>
+<p><code>predictor.SpectralCalculator.get_calculation_summary</code> : provide summary of the calculation process of predictors</p>
 </div>
 </div></li>
+<li><p>Radar Backscatter</p>
+<p>Luma-GE supports Synthetic Aperture Radar (SAR) data as predictors for classification. Because radar observations are not affected by cloud cover, they can provide useful information in cloud-prone regions and complement optical imagery. The supported datasets are:</p>
+<ul>
+<li><p>Sentinel-1 C-Band Dual Polarization</p>
+<p>Sentinel-1 carries a dual-polarization C-band SAR instrument. In Google Earth Engine, the available data are Ground Range Detected (GRD) products processed with the Sentinel-1 Toolbox to produce calibrated, orthorectified imagery. Luma-GE converts the log-scaled digital number (DN) values to normalized backscatter values. The dataset is available from 2014, has a six-day revisit interval at the equator, and provides 10 m spatial resolution.</p></li>
+<li><p>ALOS PALSAR/PALSAR-2</p>
+<p>The Advanced Land Observing Satellite (<a href="https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/alos" title="ALOS">ALOS</a>) carries the Phased Array type L-band Synthetic Aperture Radar (<a href="https://www.earthdata.nasa.gov/data/instruments/palsar" title="PALSAR">PALSAR</a>). The PALSAR record begins in 2007 and has 25 m spatial resolution. A gap in coverage between ALOS and ALOS-2 means that data are unavailable from 2011 to 2014. Luma-GE currently supports yearly PALSAR mosaics, with the latest coverage available from January 2024. PALSAR ScanSAR data are not supported because they require extensive preprocessing.</p></li>
+</ul>
+<p>The Sentinel-1 preprocessing workflow refers to <span class="citation" data-cites="mullissa_sentinel_2021">(<a href="#ref-mullissa_sentinel_2021" role="doc-biblioref">Mullissa et al. 2021</a>)</span> in the following repository: <a href="https://github.com/adugnag/gee_s1_ard/tree/main">S1_ard</a>. Pre-processing for Sentinel-1 include IW mode filtering, incidence-angle masking, low-backscatter swath-edge masking and speckle filtering (optional). Since PALSAR dataset already a yearly mosaic product, pre-processing only include radiometric calibration (conversion from DN to Db).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sar.get_sar_data:</code> Retrieve and preprocess SAR backscatter polarizations and polarization ratios as predictors for LULC mapping.</p>
+<p><code>sar.get_sar_data.apply_speckle_filter():</code> function to perform speckle filtering for calibrated gamma-naught (dB) SAR image</p>
+<p><code>sar.get_sar_data.mask_s1_border_and_angle():</code> Mask Sentinel-1 pixels with incidence angle outside [min_angle, max_angle] and low-backscatter swath-edge noise (VV or VH &lt;= edge_db_floor).</p>
+<p><code>sar.get_sar_data.get_sentinel1():</code> Build sentinel-1 backscatter predictor image</p>
+<p><code>sar.get_sar_data.mask_and_calibrate_palsar():</code> Mask invalid PALSAR pixels using the ‘qa’ band and calibrate 16-bit DN to gamma-naught (dB).</p>
+<p><code>sar.get_sar_data._resolve_palsar_year():</code> resolve the available PALSAR mosaic years intersection</p>
+<p><code>sar.get_sar_data.get_palsar():</code> Build PALSAR backscatter predictor image. The function handle the following PALSAR collection: <code>JAXA/ALOS/PALSAR/YEARLY/SAR</code> (2007 - 2010) and <code>JAXA/ALOS/PALSAR/YEARLY/SAR_EPOCH</code> (2015 - 2024)</p>
+</div>
+</div>
+<p>The list of radar backscatter band for each sensor are as follow:</p>
+<ol type="1">
+<li><p>Sentinel-1</p>
+<ul>
+<li><p>VV: single co-polarization, vertical transmit/vertical receive</p></li>
+<li><p>VH: single co-polarization, vertical transmit/horizontal receive</p></li>
+<li><p>VV-VH Ratio: Ratio between VV and VH polarization</p></li>
 </ul></li>
-<li><p>The main orchestration of predictor calculation is conduced after the system validate the required input. The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.</p>
+<li><p>ALOS PALSAR</p>
+<ul>
+<li><p>HH: single polarization, horizontal transmit/horizontal receive</p></li>
+<li><p>HV: single polarization, horizontal transmit/vertical receive</p></li>
+<li><p>HH-HV Ratio: Ratio between HH and HV polarization</p></li>
+</ul></li>
+</ol>
+<p>The main orchestration of predictor calculation is conduced after the system validate the required input. The entry point for SAR predictor is define through this source code The system combines the additional predictors chosen from this module with the multispectral bands from Module 1.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -480,13 +561,15 @@ ul.task-list li input[type="checkbox"] {
 <p><code>predictor.PredictorCalculation.validate_prerequisites:</code> Validate that required inputs are available for predictor computation. Required input are composite (<code>ee.Image</code>), AOI (<code>ee.FeatureCollection</code>) , and raw image collection (<code>ee.Image.Collection</code>)</p>
 <p><code>predictor.PredictorCalculation.compute_predictors</code> : Initialize predictor computation by validating inputs, calculating selected terrain and spectral metrics, and stacking them into a final output.</p>
 <p><code>predictor.PredictorCalculation.prepare_module6_summary:</code> Prepare summary metadata for module 6</p>
+<p><code>predictor.PredictorCalculation.resolve_date_range()</code>: resolve date range selection between optical imagery date selection with radar date selection. Therefore, radar date range will always follow optical date selection</p>
+<p><code>predictor.PredictorCalculation.resolve_sar_selection()</code>: determine which radar sensor is selected based on user optical sensor selection</p>
 </div>
 </div></li>
 </ol>
 </section>
 <section id="predictors-visualization-and-analysis" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="predictors-visualization-and-analysis"><span class="header-section-number">5.3</span> Predictors Visualization and Analysis</h2>
-<p>This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data.</p>
+<p>This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data. Predictor quality analysis is heavily related with sample quality analysis modules.</p>
 <ol type="1">
 <li><p>If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach</p>
 <ul>
@@ -521,10 +604,8 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <ol type="1">
-<li><p>The system perform input validation prior to RFE</p>
-<ul>
-<li><p>If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors</p></li>
-<li><p>If the input is valid, proceed with RFE calculation</p>
+<li><p>Input validation</p>
+<p>Prior to running the RFE, Luma-GE is design to perform input validation checks just in case a missing parameter is detected. If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors. If the input is valid, proceed with RFE calculation</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -535,61 +616,66 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>predictor.RfeGee.validate_inputs():</code>validate all input require for RFE calculations, namely: training data (<code>FeatureCollection</code>), test data (<code>FeatureCollection</code>), number of feature selected (&gt;1), and predictors (<code>ee.Image</code>)</p>
+<p><code>predictor.RFEGEE.validate_inputs():</code>validate all input require for RFE calculations, namely: training data (<code>FeatureCollection</code>), test data (<code>FeatureCollection</code>), number of feature selected (&gt;1), and predictors (<code>ee.Image</code>)</p>
 </div>
 </div></li>
-</ul></li>
-<li><p>The system perform RFE with default configuration and report the optimal predictors to the user.</p>
-<ul>
-<li><p>the default configuration are as follow:</p>
+<li><p>Default RFE configuration</p>
 <ul>
 <li>Minimum feature to select: 10</li>
 <li>Minimum random forest tree: 100</li>
 <li>Training data (for RFE): 70% of user input</li>
 <li>Test data (for RFE): 30% of user input</li>
-</ul></li>
-<li><p>Since Earth Engine did not have default feature selection algorithm, the system create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by <a href="https://github.com/DanGeospatial/GEE_Wetland_Classification">this github repository</a></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Function
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>predictor.RfeGee._train_classifier()</code> : core function to perform random forest classification with default configuration.</p>
-<p><code>predictor.RfeGee._get_importance_and_accuracy()</code> :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.</p>
-<p><code>predictor.RfeGee._adaptive_step()</code> : fallback mechanism to reduce API calls in case computational loads become larger.</p>
-<p><code>predictor.RfeGee.fit()</code>: function to conduct the complete workflow for the entire RFE, including train classifier and calling importance and accuracy.</p>
-</div>
-</div></li>
-<li><p>To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete.</p></li>
-<li><p>The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Related Function
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>predictor.RfeGee.get_selected_features</code> Function to retrieve optimal predictors list based on RFE result</p>
-<p><code>predictor.RfeGee.get_ranking</code> Function to rank importance of each predictors</p>
-<p><code>predictor.RfeGee.plot_accuracy_curve</code> Plot the accuracy curve as each features is remove from original input features</p>
-<p><code>predictor.RfeGee.plot_feature_rankings</code> Plot the feature/predictor importance from RFE calculations</p>
-<p><code>predictor.RfeGee.plot_rfe_summary</code> Create summary plot of accuracy curve and feature rankings</p>
-<p><code>predictor.RfeGee.get_results_dataframe</code> Generate a dataframe of the corresponding accuracy and importance data</p>
-</div>
-</div></li>
-<li><p>Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features</p></li>
-</ul></li>
+</ul>
+<p>Since Earth Engine did not have default feature selection algorithm, the Luma GE create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by <a href="https://github.com/DanGeospatial/GEE_Wetland_Classification">this github repository</a></p></li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.RFEGEE._train_classifier()</code> : core function to perform random forest classification with default configuration.</p>
+<p><code>predictor.RFEGEE._get_importance_and_accuracy()</code> :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.</p>
+<p><code>predictor.RRGEE._adaptive_step()</code> : fallback mechanism to reduce API calls in case computational loads become larger.</p>
+<p><code>predictor.RFGEE.fit()</code>: function to conduct the complete workflow for the entire RFE, including train classifier and calling model importance and its accuracy.</p>
+</div>
+</div>
+<p>To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete. The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve. Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Related Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>predictor.RFEGEE.get_selected_features</code> Function to retrieve optimal predictors list based on RFE result</p>
+<p><code>predictor.RFEGEE.get_ranking</code> Function to rank importance of each predictors</p>
+<p><code>predictor.RFEGEE.plot_accuracy_curve</code> Plot the accuracy curve as each features is remove from original input features</p>
+<p><code>predictor.RFEGEE.plot_feature_rankings</code> Plot the feature/predictor importance from RFE calculations</p>
+<p><code>predictor.RFGEE.plot_rfe_summary</code> Create summary plot of accuracy curve and feature rankings</p>
+<p><code>predictor.RFEGEE.get_results_dataframe</code> Generate a dataframe of the corresponding accuracy and importance data</p>
+</div>
+</div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-meijer_global_2018" class="csl-entry" role="listitem">
+Meijer, J. R., M. A. J. Huijbregts, K. C. G. J. Schotten, and A. M. Schipper. 2018. <span>“Global Patterns of Current and Future Road Infrastructure.”</span> <em>Environmental Research Letters</em> 13 (6): 064006. <a href="https://doi.org/10.1088/1748-9326/aabd42">https://doi.org/10.1088/1748-9326/aabd42</a>.
+</div>
+<div id="ref-montero_standardized_2023" class="csl-entry" role="listitem">
+Montero, David, César Aybar, Miguel D. Mahecha, Francesco Martinuzzi, Maximilian Söchting, and Sebastian Wieneke. 2023. <span>“A Standardized Catalogue of Spectral Indices to Advance the Use of Remote Sensing in Earth System Research.”</span> <em>Scientific Data</em> 10: 157. <a href="https://doi.org/10.1038/s41597-023-02096-0">https://doi.org/10.1038/s41597-023-02096-0</a>.
+</div>
+<div id="ref-mullissa_sentinel_2021" class="csl-entry" role="listitem">
+Mullissa, Adugna, Andreas Vollrath, Christelle Odongo-Braun, et al. 2021. <span>“Sentinel-1 SAR Backscatter Analysis Ready Data Preparation in Google Earth Engine.”</span> <em>Remote Sensing</em> 13 (10): 1954. <a href="https://doi.org/10.3390/rs13101954">https://doi.org/10.3390/rs13101954</a>.
+</div>
+</div>
 </section>
 </section>
 
@@ -672,7 +758,8 @@ ul.task-list li input[type="checkbox"] {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -681,8 +768,69 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -696,6 +844,7 @@ ul.task-list li input[type="checkbox"] {
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -858,44 +1007,54 @@ ul.task-list li input[type="checkbox"] {
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -994,7 +1153,10 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
-<nav class="page-navigation">
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
   <div class="nav-page nav-page-previous">
       <a href="./04_sample_data_quality.html" class="pagination-link" aria-label="Sample Data Quality Analysis">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sample Data Quality Analysis</span></span>
