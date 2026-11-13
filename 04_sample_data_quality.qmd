@@ -4,23 +4,25 @@
 
 This module assesses the spectral separability of LULC classes using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from Module 1.
 
+Since TD algorithms are parametric separability metric, non-parametric separability and visualization tools for sample data quality assessment are supported using Silouette Score, Principal Component Analysis (PCA) and t-SNE (t-distributed Stochastic Neighbor Embedding). PCA and t-SNE are data reduction. Both techniques are designed to transform high-dimensional data into a lower-dimensional space. These approach provides visualization for determining the cluster separability between various predictor used in the classification
+
 This module is diagnostic only and does not produce inputs for subsequent modules. Its outputs support interpretation of class confusion and provide justification for feature enhancement in later stages of the workflow.
 
 # Input {.unnumbered}
 
-+------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
-| Name of Input                            | Input Type               | Details                                                                                         |
-+==========================================+==========================+=================================================================================================+
-| Parameters for the separability analysis | User's input             | Contains:                                                                                       |
-|                                          |                          |                                                                                                 |
-|                                          |                          | - Spatial resolution of the imagery from Module 1 can be adjusted for the separability analysis |
-|                                          |                          |                                                                                                 |
-|                                          |                          | - Number of maximum pixels which the analysis will run for each pair of classes                 |
-+------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
-| Sample dataset                           | Input from Other Modules | Output from Module 3                                                                            |
-+------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
-| Near-cloud free satellite imagery        | Input from Other Modules | Output from Module 1                                                                            |
-+------------------------------------------+--------------------------+-------------------------------------------------------------------------------------------------+
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
+| Name of Input                            | Input Type               | Details                                                                                           |
++==========================================+==========================+===================================================================================================+
+| Parameters for the separability analysis | User's input             | Contains:                                                                                         |
+|                                          |                          |                                                                                                   |
+|                                          |                          | -   Spatial resolution of the imagery from Module 1 can be adjusted for the separability analysis |
+|                                          |                          |                                                                                                   |
+|                                          |                          | -   Number of maximum pixels which the analysis will run for each pair of classes                 |
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
+| Sample dataset                           | Input from Other Modules | Output from Module 3                                                                              |
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
+| Near-cloud free satellite imagery        | Input from Other Modules | Output from Module 1                                                                              |
++------------------------------------------+--------------------------+---------------------------------------------------------------------------------------------------+
 
 # Output {.unnumbered}
 
@@ -99,9 +101,9 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     `sample_data_quality.sample_quality.get_sample_stats_df()` : to turn the statistic information into a dataframe format.
     :::
 
-### Extracting spectral value
+### Extracting spectral and predictor value
 
-1.  The system extracts the pixel-level spectral values for each sample data by sampling the composite image at the specified scale. The system also limits the maximum number of pixels per LULC class that will be extracted to avoid memory overload.
+1.  The system extracts the pixel-level spectral values for each sample data by sampling the composite image at the specified scale. The system also limits the maximum number of pixels per LULC class that will be extracted to avoid memory overload. Additionally, the sample
 
     ::: callout-tip
     ## Related Function
@@ -109,6 +111,10 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     `sample_data_quality.sample_quality.extract_spectral_values()` : to extract and compile spectral reflectance values for all sample data. The result is a dataframe containing band values for each sample data.
 
     `sample_data_quality.sample_quality.limit_samples_per_class()` : limits (down-samples) the number of sample data per class whenever the number of available samples exceeds the maximum pixel threshold with random sampling.
+
+    `sample_data_quality.get_feature_column`: Resolve valid numeric feature/predictor columns from the DataFrame.
+
+    `sample_data_quality._stratified_subsample` : Perform stratified subsampling across classes so non-parametric metrics and embeddings execute quickly on large extracted pixel tables.
     :::
 
 ### Calculating the extracted spectral feature statistics {#sec-sample-pixel-stats}
@@ -141,6 +147,8 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     `sample_data_quality.sample_quality.lowest_separability()`: extracts the class pairs with the lowest separability scores.
 
     `sample_data_quality.sample_quality.sum_separability()`: produces a summary report counting how many class pairs fall under good, weak, or poor separability categories.
+
+    `sample_data_quality.compute_silhouette_analysis`: Compute non-parametric Silhouette Score analysis on standardized predictor features. Evaluates how tightly grouped each class is relative to its nearest neighboring class in \[-1.0, +1.0\] without assuming Gaussian distributions or inverting covariance matrices.
     :::
 
 ## Visualization of Reference Data's Spectral Profile {#sec-spectral-profile-visualization}
@@ -161,4 +169,8 @@ This sub-step does not involve any operations within the Luma Geospatial Engine.
     `sample_data_quality.spectral_plotter.add_elipse()`: draws a confidence ellipse axis for a class’ 2D band distribution (used by `static_scatter_plot`).
 
     `sample_data_quality.spectral_plotter.scatter_plot_3d()`: builds an interactive 3D scatter plot to explore three-band feature space and rotate/zoom clusters.
+
+    `sample_data_quality.compute_tsne_coordinates()`: Compute 2D or 3D t-SNE embedding coordinates on standardized predictor features. Returns a DataFrame containing TSNE_1, TSNE_2 (, TSNE_3) and class metadata.
+
+    `sample_data_quality.compute_pca_coordinates()` : Compute PCA projection coordinates, explained variance ratios, and feature loadings on standardized predictor features.
     :::

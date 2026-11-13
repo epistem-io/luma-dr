@@ -224,7 +224,7 @@ Predictor/covariate/feature stack used in the classification model (Module 6)
 
 ## Predictors Visualization and Analysis
 
-This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data.
+This section allow the user to visualize the resulted predictors to visually inspect the spatial distribution of the data. Predictor quality analysis is heavily related with sample quality analysis modules.
 
 1.  If the option to conduct correlation analysis was selected by the user, the system conduct correlation analysis using the following approach
 
