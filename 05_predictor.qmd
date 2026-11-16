@@ -246,57 +246,94 @@ This section allow the user to visualize the resulted predictors to visually ins
     `predictor.EECorrelationAnalysis.visualize`: Visualize the correlation analysis result using heatmap
     :::
 
-## Semi Automatic Predictor Selection Optimization
+## Semi Automatic Predictor Selection and Recommendation
 
-Evaluating the user's predictor selection is crucial step in determining the best combination of predictors that resulted in the optimal model performance. This approach is more commonly known as feature engineering in machine learning terminology. One of the commonly use feature engineering approach is Recursive Feature Elimination (RFE). RFE applied a backward step-wise selection process to find optimal combination of predictors based on its contribution to the model. The RFE starts with training the model with all input predictors and discards the weakest predictor one iteration at a time, while re-evaluating their importance after each removal. The workflow for RFE is shown in the figure below:
+Luma GE provides recommendations for ideal predictor selection using a commonly used feature engineering approach, namely Recursive Feature Elimination (RFE) and Recursive Feature Elimination with Cross-Validation (RFECV). RFE/RFECV applies a backward step-wise selection process to find the optimal combination of predictors based on their contribution to the model. It starts by training the model with all input predictors and discards the weakest predictor(s) iteratively while re-evaluating feature importance after each removal. Luma GE supports RFE natively via Earth Engine server-side computation (`RFEGEE`) as well as a local pure-Python implementation (`RFE_CV`). The workflow for RFE is shown in the figure below:
 
 ![](images/mermaid-diagram-puZdu9ynov1fOuPM-30oF-low.png){fig-align="center" width="710"}
 
+### RFE-GEE
+
 1.  Input validation
 
-    Prior to running the RFE, Luma-GE is design to perform input validation checks just in case a missing parameter is detected. If the input is invalid, provide informative error messages. The invalid input includes missing data (training or testing) or missing ancillary predictors. If the input is valid, proceed with RFE calculation
+    Prior to running RFE, Luma-GE performs input validation checks to detect invalid or missing parameters and raise informative error messages. Checked inputs include training data (`ee.FeatureCollection`), optional test data (`ee.FeatureCollection`, required when `track_accuracy=True`), minimum number of features to select (`>= 1` and `<= len(features)`), and elimination `step` (`> 0`). If all inputs are valid, the RFE workflow proceeds.
 
     ::: callout-tip
     ## Related Function
 
-    `predictor.RFEGEE.validate_inputs():`validate all input require for RFE calculations, namely: training data (`FeatureCollection`), test data (`FeatureCollection`), number of feature selected (\>1), and predictors (`ee.Image`)
+    `predictor.RFEGEE._validate_inputs()`: Validate all inputs required for `RFEGEE` calculations, namely: `training_data` (`ee.FeatureCollection`), `test_data` (`ee.FeatureCollection` or `None`), `n_features_to_select` (`>= 1`), and `step` (`> 0`).
     :::
 
-2.  Default RFE configuration
+2.  Default RFE-GEE configuration
 
-    -   Minimum feature to select: 10
-    -   Minimum random forest tree: 100
-    -   Training data (for RFE): 70% of user input
-    -   Test data (for RFE): 30% of user input
+    -   Minimum features to select (`n_features_to_select`): `max(1, len(features) // 2)` (half of the input features, minimum 1)
+    -   Number of Random Forest trees (`n_trees`): `50`
+    -   Step size (`step`): `1` (supports fixed integer, fractional float, or `adaptive=True`)
+    -   Auto-select optimal subset (`auto_select`): `True` (when `track_accuracy=True`)
+    -   Track validation accuracy (`track_accuracy`): `False` (requires `test_data` when enabled)
 
-    Since Earth Engine did not have default feature selection algorithm, the Luma GE create looping mechanism that train random forest classifier and return feature importance ranking and accuracy of the model for each iterations. The code is inspired by similar approach by [this github repository](https://github.com/DanGeospatial/GEE_Wetland_Classification)
+    Since Earth Engine does not provide a built-in feature selection algorithm, Luma GE implements an iterative loop that trains a Random Forest classifier (`ee.Classifier.smileRandomForest`) and retrieves variable importance (and optionally test accuracy) at each iteration. The implementation is inspired by [this GitHub repository](https://github.com/DanGeospatial/GEE_Wetland_Classification).
 
 ::: callout-tip
 ## Related Function
 
-`predictor.RFEGEE._train_classifier()` : core function to perform random forest classification with default configuration.
+`predictor.RFEGEE._train_classifier()`: Core method to train `ee.Classifier.smileRandomForest` on `training_data` using the active feature list.
 
-`predictor.RFEGEE._get_importance_and_accuracy()` :Retrieve feature importance test accuracy in a single round-trip to the Earth Engine servers. Optimizing the time required for finish the entire RFE.
+`predictor.RFEGEE._get_importance_and_accuracy()`: Retrieve feature importance (from `classifier.explain()`) and optional test accuracy in a single `.getInfo()` round-trip to Earth Engine servers per iteration.
 
-`predictor.RRGEE._adaptive_step()` : fallback mechanism to reduce API calls in case computational loads become larger.
+`predictor.RFEGEE._calculate_step()`: Calculate the number of features to drop in the current iteration; supports fixed integer steps, fractional steps, and `adaptive=True` (coarse halving when far from target, single-feature steps when near target).
 
-`predictor.RFGEE.fit()`: function to conduct the complete workflow for the entire RFE, including train classifier and calling model importance and its accuracy.
+`predictor.RFEGEE.fit()`: Conduct the complete RFE workflow, iterating through feature elimination, tracking importance and accuracy history, and auto-selecting the most parsimonious feature subset with peak accuracy when `track_accuracy=True` and `auto_select=True`.
 :::
 
-To optimize API calls in Earth Engine servers, the calculations is conducted using server-side computations, and only called after all iterations is complete. The result of RFE is visualize using graphic and tables, including the selected features, rank of eliminations, and accuracy curve. Currently, the user require to determine the number of selected predictors for RFE. Future development will optimize this features
+To optimize API calls to Earth Engine servers, importance and accuracy are bundled into a single `.getInfo()` call per iteration. The RFE results can be inspected and visualized using plots and tables, including the selected features, elimination rankings, and accuracy curve.
 
 ::: callout-tip
 ## Related Function
 
-`predictor.RFEGEE.get_selected_features` Function to retrieve optimal predictors list based on RFE result
+`predictor.RFEGEE.get_selected_features()`: Retrieve the list of selected predictor names based on the RFE result.
 
-`predictor.RFEGEE.get_ranking` Function to rank importance of each predictors
+`predictor.RFEGEE.get_ranking()`: Return a dictionary mapping each feature to its rank (`1` = selected; higher rank = eliminated earlier).
 
-`predictor.RFEGEE.plot_accuracy_curve` Plot the accuracy curve as each features is remove from original input features
+`predictor.RFEGEE.get_support()`: Return a dictionary mapping each feature to a boolean indicating whether it was selected.
 
-`predictor.RFEGEE.plot_feature_rankings` Plot the feature/predictor importance from RFE calculations
+`predictor.RFEGEE.plot_accuracy_curve()`: Plot validation accuracy vs. number of features (requires `track_accuracy=True`).
 
-`predictor.RFGEE.plot_rfe_summary` Create summary plot of accuracy curve and feature rankings
+`predictor.RFEGEE.plot_feature_rankings()`: Plot a horizontal bar chart of feature rankings (selected vs. eliminated).
 
-`predictor.RFEGEE.get_results_dataframe` Generate a dataframe of the corresponding accuracy and importance data
+`predictor.RFEGEE.plot_rfe_summary()`: Create a combined side-by-side summary plot of the accuracy curve and feature rankings.
+
+`predictor.RFEGEE.get_results_dataframe()`: Generate a `pandas.DataFrame` containing feature rank, selection status, and final importance.
+
+`predictor.RFEGEE.get_accuracy_dataframe()`: Generate a `pandas.DataFrame` containing the iteration-by-iteration feature count and accuracy history.
+:::
+
+### RFE-CV
+
+One of the key drawbacks of `RFEGEE` is computation time, which can be slow due to repeated server-client round-trips to Earth Engine. To overcome this, Luma GE provides a local pure-Python implementation (`RFE_CV`) using `scikit-learn`'s `RFECV` and `StratifiedKFold` with a `RandomForestClassifier` wrapper (`ProgressRF`). It extracts sampled training properties from Earth Engine once (with `retainGeometry=False`) or accepts a `pandas.DataFrame` directly, runs cross-validated RFE locally with live progress reporting, and omits model accuracy outputs because `scikit-learn`'s Random Forest implementation differs from Earth Engine's `smileRandomForest`.
+
+::: callout-note
+## Related Function
+
+`predictor.ProgressRF()`: Lightweight `scikit-learn` `RandomForestClassifier` wrapper that invokes an `on_fit` callback after each fit step to power live progress reporting during `RFECV`.
+
+`predictor.RFE_CV._validate_inputs()`: Validate inputs for local RFECV, including `training_data` (`ee.FeatureCollection` or `pandas.DataFrame`), `features`, `n_features_to_select`, `step`, `cv` (`>= 2`), `n_trees`, `max_depth`, `min_samples_leaf`, and `max_samples`.
+
+`predictor.RFE_CV._extract_dataframe()`: Extract `features` and `class_property` into a clean `pandas.DataFrame`. For `ee.FeatureCollection` inputs, drops geometries server-side (`retainGeometry=False`), applies balanced per-class sampling up to `max_samples`, and paginates via `ee.data.computeFeatures()`.
+
+`predictor.RFE_CV._estimate_total_fits()`: Estimate the total number of Random Forest fits across all RFECV steps and cross-validation folds for progress bar reporting.
+
+`predictor.RFE_CV.fit()`: Run local `scikit-learn` `RFECV` with `StratifiedKFold` cross-validation and `ProgressRF`, populating the recommended feature stack, rankings, support mask, and Gini feature importances.
+
+`predictor.RFE_CV.get_selected_features()`: Return the list of selected predictor names from the RFECV result.
+
+`predictor.RFE_CV.get_ranking()`: Return a dictionary mapping each feature to its RFECV rank (`1` = selected; higher values = eliminated earlier).
+
+`predictor.RFE_CV.get_support()`: Return a dictionary mapping each feature to a boolean indicating whether it was selected.
+
+`predictor.RFE_CV.select_bands()`: Subset an input `ee.Image` to only the recommended feature bands.
+
+`predictor.RFE_CV.get_results_dataframe()`: Return a `pandas.DataFrame` containing `Feature`, `Rank`, `Selected`, `Status`, and Gini `Importance`, sorted by rank and importance.
+
+`predictor.RFE_CV.plot_feature_importance()`: Plot a horizontal bar chart of Random Forest (Gini) feature importance for the recommended feature stack (and optionally eliminated features with their elimination rank).
 :::
