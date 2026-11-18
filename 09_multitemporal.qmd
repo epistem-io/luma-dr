@@ -1,0 +1,276 @@
+# Multiyear Land Use Land Cover Mapping {#sec-module-9}
+
+# Module Overview {.unnumbered}
+
+This module coordinates Land Use and Land Cover (LULC) mapping across two or more time periods (`N >= 2`) so historical and baseline maps share consistent preprocessing, feature sets, and classification outputs. It ties together imagery acquisition (@sec-module-1), training data management (@sec-module-3), sample separability diagnostics (@sec-module-4), predictor engineering (@sec-module-5), supervised classification (@sec-module-6), and thematic accuracy assessment (@sec-module-7) into a single multiyear workflow.
+
+Depending on how much reference data is available, the module automatically operates in one of two modes:
+
+-   **Model Transfer mode**: When training samples exist only for a single anchor period (typically the latest `baseline` period), the system harmonizes imagery across periods, aligns the shared spectral bands and predictors, trains one classifier on the reference period, and transfers that model to all other periods.
+-   **Batch mode**: When independent training samples are provided for every period, each period is split, trained, and evaluated separately while still sharing consistent preprocessing, predictor stacking, and reporting.
+
+# Input {.unnumbered}
+
+| Name of Input | Input Type | Details |
+|------------------------|------------------------|------------------------|
+| Area of Interest (AOI) | User's input / Input from Other Modules | Geographic boundary from @sec-module-1 within which multiyear imagery, predictors, and classifications are processed. |
+| Mapping period definitions | User's input | At least two period configurations (YYYY or DD-MM-YYYY), each defining a unique label, start and end dates, satellite sensor, and optional cloud-cover, spatial scale (default `30` m), or Cloud Score+ threshold |
+| Reference period label | User's input | Which period use as 'reference', typically recent year (baseline). Use for radiometric correction and histogram matching reference (default `'baseline'`) training source in Model Transfer mode. |
+| Harmonization and compositing options | User's input | Flags controlling Landsat cross-sensor harmonization (`harmonize_landsat=True`), BRDF normalization (`apply_brdf=False`), topographic correction (`apply_topo_correction=False`), aerosol band removal (`drop_aerosol=True`), sensor alignment (`harmonize_sensors=True`), histogram matching (`histogram_match=True`), reducer (`'median'`), and target resolution (`scale=30`). |
+| Training datasets by period | User's input / Input from Other Modules | Training data from @sec-module-3 mapped by period label: either one dataset on the reference period (Model Transfer) or one dataset per period (Batch). |
+| LULC classification scheme | Input from Other Modules | Class IDs, names, and colors from @sec-module-2 used to validate labels and name probability output bands. |
+| Predictor configuration | User's input / Input from Other Modules | Selected terrain, distance, spectral index [@montero_standardized_2023], and SAR predictors (@sec-module-5), plus DEM source (default `'NASADEM'`). |
+| Feature selection and classification settings | User's input / Input from Other Modules | Optional Recursive Feature Elimination (RFE) settings, classification type (`'soft'` multiprobability or `'hard'`), Random Forest hyperparameters (`ntrees=100`, `min_leaf=1`), optional Gaussian spatial smoothing, and optional log-loss evaluation (@sec-module-6). |
+| Validation datasets by period | User's input / Input from Other Modules | Optional per-period reference datasets from @sec-module-7, with optional `required_periods` enforcement (defaults to `[reference_period]`). |
+
+# Output {.unnumbered}
+
+1.  Harmonized and (when enabled) histogram-matched satellite imagery composites for each period, together with the intersection of available optical bands (`common_bands`).
+2.  Period-aligned predictor stacks (`predictor_stacks`) and the shared feature list (`common_feature_bands`) across all periods.
+3.  Classified LULC maps for every mapping period (hard class map, plus per-class probability layers and pixel confidence when using soft multiprobability mode).
+4.  Per-period diagnostic reports covering sample separability, optional RFE feature rankings, model test metrics (including optional log loss), and thematic accuracy results.
+
+# Process {.unnumbered}
+
+## Period Configuration and Initialization {#sec-mt-period-config}
+
+1.  The system normalizes each period entry into a structured configuration (`PeriodConfig`) containing its label, date window, sensor identifier, cloud-cover limit (default `30`), optional scale, and Cloud Score+ threshold (default `0.7`).
+
+2.  Period definitions are validated to ensure at least two periods are provided with unique labels, then sorted chronologically by start date while recording the resulting `period_order`.
+
+3.  The orchestrator (`MultitemporalAnalysis`) stores the AOI, verified period definitions, `reference_period`, and shared harmonization/compositing defaults for downstream steps.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.PeriodConfig`: Dataclass holding a single mapping period's label, date range, sensor, cloud cover, order index, scale, and Cloud Score+ threshold (`to_dict()` exports a plain dictionary).
+
+    `multitemporal.normalize_period_configs()`: Validates that at least two uniquely labeled periods exist and sorts them chronologically into `(ordered_configs, period_order)`.
+
+    `multitemporal.MultitemporalAnalysis`: Main orchestrator class coordinating all multiyear mapping stages across `N >= 2` periods.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    -   `normalize_period_configs()` raises a `ValueError` if `periods` is not a dictionary or sequence, has fewer than 2 periods, contains a period without a `'label'`, or has duplicate labels.
+    -   `MultitemporalAnalysis.__init__()` raises a `ValueError` if `aoi` is `None` or if `reference_period` is not present among the configured period labels.
+    :::
+
+## Multiyear Imagery Acquisition and Harmonization {#sec-mt-imagery}
+
+1.  For each configured period, the system retrieves and preprocesses optical satellite collections using the selected radiometric and terrain options (Landsat cross-sensor harmonization, optional BRDF normalization, and optional topographic correction).
+
+2.  The collections are composited per period and harmonized across sensors:
+
+    -   Non-shared bands such as `AEROSOL` are dropped when configured (`drop_aerosol=True`).
+    -   The optical band intersection (`common_bands`) across all periods is resolved so multi-sensor combinations (such as Landsat MSS paired with Landsat OLI or Sentinel-2) share compatible spectral bands.
+    -   When `histogram_match=True`, non-reference composites are radiometrically matched against the `reference_period` composite within the AOI to reduce cross-sensor and cross-year tonal differences before predictor calculation.
+
+3.  If pre-generated synthetic composites (`ccdc_images`) are supplied for specific period labels, they replace the raw composites for those matching periods.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.acquire_imagery()`: Runs multiyear collection retrieval and composite harmonization, returning `optical_data`, `composites`, `period_order`, and `common_bands`.
+
+    `data_acquisition.Reflectance_Data.get_multitemporal_optical_data()`: Retrieves and preprocesses optical collections for all periods with optional Landsat harmonization, BRDF correction, and topographic correction.
+
+    `data_acquisition.final_Image.get_multitemporal_composites()`: Builds per-period composites, aligns shared optical bands, and applies histogram matching relative to the reference period.
+    :::
+
+    ::: callout-caution
+    ## Feature Note
+
+    The `ccdc_images` parameter in `acquire_imagery()` acts as an extension hook for substituting synthetic Continuous Change Detection and Classification (CCDC) composites on matching period labels while keeping raw acquisition available for metadata and fallback.
+    :::
+
+## Training Data Loading and Workflow Mode Detection {#sec-mt-training-mode}
+
+1.  The system validates the supplied per-period training sources against the LULC classification scheme and AOI, checking minimum class sample counts (`min_samples=20` by default).
+
+2.  Based on which periods contain valid training data, the system automatically sets the workflow `mode` to either `'model_transfer'` (only `reference_period` has training data) or `'batch'` (all periods have training data) and clears any cached feature-extraction state.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.load_training_data()`: Loads and validates 1-or-`N` period training sources and records the detected workflow mode (`'model_transfer'` or `'batch'`).
+
+    `sample_data.SyncTrainData.LoadMultitemporalTrainData()`: Validates multiyear training datasets against `landcover_df` and `aoi_geometry` and determines the workflow mode.
+    :::
+
+## Multiyear Predictor Availability and Stack Generation {#sec-mt-predictors}
+
+### Checking Predictor Availability Across Periods {#sec-mt-predictor-availability}
+
+1.  Before computing covariates, the system can evaluate which registered predictors (spectral indices, terrain, distance, and radar) are supported across every configured period's sensor and date range.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.check_predictor_availability()`: Evaluates predictor availability across all configured periods.
+
+    `predictor.predictor_catalog.check_multitemporal_availability()`: Checks catalog support across every period's sensor and date window.
+    :::
+
+### Filtering Compatible Spectral Indices {#sec-mt-index-filtering}
+
+1.  Because older or narrower sensors may omit bands required by certain indices (for example, Landsat MSS lacks `BLUE`, `SWIR1`, and `SWIR2`), the system maps standardized Luma band names to Awesome Spectral Indices (`spyndex`) [@montero_standardized_2023] band codes and partitions requested indices into `compatible_indices` and `skipped_indices`.
+
+2.  When computing indices on a single composite image, custom index coefficients (or catalog defaults) are validated before index computation.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.filter_compatible_indices()`: Splits requested spectral indices into `(compatible_indices, skipped_indices)` based on the bands present in `available_bands`.
+
+    `multitemporal.compute_single_image_indices()`: Computes compatible spectral indices directly on a single composite `ee.Image` using validated custom or default coefficients.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `compute_single_image_indices()` raises a `ValueError` if user-supplied coefficients for a compatible index fail `validate_coefficients()`. Unrecognized or band-incompatible indices are logged as warnings and placed in `skipped_indices`.
+    :::
+
+### Computing Unified Multiyear Predictor Stacks {#sec-mt-compute-predictors}
+
+1.  Static landscape layers—terrain (`elevation`, `slope`, `aspect`, `landform` from the selected `dem_source`, defaulting to `'NASADEM'`) and distance metrics (`dist_roads`, `dist_coast`, `dist_settlement`, using GRIP4 [@meijer_global_2018] or configured sources)—are computed once for the AOI and shared across all periods.
+
+2.  For each period, the system stacks the optical bands (restricted to `common_bands` when aligned), static terrain/distance layers, and compatible spectral indices. When composites are not histogram-matched and all six standard optical bands (`BLUE`, `GREEN`, `RED`, `NIR`, `SWIR1`, `SWIR2`) are present alongside raw collections, indices are computed across the image collection; otherwise they are computed directly from the period's composite image so matched feature spaces stay identical.
+
+3.  If Sentinel-1 or ALOS PALSAR [@mullissa_sentinel_2021] predictors are requested, each sensor is retrieved for every period's date window. SAR bands are added only when valid imagery is returned for **all** periods; if any period lacks coverage, those SAR bands are dropped across all periods so every stack maintains identical input bands.
+
+4.  Finally, the system intersects band names across all period stacks to produce `common_feature_bands`.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.compute_predictors()`: Orchestrator wrapper that builds predictor stacks for all periods using the acquired composites and optical collections.
+
+    `multitemporal.compute_multitemporal_predictors()`: Computes static terrain/distance layers once, calculates compatible spectral indices and all-period SAR layers, and returns `predictor_stacks`, `feature_bands`, `common_feature_bands`, `compatible_indices`, and `skipped_indices`.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    -   `MultitemporalAnalysis.compute_predictors()` raises a `RuntimeError` if called before `acquire_imagery()`.
+    -   `compute_multitemporal_predictors()` raises a `ValueError` if fewer than 2 periods are supplied.
+    :::
+
+## Sample Quality, Feature Extraction, and Feature Selection {#sec-mt-quality-rfe}
+
+### Multiyear Separability Assessment {#sec-mt-separability}
+
+1.  The system evaluates class separability (Transformed Divergence by default, with optional Silhouette analysis) on periods that have training data—using either the raw harmonized composites (`use_predictors=False`) or the computed predictor stacks (`use_predictors=True`).
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.check_separability()`: Runs multiyear separability diagnostics on raw composites or computed predictor stacks for periods with training data.
+
+    `sample_data_quality.sample_quality.run_multitemporal_separability()`: Computes per-period separability metrics (and optional Silhouette scores) across the configured `period_order`.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `check_separability()` raises a `RuntimeError` if called before `acquire_imagery()` (when neither composites nor predictors exist) or before `load_training_data()`.
+    :::
+
+### Feature Extraction and Stratified Splitting {#sec-mt-feature-extraction}
+
+1.  Training samples are split into training and validation sets (default `train_ratio=0.7` using stratified sampling) and pixel values are extracted from the period predictor stacks:
+
+    -   In **Model Transfer** mode, splitting and pixel sampling occur once on `reference_period` using `common_feature_bands`.
+    -   In **Batch** mode, splitting and pixel sampling are executed independently for every period.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.extract_features()`: Resolves the effective workflow mode and extracts stratified training/test pixel feature collections.
+
+    `classification.FeatureExtraction.extract_multitemporal_samples()`: Performs single-period or multi-period stratified splitting and `ee.Image` pixel sampling across `predictor_stacks`.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `extract_features()` raises a `RuntimeError` if called before `compute_predictors()` or before `load_training_data()`.
+    :::
+
+### Optional Recursive Feature Elimination {#sec-mt-rfe}
+
+1.  If feature selection is requested, the system runs cross-validated Recursive Feature Elimination (`RFE_CV`) to prune low-importance predictors:
+
+    -   By default (`per_period_rfe=False`, or whenever `mode_used == 'model_transfer'`), RFE runs once on the `reference_period` training split over `common_feature_bands`, then subsets **all** periods' predictor stacks to that unified feature list so cross-period feature schemas remain identical.
+    -   In Batch mode with `per_period_rfe=True`, RFE is fit separately per period and each period stack is subset to its own selected features.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.run_feature_selection()`: Executes unified or per-period `RFE_CV` and updates `predictor_stacks`, `feature_bands`, and `common_feature_bands` in place.
+
+    `predictor.RFE_CV`: Cross-validated Random Forest Recursive Feature Elimination estimator used to rank and select predictor subsets.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `run_feature_selection()` raises a `RuntimeError` if called before `compute_predictors()`. If `extract_features()` has not been run yet, it triggers feature extraction automatically before fitting RFE.
+    :::
+
+## Multiyear Classification, Accuracy, and Full Pipeline {#sec-mt-classification-accuracy}
+
+### Generating Multiyear LULC Maps {#sec-mt-classification}
+
+1.  If pixel features have not yet been extracted, the orchestrator runs `extract_features()` automatically.
+
+2.  The classifier trains a Random Forest model (default `ntrees=100`, `classification_type='soft'`, `soft_mode='multiprobability'`, `probability_scale=100`) and generates LULC maps across every period:
+
+    -   In **Model Transfer** mode, one classifier is trained on `reference_period` using `common_feature_bands` and applied to all remaining periods.
+    -   In **Batch** mode, each period trains and applies its own classifier.
+
+3.  When `spatial_smoothing=True`, probability bands are smoothed with a Gaussian kernel (`smoothing_radius`, `smoothing_sigma`) prior to class assignment. When `include_log_loss=True`, probability calibration is evaluated alongside confusion-matrix metrics.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.run_classification()`: Triggers feature extraction if needed and delegates multiyear classification to `Generate_LULC`.
+
+    `classification.Generate_LULC.classify_multitemporal()`: Trains and applies Random Forest classification across `predictor_stacks` in Model Transfer or Batch mode, returning maps, probability band names, and evaluation metrics.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `run_classification()` raises a `RuntimeError` if called before `compute_predictors()`.
+    :::
+
+### Assessing Thematic Accuracy Across Periods {#sec-mt-accuracy}
+
+1.  Using independent validation datasets per period, the system runs thematic accuracy assessment across `period_order`, enforcing any `required_periods` (defaulting to `[reference_period]`) and safely skipping non-required periods that lack validation data.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.assess_accuracy()`: Runs post-classification thematic accuracy across mapped periods using `self.classification_result['maps']`.
+
+    `accuracy.thematic_accuracy.run_multitemporal_assessment()`: Evaluates per-period confusion matrices and accuracy metrics while enforcing required validation periods.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `assess_accuracy()` raises a `RuntimeError` if called before `run_classification()`.
+    :::
+
+### End-to-End Orchestration {#sec-mt-run-pipeline}
+
+1.  For automated execution, `run_pipeline()` chains imagery acquisition, training data loading, predictor computation, feature extraction, optional RFE (`rfe_config`), optional separability checking (`run_separability=True`), classification, and optional accuracy assessment (when `validation_by_period` is provided) in a single call, returning a dictionary consolidating the outputs of every stage.
+
+    ::: callout-tip
+    ## Related Function
+
+    `multitemporal.MultitemporalAnalysis.run_pipeline()`: Executes the complete multiyear LULC workflow from imagery acquisition through optional accuracy assessment and returns all stage outputs.
+    :::
