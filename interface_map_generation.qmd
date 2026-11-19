@@ -2,13 +2,13 @@
 
 # Overview {.unnumbered}
 
-In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel. To ensure usability regardless of technical know-how, user cannot skip steps; each step unlocks the next only after the required input has been provided by the user and the Geospatial Engine (GE) confirms the corresponding output has been produced and saved.
+In this workflow, the user produces a Land Use and Land Cover (LULC) map. Each step is presented as a panel on the left of the map canvas and progresses via the indicator at the top of the panel in number and step summary. To ensure usability regardless of technical know-how, user cannot skip steps; each step unlocks the next only after the required input has been provided by the user and the Geospatial Engine (GE) confirms the corresponding output has been produced and saved.
 
 # Step 1: Basic Information {#sec-map-generation-basic-information}
 
 **Overview**
 
-Provides the inputs needed before any geospatial computation: where to map, when, and from which satellite imagery source.
+On the stepper numbered 1 (Basic Info), the user provides the inputs needed before any geospatial computation: where to map, when, and from which satellite imagery source.
 
 ![](images/luma-int-screenshot/Step-1-Basic-Information.png)
 
@@ -72,7 +72,7 @@ The user uploads a polygon file to define the geographic boundary of the area th
     If the area size information is bigger than 2,000,000 ha, an error warning is displayed: 'Draw area exceeds maximum limit (2,000,000 ha)’
     :::
 
-4.  (GE) The system validates the geometry of the AOI for both `.shp` and `.kml` using [the `shapefile_validator` functions](@sec-validation-of-shapefile-geometries).
+4.  (GE) The system validates the geometry of the AOI for both `.shp` and `.kml` using @sec-validation-of-shapefile-geometries.
 
     **Input from Interface:** AOI for both `.shp` and `.kml` file formats.
 
@@ -88,13 +88,7 @@ The user uploads a polygon file to define the geographic boundary of the area th
 
     **Input from GE:** Validated and processed shapefile.
 
-    **Outcome:**
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation when the AOI is loaded successfully by showing a purple box with 'Approximate size of your mapping area: X \[number\] Ha' displayed
-    :::
+    **Outcome:** The system shows a confirmation when the AOI is loaded successfully by showing a pink box with the name of the file uploaded and the approximate size of the chosen area.
 
 6.  (Interface) The system activates the next step.
 
@@ -104,7 +98,13 @@ The user uploads a polygon file to define the geographic boundary of the area th
 
     **Outcome:** "Confirm" button activated.
 
-7.  (Interface) The uploaded file is deleted.
+7.  (Interface) The system redirected to the panel in the beginning of @sec-map-generation-basic-information with a pink box with a summary of input method, file/location, approximate area, and spatial resolution chosen.
+
+    **Input from User:** The user clicks "Confirm" button.
+
+    **Outcome:** The tick box next to Geographic Area turned into a green tick, the user is allowed to continue to @sec-map-generation-time-period.
+
+8.  (Interface) The uploaded file is deleted.
 
     **Input from User:** The user clicks "Reselect area".
 
@@ -134,13 +134,7 @@ The user draws their area of interest directly on the map by creating borders of
 
     **Input from User:** A series of clicks on the map to create a polygon.
 
-    **Outcome:**
-
-    ::: callout-note
-    ## Success Notification
-
-    The system shows a confirmation when the AOI is loaded successfully by showing a purple box with 'Approximate size of your mapping area: X \[number\] Ha' displayed
-    :::
+    **Outcome:** The system shows a confirmation when the AOI is loaded successfully by showing a pink box with the approximate drawn area size.
 
     ::: callout-important
     ## Error Handling Notification
@@ -156,7 +150,13 @@ The user draws their area of interest directly on the map by creating borders of
 
     **Outcome:** The "Confirm" button is activated.
 
-3.  (Interface) The drawn polygon is deleted.
+3.  (Interface) The system redirected to the panel in the beginning of @sec-map-generation-basic-information with a pink box with a summary of input method, file/location, approximate area, and spatial resolution chosen.
+
+    **Input from User:** The user clicks "Confirm" button.
+
+    **Outcome:** The tick box next to Geographic Area turned into a green tick, the user is allowed to continue to @sec-map-generation-time-period.
+
+4.  (Interface) The drawn polygon is deleted.
 
     **Input from User:** The user clicks "Reselect area".
 
@@ -208,7 +208,13 @@ The user selects the area they want to map based on a drop down list of Indonesi
 
     **Outcome:** "Confirm" button activated.
 
-5.  (Interface) The selected administrative polygon is deleted.
+5.  (Interface) The system redirected to the panel in the beginning of @sec-map-generation-basic-information with a pink box with a summary of input method, file/location, approximate area, and spatial resolution chosen.
+
+    **Input from User:** The user clicks "Confirm" button.
+
+    **Outcome:** The tick box next to Geographic Area turned into a green tick, the user is allowed to continue to @sec-map-generation-time-period.
+
+6.  (Interface) The selected administrative polygon is deleted.
 
     **Input from User:** The user clicks "Reselect area".
 
@@ -221,6 +227,10 @@ The user selects the area they want to map based on a drop down list of Indonesi
 The user defines the time period for the land use and land cover map. Currently available options for time interval of the satellite imagery period are limited to yearly (a single year) or custom date range.
 
 ![](images/luma-int-screenshot/Step-1-2-Time-Period.png)
+
+**Prerequisite to Occurring**
+
+1.  The user completed @sec-map-generation-geographic-area.
 
 **User Input to Interface**
 
@@ -254,8 +264,9 @@ The user defines the time period for the land use and land cover map. Currently 
 
     **Outcome:**
 
-    - The system shows a confirmation by showing a purple box with a summary of: time interval, period, satellite imagery date range selected.
-    - A clickable "Change input" text also appears.
+    - The system shows a confirmation by showing the panel of the beginning of @sec-map-generation-basic-information with a pink box summary of time interval, period, satellite imagery date range selected.
+    - The tick box next to Time Period turned into a green tick, the user is allowed to continue to @sec-map-generation-satellite-imagery.
+    - A clickable "Change input" text also appears; if clicked, continue to Process 4.
 
 4.  (Interface) The system resets all input from @sec-map-generation-time-period.
 
@@ -273,11 +284,13 @@ The user confirms default selection for satellite imagery source and the maximum
 
 **Prerequisite to Occurring**
 
-1.  Landsat only available for the spatial resolution of 30 m x 30 m and 100 m x 100 m chosen in Step 1.1.
+1.  The user completed @sec-map-generation-geographic-area and @sec-map-generation-time-period.
 
-2.  Sentinel-2 only available for the spatial resolution of 10 m x 10 m chosen in Step 1.1.
+2.  Landsat only available for the spatial resolution of 30 m x 30 m and 100 m x 100 m chosen in @sec-map-generation-geographic-area.
 
-3.  Sentinel-2 only available for the time period after the year 2015 chosen in Step 1.2.
+3.  Sentinel-2 only available for the spatial resolution of 10 m x 10 m chosen in @sec-map-generation-geographic-area.
+
+4.  Sentinel-2 only available for the time period after the year 2015 chosen in @sec-map-generation-time-period.
 
 **User Input to Interface**
 
@@ -315,21 +328,31 @@ The user confirms default selection for satellite imagery source and the maximum
 
     - The user clicks "Set satellite imagery" button.
 
-    **Outcome:** Satellite imagery input summary is displayed in a purple box showing satellite imagery source and maximum cloudy area.
+    **Outcome:** Satellite imagery input summary is displayed in a pink box showing satellite imagery source and maximum cloudy area.
 
-4.  (Interface) The system checks that all input from @sec-map-generation-geographic-area to @sec-map-generation-satellite-imagery has been provided as condition to activate the “Next” button.
+4.  (GE) The system runs the topographic correction functions in @sec-input-spatial-image-parameters to mitigate the influence of rugged terrain on surface reflectance data.
+
+    **Input from Interface:** Landsat collections are selected.
+
+    **Outcome:** Continue to Process 5.
+
+5.  (Interface) The system checks that all input from @sec-map-generation-geographic-area to @sec-map-generation-satellite-imagery has been provided as condition to activate the “Next” button.
 
     **Input from User:** All user input required in @sec-map-generation-geographic-area to @sec-map-generation-satellite-imagery.
 
-    **Outcome 1:** The “Next” button is activated when all input fields are filled.
+    **Outcome 1:**
+
+    - The “Next” button is activated when all input fields are filled.
+
+    - The tick box next to Satellite Imagery turned into a green tick, the user is allowed to continue to @sec-map-generation-preview.
 
     **Outcome 2:** The “Next” button remains deactivated when not all inputs are filled.
 
-## Step 1.4: Confirm and Preview
+## Step 1.4: Confirm and Preview {#sec-map-generation-preview}
 
 **Overview**
 
-After all input to basic information have been finalized, user is presented with summary of input for final confirmation. User confirms through clicking "View satellite imagery" which will trigger the system to retrieve all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualisation modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
+After all input to basic information have been finalized, user is presented with summary of input for final confirmation. User confirms through clicking "View satellite imagery" which will trigger the system to retrieve all available scenes, removes cloudy pixels, and combines the rest into a single cloud-free composite image. This composite is the base image for all classification steps. Three visualization modes are generated: True Colour (RGB), False Colour Infrared, and Land/Water.
 
 ![](images/luma-int-screenshot/Step-1-4-Confirm-and-Preview.png)
 
@@ -349,11 +372,7 @@ After all input to basic information have been finalized, user is presented with
 
     **Input from GE:** Collected basic information from previous steps.
 
-    **Outcome:** The user’s input summary is displayed in a purple box, showing:
-
-    - Mapping area: approximate size of your mapping area
-    - Time period selected: time interval, selected period, satellite input date range
-    - Satellite imagery: satellite imagery source, maximum cloudy area
+    **Outcome:** The user’s input summary is displayed in a pink box, showing the summary of the user's input in @sec-map-generation-basic-information including area of interest, time period, and satellite imagery.
 
     Two buttons appear:
 
@@ -376,6 +395,16 @@ After all input to basic information have been finalized, user is presented with
 
     **Input from User:** The user clicks on the "View Satellite Imagery" button.
 
+    **Outcome:** Continue to Process 4.
+
+4.  (GE) The system runs the functions to view the mosaic and composite for satellite imagery in @sec-mosaic-composite-imagery and visualize and save the processed satellite imagery by running functions in @sec-visualization-and-saving-data.
+
+    **Input from Interface:** Selected satellite image and cloud cover threshold.
+
+    **Outcome:** The system provides a preset of commonly used band combinations. Continue to Process 5.
+
+5.  (Interface) The system visualizes and saves the processed satellite imagery.
+
     **Input from GE:** Collected satellite image information.
 
     **Outcome:**
@@ -392,23 +421,11 @@ After all input to basic information have been finalized, user is presented with
 
       - LULC class; still disabled in this step
 
-    - The user can then download the composite, leading to Process 5.
+    - The user can then download the composite, leading to Process 6.
 
     - "Next" button appears, which leads to @sec-map-generation-lulc-classification.
 
-4.  (GE) The system performs pre-processing functions to generate an analysis-ready satellite images and collects information on satellite image availability shows the number of total satellite images found based on the user parameter input. The information includes total images found, date range of images, WRS tiles, path row tiles, scene IDs, image acquisition dates, average scene cloud cover, date range, and cloud cover range.
-
-    **Input from Interface:** Selected sensor image and cloud cover threshold.
-
-    **Outcome:** When all information is collected, allowed to continue to Process 5.
-
-    ::: callout-important
-    ## Error Handling Notification
-
-    The system provides an error notification if no satellite images were found based on the user’s parameter. The user is prompted to change the cloud cover threshold or change the target map date.
-    :::
-
-5.  (Interface) The system downloads a `.zip` file containing satellite image composite.
+6.  (Interface) The system downloads a `.zip` file containing satellite image composite.
 
     **Input from User:** The user downloads composite.
 
@@ -418,17 +435,11 @@ After all input to basic information have been finalized, user is presented with
 
 **Overview**
 
-The user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step. The Epistem-AI feature will also be available here.
+On the stepper numbered 2 (Classes), the user defines the land use and land cover classes that will be mapped. There are two main options: using the built-in Luma default classification scheme or uploading a custom classification scheme. The selected classes determine which training data will be used in the next step.
 
 ![](images/luma-int-screenshot/Step-2-Land-Use-and-Land-Cover-Classification.png)
 
-## Step 2.a: Land Use & Land Cover Classification Scheme {#sec-map-generation-lulc-classification-2a}
-
-**Overview**
-
-Luma supports user-defined classification schemes and default classification or templates for commonly used classification schemes.
-
-### Step 2.a.a: Own Classification
+## Step 2.a: Own Classification {#sec-map-generation-lulc-own-classification}
 
 **Overview**
 
@@ -452,11 +463,11 @@ The user creates their own classification scheme manually or by uploading a file
 
     **Outcome:** "Manual Input" and "Upload Classes" panels are activated.
 
-#### Step 2.a.a.a: Manual Input {#sec-map-generation-manual-input}
+### Step 2.a.a: Manual Input {#sec-map-generation-manual-input}
 
 **Overview**
 
-The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a colour for each class.
+The user inputs the land use and land cover classes they want to map. They need to type a class name and optionally pick a color for each class.
 
 ![](images/luma-int-screenshot/Step-2-1-1-1-Manual-Input.png)
 
@@ -527,12 +538,13 @@ The user inputs the land use and land cover classes they want to map. They need 
 
     **Outcome:**
 
+    - A pink box showing the summary of all user's input in @sec-map-generation-lulc-classification appears on top of the panel.
     - Each class row can be edited individually
     - New classes can be added with Add Class button
     - If all classes are deleted, back to the beginning of @sec-map-generation-lulc-classification
     - "Done" button appears; if clicked:
-      - "Next" button appears; continue to Process 6
-      - "Download LULC classes (CSV)" appears; a `.csv` file containing the inputted classification scheme is downloaded to user’s local device
+      - "Next" button appears; continue to Process 9.
+      - "Download LULC classes (CSV)" appears; continue to Process 8.
 
     ::: callout-important
     ## Error Handling Notification
@@ -540,19 +552,25 @@ The user inputs the land use and land cover classes they want to map. They need 
     The system returns a validity flag with an error message if invalid
     :::
 
-8.  (Interface) The system saves all input and process to the next step.
+8.  (GE) The system runs functions in @sec-saving-the-lulc-classification-table to save and download the final LULC classification scheme table.
+
+    **Input from User:** The user clicks "Download LULC classes (CSV)".
+
+    **Outcome:** A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
+
+9.  (Interface) The system saves all input and process to the next step.
 
     **Input from User:** The user clicks on the "Next" button.
 
-    **Outcome: T**he user will be directed to @sec-map-generation-sample-data.
+    **Outcome:** The user will be directed to @sec-map-generation-sample-data.
 
-9.  (Interface) The system saves all input.
+10. (Interface) The system saves all input.
 
     **Input from User:** The user clicks on the "Back" (chevron) button
 
     **Outcome:** The panel of @sec-map-generation-satellite-imagery Process 3 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
 
-#### Step 2.a.a.b: Upload Classes {#sec-map-generation-upload-classes}
+### Step 2.a.b: Upload Classes {#sec-map-generation-upload-classes}
 
 **Overview**
 
@@ -568,7 +586,7 @@ The user downloads a classification template `.csv` file and uses it to list the
 
 1.  The user clicks "Upload Classes" button.
 
-2.  The user uploads the `.csv` file containing the classification scheme information containing at least three columns: a class ID (numeric identifier), a class name, and an optional hex colour code specifying the display colour for each class.
+2.  The user uploads the `.csv` file containing the classification scheme information containing at least three columns: a class ID (numeric identifier), a class name, and an optional hex color code specifying the display color for each class.
 
 **Process**
 
@@ -602,17 +620,17 @@ The user downloads a classification template `.csv` file and uses it to list the
 
     **Outcome:** If the classification scheme file successfully uploaded:
 
-    - A purple box indicating the uploaded file with its file size appears
+    - A pink box showing the summary of all user's input in @sec-map-generation-lulc-classification appears on top of the panel.
 
-    - A summary table of recorded classes with its ID number and colour class appears
+    - A summary table of recorded classes with its ID number and color class appears
 
     - Manual Input option still available; if clicked, continue to @sec-map-generation-manual-input Process 2
 
     - Confirm LULC Class enabled, if clicked, a summary table is previewed, along with three options:
 
-      - "Edit" (pencil icon); continue to Process 6
-      - "Download LUCL classes (CSV)"; a `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
-      - "Next"; continue to Process 7
+      - "Edit classes"; continue to Process 6
+      - "Download LUCL classes (CSV)"; continue to Process 7.
+      - "Next"; continue to Process 8.
 
     ::: callout-important
     ## Error Handling Notification
@@ -630,19 +648,25 @@ The user downloads a classification template `.csv` file and uses it to list the
 
     **Outcome:** Each cell can be edited individually. The uploaded file can be deleted, if clicked, all inputs are being reset, back to the beginning of @sec-map-generation-lulc-classification.
 
-7.  (Interface) The system saves all input.
+7.  (GE) The system runs functions in @sec-saving-the-lulc-classification-table to save and download the final LULC classification scheme table.
+
+    **Input from User:** The user clicks "Download LULC classes (CSV)".
+
+    **Outcome:** A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
+
+8.  (Interface) The system saves all input.
 
     **Input from User:** The user clicks on the "Next" button
 
     **Outcome:** The user will be directed to @sec-map-generation-sample-data.
 
-8.  (Interface) Th system saves all input.
+9.  (Interface) Th system saves all input.
 
     **Input from User:** The user clicks on the "Back" (chevron) button.
 
     **Outcome:** The panel of @sec-map-generation-satellite-imagery Process 3 is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-lulc-classification.
 
-### Step 2.a.b: Default Classification {#sec-map-generation-default-classes}
+## Step 2.b: Default Classification
 
 **Overview**
 
@@ -688,16 +712,17 @@ The user activates class options from default Luma land use and land cover class
 
     **Outcome:**
 
+    - A pink box showing the summary of all user's input in @sec-map-generation-lulc-classification appears on top of the panel.
     - A summary table of recorded classes with its ID number and color class appears
     - Two buttons appear:
-      - "Reset classification"; continue to Process 5
-      - "Next"; continue to Process 6
+      - "Download LUCL classes (CSV)"; continue to Process 5.
+      - "Next"; continue to Process 6.
 
-5.  (Interface) All inputs are being reset.
+5.  (GE) The system runs functions in @sec-saving-the-lulc-classification-table to save and download the final LULC classification scheme table.
 
-    **Input from User:** The user clicks on "Reset classification".
+    **Input from User:** The user clicks "Download LULC classes (CSV)".
 
-    **Outcome:** Back to the beginning of @sec-map-generation-lulc-classification.
+    **Outcome:** A `.csv` file containing the inputted classification scheme is downloaded to user’s local device.
 
 6.  (Interface) The system saves all input and process the next step.
 
@@ -723,7 +748,7 @@ The user activates class options from default Luma land use and land cover class
 
 **Overview**
 
-The user prepares the sample data for land use and land cover classification in their mapping area. The user can upload existing data or create samples directly in Luma through on-screen sampling. In this step the Sample Data Summary selected in the previous step is also shown. The spectral separability of LULC classes is also being assessed in this step using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from @sec-map-generation-basic-information.
+On the stepper numbered 3 (Samples), the user prepares the sample data for land use and land cover classification in their mapping area. The user can upload existing data or create samples directly in Luma through on-screen sampling. In this step the Sample Data Summary selected in the previous step is also shown. The spectral separability of LULC classes is also being assessed in this step using sample data and near-cloud-free satellite imagery. Pairwise class separability is quantified using the Transformed Divergence (TD) method based on pixel-level spectral statistics, using only the spectral data from @sec-map-generation-basic-information.
 
 ## Step 3.a: Upload Sample Data {#sec-map-generation-upload-sample-data}
 
@@ -735,7 +760,7 @@ The user uploads their existing sample data in `.zip` file format.
 
 **Prerequisite to Occurring**
 
-1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification-2a.
+1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification.
 
 2.  The user clicks “Upload Sample Data”.
 
@@ -769,8 +794,9 @@ The user uploads their existing sample data in `.zip` file format.
 
     **Outcome:**
 
-    - A purple box indicating the uploaded file with its file size appears with a delete button, if clicked, continue to the beginning of @sec-map-generation-sample-data.
+    - A pink box indicating the uploaded file with its file size appears with a delete button, if clicked, continue to the beginning of @sec-map-generation-sample-data.
     - A summary table of Sample Data Summary with ID number, LULC class name, color class, number of samples, and buttons to view each class appears.
+    - All sample points appear in the map canvas with each chosen color.
 
 4.  (Interface) The system provides a selection for Spatial Resolution (m) and Maximum Pixels Per Class. The default value is 100 m and 5000 pixels.
 
@@ -830,7 +856,8 @@ The user adds points on the interactive displayed map and input their land use a
 
 **Prerequisite to Occurring**
 
-1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification-2a.
+1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification.
+2.  The user clicks “Add point”.
 
 #### Step 3.b.a.a: Single Point Input {#sec-map-generation-single-point}
 
@@ -988,7 +1015,7 @@ This feature is coming soon.
 
 **Overview**
 
-The user can choose a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information.
+On the stepper numbered 4 (Parameters), the user can choose a set of predictors that optimize the discrimination of LULC classes in the classification model. Predictors are generated from three principal categories: spectral transformations (indices), terrain-based metrics, and distance-based metrics, capturing complementary spectral, topographic, and spatial information.
 
 ![](images/luma-int-screenshot/Step-4-Customize-Mapping-Parameters.png)
 
@@ -1008,7 +1035,7 @@ The user selects the predictors currently supported by Luma Geospatial Engine by
 
 **Prerequisite to Occurring**
 
-1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification-2a.
+1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification.
 
 **User Input to Interface**
 
@@ -1016,49 +1043,99 @@ The user selects the predictors currently supported by Luma Geospatial Engine by
 
 **Process**
 
-1.  (Interface) The system retrieves the predictors based on the user's selection.
+1.  (Interface) The system requests execution of predictor availability check and predictor optimizer.
 
-    **Input from User:** Selected predictors.
+    **Input from User:** Input from Step 1-3.
 
     **Outcome:** Continue to Process 2.
 
-2.  (GE) The system runs the functions in @sec-selection-of-predictors.
+2.  (GE) The system checks predictors availability based on inputs from previous steps.
 
-    **Input from Interface:** Selected predictors.
+    **Input from Interface:** All the user's input from Step 1-3.
 
-    **Outcome:** Continue to Process 3.
+    **Outcome:** The system returns list of available predictors for the next steps.
 
-3.  (Interface) The system returns the calculated predictors.
+3.  (GE) The system optimizes predictor selection from list of available predictors based on user input from previous process by running functions in @sec-selection-of-predictors.
 
-    **Input from GE:** Calculated predictors.
+    **Input from GE:** List of available predictors.
+
+    **Outcome:** The system returns progress and list of optimized selection.
+
+4.  (Interface) The system retrieves progress, available predictors, and optimized predictor selection.
+
+    **Input from GE:** Progress and list of optimized predictor selection.
+
+    **Outcome:** The system presents available predictors as predictor options, with optimized predictor selection as pre-selected predictors for the user.
+
+5.  (Interface) The system requests selected predictor to the geospatial engine.
+
+    **Input from User:** The user further selects predictor, either following recommended/pre-selections or adding/removing certain predictors.
+
+    **Outcome:** Continue to Process 6.
+
+6.  (GE) The system generate selected predictors according to user input from Step 1-3.
+
+    **Input from Interface:** All the user’s input from Step 1-3 and selected predictors.
+
+    **Outcome:** Continue to Process 7.
+
+7.  (Interface) The system previews the selected predictors.
+
+    **Input from User:** The user clicks “Preview predictor”.
 
     **Outcome:**
 
-    - "Next" button leads to Summary of LULC List Parameters showing the predictors selected and Random Forest Variable in a purple box.
-    - Two buttons appear:
-      - "Change Input"; continue to Process 4
-      - "Next"; continue to Process 5
+    - The generated predictors are added to the map canvas.
 
-4.  (Interface) The system saves all input.
+    - The system displays a panel to nudge the user to run a separability analysis.
 
-    **Input from User:** The user clicks on "Change Input".
+8.  (Interface) The system requests execution of separability analysis for predictor selection.
 
-    **Outcome:** "Edit" (pencil icon) appears next to each parameter; if clicked, a pop up window appears asking if user wants to:
+    **Input from User:** The user clicks “Run separability analysis”.
 
-    - "Change Input"; all inputs being reset and back to the beginning of @sec-map-generation-parameters
-    - "Discard Changes"; stay in Process 4 with "Cancel Change" button activated
+    **Outcome:** Continue to Process 9.
 
-5.  (Interface) The system generates map with all input from Step 1-4.
+9.  (GE) The system conducts the second separability analysis with predictor selection as additional information from previous separability analysis.
 
-    **Input from User:** The user clicks on "Next" button.
+    **Input from Interface:** Additional predictor selections.
 
-    **Outcome:** A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in purple boxes, with a "Generate Map" button. Continue to @sec-map-generation-final.
+    **Outcome:** The system returns the separability result.
 
-6.  (Interface) The system saves all input.
+10. (Interface) The system displays result of separability analysis according to visualization requirement.
 
-    **Input from User:** The user clicks on the "Back" (chevron) button.
+    **Input from GE:** The separability result.
 
-    **Outcome:** The panel of @sec-map-generation-sample-data Sample Data Summary is being shown. The user has to click the "Next" button to go back to the last edited panel in @sec-map-generation-parameters.
+    **Outcome:**
+
+    - The separability analysis result is displayed on the panel.
+
+    - The system asks the user if they are satisfied with the separability result. Two buttons appear:
+
+      - ”Satisfied”; continue to Process 11.
+
+      - ”Not satisfied”; continue to Process 12.
+
+11. (Interface) The system displays option to download predictors.
+
+    **Input from User:** The user clicks “Satisfied”.
+
+    **Outcome:**
+
+    - “Download predictors” button appear; if clicked, continue to Process 13.
+
+    - The “Next” button is activated; if clicked, continue to @sec-map-generation-model-training.
+
+12. (Interface) The system redirected the user to return to the selection of predictors.
+
+    **Input from User:** The user clicks “Not satisfied”.
+
+    **Outcome:** Continue to Process 5.
+
+13. (Interface) The system delivers predictors to the user’s local device.
+
+    **Input from User:** The user clicks “Download predictors”.
+
+    **Outcome:** A `.tiff` file containing the predictors is downloaded to the user’s local device.
 
 ### Step 4.1.b: Upload Predictors
 
@@ -1078,7 +1155,7 @@ The user is given the option to adjust the classification model by adjusting the
 
 **Prerequisite to Occurring**
 
-1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification-2a.
+1.  The user chose "Own Classification" in @sec-map-generation-lulc-classification.
 
 **User Input to Interface**
 
@@ -1113,7 +1190,7 @@ The user is given the option to adjust the classification model by adjusting the
     **Outcome:** "Set Variable" button leads to Summary of LULC List Parameters showing the predictors selected and Random Forest Variable in a purple box. Two buttons appear:
 
     - "Change Input"; continue to Process 5.
-    - "Next"; continue to Process 6.
+    - "Next"; continue to @sec-map-generation-confirm-to-generate.
 
 5.  (Interface) "Edit" (pencil icon) appears next to each parameter.
 
@@ -1124,11 +1201,11 @@ The user is given the option to adjust the classification model by adjusting the
     - "Change Input"; all inputs being reset and back to the beginning of @sec-map-generation-parameters.
     - "Discard Changes"; stay in Process 5 with "Cancel Change" button activated.
 
-6.  (Interface) The system generates map with all input from Step 1-4.
+6.  (Interface) The system generates map with all input from @sec-map-generation-basic-information to @sec-map-generation-parameters.
 
     **Input from User:** The user clicks on "Next" button.
 
-    **Outcome:** A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in purple boxes, with a "Generate Map" button. Continue to @sec-map-generation-final.
+    **Outcome:** A pop up window appears with User’s Input Summary and Summary of LULC Class Compositions in pink boxes, with a "Generate Map" button. Continue to @sec-map-generation-final.
 
 7.  (Interface) The system saves all input.
 
@@ -1138,19 +1215,51 @@ The user is given the option to adjust the classification model by adjusting the
 
 ![](images/luma-int-screenshot/Summary-step-4.png)
 
+## Step 4.3: Confirm to Generate Map {#sec-map-generation-confirm-to-generate}
+
+**Overview**
+
+After all input from Step 1 to 4 have been finalized, the user is presented with summary of input for final confirmation. The user confirms through clicking "Generate Map" which will trigger the system to retrieve all available data and generate the final map.
+
+**Prerequisite to Occurring**
+
+1.  The user completed @sec-map-generation-basic-information to @sec-map-generation-parameters.
+
+**User Input to Interface**
+
+1.  The user clicks "Next" to confirm summary of all inputs after @sec-map-generation-model-training.
+
+**Process**
+
+1.  (Interface) The system generates map with all input from @sec-map-generation-basic-information to @sec-map-generation-parameters.
+
+    **Input from User:** The user clicks on "Next" button.
+
+    **Outcome:** A pop up window appears with User’s Input Summary from Basic Information, Classes & Sample Data, and Mapping Parameters in pink boxes. Two buttons available at the bottom:
+
+    - "Back to edit", continue to Process 2.
+
+    - "Generate map", continue to @sec-map-generation-final.
+
+2.  (Interface) The system redirected the user to the summary panel in @sec-map-generation-model-training.
+
+    **Input from User:** The user clicks on "Back to edit" button.
+
+    **Outcome:** Continue to @sec-map-generation-model-training Process 4.
+
 # Step 5: Map Generation {#sec-map-generation-final}
 
 **Overview**
 
-The user is shown the map generated on the map canvas with the classes in different colours, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
+On the stepper worded “Your map”, the user is shown the map generated on the map canvas with the classes in different colors, and the panel is showing model accuracy results, LULC class composition, and map’s thematic accuracy assessment process.
 
 ![](images/luma-int-screenshot/Step-5-Map-Generation.png)
 
 **Prerequisite to Occurring**
 
-1.  The user completed Step 1-4.
+1.  The user confirmed to generate map in @sec-map-generation-confirm-to-generate.
 
-## Step 5.1: Model Accuracy Assessment
+## Step 5.a: Model Accuracy Assessment
 
 **Overview**
 
@@ -1168,15 +1277,7 @@ The user is shown how accurately the mapping process distinguished their land us
 
     **Input from User:** The user clicks on "Show Detail".
 
-    **Outcome:** The system checks if there are any
-
-    .shp
-
-    file inside the
-
-    .zip
-
-    fileA pop up window shows:
+    **Outcome:** The system checks if there are any `.shp` file inside the `.zip` file. A pop up window shows:
 
     - Overall Model Accuracy Result
       - Overall accuracy
@@ -1196,7 +1297,7 @@ The user is shown how accurately the mapping process distinguished their land us
     - "Download Raw Data"; `.csv` file containing the raw data is downloaded to user’s local device
     - "Download Confusion Matrix Chart"; `.png` file of the confusion matrix is downloaded to user’s local device
 
-## Step 5.2: LULC Class Composition
+## Step 5.b: LULC Class Composition
 
 **Overview**
 
@@ -1204,7 +1305,7 @@ The user can visualize the LULC classification result on the map canvas along wi
 
 ![](images/luma-int-screenshot/Step-5-2-LULC-Class-Composition.png)
 
-## Step 5.3: Thematic Accuracy Assessment
+## Step 5.c: Thematic Accuracy Assessment
 
 **Overview**
 
@@ -1280,9 +1381,9 @@ The user uploads an independent ground reference data in `.zip` file to perform 
 
     **Outcome:** A pink box showing the Thematic Accuracy Result appears with overall prediction, Kappa coefficient, number of points correct and wrong. Two actions can be chosen:
 
-    - "Reupload validation data"
+    - "Reupload validation data".
 
-    - "Show detail"; continue to Process 8
+    - "Show detail"; continue to Process 8.
 
 7.  (Interface) The system saves all input.
 
@@ -1332,13 +1433,13 @@ The user uploads an independent ground reference data in `.zip` file to perform 
 
     **Outcome:** A pop up window shows several options:
 
-    - "Download map"; user is prompted to log in/sign up, continue to Feature 2
+    - "Download map"; user is prompted to log in/sign up, continue to @sec-map-generation-download-map.
 
-    - "Share map"; user is prompted to log in/sign up, continue to Feature 3
+    - "Share map"; user is prompted to log in/sign up, continue to @sec-map-generation-share-map.
 
-    - "Save to my account" (currently disabled)
+    - "Save to my account" (currently disabled).
 
-    - "Improve accuracy"; user can improve the accuracy of their generated map, continue to Feature 4.
+    - "Improve accuracy"; user can improve the accuracy of their generated map, continue to @sec-map-generation-improve-accuracy.
 
 # Additional Features
 
@@ -1348,7 +1449,7 @@ The user can save their land use and land cover mapping progress and share their
 
 ![](images/luma-int-screenshot/Additional-Features-Login.png)
 
-## Feature 1: Save Progress
+## Feature 1: Save Progress {#sec-map-generation-save-progress}
 
 **Overview**
 
@@ -1358,19 +1459,29 @@ Once logged in, the user can save their land use and land cover mapping progress
 
 **Process**
 
-1.  The user clicks "Save" button.
+1.  (Interface) The system shows log in/sign up window.
 
-2.  The user is prompted to log in or sign up for an Epistem account if they have not already registered.
+    **Input from User:** The user clicks "Save" button.
 
-3.  Once logged in, the user can name the map they are working on in order to save it.
+    **Outcome:** The user is prompted to log in or sign up for an Epistem account if they have not already registered.
 
-4.  Progress is saved automatically; completed steps and the user's current position are visible in the top-right corner of the map canvas.
+2.  (Interface) The system shows a window to name the map the user is currently working on.
+
+    **Input from User:** The user created an account/logged in.
+
+    **Outcome:** Once logged in, the user can name the map they are working on in order to save it.
+
+3.  (Interface) The system automatically saves the user's progress.
+
+    **Input from User:** The user named their map.
+
+    **Outcome:** Completed steps and the user's current position are visible in the top-right corner of the map canvas.
 
 ![](images/luma-int-screenshot/Feat-1-name.png)
 
 ![](images/luma-int-screenshot/Feature-1-Save-Progress.png)
 
-## Feature 2: Download Map
+## Feature 2: Download Map {#sec-map-generation-download-map}
 
 **Overview**
 
@@ -1380,17 +1491,13 @@ Once logged in, the user can download their generated map.
 
 **Process**
 
-1.  The user downloads their map.
+1.  (Interface) The system sends an email containing the exported LULC map with a download link.
 
-2.  The system sends an email containing the exported LULC map with a download link.
+    **Input from User:** The user downloads their map.
 
-    ::: callout-note
-    ## Success Notification
+    **Outcome:** The user receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map.
 
-    The user receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map
-    :::
-
-## Feature 3: Share Map
+## Feature 3: Share Map {#sec-map-generation-share-map}
 
 **Overview**
 
@@ -1400,19 +1507,15 @@ Once logged in, the user can share their generated map to another person with an
 
 **Process**
 
-1.  The user input recipient's name and email address.
+1.  (Interface) The system sends and email to the recipient containing the exported LULC map with a download link.
 
-2.  The system sends and email to the recipient containing the exported LULC map with a download link.
+    **Input from User:** The user input recipient's name and email address.
 
-    ::: callout-note
-    ## Success Notification
-
-    The recipient receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map
-    :::
+    **Outcome:** The recipient receives an email from [webdev\@epistem.io](mailto:webdev@epistem.io) containing a download link to the GeoTIFF of the exported map.
 
 ![](images/luma-int-screenshot/Feat-3-share.png)
 
-## Feature 4: Improve Accuracy
+## Feature 4: Improve Accuracy {#sec-map-generation-improve-accuracy}
 
 **Overview**
 
@@ -1422,22 +1525,18 @@ The user can improve the accuracy of their generated map in two ways: by resetti
 
 **Process**
 
-1.  The user clicks on “Improve Accuracy”.
+1.  (Interface) A pop up window showing two methods of improving accuracy.
 
-    ::: callout-note
-    ## Success Notification
+    **Input from User:** The user clicks on “Improve Accuracy”.
 
-    A pop up window showing two methods of improving accuracy:
+    **Outcome:** A pop up window showing two methods of improving accuracy:
 
-    - ”Reset Parameters”; continue to Process 2
+    - ”Reset Parameters”; continue to Process 2.
 
-    - ”Fix Training Data”; continue to Step 3 (coming soon)
-    :::
+    - ”Fix Training Data”; continue to Step 3 (coming soon).
 
-2.  If the user clicks on ”Reset Parameters”, the system retrieves information from Step 4.
+2.  (Interface) The system retrieves information from @sec-map-generation-parameters.
 
-    ::: callout-note
-    ## Success Notification
+    **Input from User:** The user clicks on ”Reset Parameters”.
 
-    The panel returns to the beginning of @sec-map-generation-parameters, with all selected predictors still checked, and displays a message explaining that the user is in Improvement Mode.
-    :::
+    **Outcome:** The panel returns to the beginning of @sec-map-generation-parameters, with all selected predictors still checked, and displays a message explaining that the user is in Improvement Mode.
