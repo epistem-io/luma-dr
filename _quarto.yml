@@ -30,7 +30,7 @@ book:
     - part: "Luma Interface"
       chapters:
       - interface_map_generation.qmd
-      - interface_change_analysis.qmd
+      - interface_identify_change.qmd
       - interface_collaborative_mapping.qmd
   sidebar:
     logo: images/epistem_logo_color.png
