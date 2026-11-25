@@ -9,26 +9,32 @@ Depending on how much reference data is available, the module automatically oper
 -   **Model Transfer mode**: When training samples exist only for a single anchor period (typically the latest `baseline` period), the system harmonizes imagery across periods, aligns the shared spectral bands and predictors, trains one classifier on the reference period, and transfers that model to all other periods.
 -   **Batch mode**: When independent training samples are provided for every period, each period is split, trained, and evaluated separately while still sharing consistent preprocessing, predictor stacking, and reporting.
 
+After multiyear maps are generated, the module also supports **Post-Classification Consistency Analysis and Correction** to detect and resolve logically or ecologically impossible land cover transitions across consecutive periods (for example, built-up settlements reverting to primary forest) using a transition consistency matrix, spatial cross-tabulation, and either probability-driven Hidden Markov Model (HMM / Viterbi) inference or rule-based reclassification.
+
 # Input {.unnumbered}
 
 | Name of Input | Input Type | Details |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Area of Interest (AOI) | User's input / Input from Other Modules | Geographic boundary from @sec-module-1 within which multiyear imagery, predictors, and classifications are processed. |
 | Mapping period definitions | User's input | At least two period configurations (YYYY or DD-MM-YYYY), each defining a unique label, start and end dates, satellite sensor, and optional cloud-cover, spatial scale (default `30` m), or Cloud Score+ threshold |
 | Reference period label | User's input | Which period use as 'reference', typically recent year (baseline). Use for radiometric correction and histogram matching reference (default `'baseline'`) training source in Model Transfer mode. |
-| Harmonization and compositing options | User's input | Flags controlling Landsat cross-sensor harmonization (`harmonize_landsat=True`), BRDF normalization (`apply_brdf=False`), topographic correction (`apply_topo_correction=False`), aerosol band removal (`drop_aerosol=True`), sensor alignment (`harmonize_sensors=True`), histogram matching (`histogram_match=True`), reducer (`'median'`), and target resolution (`scale=30`). |
-| Training datasets by period | User's input / Input from Other Modules | Training data from @sec-module-3 mapped by period label: either one dataset on the reference period (Model Transfer) or one dataset per period (Batch). |
+| Harmonization and compositing options | User's input | Flags controlling Landsat cross-sensor harmonization (`harmonize_landsat=True`), BRDF normalization (`apply_brdf=False`), topographic correction (`apply_topo_correction=False`), aerosol band removal (`drop_aerosol=True`), sensor alignment (`harmonize_sensors=True`), histogram matching (`histogram_match=True`), radiometric matching mode and Pseudo-Invariant Feature settings (`radiometric_matching=None`, `pif_metric='sid'`, `pif_percentile=10.0`), reducer (`'median'`), and target resolution (`scale=30`). |
+| Temporal segmentation options | User's input | Optional settings to build despiked, gap-filled composites via temporal segmentation (`temporal_segmentation=False`, `segmentation_method='landtrendr'`), breakpoint driver index (`segmentation_driver_index='NBR'`), minimum continuous annual window (`min_segmentation_years=6`), custom LandTrendr parameters (`segmentation_params=None`), or a pre-exported LandTrendr array asset (`lt_image=None`). |
+| Training datasets availability | User's input / Input from Other Modules | Training data from @sec-module-3 mapped by period label: either one dataset on the reference period (Model Transfer) or one dataset per period (Batch). |
 | LULC classification scheme | Input from Other Modules | Class IDs, names, and colors from @sec-module-2 used to validate labels and name probability output bands. |
 | Predictor configuration | User's input / Input from Other Modules | Selected terrain, distance, spectral index [@montero_standardized_2023], and SAR predictors (@sec-module-5), plus DEM source (default `'NASADEM'`). |
-| Feature selection and classification settings | User's input / Input from Other Modules | Optional Recursive Feature Elimination (RFE) settings, classification type (`'soft'` multiprobability or `'hard'`), Random Forest hyperparameters (`ntrees=100`, `min_leaf=1`), optional Gaussian spatial smoothing, and optional log-loss evaluation (@sec-module-6). |
-| Validation datasets by period | User's input / Input from Other Modules | Optional per-period reference datasets from @sec-module-7, with optional `required_periods` enforcement (defaults to `[reference_period]`). |
+| Feature selection and classification settings | User's input / Input from Other Modules | Optional Recursive Feature Elimination (RFE) settings (including `enabled`, `n_features_to_select` / `min_features`, and `scoring='accuracy'`), classification type (`'soft'` multiprobability or `'hard'`), Random Forest hyperparameters (`ntrees=100`, `min_leaf=1`), optional Gaussian spatial smoothing, and optional log-loss evaluation (@sec-module-6). |
+| Validation datasets availability | User's input / Input from Other Modules | Optional per-period reference datasets from @sec-module-7, with optional `required_periods` enforcement (defaults to `[reference_period]`). |
+| Transition consistency matrix | User's input | Square lookup table (`from_id` × `to_id` supplied as a CSV file/string, DataFrame, or nested dictionary) defining allowed (`1` / `True` or weight `0.0–1.0`) versus forbidden (`0` / `False`) class transitions between consecutive periods. |
+| Consistency correction options and rules | User's input | Optional correction method (`'auto'`, `'hmm'`, or `'reclassify'`), reference period anchoring (`anchor_reference=True`), explicit transition override rules (`(from_id, to_id) -> target_id`), unmatched transition policy (`'to_future'` or `'keep'`), and 3×3 neighborhood spatial smoothing (`spatial_smoothing=False`, `spatial_weight=0.25`). |
 
 # Output {.unnumbered}
 
-1.  Harmonized and (when enabled) histogram-matched satellite imagery composites for each period, together with the intersection of available optical bands (`common_bands`).
+1.  Harmonized satellite imagery composites for each period—either radiometrically matched median composites or despiked, gap-filled LandTrendr Fitted-to-Vertex (FTV) composites—together with the intersection of available optical bands (`common_bands`).
 2.  Period-aligned predictor stacks (`predictor_stacks`) and the shared feature list (`common_feature_bands`) across all periods.
 3.  Classified LULC maps for every mapping period (hard class map, plus per-class probability layers and pixel confidence when using soft multiprobability mode).
-4.  Per-period diagnostic reports covering sample separability, optional RFE feature rankings, model test metrics (including optional log loss), and thematic accuracy results.
+4.  Per-period diagnostic reports covering sample separability, optional RFE feature rankings, optional pixel-level LandTrendr observed versus fitted trajectory plots and tables, model test metrics (including optional log loss), and thematic accuracy results.
+5.  Post-classification consistency outputs: transition cross-tabulation tables (pixel counts and area in $\text{m}^2$), spatial inconsistency masks and code rasters, temporally corrected LULC maps across periods, and pre- versus post-correction accuracy comparison metrics.
 
 # Process {.unnumbered}
 
@@ -38,7 +44,7 @@ Depending on how much reference data is available, the module automatically oper
 
 2.  Period definitions are validated to ensure at least two periods are provided with unique labels, then sorted chronologically by start date while recording the resulting `period_order`.
 
-3.  The orchestrator (`MultitemporalAnalysis`) stores the AOI, verified period definitions, `reference_period`, and shared harmonization/compositing defaults for downstream steps.
+3.  The orchestrator (`MultitemporalAnalysis`) stores the AOI, verified period definitions, `reference_period`, shared harmonization/compositing defaults (including `radiometric_matching`, `pif_metric='sid'`, and `pif_percentile=10.0`), and temporal segmentation settings (`temporal_segmentation=False`, `segmentation_method='landtrendr'`, `segmentation_driver_index='NBR'`, `segmentation_params`, and `min_segmentation_years=6`) for downstream steps.
 
     ::: callout-tip
     ## Related Functions
@@ -59,24 +65,52 @@ Depending on how much reference data is available, the module automatically oper
 
 ## Multiyear Imagery Acquisition and Harmonization {#sec-mt-imagery}
 
-1.  For each configured period, the system retrieves and preprocesses optical satellite collections using the selected radiometric and terrain options (Landsat cross-sensor harmonization, optional BRDF normalization, and optional topographic correction).
+### Standard Multiyear Compositing and Radiometric Matching {#sec-mt-standard-compositing}
+
+1.  When `temporal_segmentation=False` (default)—or when temporal segmentation automatically falls back due to sensor or date-window incompatibility—the system retrieves and preprocesses optical satellite collections for each period using the selected radiometric and terrain options (Landsat cross-sensor harmonization, optional BRDF normalization, and optional topographic correction).
 
 2.  The collections are composited per period and harmonized across sensors:
 
     -   Non-shared bands such as `AEROSOL` are dropped when configured (`drop_aerosol=True`).
     -   The optical band intersection (`common_bands`) across all periods is resolved so multi-sensor combinations (such as Landsat MSS paired with Landsat OLI or Sentinel-2) share compatible spectral bands.
-    -   When `histogram_match=True`, non-reference composites are radiometrically matched against the `reference_period` composite within the AOI to reduce cross-sensor and cross-year tonal differences before predictor calculation.
-
-3.  If pre-generated synthetic composites (`ccdc_images`) are supplied for specific period labels, they replace the raw composites for those matching periods.
+    -   When `histogram_match=True` (or when a specific `radiometric_matching` mode with `pif_metric` and `pif_percentile` is configured), non-reference composites are radiometrically aligned against the `reference_period` composite within the AOI to reduce cross-sensor and cross-year tonal differences before predictor calculation.
 
     ::: callout-tip
     ## Related Functions
 
-    `multitemporal.MultitemporalAnalysis.acquire_imagery()`: Runs multiyear collection retrieval and composite harmonization, returning `optical_data`, `composites`, `period_order`, and `common_bands`.
+    `multitemporal.MultitemporalAnalysis.acquire_imagery()`: Runs multiyear collection retrieval and builds either standard harmonized composites or LandTrendr FTV composites, returning `optical_data`, `composites`, `period_order`, and `common_bands`.
 
     `data_acquisition.Reflectance_Data.get_multitemporal_optical_data()`: Retrieves and preprocesses optical collections for all periods with optional Landsat harmonization, BRDF correction, and topographic correction.
 
-    `data_acquisition.final_Image.get_multitemporal_composites()`: Builds per-period composites, aligns shared optical bands, and applies histogram matching relative to the reference period.
+    `data_acquisition.final_Image.get_multitemporal_composites()`: Builds per-period composites, aligns shared optical bands, and applies CDF histogram or PIF-based radiometric matching relative to the reference period.
+    :::
+
+### Temporal Segmentation Compositing via LandTrendr FTV (Optional) {#sec-mt-temporal-segmentation}
+
+1.  When `temporal_segmentation=True`, the system replaces independent per-period median composites with temporally smoothed, gap-filled **Fitted-to-Vertex (FTV)** reflectance composites derived from a continuous annual time series using Google Earth Engine's native **LandTrendr** algorithm. Because temporal segmentation fits a piece-wise linear trajectory through the multiyear spectral history of each pixel, transient cloud/haze spikes and data gaps in individual years are suppressed while genuine land cover disturbances and recoveries are preserved.
+
+2.  Before running LandTrendr, the system validates the segmentation configuration:
+
+    -   It confirms that `segmentation_method` is `'landtrendr'`.
+    -   It checks whether all configured periods use compatible 30 m harmonized sensors (Landsat 4–9 Surface Reflectance or NASA HLS v2.0) and evaluates the annual span (`min_segmentation_years=6` by default, auto-padding the continuous annual window when needed).
+    -   If the period configuration is incompatible (for example, when using Sentinel-2 10 m or historical Landsat MSS sensors), the system logs a warning explaining the reason and automatically falls back to standard multiyear median compositing (@sec-mt-standard-compositing).
+
+3.  When compatible, the system builds the annual collection stack (using the maximum `cloud_cover` threshold across configured periods, optional BRDF and topographic corrections, and the inverted `segmentation_driver_index` such as `'NBR'`), fits LandTrendr (or loads a pre-exported `lt_image` array asset if supplied), extracts the FTV reflectance composite for each period, and skips post-FTV CDF histogram matching. Period date and sensor metadata are recorded into `optical_data` so downstream SAR predictors inherit each period's date range cleanly.
+
+4.  If pre-generated synthetic composites (`ccdc_images`) are supplied for specific period labels, they replace the resulting composites on those matching periods.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `temporal_segmentation.LandTrendr_fit.validate_and_resolve_window()`: Validates whether the configured periods and sensors are compatible with LandTrendr FTV compositing and resolves the continuous annual segmentation window.
+
+    `data_acquisition.final_Image.get_landtrendr_composites()`: Builds continuous annual stacks, runs native GEE LandTrendr (or reads `lt_image`), and extracts despiked, gap-filled FTV composites for each target period.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `acquire_imagery()` raises a `ValueError` if `temporal_segmentation=True` and `segmentation_method` is not `'landtrendr'`. Incompatible sensor combinations or date windows do not raise an exception; instead, they log a warning and fall back to standard median compositing.
     :::
 
     ::: callout-caution
@@ -85,11 +119,31 @@ Depending on how much reference data is available, the module automatically oper
     The `ccdc_images` parameter in `acquire_imagery()` acts as an extension hook for substituting synthetic Continuous Change Detection and Classification (CCDC) composites on matching period labels while keeping raw acquisition available for metadata and fallback.
     :::
 
+### Visualizing Pixel-Level Temporal Trajectories {#sec-mt-plot-trajectory}
+
+1.  After running `acquire_imagery()` with `temporal_segmentation=True`, users can inspect how LandTrendr smoothed the spectral history at any geographic location (`(lon, lat)` tuple or `ee.Geometry.Point`).
+
+2.  The trajectory plotter extracts the annual time series at the target point and plots the raw observed reflectance alongside the LandTrendr FTV fitted trajectory for the requested `bands` (defaulting to `('SWIR1',)`, as SWIR1 is sensitive to canopy structure and less prone to high-biomass saturation than NIR), optionally including the segmentation driver index (`show_driver=True`) and vertical markers for the target mapping years (`show_target_years=True`). It returns both the matplotlib figure and the extracted time-series DataFrame `(fig, df)`.
+
+    ::: callout-tip
+    ## Related Functions
+
+    `multitemporal.MultitemporalAnalysis.plot_landtrendr_trajectory()`: Samples and plots observed versus LandTrendr FTV fitted spectral trajectories at a point location, returning `(fig, df)`.
+
+    `temporal_segmentation.LandTrendr_fit.plot_trajectory_from_result()`: Extracts pixel time-series values from the LandTrendr compositing result and renders the trajectory plot.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `plot_landtrendr_trajectory()` raises a `RuntimeError` if called before `acquire_imagery()` has populated `composites_result`.
+    :::
+
 ## Training Data Loading and Workflow Mode Detection {#sec-mt-training-mode}
 
 1.  The system validates the supplied per-period training sources against the LULC classification scheme and AOI, checking minimum class sample counts (`min_samples=20` by default).
 
-2.  Based on which periods contain valid training data, the system automatically sets the workflow `mode` to either `'model_transfer'` (only `reference_period` has training data) or `'batch'` (all periods have training data) and clears any cached feature-extraction state.
+2.  Based on which periods contain valid training data, the system automatically sets the workflow `mode` to either `'model_transfer'` (only `reference_period` has training data) or `'batch'` (all periods have training data) and clears any cached feature-extraction state. Existing training data validation workflow remain the same
 
     ::: callout-tip
     ## Related Functions
@@ -115,7 +169,7 @@ Depending on how much reference data is available, the module automatically oper
 
 ### Filtering Compatible Spectral Indices {#sec-mt-index-filtering}
 
-1.  Because older or narrower sensors may omit bands required by certain indices (for example, Landsat MSS lacks `BLUE`, `SWIR1`, and `SWIR2`), the system maps standardized Luma band names to Awesome Spectral Indices (`spyndex`) [@montero_standardized_2023] band codes and partitions requested indices into `compatible_indices` and `skipped_indices`.
+1.  Because older Landsat sensors may omit bands required by certain indices (for example, Landsat MSS lacks `BLUE`, `SWIR1`, and `SWIR2`), the system maps standardized Luma band names to Awesome Spectral Indices (`spyndex`) [@montero_standardized_2023] band codes and partitions requested indices into `compatible_indices` and `skipped_indices`.
 
 2.  When computing indices on a single composite image, custom index coefficients (or catalog defaults) are validated before index computation.
 
@@ -135,7 +189,7 @@ Depending on how much reference data is available, the module automatically oper
 
 ### Computing Unified Multiyear Predictor Stacks {#sec-mt-compute-predictors}
 
-1.  Static landscape layers—terrain (`elevation`, `slope`, `aspect`, `landform` from the selected `dem_source`, defaulting to `'NASADEM'`) and distance metrics (`dist_roads`, `dist_coast`, `dist_settlement`, using GRIP4 [@meijer_global_2018] or configured sources)—are computed once for the AOI and shared across all periods.
+1.  Static landscape layers such as terrain (`elevation`, `slope`, `aspect`, `landform` ) and distance metrics (`dist_roads`, `dist_coast`, `dist_settlement`) are computed once for the AOI and shared across all periods.
 
 2.  For each period, the system stacks the optical bands (restricted to `common_bands` when aligned), static terrain/distance layers, and compatible spectral indices. When composites are not histogram-matched and all six standard optical bands (`BLUE`, `GREEN`, `RED`, `NIR`, `SWIR1`, `SWIR2`) are present alongside raw collections, indices are computed across the image collection; otherwise they are computed directly from the period's composite image so matched feature spaces stay identical.
 
@@ -162,7 +216,7 @@ Depending on how much reference data is available, the module automatically oper
 
 ### Multiyear Separability Assessment {#sec-mt-separability}
 
-1.  The system evaluates class separability (Transformed Divergence by default, with optional Silhouette analysis) on periods that have training data—using either the raw harmonized composites (`use_predictors=False`) or the computed predictor stacks (`use_predictors=True`).
+1.  The system evaluates class separability (Transformed Divergence by default, with optional Silhouette analysis) on periods that have training data using either the raw harmonized composites (`use_predictors=False`) or the computed predictor stacks (`use_predictors=True`).
 
     ::: callout-tip
     ## Related Functions
@@ -178,7 +232,7 @@ Depending on how much reference data is available, the module automatically oper
     `check_separability()` raises a `RuntimeError` if called before `acquire_imagery()` (when neither composites nor predictors exist) or before `load_training_data()`.
     :::
 
-### Feature Extraction and Stratified Splitting {#sec-mt-feature-extraction}
+### Feature Extraction and Stratified Random Split {#sec-mt-feature-extraction}
 
 1.  Training samples are split into training and validation sets (default `train_ratio=0.7` using stratified sampling) and pixel values are extracted from the period predictor stacks:
 
@@ -199,9 +253,9 @@ Depending on how much reference data is available, the module automatically oper
     `extract_features()` raises a `RuntimeError` if called before `compute_predictors()` or before `load_training_data()`.
     :::
 
-### Optional Recursive Feature Elimination {#sec-mt-rfe}
+### Recursive Feature Elimination with Cross Validation (Optional) {#sec-mt-rfe}
 
-1.  If feature selection is requested, the system runs cross-validated Recursive Feature Elimination (`RFE_CV`) to prune low-importance predictors:
+1.  If feature selection is requested, the system runs cross-validated Recursive Feature Elimination (`RFE_CV`, supporting `scoring='accuracy'` and target feature count via `n_features_to_select` or `min_features`) to prune low-importance predictors:
 
     -   By default (`per_period_rfe=False`, or whenever `mode_used == 'model_transfer'`), RFE runs once on the `reference_period` training split over `common_feature_bands`, then subsets **all** periods' predictor stacks to that unified feature list so cross-period feature schemas remain identical.
     -   In Batch mode with `per_period_rfe=True`, RFE is fit separately per period and each period stack is subset to its own selected features.
@@ -217,7 +271,8 @@ Depending on how much reference data is available, the module automatically oper
     ::: callout-important
     ## Error Handling Notification
 
-    `run_feature_selection()` raises a `RuntimeError` if called before `compute_predictors()`. If `extract_features()` has not been run yet, it triggers feature extraction automatically before fitting RFE.
+    -   `run_feature_selection()` raises a `ValueError` if both `min_features` and `n_features_to_select` are provided with conflicting values.
+    -   It raises a `RuntimeError` if called before `compute_predictors()`, or if automatic `extract_features()` execution fails to produce a feature extraction result.
     :::
 
 ## Multiyear Classification, Accuracy, and Full Pipeline {#sec-mt-classification-accuracy}
@@ -265,12 +320,161 @@ Depending on how much reference data is available, the module automatically oper
     `assess_accuracy()` raises a `RuntimeError` if called before `run_classification()`.
     :::
 
-### End-to-End Orchestration {#sec-mt-run-pipeline}
+### End-to-End Pipeline {#sec-mt-run-pipeline}
 
-1.  For automated execution, `run_pipeline()` chains imagery acquisition, training data loading, predictor computation, feature extraction, optional RFE (`rfe_config`), optional separability checking (`run_separability=True`), classification, and optional accuracy assessment (when `validation_by_period` is provided) in a single call, returning a dictionary consolidating the outputs of every stage.
+1.  For automated execution, `run_pipeline()` chains imagery acquisition, training data loading, predictor computation, feature extraction, optional RFE (`rfe_config`, executed when `rfe_config.get('enabled', True)` is truthy), optional separability checking (`run_separability=True`), classification, and optional accuracy assessment (when `validation_by_period` is provided) in a single call, returning a dictionary consolidating the outputs of every stage.
 
     ::: callout-tip
     ## Related Function
 
     `multitemporal.MultitemporalAnalysis.run_pipeline()`: Executes the complete multiyear LULC workflow from imagery acquisition through optional accuracy assessment and returns all stage outputs.
+    :::
+
+## Post-Classification Consistency Analysis and Correction {#sec-mt-post-classification}
+
+Independent per-period classifications (or transferred models affected by residual atmospheric and seasonal noise) can occasionally produce illogical land cover trajectories over time, such as urban settlements converting back into primary forest. The post-classification consistency workflow evaluates consecutive maps against domain transition rules and resolves impossible transitions using either class probabilities or deterministic rules.
+
+### Validating the Transition Consistency Matrix {#sec-mt-validate-matrix}
+
+1.  The user supplies a transition matrix covering all active LULC class IDs (`from_id` in rows, `to_id` in columns) as a CSV file path, CSV text/bytes, `pandas.DataFrame`, or nested dictionary.
+
+2.  The system normalizes each cell into a numerical transition weight between `0.0` and `1.0`:
+
+    -   Values greater than `0.0` (including `1`, `True`, `'yes'`, or `'allowed'`, as well as continuous prior weights such as `0.8`) indicate plausible transitions.
+    -   Values equal to `0.0` (including `0`, `False`, `'no'`, or `'forbidden'`) indicate impossible transitions.
+
+3.  The validator checks that every `(from_id, to_id)` pair is defined across the active class list and returns a standardized dictionary containing the validity flag (`valid`), any `missing_pairs`, the normalized `matrix_df`, the boolean lookup (`binary_matrix`), and the continuous weights (`weight_matrix`).
+
+    ::: callout-tip
+    ## Related Functions
+
+    `post_classification.ConsistencyAnalyzer`: Main class handling transition matrix validation, cross-tabulation, and multiyear consistency correction.
+
+    `post_classification.ConsistencyAnalyzer.validate_transition_matrix()`: Parses and validates a `from_id` × `to_id` transition matrix against `class_ids`, returning both binary and weighted transition structures.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    -   `validate_transition_matrix()` raises a `ValueError` if `class_ids` is empty, if a class ID is boolean, or if any cell weight is `NaN` or outside `[0.0, 1.0]`.
+    -   A `FileNotFoundError` is raised if a file path is provided for `matrix` but does not exist on disk.
+    -   Downstream cross-tabulation and correction methods raise a `ValueError` if the matrix is missing any `(from_id, to_id)` pairs.
+    :::
+
+### Cross-Tabulating Transitions and Mapping Spatial Inconsistencies {#sec-mt-cross-tabulate}
+
+1.  To inspect changes between an earlier map (`past_map`) and a later map (`future_map`), the system encodes each pixel's transition as a single integer code (`past_class * multiplier + future_class`, where `multiplier` is a power of 10 scaled to the maximum class ID, at least `1000`) and computes a server-side frequency histogram within the AOI.
+
+2.  Each observed transition code is decoded back into `from_id` and `to_id`, attached to human-readable class names (`from_name`, `to_name`), converted into pixel counts and physical area (`area_m2`), and flagged with `is_consistent` based on the validated matrix.
+
+3.  Alongside the full summary table (`transitions_df`) and the subset of forbidden transitions (`inconsistent_transitions`), the system generates two spatial layers in Earth Engine:
+
+    -   `inconsistent_mask`: a self-masked binary raster (`1`) pinpointing pixels where forbidden transitions occur.
+    -   `inconsistent_code_image`: a raster preserving the encoded `from_id`/`to_id` transition code at every inconsistent pixel for visual inspection.
+
+    ::: callout-tip
+    ## Related Function
+
+    `post_classification.ConsistencyAnalyzer.cross_tabulate()`: Computes server-side transition pixel counts, areas, filtered inconsistent transition tables, and spatial inconsistency masks between `past_map` and `future_map`.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `cross_tabulate()` raises a `ValueError` if `aoi` is `None` or if `consistency_matrix` is missing any required class pairs.
+    :::
+
+### Correcting Impossible Transitions Between Two Periods {#sec-mt-correct-pair}
+
+1.  When correcting a pair of consecutive maps (`past_map` and `future_map`), the system first checks for per-class soft probability bands on `past_map` (matching explicit `prob_band_map` entries, scheme-based `prob_<Class_Name>` bands, or numeric `prob_<id>` bands). When `method='auto'`, it automatically selects probability-based HMM correction if probability bands exist, or falls back to rule-based reclassification for hard maps.
+
+2.  **Primary Method — Probability-Based HMM / Viterbi Correction (`method='hmm'`)**:
+
+    In standard hard classification, only the single winning class (`argmax`) is kept at each pixel, discarding how confident the classifier was about its second- or third-best candidate. If a borderline pixel is classified as *Built-up* in 2015 (e.g., 48% *Built-up*, 45% *Bare Land*) and *Forest* in 2025, a deterministic rule has to overwrite one of the dates without knowing the pixel's spectral probabilities.
+
+    The **Hidden Markov Model (HMM)** approach solves this by treating the true land cover class at each time step as an unobserved ("hidden") state and combining two sources of evidence in log-probability space for every pixel:
+
+    -   **Emission log-likelihood (classifier + spatial evidence)**: Each class's scaled Random Forest probability (`0..probability_scale`, default `100.0`) is divided by `probability_scale`, clamped to a minimum floor (`1e-6`) to avoid $\ln(0)$, and converted to its natural logarithm $\ln P_t(c_i)$. When `spatial_smoothing=True`, the system also computes the fraction of surrounding pixels in a 3×3 window (`ee.Kernel.square(1)`) belonging to each class and adds $\alpha \cdot \text{Neighborhood}_t(c_i)$ (`spatial_weight`, default `0.25`) to suppress isolated salt-and-pepper noise.
+    -   **Transition log-score (domain matrix evidence)**: Each weight $W_{i,j}$ from the validated transition matrix is converted into a log-transition score $\ln W_{i,j}$. Allowed transitions with $W_{i,j} = 1.0$ add `0.0` (no penalty), lower-weight plausible transitions ($0 < W_{i,j} < 1$) add a proportional negative offset, and forbidden transitions ($W_{i,j} = 0.0$) receive a severe negative penalty (`-1e6`) that effectively rules them out.
+
+    Depending on `anchor_reference`, the two-period HMM is solved in one of two ways:
+
+    -   **Anchored pairwise MAP inference (`anchor_reference=True`, default)**: The later reference map (`future_map`, typically the baseline year with the strongest training data) is held fixed. For a pixel whose fixed future class is $c_j$, the system evaluates every candidate past class $c_i$ by summing its emission score and the transition score from $c_i \rightarrow c_j$: $$\text{Score}(c_i \mid c_j) = \ln P_{\text{past}}(c_i) + \alpha \cdot \text{Neighborhood}_{\text{past}}(c_i) + \ln W_{i, j}$$ The pixel in `past_map` is assigned the class $c_i$ that maximizes this sum. If the pixel's original past class already forms an allowed transition into $c_j$, it remains unchanged; if the original transition is forbidden (penalized by `-1e6`), the pixel shifts to the **next most probable past class** that is allowed to transition into $c_j$. As a safeguard, if a future class $c_j$ has zero allowed incoming transitions in the matrix, the pixel retains $c_j$.
+    -   **Joint 2-step Viterbi decoding (`anchor_reference=False`)**: Neither map is held fixed. Both `past_map` and `future_map` must provide soft probability bands, and the system searches across all $(c_i, c_j)$ pairs to maximize $\text{Emission}_{\text{past}}(c_i) + \ln W_{i,j} + \text{Emission}_{\text{future}}(c_j)$, allowing a high-confidence past pixel to correct an uncertain future pixel when needed.
+    -   **Optional manual rule overrides**: If explicit user `rules` (`{(from_id, to_id): target_id}` or `'from->to': target_id`) are also supplied, they are applied after HMM decoding on any pixel whose original `(past, future)` pair matches a rule.
+
+3.  **Secondary Method — Rule-Based Reclassification (`method='reclassify'`)**:
+
+    -   Operates directly on discrete `'classification'` bands without requiring soft probabilities.
+    -   Pixels matching explicit `rules` are remapped to their specified `target_id`.
+    -   Remaining forbidden transitions (optionally restricted to `selected_transitions`) are either snapped to the later period's class (`unmatched_policy='to_future'`, default) or left unchanged (`unmatched_policy='keep'`).
+
+4.  When `compute_stats=True` and `aoi` is provided, the system summarizes the correction in Earth Engine by counting how many pixels changed class (`corrected_pixel_count`) and how many forbidden transition pixels remain (`remaining_inconsistent_count`).
+
+    ::: callout-tip
+    ## Related Functions
+
+    `post_classification.ConsistencyAnalyzer.correct_inconsistencies()`: Resolves impossible transitions between `past_map` and `future_map` via anchored HMM, joint 2-step Viterbi, or rule-based reclassification, and returns the corrected map(s) and pixel change counts.
+
+    `post_classification.ConsistencyAnalyzer._emission_log_probs()`: Converts scaled per-class probability bands into log-likelihood bands and optionally blends 3×3 neighborhood class proportions.
+
+    `post_classification.ConsistencyAnalyzer._log_transition_matrix()`: Converts the `from_id` × `to_id` weight matrix into log-transition scores with `-1e6` penalty on forbidden transitions.
+
+    `post_classification.ConsistencyAnalyzer._run_hmm_anchored_pair()`: Executes transition-constrained Maximum A Posteriori (MAP) inference on `past_map` while holding `future_map` fixed.
+
+    `post_classification.ConsistencyAnalyzer._apply_rules_override()`: Applies explicit `(from_id, to_id) -> target_id` overrides onto the decoded classification image.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `correct_inconsistencies()` raises a `ValueError` if:
+
+    -   `method` is not `'auto'`, `'hmm'`, or `'reclassify'`.
+    -   `method='hmm'` is explicitly requested when `past_map` lacks soft probability bands.
+    -   `anchor_reference=False` is used in HMM mode when `future_map` lacks soft probability bands.
+    -   `unmatched_policy` is not `'to_future'` or `'keep'`, or a key in `rules` is not a `(from_id, to_id)` tuple or `'from->to'` / `'from,to'` string.
+    :::
+
+### Propagating Correction Across a Multiyear Sequence {#sec-mt-correct-sequence}
+
+1.  For timelines with two or more chronologically ordered maps (`period_order`, from oldest $t_0$ to newest $t_{T-1}$), the system propagates consistency constraints across the entire sequence using one of two strategies:
+
+    -   **Anchored backward cascade (`anchor_reference=True`, default)**: The most recent map (`period_order[-1]`) is held fixed as the baseline anchor, and the system steps backward through each adjacent pair ($t_{T-2} \rightarrow t_{T-3} \rightarrow \dots \rightarrow t_0$). At each step, the newly corrected map for period $t + 1$ becomes the fixed future anchor used to correct period $t$. This guarantees that earlier historical maps remain consistent with the baseline map and with every intermediate period.
+    -   **Joint** $N$-period Viterbi decoding (`anchor_reference=False`): When soft probability bands are present on every period in `period_order`, the system runs the dynamic-programming **Viterbi algorithm** across all $T$ periods simultaneously to find the single most probable end-to-end class trajectory $(c_0, c_1, \dots, c_{T-1})$ at each pixel in two passes:
+        1.  **Forward pass (accumulating path scores and backpointers)**: Starting at $t = 0$ with $V_0(c_i) = \text{Emission}_0(c_i)$, the algorithm steps chronologically from $t = 1$ to $T - 1$. For each candidate class $c_j$ at period $t$, it computes the best cumulative log-score reachable from any predecessor class $c_i$ at period $t - 1$: $$V_t(c_j) = \text{Emission}_t(c_j) + \max_{c_i} \bigl( V_{t-1}(c_i) + \ln W_{i, j} \bigr)$$ At each step $t$, it also stores a multi-band **backpointer image** recording which predecessor class $c_i$ achieved that maximum score for each state $c_j$.
+        2.  **Backward pass (backtracing the winning sequence)**: At the final period $T - 1$, the algorithm selects the class index with the highest total score $\arg\max_{c_j} V_{T-1}(c_j)$ and follows the stored backpointer bands backward from $t = T - 2$ down to $0$ to reconstruct the globally optimal class for every period (followed by any explicit rule overrides from newest to oldest). Unlike backward cascading, joint Viterbi allows strong classifier confidence in earlier and later periods to jointly correct an uncertain or cloudy intermediate period.
+
+2.  The method returns `corrected_maps` ordered by `period_order`, the effective `method_used` (`'hmm'`, `'reclassify'`, `'mixed'`, or `'hmm_joint_viterbi'`), and per-pair correction summaries (`pair_summaries`).
+
+    ::: callout-tip
+    ## Related Functions
+
+    `post_classification.ConsistencyAnalyzer.correct_multitemporal_sequence()`: Applies anchored backward pairwise correction or joint $N$-period Viterbi decoding across all periods in `period_order`.
+
+    `post_classification.ConsistencyAnalyzer._run_viterbi_sequence()`: Executes the forward cumulative-score pass and backward backpointer trace across an ordered sequence of soft probability maps.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `correct_multitemporal_sequence()` raises a `ValueError` if `period_order` contains fewer than 2 periods, if any period label in `period_order` is missing from `maps_by_period`, or if `method='hmm'` with `anchor_reference=False` is missing probability bands on any period.
+    :::
+
+### Comparing Accuracy Before and After Consistency Correction {#sec-mt-compare-accuracy}
+
+1.  When independent validation data is available for a corrected period, the thematic accuracy dictionary from the uncorrected map (`raw_results`) can be compared against the thematic accuracy dictionary from the consistency-corrected map (`corrected_results`).
+
+2.  The comparison reports before-and-after Overall Accuracy (`oa_raw`, `oa_corrected`, `oa_delta`), Kappa coefficient (`kappa_raw`, `kappa_corrected`, `kappa_delta`), total and correctly classified validation sample counts (`n_total`, `n_correct_raw`, `n_correct_corrected`), and per-class F1 score changes (`per_class_f1_delta`).
+
+    ::: callout-tip
+    ## Related Function
+
+    `accuracy.thematic_accuracy.compare_accuracy()`: Computes Overall Accuracy, Kappa, sample count, and per-class F1 deltas between raw and post-classification corrected accuracy assessment results.
+    :::
+
+    ::: callout-important
+    ## Error Handling Notification
+
+    `compare_accuracy()` raises a `ValueError` if an `'error'` key is present in either `raw_results` or `corrected_results`.
     :::

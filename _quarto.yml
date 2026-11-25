@@ -25,6 +25,7 @@ book:
       - 06_classification.qmd
       - 07_accuracy.qmd
       - placeholders/module08_placeholder.qmd
+      - 09_multitemporal.qmd
     # - summary.qmd
     # - references.qmd
     - part: "Luma Interface"
